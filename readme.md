@@ -1,5 +1,5 @@
-Rat - a PHP/MySQL app-in-a-box
-==============================
+Rat
+===
 
 Rat is a PHP/MySQL boiler plate web app.
 
