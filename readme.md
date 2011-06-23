@@ -1,7 +1,7 @@
 Rat
 ===
 
-Rat is a PHP/MySQL boiler plate web app.
+Rat is a PHP/MySQL boilerplate web app.
 
 Created by David Haywood Smith
 http://twitter.com/DHS
