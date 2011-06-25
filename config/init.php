@@ -73,17 +73,8 @@ function sanitize_input($input) {
 $sql = "SELECT * FROM options ORDER BY option_id ASC";
 $query = mysql_query($sql);
 
-while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-	
-	// If values are valid json then decode
-	if ($value = json_decode($row['option_value'], TRUE)){
-		$app[$row['option_name']] = $value;
-	} else {
-		$app[$row['option_name']] = $row['option_value'];
-	}
-
-}
-
+while ($row = mysql_fetch_array($query, MYSQL_ASSOC))
+	$app[$row['option_name']] = unserialize($row['option_value']);
 
 //// Find available plugins
 //

@@ -119,7 +119,7 @@ function config() {
 					if ($new_value != $value2) {
 												
 						//echo "$key [ $key2 ] = $value2 &rarr; $new_value";
-						
+						//
 						//echo $key;
 						//echo " = ";
 						//var_dump($value2);
@@ -129,9 +129,11 @@ function config() {
 						if (is_bool($value2)) {
 							// If original value is a bool then check for checked ('on') vs unchecked (null) new values
 							
+							//echo $key.' - '.$key2;
+							
 							if ($new_value == 'on') {
 								$new_value = TRUE;
-							} elseif ($new_value == NULL) {
+							} elseif ($new_value == 'FALSE' || isset($new_value) == FALSE) {
 								$new_value = FALSE;
 							}
 							
@@ -146,37 +148,26 @@ function config() {
 												
 						$GLOBALS['app'][$key][$key2] = $new_value;
 						
-						$update_flag = TRUE;
-						
 					}
-					
+
 					$to_update[$key2] = $GLOBALS['app'][$key][$key2];
 					
 				}
-				
-				if ($update_flag == TRUE) {
 					
-					//echo '<pre>';
-					//var_dump($to_update);
-					//echo '</pre>';
-					
-					// Create json string
-					$json = json_encode($to_update);
+				// Create json string
+				$json = serialize($to_update);
+                
+				// Sanitize input
+				$key = sanitize_input($key);					
+				$json = sanitize_input($json);
+                
+				// Update single value in database
+				$sql = "UPDATE options SET option_value = {$json} WHERE option_name = $key";
+				//echo "Update SQL: $sql<br />";
+				$query = mysql_query($sql);
+                
+				$message = 'Config updated!';
 
-					// Sanitize input
-					$key = sanitize_input($key);					
-					$json = sanitize_input($json);
-
-					// Update single value in database
-					$sql = "UPDATE options SET option_value = {$json} WHERE option_name = $key";
-					//echo "$sql<br />";
-					$query = mysql_query($sql);
-
-					$message = 'Config updated!';
-					
-				}
-				
-				unset($update_flag);
 				unset($to_update);
 				
 			} else {
@@ -198,17 +189,22 @@ function config() {
 						
 						if ($new_value == 'on') {
 							$new_value = TRUE;
-						} elseif ($new_value == NULL) {
+						} elseif ($new_value == FALSE || isset($new_value) == FALSE) {
 							$new_value = FALSE;
 						}
 						
 					}
+					
+					if (is_numeric($value2))
+						$new_value = $new_value*1;
 					
 					$GLOBALS['app'][$key] = $new_value;
 
 					//echo ", actually: ";
 					//var_dump($new_value);
 					//echo "<br />";
+					
+					$new_value = serialize($new_value);
 					
 					// Sanitize database input
 					$key = sanitize_input($key);
