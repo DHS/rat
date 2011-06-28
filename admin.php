@@ -351,8 +351,9 @@ function config() {
 
 	// Show admin form
 	include 'themes/'.$GLOBALS['app']['theme'].'/admin_config.php';
-			
+	
 }
+
 
 function signups() {
 	

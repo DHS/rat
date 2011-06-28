@@ -88,7 +88,7 @@ while (false !== ($file = readdir($handle))) {
 	}
 }
 
-// Update plugin settings plugins
+// Update plugin settings
 
 foreach ($app['plugins'] as $plugin => $vars) {
 
@@ -101,10 +101,12 @@ foreach ($app['plugins'] as $plugin => $vars) {
 // Load plugins
 
 foreach ($app['plugins'] as $plugin) {
+	
 	if ($app['plugins'][$plugin]['enabled'] == TRUE) {
 		include_once "plugins/$plugin.php";
-		$$plugin = new $plugin;
+		$app['app'][$plugin] = new $plugin;
 	}
+	
 }
 
 

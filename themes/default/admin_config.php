@@ -1,9 +1,104 @@
+<?
+
+/*
+If array, call self w/ new values
+Echo header
+Echo line
+
+*/
+
+function form_handler($data, $parent_key = NULL) {
+	
+	foreach ($data as $key => $value) {
+	
+		if (is_array($value)) {
+			
+			$integer_keys = TRUE;
+			
+			echo '<tr><th colspan="2">'.ucfirst($key).'</th></tr>';
+			
+			form_handler($value, $key);
+			
+			//echo '<tr><td colspan="2"><a href="#">Add new</a></td></tr>';
+	    
+			echo '<tr><td colspan="2"><hr /></td></tr>';
+    
+		} else {
+    
+			echo '<tr>';
+			
+			if ($value === TRUE || $value === FALSE) {
+				
+				echo '<td colspan="2"><input type="checkbox" name="';
+				
+				if ($parent_key) {
+					if (is_numeric($keyvalue)) {
+						echo $parent_key.'['.$key.']';
+					} else {
+						echo $parent_key."[".$key."]";
+					}
+				} else {
+					echo $key;
+				}
+				
+				echo '"';
+				
+				if ($value2 === TRUE) {
+					echo ' checked';
+				}
+				
+				echo ' /> '.ucfirst($key);
+				
+			} elseif (is_numeric($key)) {
+			
+				echo '<td colspan="2"><input type="text" name="';
+				if ($parent_key) {
+					if (is_numeric($keyvalue)) {
+						echo $parent_key.'['.$key.']';
+					} else {
+						echo $parent_key."[".$key."]";
+					}
+				} else {
+					echo $key;
+				}
+				echo '" value="'.$value.'" />';
+			
+			} else {
+				
+				echo '<td class="right">'.ucfirst($key).':</td><td><input type="text" name="';
+				if ($parent_key) {
+					if (is_numeric($keyvalue)) {
+						echo $parent_key.'['.$key.']';
+					} else {
+						echo $parent_key."[".$key."]";
+					}
+				} else {
+					echo $key;
+				}
+				echo '" value="'.$value.'" />';
+				
+			}
+		
+			echo '</td></tr>'."\n";
+		
+		}
+	
+	}
+	
+}
+
+?>
 
 <div class="center_container">
 
 <form action="admin.php?page=config" method="POST">
 
 	<table class="center">
+		
+		<?php form_handler($GLOBALS['app']);
+		
+		/*
+		?>
 		
 		<?php foreach ($GLOBALS['app'] as $key => $value) { ?>
 		
@@ -34,11 +129,11 @@
 				<?php } ?>
 				
 				
-				<?php /*if ($integer_keys == TRUE) { ?>
+				<?php //if ($integer_keys == TRUE) { ?>
 					
 					<tr><td colspan="2"><a href="#">Add new</a></td></tr>
 					
-				<?php }*/ ?>
+				<?php //} ?>
 				
 				
 				<?php $integer_keys == FALSE; ?>
@@ -61,7 +156,9 @@
 			
 			<?php } ?>
 		
-		<?php } ?>
+		<?php }
+		
+		*/ ?>
 		
 		<tr><td></td><td class="align_left"><input type="submit" value="Save" /></td></tr>
 		
