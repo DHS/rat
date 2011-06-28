@@ -38,6 +38,7 @@ $database['live'] = array(	'host'		=> 'localhost',
 
 define('SITE_IDENTIFIER', 'dev');
 
+
 // Establish database connection
 
 $connection = mysql_pconnect($database[SITE_IDENTIFIER]['host'], $database[SITE_IDENTIFIER]['username'], $database[SITE_IDENTIFIER]['password'])
@@ -76,21 +77,34 @@ $query = mysql_query($sql);
 while ($row = mysql_fetch_array($query, MYSQL_ASSOC))
 	$app[$row['option_name']] = unserialize($row['option_value']);
 
-//// Find available plugins
-//
-//$handle = opendir('plugins');
-//while (false !== ($file = readdir($handle))) {
-//	if ($file[0] != '.') {
-//		$plugins[] = substr($file, 0, -4);
-//	}
-//}
+
+// Find available plugins
+
+$handle = opendir('plugins');
+while (false !== ($file = readdir($handle))) {
+	if ($file[0] != '.') {
+		$plugin = substr($file, 0, -4);
+		$app['plugins'][$plugin] = array('enabled' => FALSE);
+	}
+}
+
+// Update plugin settings plugins
+
+foreach ($app['plugins'] as $plugin => $vars) {
+
+	if ($app['activated_plugins'][$plugin] != NULL)
+		$app['plugins'][$plugin] = $app['activated_plugins'][$plugin];
+
+}
 
 
 // Load plugins
 
 foreach ($app['plugins'] as $plugin) {
-	include_once "plugins/$plugin.php";
-	$$plugin = new $plugin;
+	if ($app['plugins'][$plugin]['enabled'] == TRUE) {
+		include_once "plugins/$plugin.php";
+		$$plugin = new $plugin;
+	}
 }
 
 
