@@ -5,7 +5,7 @@ require_once 'config/init.php';
 //	Critical: One of the following must be set: item id (to show) or content (to add) or delete
 
 if ($_GET['id'] == '' && $_POST['content'] == '' && $_GET['delete'] == '') {
-	$app['page_name'] = ucfirst($GLOBALS['app']['items']['name']).' not found';
+	$page['name'] = ucfirst($GLOBALS['app']['items']['name']).' not found';
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 	exit;
@@ -90,7 +90,7 @@ if ($_POST['content'] != '') {
 	// fail gracefully if item doesn't exist
 	if ($item == NULL) {
 
-		$app['page_name'] = ucfirst($GLOBALS['app']['items']['name']).' not found';
+		$page['name'] = ucfirst($GLOBALS['app']['items']['name']).' not found';
 		include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 		include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 		exit;
@@ -106,11 +106,11 @@ if (is_object($GLOBALS['gravatar']))
 
 if ($item['user']['full_name'] != NULL) {
 	// Full name set so use that for page title
-	$app['head_title'] = $item['title'].' by '.$item['user']['full_name'];
+	$page['title'] = $item['title'].' by '.$item['user']['full_name'];
 	$app['page_title'] = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['full_name'].'</a> on <a href="index.php">'.$app['name'].'</a>';
 } else {
 	// Full name not set so use username for page title
-	$app['head_title'] = $item['title'].' by '.$item['user']['username'];
+	$page['title'] = $item['title'].' by '.$item['user']['username'];
 	$app['page_title'] = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['username'].'</a> on <a href="index.php">'.$app['name'].'</a>';
 }
 

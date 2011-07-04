@@ -4,7 +4,7 @@ require_once 'config/init.php';
 
 /* Header */
 
-$app['page_name'] = 'Help';
+$page['name'] = 'Help';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Show help page content */

@@ -6,7 +6,7 @@ require_once 'config/init.php';
 
 if (count(admin_get_users()) == 0 && $_GET['page'] == '') {
 	
-	$app['page_name'] = 'Setup';
+	$page['name'] = 'Setup';
 	
 	$_GET['id'] = 1;
 	$password = generate_password();
@@ -20,7 +20,7 @@ if (count(admin_get_users()) == 0 && $_GET['page'] == '') {
 	
 } elseif (count(admin_get_users()) == 0 && $_GET['page'] == 'invite') {
 	
-	$app['page_name'] = 'Setup';
+	$page['name'] = 'Setup';
 	
 	// Do signup
 
@@ -51,7 +51,7 @@ if (count(admin_get_users()) == 0 && $_GET['page'] == '') {
 
 if (in_array($_SESSION['user']['id'], $app['admin_users']) != TRUE) {
 
-	$app['page_name'] = 'Page not found';
+	$page['name'] = 'Page not found';
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 	exit;
@@ -167,7 +167,7 @@ if ($page == NULL) {
 
 /* Header */
 
-$app['page_name'] = 'Admin - '.ucfirst(strtolower($page));
+$page['name'] = 'Admin - '.ucfirst(strtolower($page));
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 include 'themes/'.$GLOBALS['app']['theme'].'/admin_menu.php';
 

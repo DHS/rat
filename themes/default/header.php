@@ -2,22 +2,43 @@
 // Set page_name for this format: '<h1>App name - page_name</h1>'
 // Overwrite with page_title
 
-if ($app['head_title'] != NULL)
-	$head_title = $app['head_title'];
+// Set the var that is printed in head title
+if ($page['head_title'] != NULL)
+	$head_title = $page['head_title'];
 
-if ($app['page_title'] != '') {
-	$page_title = $app['page_title'];
+if ($page['title'] != '') {
+	// Page title is set = override!
+
+	// Set the var that prints the page title
+	$page_title = $page['title'];
+
+	// If no head title is found then set head title equal to page title
 	if ($head_title == NULL)
-		$head_title = $app['page_title'];
+		$head_title = $page['title'];
+
 } else {
-	if (isset($app['page_name'])) {
-		$page_title = '<a href="index.php">'.$app['name'].'</a> - '.$app['page_name'];
+	// No page title set
+
+	if (isset($page['name'])) {
+		// Page name found
+
+		// Set the var that prints the page title
+		$page_title = '<a href="index.php">'.$GLOBALS['app']['name'].'</a> - '.$page['name'];
+
+		// If no head title is found then set head title similar to page title
 		if ($head_title == NULL)
-			$head_title = $app['name'].' - '.$app['page_name'];
+			$head_title = $GLOBALS['app']['name'].' - '.$page['name'];
+
 	} else {
-		$page_title = '<a href="index.php">'.$app['name'].'</a>';
+		// No page name found
+
+		// Set page title to app name
+		$page_title = '<a href="index.php">'.$GLOBALS['app']['name'].'</a>';
+
+		// Set head title to app name
 		if ($head_title == NULL)
-			$head_title = $app['name'];
+			$head_title = $GLOBALS['app']['name'];
+
 	}
 }
 

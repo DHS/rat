@@ -22,7 +22,7 @@ if (!empty($_SESSION['user'])) {
 
 /* Header */
 
-//$app['page_name'] = 'Logout';
+//$page['name'] = 'Logout';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Show login form */

@@ -14,7 +14,7 @@ if ($_GET['id']) {
 
 if ($user == NULL) {
 
-	$app['page_name'] = 'User not found';
+	$page['name'] = 'User not found';
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 	exit();
@@ -29,11 +29,11 @@ if (is_object($GLOBALS['gravatar']))
 
 if ($user['full_name'] != NULL) {
 	// Full name set so use that for page title
-	$app['head_title'] = $user['full_name'].' on '.$app['name'];
+	$page['title'] = $user['full_name'].' on '.$app['name'];
 	$app['page_title'] = '<a href="user.php?id='.$user['id'].'">'.$user['full_name'].'</a> on <a href="index.php">'.$app['name'].'</a>';
 } else {
 	// Full name not set so use username for page title
-	$app['head_title'] = $user['username'].' on '.$app['name'];
+	$page['title'] = $user['username'].' on '.$app['name'];
 	$app['page_title'] = '<a href="user.php?id='.$user['id'].'">'.$user['username'].'</a> on <a href="index.php">'.$app['name'].'</a>';
 }
 

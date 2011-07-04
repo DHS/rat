@@ -6,7 +6,7 @@ require_once 'config/init.php';
 
 if ($_SESSION['user'] == NULL) {
 	
-	$app['page_name'] = 'Page not found';
+	$page['name'] = 'Page not found';
 	$message = 'Please <a href="login.php?redirect_to=/settings.php">login</a> to view your settings.';
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
@@ -137,7 +137,7 @@ if ($page == NULL) {
 
 /* Header */
 
-$app['page_name'] = 'Settings';
+$page['name'] = 'Settings';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Show page determined by selector */

@@ -4,7 +4,7 @@ require_once 'config/init.php';
 
 /* Header */
 
-$app['page_name'] = $app['tagline'];
+$page['name'] = $app['tagline'];
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Show intro paragraph */

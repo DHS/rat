@@ -6,7 +6,7 @@ require_once 'config/init.php';
 
 if (!empty($_SESSION['user'])) {
 	
-	$app['page_name'] = 'Signup';
+	$page['name'] = 'Signup';
 	$message = 'You are already logged in!';
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';

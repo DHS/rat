@@ -43,7 +43,7 @@ if ($_POST['email'] && $_POST['password']) {
 
 /* Header */
 
-//$app['page_name'] = 'Login';
+//$page['name'] = 'Login';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Show login form */
