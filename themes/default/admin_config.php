@@ -7,75 +7,91 @@ Echo line
 
 */
 
-function form_handler($data, $parent_key = NULL) {
+function formify($data, $parent_key = NULL) {
 	
 	foreach ($data as $key => $value) {
-	
+		
 		if (is_array($value)) {
 			
-			$integer_keys = TRUE;
+			$GLOBALS['numeric_keys'] = TRUE;
 			
-			echo '<tr><th colspan="2">'.ucfirst($key).'</th></tr>';
+			if ($parent_key) {
+				// Subheading
+				echo '<tr><td colspan="2">'.ucfirst($key).'</td></tr>';
+			} else {
+				// Section heading
+				echo '<tr><th colspan="2">'.ucfirst($key).'</th></tr>';
+			}
 			
-			form_handler($value, $key);
+			// Preserve square brackets, this will only work with recursion up to 3x
+			if ($parent_key) {
+				formify($value, $parent_key.'['.$key.']');
+			} else {
+				formify($value, $key);
+			}
 			
-			//echo '<tr><td colspan="2"><a href="#">Add new</a></td></tr>';
+			
+			//if ($GLOBALS['numeric_keys'] == TRUE)
+			//	echo '<tr><td colspan="2"><a href="#">Add new</a></td></tr>';
 	    
 			echo '<tr><td colspan="2"><hr /></td></tr>';
-    
+    	
 		} else {
-    
+			
+			if (!is_numeric($key) && $GLOBALS['numeric_keys'] == TRUE)
+				$GLOBALS['numeric_keys'] = FALSE;
+			
 			echo '<tr>';
 			
 			if ($value === TRUE || $value === FALSE) {
 				
+				// Checkbox
+
 				echo '<td colspan="2"><input type="checkbox" name="';
-				
 				if ($parent_key) {
-					if (is_numeric($keyvalue)) {
-						echo $parent_key.'['.$key.']';
-					} else {
-						echo $parent_key."[".$key."]";
-					}
+					echo $parent_key."[$key]";
 				} else {
 					echo $key;
 				}
-				
 				echo '"';
 				
-				if ($value2 === TRUE) {
+				if ($value === TRUE)
 					echo ' checked';
-				}
 				
 				echo ' /> '.ucfirst($key);
 				
-			} elseif (is_numeric($key)) {
-			
-				echo '<td colspan="2"><input type="text" name="';
-				if ($parent_key) {
-					if (is_numeric($keyvalue)) {
-						echo $parent_key.'['.$key.']';
-					} else {
-						echo $parent_key."[".$key."]";
-					}
-				} else {
-					echo $key;
-				}
-				echo '" value="'.$value.'" />';
-			
 			} else {
 				
-				echo '<td class="right">'.ucfirst($key).':</td><td><input type="text" name="';
-				if ($parent_key) {
-					if (is_numeric($keyvalue)) {
-						echo $parent_key.'['.$key.']';
+				if (is_numeric($key)) {
+					
+					// Numeric key = list
+					
+					echo '<td colspan="2"><input type="text" name="';
+					if ($parent_key) {
+						if ($parent_key) {
+							echo $parent_key."[$key]";
+						} else {
+							echo $key;
+						}
 					} else {
-						echo $parent_key."[".$key."]";
+					    echo $key;
 					}
+					echo '" value="'.$value.'" />';
+					
 				} else {
-					echo $key;
+					
+					// Non-numeric key so show value in a text box with key
+					
+					echo '<td class="align_right">';
+					echo ucfirst($key).':</td>';
+					echo '<td><input type="text" name="';
+					if ($parent_key) {
+						echo $parent_key."[$key]";
+					} else {
+						echo $key;
+					}
+					echo '" value="'.$value.'" />';
 				}
-				echo '" value="'.$value.'" />';
 				
 			}
 		
@@ -95,70 +111,12 @@ function form_handler($data, $parent_key = NULL) {
 
 	<table class="center">
 		
-		<?php form_handler($GLOBALS['app']);
+		<?php
 		
-		/*
+		formify($GLOBALS['app']);
+		unset($GLOBALS['numeric_keys']);
+		
 		?>
-		
-		<?php foreach ($GLOBALS['app'] as $key => $value) { ?>
-		
-			<?php if (is_array($value)) { ?>
-				
-				<?php $integer_keys = TRUE; ?>
-				
-				<th colspan="2"><?php echo ucfirst($key); ?></th>
-				
-				<?php foreach ($value as $key2 => $value2) { ?>
-        	
-					<?php if (!is_numeric($key2)) { $integer_keys = FALSE; } ?>
-
-					<?php if ($value2 === TRUE || $value2 === FALSE) { ?>
-						
-						<tr><td colspan="2"><input type="checkbox" name="<?php if (is_numeric($key2)) { echo $key.'['.$key2.']'; } else { echo $key."[".$key2."]"; }  ?>" <?php if ($value2 === TRUE) { echo 'checked'; } ?> /> <?php echo ucfirst($key2); ?></td></tr>
-						
-					<?php } elseif (is_numeric($key2)) { ?>
-					
-						<tr><td colspan="2"><input type="text" name="<?php if (is_numeric($key2)) { echo $key.'['.$key2.']'; } else { echo $key."[".$key2."]"; }  ?>" value="<?php echo $value2; ?>" /></td></tr>
-
-					<?php } else { ?>
-						
-						<tr><td class="right"><?php echo ucfirst($key2); ?>:</td><td><input type="text" name="<?php if (is_numeric($key2)) { echo $key.'['.$key2.']'; } else { echo $key."[".$key2."]"; }  ?>" value="<?php echo $value2; ?>" /></td></tr>
-						
-					<?php } ?>
-
-				<?php } ?>
-				
-				
-				<?php //if ($integer_keys == TRUE) { ?>
-					
-					<tr><td colspan="2"><a href="#">Add new</a></td></tr>
-					
-				<?php //} ?>
-				
-				
-				<?php $integer_keys == FALSE; ?>
-
-				<tr><td colspan="2"><hr /></td></tr>
-
-			<?php } else { ?>
-
-				<?php if ($value === TRUE || $value === FALSE) { ?>
-
-					<tr><td colspan="2"><input type="checkbox" name="<?php echo $key; ?>" <?php if ($value === TRUE) { echo 'checked'; } ?> /> <?php echo ucfirst($key); ?></td></tr>
-
-				<?php } else { ?>
-				
-					<tr><td class="right"><?php echo ucfirst($key); ?>:</td><td><input type="text" name="<?php echo $key; ?>" value="<?php echo $value; ?>" /></td></tr>
-
-				<?php } ?>
-			
-				
-			
-			<?php } ?>
-		
-		<?php }
-		
-		*/ ?>
 		
 		<tr><td></td><td class="align_left"><input type="submit" value="Save" /></td></tr>
 		

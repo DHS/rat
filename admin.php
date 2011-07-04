@@ -84,34 +84,115 @@ function dashboard() {
 	
 }
 
+function process_vars($data) {
+	
+	/*
+	
+	Loop through globals
+	If post equivalent is different then write
+	
+	*/
+	
+	foreach ($GLOBALS['app'] as $key => $value) {
+		
+		$new_value = $data[$key];
+		
+		echo $key.' = ';
+		var_dump($value);
+		echo '<br />';
+		
+		if (is_array($new_value)) {
+			
+			//$vars[$key] = process_vars($new_value);
+			
+		} else {
+			
+			if ($new_value != $value) {
+
+				// If value is a bool then check for checked ('on') vs unchecked (null)
+				if (is_bool($value)) {
+            
+					if ($new_value == 'on') {
+						$new_value = TRUE;
+					} elseif ($new_value == FALSE || isset($new_value) == FALSE) {
+						$new_value = FALSE;
+					}
+            
+				}
+            
+				// Force numeric casting
+				if (is_numeric($value))
+					$new_value = $new_value*1;
+            
+				//$GLOBALS['app'][$key] = $new_value;
+            
+				//$query = mysql_query($sql);
+				
+			}
+			
+			$vars[$key] = $new_value;
+			
+		}
+		
+	}
+	
+	return $vars;
+	
+}
+
+
+
 function config() {
 	// Updates config
 
 	//echo "<pre>POST:\n\n";
-	//var_dump($_POST);
+	//print_r($_POST);
 	//echo '</pre>';
 	//
 	//echo "<pre>GLOBALS:\n\n";
-	//var_dump($GLOBALS['app']);
+	//print_r($GLOBALS['app']);
 	//echo '</pre>';
-	
-	//// Finds available plugins
-	//$handle = opendir('plugins');
-	//while (false !== ($file = readdir($handle))) {
-	//	if ($file[0] != '.') {
-	//		$plugin = substr($file, 0, -4);
-	//		echo "$plugin<br />";
-	//	}
-	//}
-	
+    
+	//echo serialize(array('log' => array('enabled' => TRUE), 'gravatar' => array('enabled' => TRUE)));
+
 	if (!empty($_POST)) {
 
+		$vars = process_vars($_POST);
+
+		echo '<pre>';
+		foreach ($vars as $key => $value) {
+			
+			$new_value = serialize($value);
+			
+			//echo $key.' = ';
+			//var_dump($value);
+			//echo '<br />';
+        	
+			// Sanitize database input
+			$key = sanitize_input($key);
+			$new_value = sanitize_input($new_value);
+        	
+			// Update single value in database
+			$sql = "UPDATE options SET option_value = $new_value WHERE option_name = $key";
+			echo "$sql<br />";
+			
+			
+		
+		}
+		echo '</pre>';
+
+		$message = 'Config updated!';
+
+	}
+
+	/*
+		
 		// Loop through GLOBAL variables
 		foreach ($GLOBALS['app'] as $key => $value) {
 			
 			if (is_array($value)) {
 				// Global var is an array
-								
+				
 				foreach ($value as $key2 => $value2) {
 					
 					$new_value = $_POST[$key][$key2];
@@ -153,7 +234,7 @@ function config() {
 					$to_update[$key2] = $GLOBALS['app'][$key][$key2];
 					
 				}
-					
+				
 				// Create json string
 				$json = serialize($to_update);
                 
@@ -222,8 +303,10 @@ function config() {
 			}
 			
 		}
-		
+
 	}
+	
+	*/		
 
 	/*
 
