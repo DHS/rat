@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config/initialize.php';
+require_once 'config/init.php';
 
 if ($_GET['id']) {
 	$user = user_get_by_id($_GET['id']);

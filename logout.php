@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config/initialize.php';
+require_once 'config/init.php';
 
 if (!empty($_SESSION['user'])) {
 	// do logout

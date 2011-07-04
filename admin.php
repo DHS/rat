@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config/initialize.php';
+require_once 'config/init.php';
 
 // Critical: Setup wizard creates admin as first user
 

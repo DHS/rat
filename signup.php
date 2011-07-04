@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config/initialize.php';
+require_once 'config/init.php';
 
 // Critical: user can't already be logged in
 

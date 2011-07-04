@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config/initialize.php';
+require_once 'config/init.php';
 
 //	Critical: Feature must be enabled
 

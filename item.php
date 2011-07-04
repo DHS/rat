@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config/initialize.php';
+require_once 'config/init.php';
 
 //	Critical: One of the following must be set: item id (to show) or content (to add) or delete
 
