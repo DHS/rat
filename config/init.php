@@ -92,10 +92,13 @@ while (false !== ($file = readdir($handle))) {
 
 foreach ($app['plugins'] as $plugin => $vars) {
 
-	if ($app['activated_plugins'][$plugin] != NULL)
+	if (is_array($app['activated_plugins'][$plugin])) {
 		$app['plugins'][$plugin] = $app['activated_plugins'][$plugin];
+	}
 
 }
+
+unset($app['activated_plugins']);
 
 
 // Load plugins
