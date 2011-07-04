@@ -1,12 +1,12 @@
 <?php
 
-require_once 'config/init.php';
+require_once 'config/initialize.php';
 
 //	Critical: Feature must be enabled and user must be logged in
 
 if ($app['invites']['enabled'] == FALSE || empty($_SESSION['user'])) {
 	
-	$page['name'] = 'Page not found';
+	$app['page_name'] = 'Page not found';
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 	exit;
@@ -15,7 +15,7 @@ if ($app['invites']['enabled'] == FALSE || empty($_SESSION['user'])) {
 
 /* Header */
 
-$page['name'] = 'Invites';
+$app['page_name'] = 'Invites';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Process new invites */

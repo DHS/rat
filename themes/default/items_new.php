@@ -11,11 +11,10 @@ if (!empty($_SESSION['user'])) { ?>
 
 	<table class="center">
 		<?php
-		//var_dump($GLOBALS['app']['items']);
-		if ($GLOBALS['app']['items']['titles'] == TRUE)
-			echo '<tr><td colspan="2">Title: <input type="text" name="title" size="50" value="'.$_GET['title'].'" /></td></tr>';
+		if ($GLOBALS['app']['items']['title'] == TRUE)
+			echo '<tr><td class="align_right">Title: </td><td class="alight_left"><input type="text" name="title" size="50" value="'.$_GET['title'].'" /></td></tr>';
 		?>
-		<tr><td class="align_right"></td><td class="align_left"><textarea name="content" rows="5" cols="50"><?php echo $_GET['content']; ?></textarea></td></tr>
+		<tr><td class="align_right">Content: </td><td class="align_left"><textarea name="content" rows="5" cols="50"><?php echo $_GET['content']; ?></textarea></td></tr>
 		<tr><td></td><td class="align_left"><input type="submit" value="Submit" /></td></tr>
 	</table>
 	

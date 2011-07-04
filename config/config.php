@@ -18,8 +18,6 @@
 *		
 */
 
-/*
-
 // Basic app variables
 $app['name']							= 'Twitter';
 $app['tagline']							= 'What\'s happening?';
@@ -59,7 +57,6 @@ $app['admin_users']						= array(1);
 // Encryption salt - change to a random six character string, do not change after first use of application
 $app['encryption_salt']					= 'hw9e46';
 
-*/
 
 // DATABASE
 
@@ -97,7 +94,7 @@ if (SITE_IDENTIFIER == 'live') {
 	$app['database'] = array(	'host'		=> 'localhost',
 								'username'	=> 'root',
 								'password'	=> 'root',
-								'database'	=> 'rat'
+								'database'	=> 'twitter'
 							);
 
 }
@@ -105,7 +102,7 @@ if (SITE_IDENTIFIER == 'live') {
 
 // THEMES
 
-//$app['theme'] = 'default';
+$app['theme'] = 'default';
 
 
 // PLUGINS

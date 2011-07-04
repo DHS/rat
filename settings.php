@@ -1,12 +1,12 @@
 <?php
 
-require_once 'config/init.php';
+require_once 'config/initialize.php';
 
 // Critical: user must be logged in
 
 if ($_SESSION['user'] == NULL) {
 	
-	$page['name'] = 'Page not found';
+	$app['page_name'] = 'Page not found';
 	$message = 'Please <a href="login.php?redirect_to=/settings.php">login</a> to view your settings.';
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
@@ -24,7 +24,7 @@ if ($_SESSION['user'] == NULL) {
 */
 
 function index() {
-
+	
 }
 
 function password() {
@@ -130,20 +130,19 @@ function profile() {
 
 /* Selector */
 
-$page['selector'] = $_GET['page'];
-
-if ($page['selector'] == NULL) {
-	$page['selector'] = 'index';
+$page = $_GET['page'];
+if ($page == NULL) {
+	$page = 'index';
 }
 
 /* Header */
 
-$page['name'] = 'Settings';
+$app['page_name'] = 'Settings';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Show page determined by selector */
 
-$page['selector']();
+$page();
 
 /* Show profile info form */
 

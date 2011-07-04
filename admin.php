@@ -1,12 +1,12 @@
 <?php
 
-require_once 'config/init.php';
+require_once 'config/initialize.php';
 
 // Critical: Setup wizard creates admin as first user
 
 if (count(admin_get_users()) == 0 && $_GET['page'] == '') {
 	
-	$page['name'] = 'Setup';
+	$app['page_name'] = 'Setup';
 	
 	$_GET['id'] = 1;
 	$password = generate_password();
@@ -20,7 +20,7 @@ if (count(admin_get_users()) == 0 && $_GET['page'] == '') {
 	
 } elseif (count(admin_get_users()) == 0 && $_GET['page'] == 'invite') {
 	
-	$page['name'] = 'Setup';
+	$app['page_name'] = 'Setup';
 	
 	// Do signup
 
@@ -34,15 +34,15 @@ if (count(admin_get_users()) == 0 && $_GET['page'] == '') {
 	if (is_object($GLOBALS['log']))
 		$GLOBALS['log']->add($_SESSION['user']['id'], 'user', NULL, 'signup');
 	
-	$message = 'You are now logged in! Set up your app by tweaking the following variables:';
+	$message = 'Rat is now setup and you are logged in!';
 	
 	// Go forth!
 	if (SITE_IDENTIFIER == 'live') {
-		header('Location: '.$GLOBALS['app']['url'].'admin.php?page=config&message='.urlencode($message));
+		header('Location: '.$GLOBALS['app']['url'].'?message='.urlencode($message));
 	} else {
-		header('Location: '.$GLOBALS['app']['dev_url'].'admin.php?page=config&message='.urlencode($message));
+		header('Location: '.$GLOBALS['app']['dev_url'].'?message='.urlencode($message));
 	}
-	
+		
 	exit();
 	
 }
@@ -51,7 +51,7 @@ if (count(admin_get_users()) == 0 && $_GET['page'] == '') {
 
 if (in_array($_SESSION['user']['id'], $app['admin_users']) != TRUE) {
 
-	$page['name'] = 'Page not found';
+	$app['page_name'] = 'Page not found';
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 	exit;
@@ -74,381 +74,15 @@ function dashboard() {
 	$user_count = count(admin_get_users());
 	$waiting_user_count = count(admin_get_waiting_users());
 	
-	// Show header
-	$page['name'] = 'Admin - '.ucfirst(strtolower($_GET['page']));
-	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	include 'themes/'.$GLOBALS['app']['theme'].'/admin_menu.php';
-	
-	// Show dashboard
 	include 'themes/'.$GLOBALS['app']['theme'].'/admin_dashboard.php';
 	
 }
-
-function process_vars($data) {
-	
-	/*
-	
-	Loop through globals
-	If post equivalent is different then write
-	
-	*/
-	
-	foreach ($GLOBALS['app'] as $key => $value) {
-		
-		$new_value = $data[$key];
-		
-		echo $key.' = ';
-		var_dump($value);
-		echo '<br />';
-		
-		if (is_array($new_value)) {
-			
-			//$vars[$key] = process_vars($new_value);
-			
-		} else {
-			
-			if ($new_value != $value) {
-
-				// If value is a bool then check for checked ('on') vs unchecked (null)
-				if (is_bool($value)) {
-            
-					if ($new_value == 'on') {
-						$new_value = TRUE;
-					} elseif ($new_value == FALSE || isset($new_value) == FALSE) {
-						$new_value = FALSE;
-					}
-            
-				}
-            
-				// Force numeric casting
-				if (is_numeric($value))
-					$new_value = $new_value*1;
-            
-				//$GLOBALS['app'][$key] = $new_value;
-            
-				//$query = mysql_query($sql);
-				
-			}
-			
-			$vars[$key] = $new_value;
-			
-		}
-		
-	}
-	
-	return $vars;
-	
-}
-
-
-
-function config() {
-	// Updates config
-
-	//echo "<pre>POST:\n\n";
-	//print_r($_POST);
-	//echo '</pre>';
-	//
-	//echo "<pre>GLOBALS:\n\n";
-	//print_r($GLOBALS['app']);
-	//echo '</pre>';
-    
-	//echo serialize(array('log' => array('enabled' => TRUE), 'gravatar' => array('enabled' => TRUE)));
-
-	if (!empty($_POST)) {
-
-		$vars = process_vars($_POST);
-
-		echo '<pre>';
-		foreach ($vars as $key => $value) {
-			
-			$new_value = serialize($value);
-			
-			//echo $key.' = ';
-			//var_dump($value);
-			//echo '<br />';
-        	
-			// Sanitize database input
-			$key = sanitize_input($key);
-			$new_value = sanitize_input($new_value);
-        	
-			// Update single value in database
-			$sql = "UPDATE options SET option_value = $new_value WHERE option_name = $key";
-			echo "$sql<br />";
-			
-			
-		
-		}
-		echo '</pre>';
-
-		$message = 'Config updated!';
-
-	}
-
-	/*
-		
-		// Loop through GLOBAL variables
-		foreach ($GLOBALS['app'] as $key => $value) {
-			
-			if (is_array($value)) {
-				// Global var is an array
-				
-				foreach ($value as $key2 => $value2) {
-					
-					$new_value = $_POST[$key][$key2];
-					
-					if ($new_value != $value2) {
-												
-						//echo "$key [ $key2 ] = $value2 &rarr; $new_value";
-						//
-						//echo $key;
-						//echo " = ";
-						//var_dump($value2);
-						//echo " &rarr; ";
-						//var_dump($new_value);
-						
-						if (is_bool($value2)) {
-							// If original value is a bool then check for checked ('on') vs unchecked (null) new values
-							
-							//echo $key.' - '.$key2;
-							
-							if ($new_value == 'on') {
-								$new_value = TRUE;
-							} elseif ($new_value == 'FALSE' || isset($new_value) == FALSE) {
-								$new_value = FALSE;
-							}
-							
-						}
-						
-						if (is_numeric($value2))
-							$new_value = $new_value*1;
-						
-						//echo "(actually: ";
-						//var_dump($new_value);
-						//echo ")<br />";
-												
-						$GLOBALS['app'][$key][$key2] = $new_value;
-						
-					}
-
-					$to_update[$key2] = $GLOBALS['app'][$key][$key2];
-					
-				}
-				
-				// Create json string
-				$json = serialize($to_update);
-                
-				// Sanitize input
-				$key = sanitize_input($key);					
-				$json = sanitize_input($json);
-                
-				// Update single value in database
-				$sql = "UPDATE options SET option_value = {$json} WHERE option_name = $key";
-				//echo "Update SQL: $sql<br />";
-				$query = mysql_query($sql);
-                
-				$message = 'Config updated!';
-
-				unset($to_update);
-				
-			} else {
-				// This global var is not an array
-				
-				$new_value = $_POST[$key];
-				
-				if ($new_value != $value) {
-					// Posted var doesn't equal global value
-					
-					//var_dump($key);
-					//echo " = ";
-					//var_dump($value);
-					//echo " &rarr; ";
-					//var_dump($new_value);
-					
-					if (is_bool($value)) {
-						// If value is a bool then check for checked ('on') vs unchecked (null)
-						
-						if ($new_value == 'on') {
-							$new_value = TRUE;
-						} elseif ($new_value == FALSE || isset($new_value) == FALSE) {
-							$new_value = FALSE;
-						}
-						
-					}
-					
-					if (is_numeric($value2))
-						$new_value = $new_value*1;
-					
-					$GLOBALS['app'][$key] = $new_value;
-
-					//echo ", actually: ";
-					//var_dump($new_value);
-					//echo "<br />";
-					
-					$new_value = serialize($new_value);
-					
-					// Sanitize database input
-					$key = sanitize_input($key);
-					$new_value = sanitize_input($new_value);
-					
-					// Update single value in database
-					$sql = "UPDATE options SET option_value = $new_value WHERE option_name = $key";
-					//echo "$sql<br /><br />";
-					$query = mysql_query($sql);
-					
-					$message = 'Config updated!';
-					
-				}
-								
-			}
-			
-		}
-
-	}
-	
-	*/		
-
-	/*
-
-	// If vars have been posted then parse
-	if (!empty($_POST)) {
-
-		// Loop through posted variables
-		foreach ($_POST as $key => $value) {
-			
-			// Ignore 'page'
-			if ($key != 'page') {
-				
-				// If magic quotes is enabled then strip slashes on the key
-				if (get_magic_quotes_gpc())
-					$key = stripslashes($key);
-				
-				// Is the submitted field an array of values
-				if (is_array($value)) {
-				
-					// Loop through each submitted field
-					foreach ($value as $key2 => $value2) {
-
-    	    			// Strip slashes if necessary
-						if (get_magic_quotes_gpc())
-							$key2 = stripslashes($key2);
-
-						if (get_magic_quotes_gpc())
-							$value2 = stripslashes($value2);
-
-    	    			// If submitted value is different to existing value (GLOBAL) then add to $updates array
-						if ($GLOBALS['app'][$key][$key2] != $value2)
-							$updates[$key][$key2] = $value2;
-					
-					}
-					
-					// Updates were detected
-					if (is_array($updates[$key])) {
-						
-						// Fetch unchanged parts of the array
-						$total_keys = array_keys($GLOBALS['app'][$key]);
-						$updated_keys = array_keys($updates[$key]);
-						$remaining = array_diff($total_keys, $updated_keys);
-    	                
-						// Loop through unchanged parts, fetching values
-						foreach ($remaining as $key2 => $value2) {
-							$updates[$key][$value2] = $GLOBALS['app'][$key][$value2];
-						}
-						
-						//$updates[$key] = array_merge($updates[$key], $GLOBALS['app'][$key]);
-						//
-						//foreach ($updates[$key] as $key2 => $value2) {
-						//	if ($value == 'true') {
-						//		$value == '"TRUE"';
-						//	} elseif ($value == 'false') {
-						//		$value == '"FALSE"';
-						//	}
-						//	$updates[$key][$key2] = $value2;
-						//}
-						
-						$GLOBALS['app'][$key] = $updates[$key];
-						
-						// Create json string
-						$json = json_encode($updates[$key]);
-
-						print_r($json);
-
-						// Sanitize database input
-						$key = sanitize_input($key);
-						$json = sanitize_input($json);
-
-						// Add json string to database
-						$sql = "UPDATE options SET option_value = $json WHERE option_name = $key";
-						$query = mysql_query($sql);
-						
-						$message = 'Config updated!';
-						
-					}
-					
-				} else {
-					// Single value detected
-					
-					// Strip slashes if necessary
-					if (get_magic_quotes_gpc())
-						$value = stripslashes($value);
-					
-					// Add to $updates array
-					if ($GLOBALS['app'][$key] != $value) {
-						
-						$GLOBALS['app'][$key] = $value;
-						
-						if ($value == 'true') {
-							$value = '"TRUE"';
-						} elseif ($value == 'false') {
-							$value = '"FALSE"';
-						}
-						
-						echo "$key: $value, ";
-						
-						// Sanitize database input
-						$key = sanitize_input($key);
-						$value = sanitize_input($value);
-						
-						// Update single value in database
-						$sql = "UPDATE options SET option_value = $value WHERE option_name = $key";
-						$query = mysql_query($sql);
-						
-						$message = 'Config updated!';
-						
-					}
-				
-				}
-			
-			}
-			
-		}
-		
-	}
-	
-	*/
-	
-	// Show header
-	$page['name'] = 'Admin - '.ucfirst(strtolower($_GET['page']));
-	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	include 'themes/'.$GLOBALS['app']['theme'].'/admin_menu.php';
-
-	// Show admin form
-	include 'themes/'.$GLOBALS['app']['theme'].'/admin_config.php';
-	
-}
-
 
 function signups() {
 	
 	$waiting_users = admin_get_waiting_users();
 	$waiting_user_count = count($waiting_users);
 	
-	// Show header
-	$page['name'] = 'Admin - '.ucfirst(strtolower($_GET['page']));
-	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	include 'themes/'.$GLOBALS['app']['theme'].'/admin_menu.php';
-	
-	// Show signups
 	include 'themes/'.$GLOBALS['app']['theme'].'/admin_signups.php';
 	
 }
@@ -495,12 +129,6 @@ function users() {
 	$users = admin_get_users();
 	$user_count = count($users);
 	
-	// Show header
-	$page['name'] = 'Admin - '.ucfirst(strtolower($_GET['page']));
-	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	include 'themes/'.$GLOBALS['app']['theme'].'/admin_menu.php';
-	
-	// Show users
 	include 'themes/'.$GLOBALS['app']['theme'].'/admin_users.php';
 
 }
@@ -532,20 +160,20 @@ function generate_password() {
 
 /* Selector */
 
-$page['selector'] = $_GET['page'];
-if ($page['selector'] == NULL) {
-	$page['selector'] = 'dashboard';
+$page = $_GET['page'];
+if ($page == NULL) {
+	$page = 'dashboard';
 }
 
 /* Header */
 
-//$page['name'] = 'Admin - '.ucfirst(strtolower($page));
-//include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-//include 'themes/'.$GLOBALS['app']['theme'].'/admin_menu.php';
+$app['page_name'] = 'Admin - '.ucfirst(strtolower($page));
+include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
+include 'themes/'.$GLOBALS['app']['theme'].'/admin_menu.php';
 
 /* Show page determined by selector */
 
-$page['selector']();
+$page();
 
 /* Footer */
 

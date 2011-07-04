@@ -1,15 +1,15 @@
 <?php
 
-require_once 'config/init.php';
+require_once 'config/initialize.php';
 
 /* Header */
 
-$page['name'] = $app['tagline'];
+$app['page_name'] = $app['tagline'];
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Show intro paragraph */
 
-include 'themes/'.$GLOBALS['app']['theme'].'/index.php';
+//include 'themes/'.$GLOBALS['app']['theme'].'/index.php';
 
 /* Show new item form */
 

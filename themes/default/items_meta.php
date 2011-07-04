@@ -5,10 +5,10 @@
 
 <?php
 
-if ($GLOBALS['app']['items']['comments'] == 'TRUE')
+if ($GLOBALS['app']['items']['comments'] == TRUE)
 	echo ' &middot <a href="#" onclick="document.getElementById(\'comment_form_'.$item['id'].'\').style.visibility = \'visible\'; document.getElementById(\'comment_form_'.$item['id'].'\').style.height = \'auto\'; document.getElementById(\'comment_form_'.$item['id'].'\').content.focus(); return false;">Comment</a>';
 
-if ($GLOBALS['app']['items']['likes'] == 'TRUE') {
+if ($GLOBALS['app']['items']['likes'] == TRUE) {
 	
 	// find if current user likes the item
 	if (is_array($item['likes'])) {

@@ -100,7 +100,7 @@ function items_by_user($user_id, $limit = 10) {
 	$user_id = sanitize_input($user_id);
 	
 	$sql = "SELECT * FROM items WHERE user_id = $user_id ORDER BY id DESC";
-
+	
 	// Limit not null so create limit string
 	if ($limit != NULL) {
 		$limit = sanitize_input($limit);

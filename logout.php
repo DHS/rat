@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config/init.php';
+require_once 'config/initialize.php';
 
 if (!empty($_SESSION['user'])) {
 	// do logout
@@ -22,7 +22,7 @@ if (!empty($_SESSION['user'])) {
 
 /* Header */
 
-//$page['name'] = 'Logout';
+//$app['page_name'] = 'Logout';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Show login form */

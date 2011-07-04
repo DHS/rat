@@ -1,21 +1,15 @@
 <?php
 
-require_once 'config/init.php';
+require_once 'config/initialize.php';
 
 /* Header */
 
-$page['name'] = 'Help';
+$app['page_name'] = 'Help';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Show help page content */
 
-//include 'themes/'.$GLOBALS['app']['theme'].'/help.php';
-
-/* Building visual config */
-
-//echo "<pre>App\n\n";
-//var_dump($GLOBALS['app']);
-//echo '</pre>';
+include 'themes/'.$GLOBALS['app']['theme'].'/help.php';
 
 /* Footer */
 

@@ -1,11 +1,11 @@
 <?php
 
-require_once 'config/init.php';
+require_once 'config/initialize.php';
 
 //	Critical: Feature must be enabled
 
 if (!is_object($GLOBALS['points']) || $app['points']['leaderboard'] == FALSE) {
-	$page['name'] = 'Page not found';
+	$app['page_name'] = 'Page not found';
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 	exit;
@@ -13,7 +13,7 @@ if (!is_object($GLOBALS['points']) || $app['points']['leaderboard'] == FALSE) {
 
 /* Header */
 
-$page['name'] = 'Leaderboard';
+$app['page_name'] = 'Leaderboard';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Show leaderboard */

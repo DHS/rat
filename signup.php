@@ -1,12 +1,12 @@
 <?php
 
-require_once 'config/init.php';
+require_once 'config/initialize.php';
 
 // Critical: user can't already be logged in
 
 if (!empty($_SESSION['user'])) {
 	
-	$page['name'] = 'Signup';
+	$app['page_name'] = 'Signup';
 	$message = 'You are already logged in!';
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
@@ -296,25 +296,25 @@ $mode = NULL;
 
 if ($_GET['code'] != '') {
 	
-	$page['selector'] = 'validate_code';
+	$page = 'validate_code';
 	
 } elseif ($_POST['email'] != '') {
 	
 	if ($_POST['code'] != '') {
 		
-		$page['selector'] = 'do_signup';
+		$page = 'do_signup';
 		$mode = 'code';
 		
 	} else {
 		
 		if ($GLOBALS['app']['beta'] == TRUE) {
 			
-			$page['selector'] = 'do_signup';
+			$page = 'do_signup';
 			$mode = 'beta';
 			
 		} else {
 			
-			$page['selector'] = 'do_signup';
+			$page = 'do_signup';
 			$mode = 'full';
 			
 		}
@@ -323,16 +323,16 @@ if ($_GET['code'] != '') {
 	
 } else {
 	
-	$page['selector'] = 'show_form';
+	$page = 'show_form';
 	
 }
 
-//var_dump($page);
-//var_dump($mode);
+var_dump($page);
+var_dump($mode);
 
 /* Show page determined by selector */
 
-if ($page['selector'] == 'do_signup') {
+if ($page == 'do_signup') {
 	// Do signup. No headers to allow redirects. Error pages load their own page header.
 	
 	do_signup($mode);
@@ -341,7 +341,7 @@ if ($page['selector'] == 'do_signup') {
 	// Not doing signup so show a simpler page. Also call header.
 	
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	$page['selector']();
+	$page();
 	
 }
 

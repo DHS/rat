@@ -1,10 +1,10 @@
 <?php
 
-require_once 'config/init.php';
+require_once 'config/initialize.php';
 
 /* Header */
 
-$page['name'] = 'About';
+$app['page_name'] = 'About';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Show About page */

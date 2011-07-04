@@ -2,43 +2,22 @@
 // Set page_name for this format: '<h1>App name - page_name</h1>'
 // Overwrite with page_title
 
-// Set the var that is printed in head title
-if ($page['head_title'] != NULL)
-	$head_title = $page['head_title'];
+if ($app['head_title'] != NULL)
+	$head_title = $app['head_title'];
 
-if ($page['title'] != '') {
-	// Page title is set = override!
-	
-	// Set the var that prints the page title
-	$page_title = $page['title'];
-	
-	// If no head title is found then set head title equal to page title
+if ($app['page_title'] != '') {
+	$page_title = $app['page_title'];
 	if ($head_title == NULL)
-		$head_title = $page['title'];
-		
+		$head_title = $app['page_title'];
 } else {
-	// No page title set
-	
-	if (isset($page['name'])) {
-		// Page name found
-
-		// Set the var that prints the page title
-		$page_title = '<a href="index.php">'.$GLOBALS['app']['name'].'</a> - '.$page['name'];
-		
-		// If no head title is found then set head title similar to page title
+	if (isset($app['page_name'])) {
+		$page_title = '<a href="index.php">'.$app['name'].'</a> - '.$app['page_name'];
 		if ($head_title == NULL)
-			$head_title = $GLOBALS['app']['name'].' - '.$page['name'];
-
+			$head_title = $app['name'].' - '.$app['page_name'];
 	} else {
-		// No page name found
-		
-		// Set page title to app name
-		$page_title = '<a href="index.php">'.$GLOBALS['app']['name'].'</a>';
-		
-		// Set head title to app name
+		$page_title = '<a href="index.php">'.$app['name'].'</a>';
 		if ($head_title == NULL)
-			$head_title = $GLOBALS['app']['name'];
-
+			$head_title = $app['name'];
 	}
 }
 
@@ -83,14 +62,14 @@ if (is_object($GLOBALS['analytics']))
 		echo '<a href="index.php">Home</a> &middot; <a href="user.php">My profile</a> &middot; ';
 
 		if (is_object($GLOBALS['points']))
-			echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$GLOBALS['app']['points']['name'].' &middot; ';
+			echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app['points']['name'].' &middot; ';
 
 		if ($GLOBALS['app']['invites']['enabled'] == TRUE)
 			echo '<a href="invites.php">Invites</a> &middot; ';
 
 		echo '<a href="settings.php">Settings</a> &middot; <a href="help.php">Help</a> &middot; ';
 
-		if (in_array($_SESSION['user']['id'], $GLOBALS['app']['admin_users']) == TRUE)
+		if (in_array($_SESSION['user']['id'], $app['admin_users']) == TRUE)
 			echo '<a href="admin.php">Admin</a> &middot; ';
 
 		echo '<a href="logout.php">Logout</a>';
@@ -112,13 +91,13 @@ if (is_object($GLOBALS['analytics']))
 <div class="center_container">
 <?php
 
-if (is_object($GLOBALS['gravatar']) && !empty($GLOBALS['app']['page_title_gravatar'])) {
+if (is_object($GLOBALS['gravatar']) && !empty($app['page_title_gravatar'])) {
 	// Show gravatar
 
 echo '<table class="center">
 <tr>
 <td>';
-echo $GLOBALS['gravatar']->show($GLOBALS['app']['page_title_gravatar'], array('style' => "margin-right: 10px;"));
+echo $GLOBALS['gravatar']->show($app['page_title_gravatar'], array('style' => "margin-right: 10px;"));
 echo '</td>
 <td><h1>'.$page_title.'</h1></td>
 </tr>

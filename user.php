@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config/init.php';
+require_once 'config/initialize.php';
 
 if ($_GET['id']) {
 	$user = user_get_by_id($_GET['id']);
@@ -14,7 +14,7 @@ if ($_GET['id']) {
 
 if ($user == NULL) {
 
-	$page['name'] = 'User not found';
+	$app['page_name'] = 'User not found';
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 	exit();
@@ -29,12 +29,12 @@ if (is_object($GLOBALS['gravatar']))
 
 if ($user['full_name'] != NULL) {
 	// Full name set so use that for page title
-	$page['head_title'] = $user['full_name'].' on '.$app['name'];
-	$page['title'] = '<a href="user.php?id='.$user['id'].'">'.$user['full_name'].'</a> on <a href="index.php">'.$app['name'].'</a>';
+	$app['head_title'] = $user['full_name'].' on '.$app['name'];
+	$app['page_title'] = '<a href="user.php?id='.$user['id'].'">'.$user['full_name'].'</a> on <a href="index.php">'.$app['name'].'</a>';
 } else {
 	// Full name not set so use username for page title
-	$page['head_title'] = $user['username'].' on '.$app['name'];
-	$page['title'] = '<a href="user.php?id='.$user['id'].'">'.$user['username'].'</a> on <a href="index.php">'.$app['name'].'</a>';
+	$app['head_title'] = $user['username'].' on '.$app['name'];
+	$app['page_title'] = '<a href="user.php?id='.$user['id'].'">'.$user['username'].'</a> on <a href="index.php">'.$app['name'].'</a>';
 }
 
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
@@ -89,7 +89,7 @@ if ($_SESSION['user']['post_permission'] == 1)
 
 /* List all items for this user */
 
-$items = items_by_user($user['id']);
+$items = items_by_user($user['id'], 1, NULL);
 
 if (count($items) > 0) {
 	

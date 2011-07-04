@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config/init.php';
+require_once 'config/initialize.php';
 
 //	Critical: If email + pass ok then login
 
@@ -43,7 +43,7 @@ if ($_POST['email'] && $_POST['password']) {
 
 /* Header */
 
-//$page['name'] = 'Login';
+//$app['page_name'] = 'Login';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Show login form */
