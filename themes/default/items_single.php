@@ -1,5 +1,5 @@
 
-<?php if ($GLOBALS['app']['items']['titles'] == TRUE) { ?>
+<?php if ($GLOBALS['app']['items']['titles']['enabled'] == TRUE) { ?>
 
 <p style="font-size: 200%; line-height: 100%; width: 500px; text-align: left;"><?php echo $item['title']; ?></p>
 <p><?php echo $item['content'] ?></p>

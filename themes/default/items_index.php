@@ -16,7 +16,7 @@ foreach ($items as $item) { ?>
 		?>
 		<td style="padding-bottom: 10px;">
 		
-			<?php if ($GLOBALS['app']['items']['titles'] == TRUE) { ?>
+			<?php if ($GLOBALS['app']['items']['titles']['enabled'] == TRUE) { ?>
 
 				<p><a href="item.php?id=<?php echo $item['id']; ?>"><?php echo $item['title']; ?></a> by <a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a>
 				<br /><?php echo $item['content']; ?></p>

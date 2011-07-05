@@ -19,8 +19,8 @@
 */
 
 // Basic app variables
-$app['name']							= 'Twitter';
-$app['tagline']							= 'What\'s happening?';
+$app['name']							= 'Ratter';
+$app['tagline']							= 'Demo of rat\'s functionality';
 
 // URLs - must include http:// and trailing slash
 $app['url']								= 'http://twitter.com/';
@@ -37,11 +37,12 @@ $app['private']							= TRUE;
 $app['public_pages']					= array('signup.php', 'login.php', 'logout.php', 'help.php');
 
 // Items
-$app['items'] = array(	'name'			=> 'tweet',
-						'name_plural'	=> 'tweets',
-						'titles'		=> FALSE,
-						'comments'		=> TRUE,
-						'likes'			=> TRUE
+$app['items'] = array(	'name'			=> 'post',
+						'name_plural'	=> 'posts',
+						'titles'		=> array('enabled' => TRUE, 'name' => 'Title'),
+						'content'		=> array('enabled' => TRUE, 'name' => 'Content'),
+						'comments'		=> array('enabled' => TRUE, 'name' => 'Comment', 'name_plural' => 'Comments'),
+						'likes'			=> array('enabled' => TRUE, 'name' => 'Like', 'opposite' => 'Unlike', 'past_tense' => 'Liked by')
 						);
 
 // Invites system
