@@ -290,7 +290,7 @@ function do_signup($mode = 'full') {
 	
 }
 
-/* Selector */
+// Selector
 
 $mode = NULL;
 
@@ -330,7 +330,7 @@ if ($_GET['code'] != '') {
 //var_dump($page['selector']);
 //var_dump($mode);
 
-/* Show page determined by selector */
+// Show page determined by selector
 
 if ($page['selector'] == 'do_signup') {
 	// Do signup. No headers to allow redirects. Error pages load their own page header.
@@ -345,7 +345,7 @@ if ($page['selector'] == 'do_signup') {
 	
 }
 
-/* Footer */
+// Footer
 
 include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 

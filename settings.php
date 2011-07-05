@@ -128,37 +128,37 @@ function profile() {
 }
 
 
-/* Selector */
+// Selector
 
 $page['selector'] = $_GET['page'];
 if ($page['selector'] == NULL)
 	$page['selector'] = 'index';
 
-/* Header */
+// Header
 
 $page['name'] = 'Settings';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
-/* Show page determined by selector */
+// Show page determined by selector
 
 $page['selector']();
 
-/* Show profile info form */
+// Show profile info form
 
 include 'themes/'.$GLOBALS['app']['theme'].'/settings_profile.php';
 
-/* Show password change form */
+// Show password change form
 
 include 'themes/'.$GLOBALS['app']['theme'].'/settings_password.php';
 
-/* Show Gravatar */
+// Show Gravatar
 
 if (is_object($GLOBALS['gravatar'])) {
 	$gravatar = $GLOBALS['gravatar']->show($_SESSION['user']['email']);
 	include 'themes/'.$GLOBALS['app']['theme'].'/gravatar_settings.php';
 }
 
-/* Footer */
+// Footer
 
 include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 

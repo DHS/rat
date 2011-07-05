@@ -2,16 +2,16 @@
 
 require_once 'config/init.php';
 
-/* Header */
+// Header
 
 $page['name'] = 'Help';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
-/* Show help page content */
+// Content
 
 include 'themes/'.$GLOBALS['app']['theme'].'/help.php';
 
-/* Footer */
+// Footer
 
 include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 

@@ -158,23 +158,23 @@ function generate_password() {
 }
 
 
-/* Selector */
+// Selector
 
 $page['selector'] = $_GET['page'];
 if ($page['selector'] == NULL)
 	$page['selector'] = 'dashboard';
 
-/* Header */
+// Header
 
 $page['name'] = 'Admin - '.ucfirst(strtolower($page));
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 include 'themes/'.$GLOBALS['app']['theme'].'/admin_menu.php';
 
-/* Show page determined by selector */
+// Show page determined by selector
 
 $page['selector']();
 
-/* Footer */
+// Footer
 
 include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 

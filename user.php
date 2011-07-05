@@ -22,7 +22,7 @@ if ($user == NULL) {
 }
 
 
-/* Header */
+// Header
 
 if (is_object($GLOBALS['gravatar']))
 	$app['page_title_gravatar'] = $user['email'];
@@ -39,25 +39,23 @@ if ($user['full_name'] != NULL) {
 
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
-/* Show profile */
+// Show profile
 
 include 'themes/'.$GLOBALS['app']['theme'].'/user_profile.php';
 
-/* Show add friend button */
+// Show add friend button
 
-/*
-*	What does this do?
-*		
-*		Format: "Follow string - Follow button"
-*
-*		If (followers) string
-*		
-*		If (not current user) button
-*		If (not loggedin) disguised login button
-*
-*		If (both) dot separator
-*		
-*/
+//  What does this do?
+//  	
+//  	Format: "Follow string - Follow button"
+//
+//  	If (followers) string
+//  	
+//  	If (not current user) button
+//  	If (not loggedin) disguised login button
+//
+//  	If (both) dot separator
+//  	
 
 $followers = count(friends_get_followers($user['id']));
 
@@ -77,19 +75,19 @@ if (empty($_SESSION['user'])) {
 	
 }
 
-/* Show number of points */
+// Show number of points
 
 if (is_object($GLOBALS['points']))
 	include 'themes/'.$GLOBALS['app']['theme'].'/points.php';
 
-/* Show new item form */
+// Show new item form
 
 if ($_SESSION['user']['post_permission'] == 1)
 	include 'themes/'.$GLOBALS['app']['theme'].'/items_new.php';
 
-/* List all items for this user */
+// List all items for this user
 
-$items = items_by_user($user['id']);
+$items = items_by_user($user['id'], 1, NULL);
 
 if (count($items) > 0) {
 	
@@ -110,7 +108,7 @@ if (count($items) > 0) {
 	
 }
 
-/* Footer */
+// Footer
 
 include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 

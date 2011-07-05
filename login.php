@@ -41,12 +41,12 @@ if ($_POST['email'] && $_POST['password']) {
 	
 }
 
-/* Header */
+// Header
 
 //$page['name'] = 'Login';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
-/* Show login form */
+// Show login form
 
 if (empty($_SESSION['user'])) {
 	include 'themes/'.$GLOBALS['app']['theme'].'/login.php';
@@ -55,7 +55,7 @@ if (empty($_SESSION['user'])) {
 	include 'themes/'.$GLOBALS['app']['theme'].'/message.php';
 }
 
-/* Footer */
+// Footer
 
 include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 

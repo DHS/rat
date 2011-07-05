@@ -99,7 +99,7 @@ if ($_POST['content'] != '') {
 
 }
 
-/* Header */
+// Header
 
 if (is_object($GLOBALS['gravatar']))
 	$app['page_title_gravatar'] = $item['user']['email'];
@@ -116,11 +116,11 @@ if ($item['user']['full_name'] != NULL) {
 
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
-/* Show item  */
+// Show item
 
 include 'themes/'.$GLOBALS['app']['theme'].'/items_single.php';
 
-/* Footer */
+// Footer
 
 include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 

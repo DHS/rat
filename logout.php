@@ -20,16 +20,16 @@ if (!empty($_SESSION['user'])) {
 	
 }
 
-/* Header */
+// Header
 
 //$page['name'] = 'Logout';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
-/* Show login form */
+// Show login form
 
 include 'themes/'.$GLOBALS['app']['theme'].'/login.php';
 
-/* Footer */
+// Footer
 
 include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 

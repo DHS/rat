@@ -13,12 +13,12 @@ if ($app['invites']['enabled'] == FALSE || empty($_SESSION['user'])) {
 	
 }
 
-/* Header */
+// Header
 
 $page['name'] = 'Invites';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
-/* Process new invites */
+// Process new invites
 
 if ($_POST['email'] != '') {
 	
@@ -85,17 +85,17 @@ if ($_POST['email'] != '') {
 	
 }
 
-/* Show invite form */
+// Show invite form
 
 $invites_remaining = $_SESSION['user']['invites'];
 include 'themes/'.$GLOBALS['app']['theme'].'/invites.php';
 
-/* Show sent invites */
+// Show sent invites
 
 $invites_sent = invites_sent($_SESSION['user']['id']);
 include 'themes/'.$GLOBALS['app']['theme'].'/invites_sent.php';
 
-/* Footer */
+// Footer
 
 include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 

@@ -11,17 +11,17 @@ if (!is_object($GLOBALS['points']) || $app['points']['leaderboard'] == FALSE) {
 	exit;
 }
 
-/* Header */
+// Header
 
 $page['name'] = 'Leaderboard';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
-/* Show leaderboard */
+// Show leaderboard
 
 $leaderboard = 	$GLOBALS['points']->get_leaderboard(20);
 include 'themes/'.$GLOBALS['app']['theme'].'/leaderboard.php';
 
-/* Footer */
+// Footer
 
 include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 

@@ -2,12 +2,12 @@
 
 require_once 'config/init.php';
 
-/* Header */
+// Header
 
 $page['name'] = 'About';
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
-/* Show About page */
+// Show About page
 
 foreach ($GLOBALS['app']['admin_users'] as $value) {
 	$author = user_get_by_id($value);
@@ -22,7 +22,7 @@ $authors = substr($authors, 0, -2);
 
 include 'themes/'.$GLOBALS['app']['theme'].'/about.php';
 
-/* Footer */
+// Footer
 
 include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 
