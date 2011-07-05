@@ -15,10 +15,31 @@ include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 include 'themes/'.$GLOBALS['app']['theme'].'/items_new.php';
 
-// Show recent items
+// If friends is enabled, show feed of their activity
 
-$items = items_get();
-include 'themes/'.$GLOBALS['app']['theme'].'/items_index.php';
+if ($GLOBALS['app']['friends']['enabled'] == TRUE) {
+
+	if (empty($_SESSION['user'])) {
+		
+		echo '<p>Please <a href="login.php">login</a>.</p>';
+		
+	} else {
+		
+		// Show feed of friends' activity
+		
+		$items = items_get_feed($_SESSION['user']['id']);
+		include 'themes/'.$GLOBALS['app']['theme'].'/items_index.php';
+		
+	}
+
+} else {
+	
+	// Friends not enabled so don't show recent items
+
+	$items = items_get();
+	include 'themes/'.$GLOBALS['app']['theme'].'/items_index.php';	
+	
+}
 
 // Footer
 

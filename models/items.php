@@ -156,4 +156,34 @@ function items_liked_by_user($user_id, $limit = 10) {
 
 }
 
+function items_get_feed($user_id) {
+	// Get a feed of a friend's activity
+	
+	// Start by adding the viewer to the query string
+	$friends_string  = "user_id = $user_id";
+
+	// Fetch friends
+	$friends = friends_get($user_id);
+	
+	// Loop through friends adding them to the query string
+	foreach ($friends as $friend)
+		$friends_string .= " OR user_id = {$friend['friend_user_id']}";
+	
+	$sql = "SELECT * FROM items WHERE $friends_string ORDER BY id DESC LIMIT 100";
+	$query = mysql_query($sql);
+	
+	while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
+
+		$item['comments'] = comments_get($item['id']);
+		$item['likes'] = likes_get($item['id']);
+		$item['user'] = user_get_by_id($item['user_id']);
+
+		$items[] = $item;
+		
+	}
+
+	return $items;
+	
+}
+
 ?>
