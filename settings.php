@@ -151,12 +151,10 @@ include 'themes/'.$GLOBALS['app']['theme'].'/settings_profile.php';
 
 include 'themes/'.$GLOBALS['app']['theme'].'/settings_password.php';
 
-// Show Gravatar
+// Gravatar settings
 
-if (is_object($GLOBALS['gravatar'])) {
-	$gravatar = $GLOBALS['gravatar']->show($_SESSION['user']['email']);
-	include 'themes/'.$GLOBALS['app']['theme'].'/gravatar_settings.php';
-}
+if (is_object($GLOBALS['gravatar']))
+	$GLOBALS['gravatar']->view_settings($_SESSION['user']['email']);
 
 // Footer
 
