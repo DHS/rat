@@ -16,8 +16,17 @@ foreach ($items as $item) { ?>
 		?>
 		<td style="padding-bottom: 10px;">
 		
-			<p><a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a> <?php echo $item['content']; ?></p>
+			<?php if ($GLOBALS['app']['items']['titles'] == TRUE) { ?>
+
+				<p><a href="item.php?id=<?php echo $item['id']; ?>"><?php echo $item['title']; ?></a> by <a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a>
+				<br /><?php echo $item['content']; ?></p>
+
+			<?php } else { ?>
+				
+				<p><a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a> <?php echo $item['content']; ?></p>
 			
+			<?php } ?>
+					
 			<p>
 			<?php include 'items_meta.php'; ?>
 			</p>
