@@ -44,7 +44,7 @@ function likes_remove($user_id, $item_id) {
 	$item_id = sanitize_input($item_id);
 	
 	$count_sql = "SELECT id FROM likes WHERE user_id = $user_id AND item_id = $item_id";
-	$count_query = mysql_query($sql);
+	$count_query = mysql_query($count_sql);
 	
 	$id = mysql_result($count_query, 0);
 	
