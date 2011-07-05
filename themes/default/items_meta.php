@@ -6,7 +6,7 @@
 <?php
 
 if ($GLOBALS['app']['items']['comments'] == TRUE)
-	echo ' &middot <a href="#" onclick="document.getElementById(\'comment_form_'.$item['id'].'\').style.visibility = \'visible\'; document.getElementById(\'comment_form_'.$item['id'].'\').style.height = \'auto\'; document.getElementById(\'comment_form_'.$item['id'].'\').content.focus(); return false;">Comment</a>';
+	echo ' &middot <a href="#" onclick="document.getElementById(\'comment_form_'.$item['id'].'\').style.visibility = \'visible\'; document.getElementById(\'comment_form_'.$item['id'].'\').style.height = \'auto\'; document.getElementById(\'comment_form_'.$item['id'].'\').content.focus(); return false;">'.$GLOBALS['app']['items']['comments']['name'].'</a>';
 
 if ($GLOBALS['app']['items']['likes'] == TRUE) {
 	
@@ -18,9 +18,9 @@ if ($GLOBALS['app']['items']['likes'] == TRUE) {
 		}
 	}
 	if ($i_like == TRUE) {
-		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_remove('.$_SESSION['user']['id'].', '.$item['id'].'); return false;">Unlike</a></a>';
+		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_remove('.$_SESSION['user']['id'].', '.$item['id'].'); return false;">'.$GLOBALS['app']['items']['likes']['opposite_name'].'</a></a>';
 	} else {
-		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_add('.$_SESSION['user']['id'].', '.$item['id'].'); return false;">Like</a></a>';
+		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_add('.$_SESSION['user']['id'].', '.$item['id'].'); return false;">'.$GLOBALS['app']['items']['likes']['name'].'</a></a>';
 	}
 	unset ($i_like);
 

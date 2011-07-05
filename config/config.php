@@ -42,7 +42,7 @@ $app['items'] = array(	'name'			=> 'post',
 						'titles'		=> array('enabled' => TRUE, 'name' => 'Title'),
 						'content'		=> array('enabled' => TRUE, 'name' => 'Content'),
 						'comments'		=> array('enabled' => TRUE, 'name' => 'Comment', 'name_plural' => 'Comments'),
-						'likes'			=> array('enabled' => TRUE, 'name' => 'Like', 'opposite' => 'Unlike', 'past_tense' => 'Liked by')
+						'likes'			=> array('enabled' => TRUE, 'name' => 'Like', 'opposite_name' => 'Unlike', 'past_tense' => 'Liked by')
 						);
 
 // Invites system
