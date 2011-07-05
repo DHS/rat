@@ -43,37 +43,10 @@ include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 include 'themes/'.$GLOBALS['app']['theme'].'/user_profile.php';
 
-// Show add friend button
+// Show follow button
 
-//  What does this do?
-//  	
-//  	Format: "Follow string - Follow button"
-//
-//  	If (followers) string
-//  	
-//  	If (not current user) button
-//  	If (not loggedin) disguised login button
-//
-//  	If (both) dot separator
-//  	
-
-$followers = count(friends_get_followers($user['id']));
-
-if (empty($_SESSION['user'])) {
-	
-	include 'themes/'.$GLOBALS['app']['theme'].'/friends_add_loggedout.php';
-	
-} else {
-	
-	// If current user & no followers then don't include holder (as it would be empty)
-	$show_holder = TRUE;
-	if ($user['id'] == $_SESSION['user']['id'] && $followers == 0)
-		$show_holder = FALSE;
-	
-	if ($show_holder == TRUE)
-		include 'themes/'.$GLOBALS['app']['theme'].'/friends_button_holder.php';
-	
-}
+if ($GLOBALS['app']['friends']['enabled'] == TRUE)
+	include 'themes/'.$GLOBALS['app']['theme'].'/friends_button.php';
 
 // Show number of points
 

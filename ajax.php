@@ -72,14 +72,7 @@ if ($page['selector'] == 'like_add') {
 	}
 
 	$user['id'] = $_GET['friend_user_id'];
-	$followers = count(friends_get_followers($_GET['friend_user_id']));
-	if ($followers == 1) {
-		$string = '<strong>One</strong> pioneering follower &middot; ';
-	} elseif ($followers > 1) {
-		$string = '<strong>'.$followers.'</strong> followers &middot; ';
-	}
-	// Shouldn't really be echoing in a controller
-	echo $string;
+
 	include 'themes/'.$GLOBALS['app']['theme'].'/friends_remove.php';
 
 } elseif ($page['selector'] == 'friend_remove') {
@@ -90,14 +83,7 @@ if ($page['selector'] == 'like_add') {
 		$GLOBALS['log']->add($_GET['user_id'], 'friend', $friend_id, 'remove');
 
 	$user['id'] = $_GET['friend_user_id'];
-	$followers = count(friends_get_followers($_GET['friend_user_id']));
-	if ($followers == 1) {
-		$string = '<strong>One</strong> pioneering follower &middot; ';
-	} elseif ($followers > 1) {
-		$string = '<strong>'.$followers.'</strong> followers &middot; ';
-	}
-	// Shouldn't really be echoing in a controller
-	echo $string;
+
 	include 'themes/'.$GLOBALS['app']['theme'].'/friends_add.php';
 
 }

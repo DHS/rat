@@ -48,8 +48,8 @@ $app['items'] = array(	'name'			=> 'tweet',
 $app['invites']['enabled']				= TRUE;
 
 // Friends
-$app['friends']['enabled']				= FALSE;
-$app['friends']['asymmetric']			= FALSE;
+$app['friends']['enabled']				= TRUE;
+$app['friends']['asymmetric']			= TRUE;
 
 // Admin users - array of user IDs who have access to admin area
 $app['admin_users']						= array(1);
