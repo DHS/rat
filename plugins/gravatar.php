@@ -51,7 +51,7 @@ class gravatar {
 		
 	}
 	
-	function view_settings($email) {
+	function show_settings($email) {
 
 echo '<div class="center_container">
 

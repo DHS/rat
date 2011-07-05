@@ -154,7 +154,7 @@ include 'themes/'.$GLOBALS['app']['theme'].'/settings_password.php';
 // Gravatar settings
 
 if (is_object($GLOBALS['gravatar']))
-	$GLOBALS['gravatar']->view_settings($_SESSION['user']['email']);
+	$GLOBALS['gravatar']->show_settings($_SESSION['user']['email']);
 
 // Footer
 
