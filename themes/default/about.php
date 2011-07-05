@@ -41,7 +41,7 @@ if (is_object($GLOBALS['points'])) {
 	
 }
 
-if ($app['gravatar']['enabled'] == TRUE)
+if (is_object($GLOBALS['gravatar']) == TRUE)
 	echo '<p>'.$app['name'].' is <a href="http://gravatar.com/">Gravatar</a>-enabled.</p>';
 
 ?>
