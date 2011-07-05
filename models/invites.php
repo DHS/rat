@@ -118,11 +118,10 @@ function validate_invite_code($code, $email) {
 	$email = sanitize_input($email);
 	
 	$sql = "SELECT result FROM invites WHERE code = $code AND email = $email";
-	echo $sql;
 	$query = mysql_query($sql);
 	$status = mysql_result($query, 0);
 	
-	if ($status === 0) {
+	if ($status == 0) {
 		return TRUE;
 	} else {
 		return FALSE;
