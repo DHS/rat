@@ -160,10 +160,9 @@ function generate_password() {
 
 /* Selector */
 
-$page = $_GET['page'];
-if ($page == NULL) {
-	$page = 'dashboard';
-}
+$page['selector'] = $_GET['page'];
+if ($page['selector'] == NULL)
+	$page['selector'] = 'dashboard';
 
 /* Header */
 
@@ -173,7 +172,7 @@ include 'themes/'.$GLOBALS['app']['theme'].'/admin_menu.php';
 
 /* Show page determined by selector */
 
-$page();
+$page['selector']();
 
 /* Footer */
 

@@ -130,10 +130,9 @@ function profile() {
 
 /* Selector */
 
-$page = $_GET['page'];
-if ($page == NULL) {
-	$page = 'index';
-}
+$page['selector'] = $_GET['page'];
+if ($page['selector'] == NULL)
+	$page['selector'] = 'index';
 
 /* Header */
 
@@ -142,7 +141,7 @@ include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 /* Show page determined by selector */
 
-$page();
+$page['selector']();
 
 /* Show profile info form */
 

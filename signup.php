@@ -296,25 +296,25 @@ $mode = NULL;
 
 if ($_GET['code'] != '') {
 	
-	$page = 'validate_code';
+	$page['selector'] = 'validate_code';
 	
 } elseif ($_POST['email'] != '') {
 	
 	if ($_POST['code'] != '') {
 		
-		$page = 'do_signup';
+		$page['selector'] = 'do_signup';
 		$mode = 'code';
 		
 	} else {
 		
 		if ($GLOBALS['app']['beta'] == TRUE) {
 			
-			$page = 'do_signup';
+			$page['selector'] = 'do_signup';
 			$mode = 'beta';
 			
 		} else {
 			
-			$page = 'do_signup';
+			$page['selector'] = 'do_signup';
 			$mode = 'full';
 			
 		}
@@ -323,16 +323,16 @@ if ($_GET['code'] != '') {
 	
 } else {
 	
-	$page = 'show_form';
+	$page['selector'] = 'show_form';
 	
 }
 
-var_dump($page);
-var_dump($mode);
+//var_dump($page['selector']);
+//var_dump($mode);
 
 /* Show page determined by selector */
 
-if ($page == 'do_signup') {
+if ($page['selector'] == 'do_signup') {
 	// Do signup. No headers to allow redirects. Error pages load their own page header.
 	
 	do_signup($mode);
@@ -341,7 +341,7 @@ if ($page == 'do_signup') {
 	// Not doing signup so show a simpler page. Also call header.
 	
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	$page();
+	$page['selector']();
 	
 }
 

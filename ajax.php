@@ -2,13 +2,12 @@
 
 require_once 'config/init.php';
 
-$page = $_GET['page'];
+$page['selector'] = $_GET['page'];
 
-if ($_GET['user_id'] != $_SESSION['user']['id']) {
+if ($_GET['user_id'] != $_SESSION['user']['id'])
 	exit();
-}
 
-if ($page == 'like_add') {
+if ($page['selector'] == 'like_add') {
 	
 	$like_id = likes_add($_GET['user_id'], $_GET['item_id']);
 	
@@ -18,7 +17,7 @@ if ($page == 'like_add') {
 	$item = items_get_by_id($_GET['item_id']);
 	include 'themes/'.$GLOBALS['app']['theme'].'/likes_show.php';
 	
-} elseif ($page == 'like_remove') {
+} elseif ($page['selector'] == 'like_remove') {
 
 	$like_id = likes_remove($_GET['user_id'], $_GET['item_id']);
 	
@@ -28,7 +27,7 @@ if ($page == 'like_add') {
 	$item = items_get_by_id($_GET['item_id']);
 	include 'themes/'.$GLOBALS['app']['theme'].'/likes_show.php';
 	
-} elseif ($page == 'comment_add') {
+} elseif ($page['selector'] == 'comment_add') {
 
 	$comment_id = comments_add($_GET['user_id'], $_GET['item_id'], $_GET['content']);
 	
@@ -38,7 +37,7 @@ if ($page == 'like_add') {
 	$item = items_get_by_id($_GET['item_id']);
 	include 'themes/'.$GLOBALS['app']['theme'].'/comments_show.php';
 
-} elseif ($page == 'comment_remove') {
+} elseif ($page['selector'] == 'comment_remove') {
 	
 	comments_remove($_GET['user_id'], $_GET['item_id'], $_GET['comment_id']);
 	
@@ -48,7 +47,7 @@ if ($page == 'like_add') {
 	$item = items_get_by_id($_GET['item_id']);
 	include 'themes/'.$GLOBALS['app']['theme'].'/comments_show.php';
 
-} elseif ($page == 'friend_add') {
+} elseif ($page['selector'] == 'friend_add') {
 
 	$friend_id = friends_add($_GET['user_id'], $_GET['friend_user_id']);
 
@@ -83,7 +82,7 @@ if ($page == 'like_add') {
 	echo $string;
 	include 'themes/'.$GLOBALS['app']['theme'].'/friends_remove.php';
 
-} elseif ($page == 'friend_remove') {
+} elseif ($page['selector'] == 'friend_remove') {
 
 	$friend_id = friends_remove($_GET['user_id'], $_GET['friend_user_id']);
 
