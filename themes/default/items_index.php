@@ -55,7 +55,7 @@ foreach ($items as $item) { ?>
 	
 	<tr>
 		<?php 
-		if (is_object($GLOBALS['gravatar']) == TRUE) {
+		if (is_object($GLOBALS['gravatar'])) {
 			echo '<td colspan="2" style="border-top: 1px solid #CCCCCC; height: 10px;"></td>';
 		} else {
 			echo '<td colspan="2" style="border-top: 1px solid #CCCCCC; height: 10px;"></td>';
