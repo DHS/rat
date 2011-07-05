@@ -61,7 +61,7 @@ http://github.com/DHS/rat
 
 <title><?php echo $head_title; ?></title>
 
-<link rel="stylesheet" type="text/css" href="themes/default/styles.css" />
+<link rel="stylesheet" type="text/css" href="themes/<?php echo $GLOBALS['app']['theme']; ?>/styles.css" />
 
 <script src="assets/js/javascript.js" type="text/javascript"></script>
 
