@@ -94,7 +94,7 @@ if (SITE_IDENTIFIER == 'live') {
 	$app['database'] = array(	'host'		=> 'localhost',
 								'username'	=> 'root',
 								'password'	=> 'root',
-								'database'	=> 'rat'
+								'database'	=> 'twitter'
 							);
 
 }

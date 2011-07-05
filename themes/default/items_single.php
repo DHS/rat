@@ -1,14 +1,5 @@
 
-<?php if ($GLOBALS['app']['items']['titles'] == TRUE) { ?>
-
-<p style="font-size: 200%; line-height: 100%; width: 500px; text-align: left;"><?php echo $item['title']; ?></p>
-<p><?php echo $item['content'] ?></p>
-
-<?php } else { ?>
-
-<p style="font-size: 200%; line-height: 100%; width: 500px; text-align: left;"><?php echo $item['content']; ?></p>  
-
-<?php } ?>
+<p style="font-size: 200%; line-height: 100%; width: 500px; text-align: left;"><?php echo $item['content']; ?></p>
 
 <p style="font-size: 50%; width: 500px; text-align: left;">
 

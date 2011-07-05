@@ -12,7 +12,7 @@ session_start();
 // Load admin model
 require_once 'models/admin.php';
 
-if ($app['private'] == TRUE && count(admin_get_users()) != 0) {
+if ($app['private'] == TRUE && count(admin_get_users()) != NULL) {
 	// App requires login to view pages
 
 	// Finds page name
