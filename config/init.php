@@ -15,15 +15,15 @@ require_once 'models/admin.php';
 // Finds page name
 preg_match("/[a-zA-Z0-9]+\.php/", $_SERVER['PHP_SELF'], $result);
 
-// If app is private and page is not in public_pages then show splash page
-if ($app['private'] == TRUE && in_array($result[0], $app['public_pages']) == FALSE) {
+// If user is logged out, app is private and page is not in public_pages then show splash page
+if ($_SESSION['user'] == NULL && $app['private'] == TRUE && in_array($result[0], $app['public_pages']) == FALSE) {
 
 	if (count(admin_get_users()) == 0 && $result[0] == 'admin.php') {
 
 		// Make an exception for setup
 		
 		// So at the moment, setup requires $app['private'] to be TRUE
-		// and admin.php must NOT be in public_pages.
+		// and admin.php must NOT be in public_pages
 		
 	} else {
 
