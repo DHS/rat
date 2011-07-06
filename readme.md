@@ -9,7 +9,8 @@ http://twitter.com/DHS
 Getting started
 ---------------
 
-1. Copy all files to application directory
+1. Copy all files to your application directory
 2. Create a MySQL database
 3. Run rat.sql
-4. Visit admin.php
+4. Update the database variables in config/config.php
+5. Visit admin.php
