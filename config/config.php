@@ -23,8 +23,8 @@ $app['name']							= 'Ratter';
 $app['tagline']							= 'Demo of rat\'s functionality';
 
 // URLs - must include http:// and trailing slash
-$app['url']								= 'http://twitter.com/';
-$app['dev_url']							= 'http://localhost:8888/';
+$app['url']								= 'http://example.com/';
+$app['dev_url']							= 'http://localhost/';
 
 // Beta - users can't signup, can only enter their email addresses
 $app['beta']							= TRUE;
@@ -48,9 +48,9 @@ $app['items'] = array(	'name'			=> 'post',
 // Invites system
 $app['invites']['enabled']				= TRUE;
 
-// Friends
-$app['friends']['enabled']				= TRUE;
-$app['friends']['asymmetric']			= TRUE;
+// Friends - still testing, works with asymmetric set to true... just! (Shows 'Follow' link & generates homepage feed)
+$app['friends']['enabled']				= FALSE;
+$app['friends']['asymmetric']			= FALSE;
 
 // Admin users - array of user IDs who have access to admin area
 $app['admin_users']						= array(1);
@@ -61,7 +61,7 @@ $app['encryption_salt']					= 'hw9e46';
 
 // DATABASE
 
-// determine whether site is dev or live
+// Determine whether site is dev or live
 $domain = substr(substr($app['url'], 0, -1), 7);
 
 switch ($_SERVER['HTTP_HOST']) {
@@ -81,7 +81,7 @@ switch ($_SERVER['HTTP_HOST']) {
 }
 
 if (SITE_IDENTIFIER == 'live') {
-	// live database vars
+	// Live database vars
 
 	$app['database'] = array(	'host'		=> 'localhost',
 								'username'	=> 'username',
@@ -90,7 +90,7 @@ if (SITE_IDENTIFIER == 'live') {
 							);
 
 } else {
-	// live database vars
+	// Dev database vars
 
 	$app['database'] = array(	'host'		=> 'localhost',
 								'username'	=> 'root',
