@@ -166,7 +166,7 @@ if ($page['selector'] == NULL)
 
 // Header
 
-$page['name'] = 'Admin - '.ucfirst(strtolower($page));
+$page['name'] = 'Admin - '.ucfirst(strtolower($page['selector']));
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 include 'themes/'.$GLOBALS['app']['theme'].'/admin_menu.php';
 
