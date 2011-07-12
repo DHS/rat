@@ -41,6 +41,7 @@ $app['items'] = array(	'name'			=> 'post',
 						'name_plural'	=> 'posts',
 						'titles'		=> array('enabled' => TRUE, 'name' => 'Title'),
 						'content'		=> array('enabled' => TRUE, 'name' => 'Content'),
+						'uploads'		=> array('enabled' => TRUE, 'name' => 'Image'),
 						'comments'		=> array('enabled' => TRUE, 'name' => 'Comment', 'name_plural' => 'Comments'),
 						'likes'			=> array('enabled' => TRUE, 'name' => 'Like', 'opposite_name' => 'Unlike', 'past_tense' => 'Liked by')
 						);
