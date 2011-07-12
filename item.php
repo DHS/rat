@@ -13,11 +13,11 @@ if ($_GET['id'] == '' && $_POST['content'] == '' && $_GET['delete'] == '') {
 
 
 if ($_POST['content'] != '') {
-	//Process new item
+	// Process new item
 
 	$item_id = items_add($_SESSION['user']['id'], $_POST['content'], $_POST['title']);
 
-	// give points
+	// Give points
 	if (is_object($GLOBALS['points']))
 		$GLOBALS['points']->update($_SESSION['user']['id'], $app['points']['per_item']);
 	
@@ -27,7 +27,7 @@ if ($_POST['content'] != '') {
 
 	$message = ucfirst($GLOBALS['app']['items']['name']).' added!';
 
-	// return from whence you came
+	// Return from whence you came
 	header('Location: '.$_SERVER['HTTP_REFERER'].'?message='.urlencode($message));
 	exit();
 	
@@ -38,12 +38,12 @@ if ($_POST['content'] != '') {
 	
 	if ($_SESSION['user']['id'] == $item['user']['id'] && $item != NULL) {
 
-		// delete item
+		// Delete item
 		items_remove($_GET['delete']);
 		if (is_object($GLOBALS['log']))
 			$GLOBALS['log']->add($_SESSION['user']['id'], 'item', $_GET['delete'], 'remove');
 
-		// delete comments
+		// Delete comments
 		if (is_array($item['comments'])) {
 			foreach ($item['comments'] as $key => $value) {
 				$id = comments_remove($value['user_id'], $item['id'], $value['id']);
@@ -52,7 +52,7 @@ if ($_POST['content'] != '') {
 			}
 		}
 		
-		// delete likes
+		// Delete likes
 		if (is_array($item['comments'])) {
 			foreach ($item['likes'] as $key => $value) {
 				$id = likes_remove($value['user_id'], $item['id']);
@@ -61,17 +61,17 @@ if ($_POST['content'] != '') {
 			}
 		}
 		
-		// set message
+		// Set message
 		$message = ucfirst($GLOBALS['app']['items']['name']).' removed!';
 
-		// return from whence you came
+		// Return from whence you came
 		header('Location: '.$_SERVER['HTTP_REFERER']);
 		exit();
 
 	} else {
-		// naughtiness, expulsion
+		// Naughtiness = expulsion!
 		
-		// go forth
+		// Go forth
 		if (SITE_IDENTIFIER == 'live') {
 			header('Location: '.$GLOBALS['app']['url']);
 		} else {
@@ -83,11 +83,11 @@ if ($_POST['content'] != '') {
 	}
 	
 } elseif ($_GET['id'] != '') {
-	// no new item so get item info based on get var
+	// No new item so get item info based on get var
 	
 	$item = items_get_by_id($_GET['id']);
 
-	// fail gracefully if item doesn't exist
+	// Fail gracefully if item doesn't exist
 	if ($item == NULL) {
 
 		$page['name'] = ucfirst($GLOBALS['app']['items']['name']).' not found';
