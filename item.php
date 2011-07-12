@@ -11,6 +11,60 @@ if ($_GET['id'] == '' && $_POST['content'] == '' && $_GET['delete'] == '') {
 	exit;
 }
 
+function generate_thumbnail($filename, $type, $max_width = 100, $max_height = 100, $dir = 'thumbnails') {
+	
+	// Create temporary source image resource
+	if ($type == 'image/jpeg' || $type == 'image/pjpeg') {
+		$src = imagecreatefromjpeg("{$GLOBALS['app']['items']['uploads']['directory']}/originals/$filename");
+	} elseif ($type == 'image/png') {
+		$src = imagecreatefrompng("{$GLOBALS['app']['items']['uploads']['directory']}/originals/$filename");
+	} elseif ($type == 'image/gif') {
+		$src = imagecreatefromgif("{$GLOBALS['app']['items']['uploads']['directory']}/originals/$filename");
+	}
+	
+	// Find existing dimensions
+	$old_width = imagesx($src);
+	$old_height = imagesy($src);
+	
+	// Generate new dimensions, check width first
+	if ($old_width > $max_width) {
+		$new_width = $old_width * ($max_width / $old_width);
+		$new_height = $old_height * ($max_width / $old_width);
+	} else {
+		$new_width = $old_width;
+		$new_height = $old_height;
+	}
+
+	// Then check height
+	if ($new_height > $max_height) {
+		$new_width = $old_width * ($max_height / $old_height);
+		$new_height = $old_height * ($max_height / $old_height);
+	}
+	
+	// Create temporary destination image resource
+	$new = imagecreatetruecolor($new_width, $new_height);
+	
+	// Preserve transparency on PNGs
+	imagealphablending($new, FALSE);
+	imagesavealpha($new, TRUE);
+	
+	// Generate new image
+	imagecopyresampled($new, $src, 0, 0, 0, 0, $new_width, $new_height, $old_width, $old_height);
+	
+	// Save new image
+	if ($type == 'image/jpeg' || $type == 'image/pjpeg') {
+		imagejpeg($new, "{$GLOBALS['app']['items']['uploads']['directory']}/$dir/$filename");
+	} elseif ($type == 'image/png') {
+		imagepng($new, "{$GLOBALS['app']['items']['uploads']['directory']}/$dir/$filename");
+	} elseif ($type == 'image/gif') {
+		imagegif($new, "{$GLOBALS['app']['items']['uploads']['directory']}/$dir/$filename");
+	}
+	
+	// Delete temporary image resources
+	imagedestroy($new);
+	imagedestroy($src);
+	
+}
 
 if ($_POST['content'] != '') {
 	// Process new item
@@ -33,7 +87,7 @@ if ($_POST['content'] != '') {
 		if ($_FILES['file']['size'] > $GLOBALS['app']['items']['uploads']['max-size'])
 			$error .= 'File too large.<br />';
 		
-		if (file_exists("upload/" . $_FILES['file']["name"]))
+		if (file_exists('uploads/'.$_FILES['file']['name']))
 			$error .= 'File already exists.<br />';
 		
 	}
@@ -44,8 +98,18 @@ if ($_POST['content'] != '') {
 		// No error so proceed...
 		
 		if ($GLOBALS['app']['items']['uploads']['enabled'] == TRUE) {
-			move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/'.$_FILES['file']['name']);
+			
+			// Grab the file
+			move_uploaded_file($_FILES['file']['tmp_name'], "{$GLOBALS['app']['items']['uploads']['directory']}/originals/{$_FILES['file']['name']}");
+			
+			// Generate thumbnail (using default settings, size: 100px, dir: thumbnails)
+			generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 100, 100, 'thumbnails');
+			
+			// Generate stream image
+			generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 350, 500, 'stream');
+
 			$item_id = items_add($_SESSION['user']['id'], $_POST['content'], $_POST['title'], $_FILES['file']['name']);
+			
 		} else {
 			$item_id = items_add($_SESSION['user']['id'], $_POST['content'], $_POST['title']);
 		}

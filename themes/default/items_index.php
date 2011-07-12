@@ -18,12 +18,11 @@ foreach ($items as $item) { ?>
 		
 			<?php if ($GLOBALS['app']['items']['titles']['enabled'] == TRUE) { ?>
 				
+				<p><a href="item.php?id=<?php echo $item['id']; ?>"><?php echo $item['title']; ?></a> by <a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a></p>
 				<?php if ($GLOBALS['app']['items']['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
-					<img src="uploads/<?php echo $item['image']; ?>" />
+					<a href="item.php?id=<?php echo $item['id']; ?>"><img src="<?php echo $GLOBALS['app']['items']['uploads']['directory']; ?>/stream/<?php echo $item['image']; ?>" /></a>
 				<?php } ?>
-				
-				<p><a href="item.php?id=<?php echo $item['id']; ?>"><?php echo $item['title']; ?></a> by <a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a>
-				<br /><?php echo $item['content']; ?></p>
+				<p><?php echo $item['content']; ?></p>
 
 			<?php } else { ?>
 				

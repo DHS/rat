@@ -3,7 +3,7 @@
 
 <p style="font-size: 200%; line-height: 100%; width: 500px; text-align: left;"><?php echo $item['title']; ?></p>
 <?php if ($GLOBALS['app']['items']['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
-	<img src="uploads/<?php echo $item['image']; ?>" />
+	<a href="<?php echo $GLOBALS['app']['items']['uploads']['directory']; ?>/originals/<?php echo $item['image']; ?>"><img src="<?php echo $GLOBALS['app']['items']['uploads']['directory']; ?>/stream/<?php echo $item['image']; ?>" /></a>
 <?php } ?>
 <p><?php echo $item['content'] ?></p>
 
