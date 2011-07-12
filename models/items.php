@@ -1,6 +1,6 @@
 <?php
 
-function items_add($user_id, $content, $title = NULL) {
+function items_add($user_id, $content, $title = NULL, $image = NULL) {
 	// Add an item
 
 	$user_id = sanitize_input($user_id);
@@ -11,6 +11,11 @@ function items_add($user_id, $content, $title = NULL) {
 	if ($title != NULL) {
 		$title = sanitize_input($title);
 		$sql .= ", title = $title";
+	}
+
+	if ($image != NULL) {
+		$image = sanitize_input($image);
+		$sql .= ", image = $image";
 	}
 
 	$query = mysql_query($sql);

@@ -2,6 +2,9 @@
 <?php if ($GLOBALS['app']['items']['titles']['enabled'] == TRUE) { ?>
 
 <p style="font-size: 200%; line-height: 100%; width: 500px; text-align: left;"><?php echo $item['title']; ?></p>
+<?php if ($GLOBALS['app']['items']['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
+	<img src="uploads/<?php echo $item['image']; ?>" />
+<?php } ?>
 <p><?php echo $item['content'] ?></p>
 
 <?php } else { ?>

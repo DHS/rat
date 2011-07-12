@@ -60,7 +60,7 @@ if ($_SESSION['user']['post_permission'] == 1)
 
 // List all items for this user
 
-$items = items_by_user($user['id'], 1, NULL);
+$items = items_by_user($user['id']);
 
 if (count($items) > 0) {
 	
