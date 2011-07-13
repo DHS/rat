@@ -167,7 +167,8 @@ function do_signup($mode = 'full') {
 
 				$to			= "{$_POST['username']} <{$_POST['email']}>";
 				$subject	= "[{$GLOBALS['app']['name']}] Welcome to {$GLOBALS['app']['name']}!";
-				$body		= "<p>Hi {$_POST['username']},</p><p>Thank you for joining {$GLOBALS['app']['name']}!</p><p>We've got some great content - I hope you find something that takes your interest.</p><p>Your feedback is very valuable to me so do reply to this email with your thoughts so far.</p><p>Thanks again,</p><p>David Haywood Smith, creator of {$GLOBALS['app']['name']}</p>";
+				// Load template into $body variable
+				include 'themes/'.$GLOBALS['app']['theme'].'/email_signup.php';
 				$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 				// Email user

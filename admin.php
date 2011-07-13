@@ -107,8 +107,9 @@ function invite() {
 		$url		= $GLOBALS['app']['url'].'signup.php?code='.$id.'&email='.urlencode($_GET['email']);
 		
 		$subject	= "Your {$GLOBALS['app']['name']} invite is here!";
-		$body		= "Hi there,\n\nYour {$GLOBALS['app']['name']} invite is here! Click the following link to get started:\n\n{$url}\n\nWe value your feedback very highly. Once you've had a play with {$GLOBALS['app']['name']}, please reply to this email with your thoughts!\n\nMany thanks,\n\n{$_SESSION['user']['username']}, {$GLOBALS['app']['name']} admin";
-		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>";
+		// Load template into $body variable
+		include 'themes/'.$GLOBALS['app']['theme'].'/email_invite_admin.php';
+		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 		
 		if ($GLOBALS['app']['send_emails'] == TRUE) {
 			// Email user

@@ -63,8 +63,9 @@ if ($_POST['email'] != '') {
 		$link = $GLOBALS['app']['url'].'signup.php?code='.$id.'&email='.urlencode($_POST['email']);
 
 		$subject	= "[{$GLOBALS['app']['name']}] An invitation from {$_SESSION['user']['username']}";
-		$body		= "Hi there,\n\nI think you should check out {$GLOBALS['app']['name']}! Click the following link to get started:\n\n{$link}\n\nRegards,\n\n{$_SESSION['user']['username']}";
-		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nBcc: davehs@gmail.com\r\n";
+		// Load template into $body variable
+		include 'themes/'.$GLOBALS['app']['theme'].'/email_invite_friend.php';
+		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 		if ($GLOBALS['app']['send_emails'] == TRUE) {
 			// Email user

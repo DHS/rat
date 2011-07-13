@@ -63,8 +63,9 @@ if ($page['selector'] == 'like_add') {
 
 		$to			= "{$friend['username']} <{$friend['email']}>";
 		$subject	= "[{$GLOBALS['app']['name']}] {$user['username']} is now following you on {$GLOBALS['app']['name']}!";
-		$body		= "Hi {$friend['username']},\n\nJust to let you know that you have a new follower on {$GLOBALS['app']['name']}:\n\n$link\n\nYou should publish another {$GLOBALS['app']['items']['name']} to celebrate!\n\nBest regards,\n\nDavid Haywood Smith, creator of {$GLOBALS['app']['name']}";
-		$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\n";
+		// Load template into $body variable
+		include 'themes/'.$GLOBALS['app']['theme'].'/email_follower.php';
+		$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 		// Email user
 		mail($to, $subject, $body, $headers);
