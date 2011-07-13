@@ -4,7 +4,7 @@ require_once 'config/init.php';
 
 //	Critical: One of the following must be set: item id (to show) or content (to add) or delete
 
-if ($_GET['id'] == '' && $_POST['content'] == '' && $_GET['delete'] == '') {
+if ($_GET['id'] == '' && $_POST['title'] == '' && $_POST['content'] == '' && $_GET['delete'] == '') {
 	$page['name'] = ucfirst($GLOBALS['app']['items']['name']).' not found';
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
@@ -66,17 +66,15 @@ function generate_thumbnail($filename, $type, $max_width = 100, $max_height = 10
 	
 }
 
-if ($_POST['content'] != '') {
+if ($_POST['title'] != '' || $_POST['content'] != '') {
 	// Process new item
 
 	// Form validation
 	
-	if ($_POST['content'] == '')
-		$error .= ucfirst($GLOBALS['app']['items']['name']).' must include '.strtolower($GLOBALS['app']['items']['content']['name']);
+	if ($GLOBALS['app']['items']['titles'] == FALSE && $_POST['content'] == '')
+		$error .= ucfirst($GLOBALS['app']['items']['name']).' must include '.strtolower($GLOBALS['app']['items']['content']['name']).'.<br />';
 
 	if ($GLOBALS['app']['items']['uploads']['enabled'] == TRUE) {
-		
-		//print_r($_FILES['file']);
 		
 		if ($_FILES['file']['error'] > 0)
 			$error .= 'Error code: '.$_FILES['file']['error'].'<br />';
@@ -87,9 +85,6 @@ if ($_POST['content'] != '') {
 		if ($_FILES['file']['size'] > $GLOBALS['app']['items']['uploads']['max-size'])
 			$error .= 'File too large.<br />';
 		
-		if (file_exists('uploads/'.$_FILES['file']['name']))
-			$error .= 'File already exists.<br />';
-		
 	}
 	
 	// Error processing
@@ -99,10 +94,30 @@ if ($_POST['content'] != '') {
 		
 		if ($GLOBALS['app']['items']['uploads']['enabled'] == TRUE) {
 			
+			// Check for file with same name and rename if neccessary
+			if (file_exists("{$GLOBALS['app']['items']['uploads']['directory']}/originals/{$_FILES['file']['name']}")) {
+				
+				// Find filename and extension, works for filenames that include dots and any length extension!
+				$pos = strrpos($_FILES['file']['name'], '.');
+				$pos2 = strlen($_FILES['file']['name']) - $pos - 1;
+				$pos2 = 0 - $pos2;
+				$pos = 0 - $pos;
+				$filename = substr($_FILES['file']['name'], 0, $pos);
+				$extension = substr($_FILES['file']['name'], $pos2);
+				
+				// Extends clashing filenames as such: for clash.jpg try clash-1.jpg, clash-2.jpg etc
+				$i = 1;
+				do {
+					$_FILES['file']['name'] = "$filename-$i.$extension";
+					$i++;
+				} while (file_exists("{$GLOBALS['app']['items']['uploads']['directory']}/originals/{$_FILES['file']['name']}"));
+				
+			}
+			
 			// Grab the file
 			move_uploaded_file($_FILES['file']['tmp_name'], "{$GLOBALS['app']['items']['uploads']['directory']}/originals/{$_FILES['file']['name']}");
 			
-			// Generate thumbnail (using default settings, size: 100px, dir: thumbnails)
+			// Generate thumbnail
 			generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 100, 100, 'thumbnails');
 			
 			// Generate stream image
