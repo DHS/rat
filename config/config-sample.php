@@ -40,11 +40,11 @@ $app['public_pages']					= array('signup.php', 'login.php', 'logout.php', 'help.
 // Notes about uploads: max-size is in bytes (default: 5MB), directory should contain three subdirectories: originals, thumbnails, stream
 $app['items'] = array(	'name'			=> 'post',
 						'name_plural'	=> 'posts',
-						'titles'		=> array('enabled' => TRUE, 'name' => 'Title'),
-						'content'		=> array('enabled' => TRUE, 'name' => 'Content'),
+						'titles'		=> array('enabled' => TRUE, 'name' => 'Title', 'name_plural' => 'Titles'),
+						'content'		=> array('enabled' => TRUE, 'name' => 'Content', 'name_plural' => 'Contents'),
 						'uploads'		=> array('enabled' => FALSE, 'name' => 'Image', 'directory' => 'uploads', 'max-size' => '5242880', 'mime-types' => array('image/jpeg', 'image/png', 'image/gif', 'image/pjpeg')),
 						'comments'		=> array('enabled' => TRUE, 'name' => 'Comment', 'name_plural' => 'Comments'),
-						'likes'			=> array('enabled' => TRUE, 'name' => 'Like', 'opposite_name' => 'Unlike', 'past_tense' => 'Liked by')
+						'likes'			=> array('enabled' => TRUE, 'name' => 'Like', 'name_plural' => 'Likes', 'opposite_name' => 'Unlike', 'past_tense' => 'Liked by')
 						);
 
 // Invites system
