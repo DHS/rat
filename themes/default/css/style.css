@@ -210,17 +210,11 @@ table { border-collapse: collapse; border-spacing: 0; }
 body { font-family: Verdana, Arial, Helvetica, sans-serif; }
 
 h1 { font-size: 140%; text-align: center; }
-
-h1:a { text-decoration: none; }
-
 h2 { font-size: 100%; font-weight: bold; }
 
 a:link { color: #000066; text-decoration: underline; }
-
 a:active { color: #999999; text-decoration: underline; }
-
 a:visited { color: #000000; text-decoration: underline; }
-
 a:hover { color: #0033FF; text-decoration: none; }
 
 #container {
@@ -257,12 +251,10 @@ footer {
 footer a, footer a:visited { color: #666666; }
 
 .align_left { text-align: left; }
-
 .align_right { text-align: right; }
 
+.float_left { float: left; }
 .float_right { float: right; }
-
-.byline { font-style: italic; }
 
 .center_container { text-align: center; }
 .center { margin-left: auto; margin-right: auto; }
@@ -275,10 +267,7 @@ footer a, footer a:visited { color: #666666; }
 .bad_news { color: red; }
 
 .item_title { font-size: 200%; line-height: 100%; text-align: left; }
-
 .item_meta { font-size: 75%; color: gray; }
-
-.bottom_separator { border-bottom: 1px #CCCCCC solid; }
 
 .clear { clear: both; }
 
