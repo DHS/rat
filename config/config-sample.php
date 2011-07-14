@@ -42,7 +42,7 @@ $app['items'] = array(	'name'			=> 'post',
 						'name_plural'	=> 'posts',
 						'titles'		=> array('enabled' => TRUE, 'name' => 'Title'),
 						'content'		=> array('enabled' => TRUE, 'name' => 'Content'),
-						'uploads'		=> array('enabled' => TRUE, 'name' => 'Image', 'directory' => 'uploads', 'max-size' => '5242880', 'mime-types' => array('image/jpeg', 'image/png', 'image/gif', 'image/pjpeg')),
+						'uploads'		=> array('enabled' => FALSE, 'name' => 'Image', 'directory' => 'uploads', 'max-size' => '5242880', 'mime-types' => array('image/jpeg', 'image/png', 'image/gif', 'image/pjpeg')),
 						'comments'		=> array('enabled' => TRUE, 'name' => 'Comment', 'name_plural' => 'Comments'),
 						'likes'			=> array('enabled' => TRUE, 'name' => 'Like', 'opposite_name' => 'Unlike', 'past_tense' => 'Liked by')
 						);
