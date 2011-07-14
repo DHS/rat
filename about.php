@@ -69,7 +69,7 @@ if (is_object($GLOBALS['points'])) {
 if (is_object($GLOBALS['gravatar']))
 	$content .= '<p>'.$GLOBALS['app']['name'].' is <a href="http://gravatar.com/">Gravatar</a>-enabled.</p>'."\n";
 
-include 'themes/'.$GLOBALS['app']['theme'].'/blank.php';
+echo $content;
 
 // Footer
 
