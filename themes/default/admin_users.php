@@ -3,21 +3,17 @@
 
 <?php include 'themes/'.$GLOBALS['app']['theme'].'/admin_grant_invites.php'; ?>
 
-<?php
+<?php if (is_array($users)) { ?>
 
-if (is_array($users)) {
+<table>
+<tr><td></td><td>Credits</td><td>Last login</td></tr>
 
-echo '<table>
-<tr><td></td><td>Credits</td><td>Last login</td></tr>';
-
-foreach ($users as $user) {
+<?php foreach ($users as $user) { ?>
 	
-	echo '<tr><td><a href="user.php?id='.$user['id'].'">'.$user['username'].'</a></td><td>'.$user['points'].'</td><td>'.$user['last_login'].'</td></tr>';
+	<tr><td><a href="user.php?id=<?php echo $user['id']; ?>"><?php echo $user['username']; ?></a></td><td><?php echo $user['points']; ?></td><td><?php echo $user['last_login']; ?></td></tr>
 
-}
+<?php } ?>
 
-echo '</table>';
+</table>
 
-}
-
-?>
+<?php } ?>
