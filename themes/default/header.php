@@ -1,6 +1,7 @@
 <?php
-// Set page_name for this format: '<h1>App name - page_name</h1>'
-// Overwrite with page_title
+// Set page_name for this format: <h1>App name - $page['name']</h1>
+// Overwrite with $page['title'] (and $page['head_title'] if necessary)
+// The next few lines process these and output $head_title (for <title></title>) and $page_title (for <h1></h1>)
 
 // Set the var that is printed in head title
 if ($page['head_title'] != NULL)

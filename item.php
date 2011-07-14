@@ -238,12 +238,12 @@ if (is_object($GLOBALS['gravatar']))
 
 if ($item['user']['full_name'] != NULL) {
 	// Full name set so use that for page title
-	$page['title'] = $item['title'].' by '.$item['user']['full_name'];
-	$app['page_title'] = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['full_name'].'</a> on <a href="index.php">'.$app['name'].'</a>';
+	$page['head_title'] = $item['title'].' by '.$item['user']['full_name'];
+	$page['title'] = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['full_name'].'</a> on <a href="index.php">'.$app['name'].'</a>';
 } else {
 	// Full name not set so use username for page title
-	$page['title'] = $item['title'].' by '.$item['user']['username'];
-	$app['page_title'] = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['username'].'</a> on <a href="index.php">'.$app['name'].'</a>';
+	$page['head_title'] = $item['title'].' by '.$item['user']['username'];
+	$page['title'] = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['username'].'</a> on <a href="index.php">'.$app['name'].'</a>';
 }
 
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
