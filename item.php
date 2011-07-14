@@ -98,12 +98,8 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 			if (file_exists("{$GLOBALS['app']['items']['uploads']['directory']}/originals/{$_FILES['file']['name']}")) {
 				
 				// Find filename and extension, works for filenames that include dots and any length extension!
-				$pos = strrpos($_FILES['file']['name'], '.');
-				$pos2 = strlen($_FILES['file']['name']) - $pos - 1;
-				$pos2 = 0 - $pos2;
-				$pos = 0 - $pos;
-				$filename = substr($_FILES['file']['name'], 0, $pos);
-				$extension = substr($_FILES['file']['name'], $pos2);
+				$filename = substr($_FILES['file']['name'], 0, strrpos($_FILES['file']['name'], '.'));
+				$extension = substr($_FILES['file']['name'], 0-(strlen($_FILES['file']['name']) - strrpos($_FILES['file']['name'], '.') - 1));
 				
 				// Extends clashing filenames as such: for clash.jpg try clash-1.jpg, clash-2.jpg etc
 				$i = 1;
