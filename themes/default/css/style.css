@@ -219,22 +219,22 @@ a:hover { color: #0033FF; text-decoration: none; }
 
 #container {
 	position: absolute;
-	margin-left: 30%;
-	margin-right: 30%;
-	margin-top: 5%;
-	width: 40%;
+	margin-left: 25%;
+	margin-right: 25%;
+	width: 50%;
 	word-wrap: break-word;
 	min-height: 600px;
 	padding-bottom: 60px;
 }
 
 header {
-	position: absolute;
+	float: right;
+	text-align: right;
 	top: 0px;
 	right: 0px;
-	padding: 0px 10px 0px 10px;
-	border-left: 1px black solid;
-	border-bottom: 1px black solid;
+	border-left: 1px #CCCCCC solid;
+	border-right: 1px #CCCCCC solid;
+	border-bottom: 1px #CCCCCC solid;
 	padding: 10px;
 }
 

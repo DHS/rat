@@ -53,15 +53,9 @@ class gravatar {
 	
 	function show_settings($email) {
 
-echo '<div class="center_container">
-
-<h2>Picture</h2>
-
+echo '<h2>Picture</h2>
 '.$this->show($email).'
-
-<p>Visit <a href="http://gravatar.com/">Gravatar.com</a> to change your picture.</p>
-
-</div>';
+<p>Visit <a href="http://gravatar.com/">Gravatar.com</a> to change your picture.</p>';
 	
 	}
 

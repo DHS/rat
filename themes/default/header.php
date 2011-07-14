@@ -80,6 +80,8 @@ if ($page['title'] != '') {
 
 <body>
 
+  <div id="container">
+
     <header>
 
 	<?php
@@ -111,7 +113,7 @@ if ($page['title'] != '') {
 
     </header>
 
-  <div id="container">
+	<p class="clear">&nbsp;</p>
 
     <!-- Page title -->
     <?php

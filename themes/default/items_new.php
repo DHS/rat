@@ -7,7 +7,7 @@ if (!empty($_SESSION['user'])) { ?>
 
 <form action="item.php" method="post" enctype="multipart/form-data">
 
-	<table class="center">
+	<table>
 		<?php
 		if ($GLOBALS['app']['items']['titles']['enabled'] == TRUE)
 			echo '<tr><td class="align_right">'.$GLOBALS['app']['items']['titles']['name'].': </td><td class="alight_left"><input type="text" name="title" size="50" value="'.$_GET['title'].'" /></td></tr>';
