@@ -8,11 +8,11 @@
 if (is_array($users)) {
 
 echo '<table>
-<tr><td></td><td style="padding-right: 10px;">Credits</td><td style="padding-right: 10px;">Last login</td></tr>';
+<tr><td></td><td>Credits</td><td>Last login</td></tr>';
 
 foreach ($users as $user) {
 	
-	echo '<tr><td style="padding-right: 10px;"><a href="user.php?id='.$user['id'].'">'.$user['username'].'</a></td><td>'.$user['points'].'</td><td>'.$user['last_login'].'</td></tr>';
+	echo '<tr><td><a href="user.php?id='.$user['id'].'">'.$user['username'].'</a></td><td>'.$user['points'].'</td><td>'.$user['last_login'].'</td></tr>';
 
 }
 
