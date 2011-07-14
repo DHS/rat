@@ -56,18 +56,12 @@ $items = items_by_user($user['id']);
 
 if (count($items) > 0) {
 	
-	//echo '<h2>'.ucfirst($GLOBALS['app']['items']['name_plural']).' by '.$user['username'].'</h2>';
-	//include 'themes/'.$GLOBALS['app']['theme'].'/items_user.php';
-
-	// cheeky hack to hide avatar on each post in items_index.php
-	unset($GLOBALS['gravatar']);
-	
-	// recycle homepage display of articles
+	// Recycle homepage display of articles
 	include 'themes/'.$GLOBALS['app']['theme'].'/items_index.php';
 
 } else {
 	
-	// if own page and no post_permission OR someone else's page show 'no articles yet'
+	// If own page and no post_permission OR someone else's page show 'no articles yet'
 	if (($_SESSION['user']['id'] == $user['id'] && $_SESSION['user']['post_permission'] == 0) || $_SESSION['user']['id'] != $user['id'])
 		echo '<p>'.$user['username'].' hasn\'t published any '.$GLOBALS['app']['items']['name_plural'].' yet.</p>';
 	
