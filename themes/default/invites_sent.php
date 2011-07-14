@@ -7,7 +7,7 @@ if (!empty($invites_sent)) {
 	foreach ($invites_sent as $key => $value) {
 		echo htmlentities($value['email']);
 		if ($value['result'] >= 1) {
-			echo ' &middot; <span style="invite_accepted">Accepted</span>';
+			echo ' &middot; <span class="good_news">Accepted</span>';
 		} else {
 			echo ' &middot; Still waiting';
 		}

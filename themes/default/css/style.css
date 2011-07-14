@@ -271,7 +271,8 @@ footer a, footer a:visited { color: #666666; }
 
 .small { font-size: 75%; }
 
-.invite_accepted { color: green; }
+.good_news { color: green; }
+.bad_news { color: red; }
 
 .item_title { font-size: 200%; line-height: 100%; text-align: left; }
 

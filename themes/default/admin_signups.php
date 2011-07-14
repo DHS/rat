@@ -14,7 +14,7 @@ foreach ($waiting_users as $user) {
 	} elseif ($user['days_waiting']) {
 		$waiting = $user['days_waiting'].' days ago';
 	} else {
-		$waiting = '<span style="color: red;">Error</span>';
+		$waiting = '<span class="bad_news">Error</span>';
 	}
 	
 	if ($user['invites'] > 0) {
