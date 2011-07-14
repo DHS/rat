@@ -30,7 +30,6 @@ function user_signup($user_id, $username, $password) {
 function user_update_password($user_id, $new_password) {
 	// Change password
 	
-	
 	$user_id = sanitize_input($user_id);
 	
 	$encrypted_password = md5($new_password.$GLOBALS['app']['encryption_salt']);
@@ -114,6 +113,12 @@ function user_get_by_id($id) {
 	if ($num_rows > 0) {
 	
 		$user = mysql_fetch_array($query, MYSQL_ASSOC);
+		
+		if ($user['full_name'] != NULL) {
+			$user['name'] = $user['full_name'];
+		} else {
+			$user['name'] = $user['username'];
+		}
 	
 	} else {
 		
@@ -135,6 +140,12 @@ function user_get_by_email($email) {
 	if (mysql_num_rows($query) > 0) {
 	
 		$user = mysql_fetch_array($query, MYSQL_ASSOC);
+	
+		if ($user['full_name'] != NULL) {
+			$user['name'] = $user['full_name'];
+		} else {
+			$user['name'] = $user['username'];
+		}
 	
 	} else {
 		

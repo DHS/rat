@@ -26,15 +26,8 @@ if ($user == NULL) {
 if (is_object($GLOBALS['gravatar']))
 	$app['page_title_gravatar'] = $user['email'];
 
-if ($user['full_name'] != NULL) {
-	// Full name set so use that for page title
-	$page['head_title'] = $user['full_name'].' on '.$app['name'];
-	$page['title'] = '<a href="user.php?id='.$user['id'].'">'.$user['full_name'].'</a> on <a href="index.php">'.$app['name'].'</a>';
-} else {
-	// Full name not set so use username for page title
-	$page['head_title'] = $user['username'].' on '.$app['name'];
-	$page['title'] = '<a href="user.php?id='.$user['id'].'">'.$user['username'].'</a> on <a href="index.php">'.$app['name'].'</a>';
-}
+$page['head_title'] = $user['name'].' on '.$app['name'];
+$page['title'] = '<a href="user.php?id='.$user['id'].'">'.$user['name'].'</a> on <a href="index.php">'.$app['name'].'</a>';
 
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 

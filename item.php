@@ -236,15 +236,8 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 if (is_object($GLOBALS['gravatar']))
 	$app['page_title_gravatar'] = $item['user']['email'];
 
-if ($item['user']['full_name'] != NULL) {
-	// Full name set so use that for page title
-	$page['head_title'] = $item['title'].' by '.$item['user']['full_name'];
-	$page['title'] = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['full_name'].'</a> on <a href="index.php">'.$app['name'].'</a>';
-} else {
-	// Full name not set so use username for page title
-	$page['head_title'] = $item['title'].' by '.$item['user']['username'];
-	$page['title'] = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['username'].'</a> on <a href="index.php">'.$app['name'].'</a>';
-}
+$page['head_title'] = $item['title'].' by '.$item['user']['name'];
+$page['title'] = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['name'].'</a> on <a href="index.php">'.$app['name'].'</a>';
 
 include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
