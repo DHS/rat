@@ -1,5 +1,5 @@
 
-<span style="font-size: 50%; color: gray;">
+<span class="item_meta">
 
 <a href="item.php?id=<?php echo $item['id']; ?>"><?php echo $item['date']; ?></a> 
 

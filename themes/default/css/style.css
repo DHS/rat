@@ -275,7 +275,7 @@ footer a, footer a:visited { color: #666666; }
 
 .item_title { font-size: 200%; line-height: 100%; text-align: left; }
 
-.item_meta_info { font-size: 75%; color: gray; }
+.item_meta { font-size: 75%; color: gray; }
 
 .bottom_separator { border-bottom: 1px #CCCCCC solid; }
 

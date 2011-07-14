@@ -13,7 +13,7 @@
 
 <?php } ?>
 
-<p style="font-size: 50%; width: 500px; text-align: left;">
+<p>
 
 	<?php
 	if (is_object($GLOBALS['gravatar']))
