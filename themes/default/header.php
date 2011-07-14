@@ -63,7 +63,7 @@ http://github.com/DHS/rat
 
 <link rel="stylesheet" type="text/css" href="themes/<?php echo $GLOBALS['app']['theme']; ?>/styles.css" />
 
-<script src="assets/js/javascript.js" type="text/javascript"></script>
+<script src="js/javascript.js" type="text/javascript"></script>
 
 <?php
 if (is_object($GLOBALS['analytics']))
