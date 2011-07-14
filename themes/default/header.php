@@ -80,37 +80,38 @@ if ($page['title'] != '') {
 
 <body>
 
-  <div id="container">
     <header>
 
-<?php
+	<?php
 
-		if ($_SESSION['user']) {
+			if ($_SESSION['user']) {
 
-			echo '<a href="index.php">Home</a> &middot; <a href="user.php">My profile</a> &middot; ';
+				echo '<a href="index.php">Home</a> &middot; <a href="user.php">My profile</a> &middot; ';
 
-			if (is_object($GLOBALS['points']))
-				echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app['points']['name'].' &middot; ';
+				if (is_object($GLOBALS['points']))
+					echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app['points']['name'].' &middot; ';
 
-			if ($GLOBALS['app']['invites']['enabled'] == TRUE)
-				echo '<a href="invites.php">Invites</a> &middot; ';
+				if ($GLOBALS['app']['invites']['enabled'] == TRUE)
+					echo '<a href="invites.php">Invites</a> &middot; ';
 
-			echo '<a href="settings.php">Settings</a> &middot; <a href="help.php">Help</a> &middot; ';
+				echo '<a href="settings.php">Settings</a> &middot; <a href="help.php">Help</a> &middot; ';
 
-			if (in_array($_SESSION['user']['id'], $app['admin_users']) == TRUE)
-				echo '<a href="admin.php">Admin</a> &middot; ';
+				if (in_array($_SESSION['user']['id'], $app['admin_users']) == TRUE)
+					echo '<a href="admin.php">Admin</a> &middot; ';
 
-			echo '<a href="logout.php">Logout</a>';
+				echo '<a href="logout.php">Logout</a>';
 
-		} else {
+			} else {
 
-			echo '<a href="signup.php">Signup</a> &middot; <a href="login.php">Login</a> &middot; <a href="help.php">Help</a>';
+				echo '<a href="signup.php">Signup</a> &middot; <a href="login.php">Login</a> &middot; <a href="help.php">Help</a>';
 
-		}
+			}
 
-?>
+	?>
 
     </header>
+
+  <div id="container">
 
 <?php
 
