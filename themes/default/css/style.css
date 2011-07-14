@@ -213,6 +213,7 @@ body {
 
 h1 {
 	font-size: 140%;
+	text-align: center;
 }
 
 h1:a {
@@ -220,6 +221,7 @@ h1:a {
 }
 
 h2 {
+	font-size: 100%;
 	font-weight: bold;
 }
 

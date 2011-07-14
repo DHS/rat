@@ -43,7 +43,6 @@ if ($page['title'] != '') {
 }
 
 ?>
-
 <!doctype html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
@@ -112,6 +111,29 @@ if ($page['title'] != '') {
     </header>
 
   <div id="container">
+
+    <!-- Page title -->
+    <?php
+
+	if (is_object($GLOBALS['gravatar']) && !empty($app['page_title_gravatar'])) {
+		// Show gravatar
+
+	echo '<table class="center">
+	<tr>
+	<td>';
+	echo $GLOBALS['gravatar']->show($app['page_title_gravatar'], array('style' => "margin-right: 10px;"));
+	echo '</td>
+	<td><h1>'.$page_title.'</h1></td>
+	</tr>
+	</table>';
+
+	} else {
+
+		echo '<h1>'.$page_title.'</h1>';
+
+	}
+
+	?>
 
 <?php
 
