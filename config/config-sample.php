@@ -24,7 +24,7 @@ $app['tagline']							= 'Demo of rat\'s functionality';
 
 // URLs - must include http:// and trailing slash
 $app['url']								= 'http://example.com/';
-$app['dev_url']							= 'http://localhost:8888/';
+$app['dev_url']							= 'http://localhost/';
 
 // Beta - users can't signup, can only enter their email addresses
 $app['beta']							= TRUE;
