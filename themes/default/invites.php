@@ -1,27 +1,20 @@
-<div class="center_container">
 
-<?php
+<?php if ($invites_remaining == 1) { ?>
+	
+	<p>You have one invite remaining.</p>
+	
+	<?php include 'themes/'.$GLOBALS['app']['theme'].'/invites_form.php'; ?>
+	
+<?php } elseif ($invites_remaining > 1) { ?>
 
-if ($invites_remaining == 1) {
+	<p>You have <?php echo $invites_remaining; ?> invites remaining.</p>
 	
-	echo '<p>You have one invite remaining.</p>';
+	<?php include 'themes/'.$GLOBALS['app']['theme'].'/invites_form.php'; ?>
 	
-	include 'themes/'.$GLOBALS['app']['theme'].'/invites_form.php';
+<?php } else { ?>
 	
-} elseif ($invites_remaining > 1) {
-
-	echo '<p>You have '.$invites_remaining.' invites remaining.</p>';
+	<p>You have no remaining invites.</p>
 	
-	include 'themes/'.$GLOBALS['app']['theme'].'/invites_form.php';
-	
-} else {
-	
-	echo '<p>You have no remaining invites.</p>';
-	
-}
-
-?>
-
-</div>
+<?php } ?>
 
 <p>&nbsp;</p>
