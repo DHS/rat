@@ -44,98 +44,73 @@ if ($page['title'] != '') {
 
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8">
 
-<!--
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/b/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-Built by David Haywood Smith:
-http://twitter.com/DHS
+  <title><?php echo $head_title; ?></title>
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-Powered by Rat:
-http://github.com/DHS/rat
+  <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
--->
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
-<title><?php echo $head_title; ?></title>
+  <!-- CSS: implied media="all" -->
+  <link rel="stylesheet" href="themes/<?php echo $GLOBALS['app']['theme']; ?>/css/style.css">
 
-<link rel="stylesheet" type="text/css" href="themes/<?php echo $GLOBALS['app']['theme']; ?>/styles.css" />
+  <!-- More ideas for your <head> here: h5bp.com/docs/#head-Tips -->
 
-<script src="js/javascript.js" type="text/javascript"></script>
-
-<?php
-if (is_object($GLOBALS['analytics']))
-	echo $GLOBALS['analytics']->show();
-
-?>
-
+  <!-- All JavaScript at the bottom, except for Modernizr and Respond.
+       Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
+       For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
+  <script src="js/libs/modernizr-2.0.min.js"></script>
+  <script src="js/libs/respond.min.js"></script>
 </head>
+
 <body>
 
-<div id="header">
+  <div id="container">
+    <header>
 
-	<?php
-	
-	if ($_SESSION['user']) {
-
-		echo '<a href="index.php">Home</a> &middot; <a href="user.php">My profile</a> &middot; ';
-
-		if (is_object($GLOBALS['points']))
-			echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app['points']['name'].' &middot; ';
-
-		if ($GLOBALS['app']['invites']['enabled'] == TRUE)
-			echo '<a href="invites.php">Invites</a> &middot; ';
-
-		echo '<a href="settings.php">Settings</a> &middot; <a href="help.php">Help</a> &middot; ';
-
-		if (in_array($_SESSION['user']['id'], $app['admin_users']) == TRUE)
-			echo '<a href="admin.php">Admin</a> &middot; ';
-
-		echo '<a href="logout.php">Logout</a>';
-
-	} else {
-
-		echo '<a href="signup.php">Signup</a> &middot; <a href="login.php">Login</a> &middot; <a href="help.php">Help</a>';
-
-	}
-	
-	?>
-
-</div>
-
-<!-- Content div -->
-<div id="content">
-
-<!-- Page title -->
-<div class="center_container">
 <?php
 
-if (is_object($GLOBALS['gravatar']) && !empty($app['page_title_gravatar'])) {
-	// Show gravatar
+		if ($_SESSION['user']) {
 
-echo '<table class="center">
-<tr>
-<td>';
-echo $GLOBALS['gravatar']->show($app['page_title_gravatar'], array('style' => "margin-right: 10px;"));
-echo '</td>
-<td><h1>'.$page_title.'</h1></td>
-</tr>
-</table>';
+			echo '<a href="index.php">Home</a> &middot; <a href="user.php">My profile</a> &middot; ';
 
-} else {
+			if (is_object($GLOBALS['points']))
+				echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app['points']['name'].' &middot; ';
 
-	echo '<h1>'.$page_title.'</h1>';
+			if ($GLOBALS['app']['invites']['enabled'] == TRUE)
+				echo '<a href="invites.php">Invites</a> &middot; ';
 
-}
+			echo '<a href="settings.php">Settings</a> &middot; <a href="help.php">Help</a> &middot; ';
+
+			if (in_array($_SESSION['user']['id'], $app['admin_users']) == TRUE)
+				echo '<a href="admin.php">Admin</a> &middot; ';
+
+			echo '<a href="logout.php">Logout</a>';
+
+		} else {
+
+			echo '<a href="signup.php">Signup</a> &middot; <a href="login.php">Login</a> &middot; <a href="help.php">Help</a>';
+
+		}
 
 ?>
 
-</div>
-
-<!-- Title spacer -->
-<p>&nbsp;</p>
+    </header>
 
 <?php
 
