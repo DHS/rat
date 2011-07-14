@@ -207,43 +207,21 @@ table { border-collapse: collapse; border-spacing: 0; }
    Author: David Haywood Smith
    ========================================================================== */
 
-body {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-}
+body { font-family: Verdana, Arial, Helvetica, sans-serif; }
 
-h1 {
-	font-size: 140%;
-	text-align: center;
-}
+h1 { font-size: 140%; text-align: center; }
 
-h1:a {
-	text-decoration: none;
-}
+h1:a { text-decoration: none; }
 
-h2 {
-	font-size: 100%;
-	font-weight: bold;
-}
+h2 { font-size: 100%; font-weight: bold; }
 
-a:link {
-	color: #000066;
-	text-decoration: underline;
-}
+a:link { color: #000066; text-decoration: underline; }
 
-a:active {
-	color: #999999;
-	text-decoration: underline;
-}
+a:active { color: #999999; text-decoration: underline; }
 
-a:visited {
-	color: #000000;
-	text-decoration: underline;
-}
+a:visited { color: #000000; text-decoration: underline; }
 
-a:hover {
-	color: #0033FF;
-	text-decoration: none;
-}
+a:hover { color: #0033FF; text-decoration: none; }
 
 #container {
 	position: absolute;
@@ -276,67 +254,32 @@ footer {
 	font-size: 75%;
 }
 
-footer a, footer a:visited {
-	color: #666666;
-}
+footer a, footer a:visited { color: #666666; }
 
-.align_left {
-	text-align: left;
-}
+.align_left { text-align: left; }
 
-.align_right {
-	text-align: right;
-}
+.align_right { text-align: right; }
 
-.float_right {
-	float: right;
-}
+.float_right { float: right; }
 
-.byline {
-	font-style: italic;
-}
+.byline { font-style: italic; }
 
-.center_container {
-	text-align: center;
-}
+.center_container { text-align: center; }
+.center { margin-left: auto; margin-right: auto; }
 
-.center {
-	margin-left: auto;
-	margin-right: auto;
-}
+.message { background: #fff9d7; padding: 10px; text-align: center; }
 
-.message {
-	background: #fff9d7;
-	padding: 10px;
-	text-align: center;
-}
+.small { font-size: 75%; }
 
-.small {
-	font-size: 75%;
-}
+.invite_accepted { color: green; }
 
-.invite_accepted {
-	color: green;
-}
+.item_title { font-size: 200%; line-height: 100%; text-align: left; }
 
-.item_title {
-	font-size: 200%;
-	line-height: 100%;
-	text-align: left;
-}
+.item_meta_info { font-size: 75%; color: gray; }
 
-.item_meta_info {
-	font-size: 75%;
-	color: gray;
-}
+.bottom_separator { border-bottom: 1px #CCCCCC solid; }
 
-.bottom_separator {
-	border-bottom: 1px #CCCCCC solid;
-}
-
-.clear {
-	clear: both;
-}
+.clear { clear: both; }
 
 /* =============================================================================
    Non-semantic helper classes
