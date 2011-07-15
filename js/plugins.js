@@ -16,31 +16,8 @@ window.log = function(){
 // place any jQuery/helper plugins in here, instead of separate, slower script files.
 
 $(function() {
-	var availableTags = [
-		"ActionScript",
-		"AppleScript",
-		"Asp",
-		"BASIC",
-		"C",
-		"C++",
-		"Clojure",
-		"COBOL",
-		"ColdFusion",
-		"Erlang",
-		"Fortran",
-		"Groovy",
-		"Haskell",
-		"Java",
-		"JavaScript",
-		"Lisp",
-		"Perl",
-		"PHP",
-		"Python",
-		"Ruby",
-		"Scala",
-		"Scheme"
-	];
 	$( "#title" ).autocomplete({
-		source: availableTags
+		source: "titles.php",
+		minLength: 2
 	});
 });
