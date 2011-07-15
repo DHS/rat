@@ -68,7 +68,6 @@ if ($page['title'] != '') {
 
   <!-- CSS: implied media="all" -->
   <link rel="stylesheet" href="themes/<?php echo $GLOBALS['app']['theme']; ?>/css/style.css">
-  <link rel="stylesheet" href="themes/<?php echo $GLOBALS['app']['theme']; ?>/css/smoothness/jquery-ui-1.8.14.custom.css">
 
   <!-- More ideas for your <head> here: h5bp.com/docs/#head-Tips -->
 

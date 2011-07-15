@@ -14,10 +14,3 @@ window.log = function(){
 
 
 // place any jQuery/helper plugins in here, instead of separate, slower script files.
-
-$(function() {
-	$( "#title" ).autocomplete({
-		source: "titles.php",
-		minLength: 2
-	});
-});
