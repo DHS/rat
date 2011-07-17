@@ -114,6 +114,64 @@ function comment_remove(user_id, item_id, comment_id) {
 	
 }
 
+function comment_like_add(user_id, item_id) {
+
+	if (window.XMLHttpRequest) {
+		// IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		// IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			if (xmlhttp.responseText != '') {
+				
+				if (like_link = document.getElementById('like_link_'+item_id))
+					like_link.innerHTML = '<a href="#" onclick="like_remove('+user_id+', '+item_id+'); return false;">Unlike</a>';
+				
+				if (likes = document.getElementById('likes_'+item_id))
+					likes.innerHTML = xmlhttp.responseText;
+				
+			}
+		}
+	}
+
+	xmlhttp.open("GET", 'ajax.php?page=comment_like_add&user_id='+user_id+'&item_id='+item_id, true);
+	xmlhttp.send();
+	
+}
+
+function comment_like_remove(user_id, item_id) {
+
+	if (window.XMLHttpRequest) {
+		// IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		// IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			if (xmlhttp.responseText != '') {
+				
+				if (like_link = document.getElementById('like_link_'+item_id))
+					like_link.innerHTML = '<a href="#" onclick="like_add('+user_id+', '+item_id+'); return false;">Like</a>';
+				
+				if (likes = document.getElementById('likes_'+item_id))
+					likes.innerHTML = xmlhttp.responseText;
+
+			}
+		}
+	}
+
+	xmlhttp.open("GET", 'ajax.php?page=comment_like_remove&user_id='+user_id+'&item_id='+item_id, true);
+	xmlhttp.send();
+	
+}
+
 function friend_add(user_id, friend_user_id) {
 
 	if (window.XMLHttpRequest) {

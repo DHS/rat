@@ -47,6 +47,26 @@ if ($page['selector'] == 'like_add') {
 	$item = items_get_by_id($_GET['item_id']);
 	include 'themes/'.$GLOBALS['app']['theme'].'/comments_show.php';
 
+} elseif ($page['selector'] == 'comment_like_add') {
+
+	$like_id = comments_likes_add($_GET['user_id'], $_GET['item_id']);
+	
+	if (is_object($GLOBALS['log']))
+		$GLOBALS['log']->add($_GET['user_id'], 'like', $like_id, 'add');
+	
+	$item = items_get_by_id($_GET['item_id']);
+	include 'themes/'.$GLOBALS['app']['theme'].'/likes_show.php';
+
+} elseif ($page['selector'] == 'comment_like_remove') {
+
+	$like_id = comments_likes_remove($_GET['user_id'], $_GET['item_id']);
+	
+	if (is_object($GLOBALS['log']))
+		$GLOBALS['log']->add($_GET['user_id'], 'like', $like_id, 'remove');
+	
+	$item = items_get_by_id($_GET['item_id']);
+	include 'themes/'.$GLOBALS['app']['theme'].'/likes_show.php';
+
 } elseif ($page['selector'] == 'friend_add') {
 
 	$friend_id = friends_add($_GET['user_id'], $_GET['friend_user_id']);
