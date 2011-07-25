@@ -1,7 +1,7 @@
 Rat
 ===
 
-Rat is a PHP/MySQL boilerplate web app.
+Rat is a PHP/MySQL boilerplate web app built by David Haywood Smith.
 
 History
 -------
@@ -20,7 +20,7 @@ Getting started
 Functionality
 -------------
 
-Users
+**Users**
 
 - Beta signup (collect email addresses before launch)
 - Full signup
@@ -29,7 +29,7 @@ Users
 - Sessions
 - Change password
 
-Objects
+**Objects**
 
 - Create object
 - Delete object
@@ -37,25 +37,25 @@ Objects
 - Comments (optional, re-namable)
 - Likes (optional, re-namable)
 
-Invites
+**Invites**
 
 - Allow users to invite their friends by email
 - Limit the number of invites
 - Grant new invites to users
 
-Admin
+**Admin**
 
 - Grant access to users who have signed up for the beta
 - Grant invites to users
 
-Default plugins
+**Default plugins**
 
 - Google Analytics
 - Gravatar
 - Logging
 - Points system (with leaderboard)
 
-Themes
+**Themes**
 
 Rat uses a templating system to keep layout files separate from the rest of code. It comes with two themes be default.
 
@@ -67,10 +67,16 @@ Missing functionality
 
 - Forgotten password
 - Confirm email address
-- Edit objects
 - Delete user accounts
 - Native avatars
-- Connect to Facebook/Twitter
+- Search users
+- Search items
+- Edit items
+- Connect accounts to Facebook/Twitter
+- Signup using Facebook/Twitter
 - Option to auto-post new objects to Facebook/Twitter
-- Enhance friends functionality
+- Enhance friends functionality (friend requests with emails)
 - Find friends on Facebook/Twitter
+- Incorporate more defaults from [HTML5 Boilerplate](https://github.com/paulirish/html5-boilerplate)
+- Read-only JSON API
+- OAuth API and developer section
