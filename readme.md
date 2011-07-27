@@ -1,20 +1,20 @@
 Rat
 ===
 
-Rat is a PHP/MySQL boilerplate web app built by David Haywood Smith.
+Rat is a boilerplate social network written in PHP/MySQL.
 
 History
 -------
 
-When you start building a web app you always start out building the same functionality: signup, login, change password, create a new 'object' (ie. status update or image), delete objects etc. Imagine having that functionality straight out of the box! This is what Rat gives you. Now you can focus on the tricky parts of building a web app: making it useful and getting people using it. 
+When you start building a web app you usually start with the same functionality: signup, login, change password, create 'objects' (ie. status updates or images), delete objects etc. Imagine having that functionality straight out of the box. This is Rat. Now you can focus on the differentiating parts of an app: the design, making it useful and getting people using it. Why the name Rat? Because it's small, quick and dirty, and ultimately you should probably exterminate it (replace it with your own code).
 
 Getting started
 ---------------
 
 1. Copy all files to your application directory
-2. Create a MySQL database
-3. Run rat.sql
-4. Update the database variables in config/config.php
+2. Create a MySQL database and run rat.sql in it
+3. Rename config/config-sample.php → config/config.php
+4. Update the variables in config/config.php, in particular the database variables
 5. Visit admin.php to create your account
 
 Functionality
@@ -57,10 +57,7 @@ Functionality
 
 **Themes**
 
-Rat uses a templating system to keep layout files separate from the rest of code. It comes with two themes be default.
-
 - Default: a basic theme
-- ScribeSub: the theme used on [ScribeSub.com](http://scribesub.com)
 
 Missing functionality
 ---------------------
@@ -72,6 +69,7 @@ Missing functionality
 - Search users
 - Search items
 - Edit items
+- @ mentions
 - Connect accounts to Facebook/Twitter
 - Signup using Facebook/Twitter
 - Option to auto-post new objects to Facebook/Twitter
