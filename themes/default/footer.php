@@ -20,16 +20,11 @@
   <script src="js/rat.js"></script>
   <!-- end scripts-->
 
-	
-  <!-- mathiasbynens.be/notes/async-analytics-snippet Change UA-XXXXX-X to be your site's ID -->
-  <?php if (is_object($GLOBALS['analytics'])) { ?>
-  <script>
-    var _gaq=[['_setAccount','<?php echo $GLOBALS['analytics']->analytics_id; ?>'],['_trackPageview'],['_trackPageLoadTime']];
-    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
-    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-    s.parentNode.insertBefore(g,s)}(document,'script'));
-  </script>
-  <?php } ?>
+
+  <?php
+  if (is_object($GLOBALS['analytics']))
+    $GLOBALS['analytics']->view();
+  ?>
 
 
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
