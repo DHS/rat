@@ -13,7 +13,7 @@ if (count(admin_get_users()) == 0 && $_GET['page'] == '') {
 	
 	$message = 'Welcome to Rat! Please enter your details:';
 	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	include 'themes/'.$GLOBALS['app']['theme'].'/admin_user_add.php';
+	include 'themes/'.$GLOBALS['app']['theme'].'/admin_setup.php';
 	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 	
 	exit();
