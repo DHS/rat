@@ -48,7 +48,7 @@ if (is_object($GLOBALS['points']))
 // Show new item form
 
 if ($_SESSION['user']['post_permission'] == 1)
-	include 'themes/'.$GLOBALS['app']['theme'].'/items_new.php';
+	include 'themes/'.$GLOBALS['app']['theme'].'/items_add.php';
 
 // List all items for this user
 

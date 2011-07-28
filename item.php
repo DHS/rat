@@ -157,7 +157,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		// Show error message
 		$message = $error;
 		include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-		include 'themes/'.$GLOBALS['app']['theme'].'/items_new.php';
+		include 'themes/'.$GLOBALS['app']['theme'].'/items_add.php';
 		include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
 		exit();
 	

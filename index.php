@@ -13,7 +13,7 @@ include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 
 // New item form
 
-include 'themes/'.$GLOBALS['app']['theme'].'/items_new.php';
+include 'themes/'.$GLOBALS['app']['theme'].'/items_add.php';
 
 // If friends is enabled, show feed of their activity
 
