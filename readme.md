@@ -1,12 +1,12 @@
 Rat
 ===
 
-Rat is a boilerplate social network written in PHP/MySQL.
+Rat is a boilerplate web app written in PHP/MySQL.
 
 History
 -------
 
-When you start building a web app you usually start with the same functionality: signup, login, change password, create 'objects' (ie. status updates or images), delete objects etc. Imagine having that functionality straight out of the box. This is Rat. Now you can focus on the differentiating parts of an app: the design, making it useful and getting people using it. Why the name Rat? Because it's small, quick and dirty, and ultimately you should probably exterminate it (replace it with your own code).
+When you start building a web app you usually start with the same functionality: signup, login, change password, create 'objects' (whatever they may be), delete objects, add friends etc. Rat gives you that functionality straight out of the box. This frees you up to focus on the differentiating parts of your app: the design, making it useful and getting people using it. Why the name Rat? Because it's small, quick and dirty, and ultimately you should probably exterminate it (and replace it with your own code).
 
 Getting started
 ---------------
@@ -70,9 +70,14 @@ Missing functionality
 - Search items
 - Edit items
 - @ mentions
+- Pagination/infinite scroll
+- Tidier date formats
+- Log viewer for admin section
+- Plugin hooks similar to Wordpress
 - Connect accounts to Facebook/Twitter
 - Signup using Facebook/Twitter
-- Option to auto-post new objects to Facebook/Twitter
+- Option to post new objects to Facebook/Twitter
+- Option in Settings to auto-post to Facebook/Twitter
 - Enhance friends functionality (friend requests with emails)
 - Find friends on Facebook/Twitter
 - Incorporate more defaults from [HTML5 Boilerplate](https://github.com/paulirish/html5-boilerplate)
