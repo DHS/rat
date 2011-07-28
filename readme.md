@@ -39,13 +39,19 @@ Functionality
 
 **Invites**
 
-- Allow users to invite their friends by email
-- Limit the number of invites
+- Invite friends by email
+- Number of invites can be limited
 - Grant new invites to users
 
-**Admin**
+**Friends**
 
-- Grant access to users who have signed up for the beta
+- Symmetrical friending (send request, request must be accepted)
+- Asymmetrical friending (following)
+- Feed of friends' activity
+
+**Admin section**
+
+- Grant access to beta signups
 - Grant invites to users
 
 **Default plugins**
@@ -73,6 +79,7 @@ Missing functionality
 - Pagination/infinite scroll
 - Tidier date formats
 - Log viewer for admin section
+- Add an additional theme
 - Plugin hooks similar to Wordpress
 - Connect accounts to Facebook/Twitter
 - Signup using Facebook/Twitter
