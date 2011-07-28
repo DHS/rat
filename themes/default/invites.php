@@ -3,13 +3,13 @@
 	
 	<p>You have one invite remaining.</p>
 	
-	<?php include 'themes/'.$GLOBALS['app']['theme'].'/invites_new.php'; ?>
+	<?php include 'themes/'.$GLOBALS['app']['theme'].'/invites_form.php'; ?>
 	
 <?php } elseif ($invites_remaining > 1) { ?>
 
 	<p>You have <?php echo $invites_remaining; ?> invites remaining.</p>
 	
-	<?php include 'themes/'.$GLOBALS['app']['theme'].'/invites_new.php'; ?>
+	<?php include 'themes/'.$GLOBALS['app']['theme'].'/invites_form.php'; ?>
 	
 <?php } else { ?>
 	
