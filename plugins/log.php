@@ -19,7 +19,8 @@
 class log {
 
 	function add($user_id, $object_type = NULL, $object_id = NULL, $action, $params = NULL) {
-	
+		// Add a new entry to the log
+		
 		$user_id = sanitize_input($user_id);	
 		$object_type = sanitize_input($object_type);
 		$object_id = sanitize_input($object_id);
@@ -28,6 +29,36 @@ class log {
 		
 		$query = mysql_query("INSERT INTO log SET user_id = $user_id, object_type = $object_type, object_id = $object_id, action = $action, params = $params");
 		
+	}
+	
+	function view() {
+		// View the log
+		
+		$sql = "SELECT * FROM log ORDER BY id DESC LIMIT 10";
+		$query = mysql_query($sql);
+
+		while ($entry = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			$entry['user'] = user_get_by_id($entry['user_id']);
+			$entries[] = $entry;
+		}
+		
+		if (is_array($entries)) {
+			
+			echo '<table>';
+			echo '<tr><th>Action</th><th>Object</th><th>Params</th><th>Timestamp</th></tr>';
+			foreach ($entries as $entry) {
+				echo '<tr><td><a href="user.php?id='.$entry['user_id'].'">'.$entry['user']['name'].'</a> '.$entry['object_type'].' '.$entry['action'].'</td><td>';
+				if ($entry['object_id'] != NULL)
+					echo '<a href="item.php?id='.$entry['object_id'].'">'.$entry['object_id'].'</a>';
+				echo '</td><td>';
+				if ($entry['params'] != NULL)
+					echo $entry['params'];
+				echo '</td><td>'.$entry['date'].'</td></tr>';
+			}
+			echo '</table>';
+		
+		}
+	
 	}
 
 }

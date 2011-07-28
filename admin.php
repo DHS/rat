@@ -149,6 +149,15 @@ function grant_invites() {
 	
 }
 
+function history() {
+	// Should be log() but that's a native PHP function
+	// Show most recent entries in the log
+	
+	if (is_object($GLOBALS['log']))
+		$GLOBALS['log']->view();
+
+}
+
 function generate_password() {
 	$password = '';
 	$source = 'abcdefghijklmnpqrstuvwxyz123456789';
