@@ -43,7 +43,8 @@ if ($_SESSION['user'] == NULL && $app['private'] == TRUE && in_array($result[0],
 require_once 'models/user.php';
 require_once 'models/invites.php';
 require_once 'models/friends.php';
-require_once 'models/items.php';
+require_once 'models/item.php';
+$item = new item;
 require_once 'models/comments.php';
 require_once 'models/likes.php';
 

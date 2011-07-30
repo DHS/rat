@@ -27,7 +27,7 @@ if ($GLOBALS['app']['friends']['enabled'] == TRUE) {
 		
 		// Show feed of friends' activity
 		
-		$items = items_get_feed($_SESSION['user']['id']);
+		$items = $item->list_feed();
 		include 'themes/'.$GLOBALS['app']['theme'].'/items_list.php';
 		
 	}
@@ -36,7 +36,7 @@ if ($GLOBALS['app']['friends']['enabled'] == TRUE) {
 	
 	// Friends not enabled so don't show recent items
 
-	$items = items_get();
+	$items = $item->list_all();
 	include 'themes/'.$GLOBALS['app']['theme'].'/items_list.php';	
 	
 }

@@ -119,10 +119,10 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 			// Generate stream image
 			generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 350, 500, 'stream');
 
-			$item_id = items_add($_SESSION['user']['id'], $_POST['content'], $_POST['title'], $_FILES['file']['name']);
+			$item_id = $item->add($_SESSION['user']['id'], $_POST['content'], $_POST['title'], $_FILES['file']['name']);
 			
 		} else {
-			$item_id = items_add($_SESSION['user']['id'], $_POST['content'], $_POST['title']);
+			$item_id = $item->add($_SESSION['user']['id'], $_POST['content'], $_POST['title']);
 		}
 		
 		// Give points
@@ -166,12 +166,12 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 } elseif ($_GET['delete'] != '') {
 	// Delete an item
 
-	$item = items_get_by_id($_GET['delete']);
+	$item = $item->get($_GET['delete']);
 	
 	if ($_SESSION['user']['id'] == $item['user']['id'] && $item != NULL) {
 
 		// Delete item
-		items_remove($_GET['delete']);
+		$item->remove($_GET['delete']);
 		if (is_object($GLOBALS['log']))
 			$GLOBALS['log']->add($_SESSION['user']['id'], 'item', $_GET['delete'], 'remove');
 
@@ -217,7 +217,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 } elseif ($_GET['id'] != '') {
 	// No new item so get item info based on get var
 	
-	$item = items_get_by_id($_GET['id']);
+	$item = $item->get($_GET['id']);
 
 	// Fail gracefully if item doesn't exist
 	if ($item == NULL) {
