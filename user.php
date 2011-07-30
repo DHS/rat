@@ -57,7 +57,7 @@ $items = items_by_user($user['id']);
 if (count($items) > 0) {
 	
 	// Recycle homepage display of articles
-	include 'themes/'.$GLOBALS['app']['theme'].'/items_list.php';
+	include 'themes/'.$GLOBALS['app']['theme'].'/items_list_user.php';
 
 } else {
 	
