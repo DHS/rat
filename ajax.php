@@ -35,7 +35,7 @@ if ($page['selector'] == 'like_add') {
 		$GLOBALS['log']->add($_GET['user_id'], 'comment', $comment_id, 'add', $_GET['content']);
 
 	$item = items_get_by_id($_GET['item_id']);
-	include 'themes/'.$GLOBALS['app']['theme'].'/comments_show.php';
+	include 'themes/'.$GLOBALS['app']['theme'].'/comments_list.php';
 
 } elseif ($page['selector'] == 'comment_remove') {
 	
@@ -45,7 +45,7 @@ if ($page['selector'] == 'like_add') {
 		$GLOBALS['log']->add($_GET['user_id'], 'comment', $_GET['comment_id'], 'remove');
 	
 	$item = items_get_by_id($_GET['item_id']);
-	include 'themes/'.$GLOBALS['app']['theme'].'/comments_show.php';
+	include 'themes/'.$GLOBALS['app']['theme'].'/comments_list.php';
 
 } elseif ($page['selector'] == 'friend_add') {
 

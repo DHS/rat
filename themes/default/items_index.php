@@ -41,7 +41,7 @@ foreach ($items as $item) { ?>
 			
 			if ($GLOBALS['app']['items']['comments'] == TRUE) {
 
-				include 'themes/'.$GLOBALS['app']['theme'].'/comments_show.php';
+				include 'themes/'.$GLOBALS['app']['theme'].'/comments_list.php';
 				if (count($item['comments']) > 0) {
 					$comments_add_show = TRUE;
 				} else {

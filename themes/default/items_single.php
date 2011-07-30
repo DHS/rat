@@ -37,7 +37,7 @@ if ($GLOBALS['app']['items']['likes'] == TRUE)
 	include 'themes/'.$GLOBALS['app']['theme'].'/likes_show.php';
 
 if ($GLOBALS['app']['items']['comments'] == TRUE) {
-	include 'themes/'.$GLOBALS['app']['theme'].'/comments_show.php';
+	include 'themes/'.$GLOBALS['app']['theme'].'/comments_list.php';
 	$comments_add_show = TRUE;
 	include 'themes/'.$GLOBALS['app']['theme'].'/comments_add.php';
 }
