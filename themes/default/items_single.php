@@ -34,7 +34,7 @@ if ($GLOBALS['app']['private'] != TRUE)
 <?php
 
 if ($GLOBALS['app']['items']['likes'] == TRUE)
-	include 'themes/'.$GLOBALS['app']['theme'].'/likes_show.php';
+	include 'themes/'.$GLOBALS['app']['theme'].'/likes_list.php';
 
 if ($GLOBALS['app']['items']['comments'] == TRUE) {
 	include 'themes/'.$GLOBALS['app']['theme'].'/comments_list.php';

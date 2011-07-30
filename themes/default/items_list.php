@@ -37,7 +37,7 @@ foreach ($items as $item) { ?>
 			<?php
 			
 			if ($GLOBALS['app']['items']['likes'] == TRUE)
-				include 'themes/'.$GLOBALS['app']['theme'].'/likes_show.php';
+				include 'themes/'.$GLOBALS['app']['theme'].'/likes_list.php';
 			
 			if ($GLOBALS['app']['items']['comments'] == TRUE) {
 
