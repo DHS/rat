@@ -94,7 +94,7 @@ include 'themes/'.$GLOBALS['app']['theme'].'/invites.php';
 // Show sent invites
 
 $invites_sent = invites_sent($_SESSION['user']['id']);
-include 'themes/'.$GLOBALS['app']['theme'].'/invites_sent.php';
+include 'themes/'.$GLOBALS['app']['theme'].'/invites_list.php';
 
 // Footer
 
