@@ -49,7 +49,7 @@ if ($page['selector'] == 'like_add') {
 
 } elseif ($page['selector'] == 'friend_add') {
 
-	$friend_id = friends_add($_GET['user_id'], $_GET['friend_user_id']);
+	$friend_id = $friend->add($_GET['user_id'], $_GET['friend_user_id']);
 
 	if (is_object($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'friend', $friend_id, 'add');
@@ -78,7 +78,7 @@ if ($page['selector'] == 'like_add') {
 
 } elseif ($page['selector'] == 'friend_remove') {
 
-	$friend_id = friends_remove($_GET['user_id'], $_GET['friend_user_id']);
+	$friend_id = $friend->remove($_GET['user_id'], $_GET['friend_user_id']);
 
 	if (is_object($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'friend', $friend_id, 'remove');

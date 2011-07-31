@@ -4,7 +4,7 @@
 <a href="login.php?redirect_to=/user.php?id=<?php echo $user['id']; ?>" class="friend"><?php if ($GLOBALS['app']['friends']['asymmetric'] == TRUE) { echo 'Follow'; } else { echo 'Add friend'; } ?></a>
 <?php } else {
 
-	if (friends_is($_SESSION['user']['id'], $user['id']) == TRUE) {
+	if ($friend->check($_SESSION['user']['id'], $user['id']) == TRUE) {
 		include 'friends_remove.php';
 	} else {
 		include 'friends_add.php';

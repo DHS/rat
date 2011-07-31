@@ -149,7 +149,7 @@ class item {
 		$friends_string  = "user_id = $user_id";
 
 		// Fetch friends
-		$friends = friends_get($user_id);
+		$friends = $friend->get($user_id);
 
 		// Loop through friends adding them to the query string
 		foreach ($friends as $friend)
