@@ -193,7 +193,7 @@ function do_signup($mode = 'full') {
 					foreach ($invites as $invite) {
 						
 						// Update invites
-						invites_update($invite['id']);
+						$invite->update(($invite['id']);
 						
 						// Log invite update
 						if (is_object($GLOBALS['log']))

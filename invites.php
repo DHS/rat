@@ -41,7 +41,7 @@ if ($_POST['email'] != '') {
 		// no problems so do signup + login
 
 		// add invite to database
-		$id = invites_add($_SESSION['user']['id'], $_POST['email']);
+		$id = $invite->add($_SESSION['user']['id'], $_POST['email']);
 
 		// decrement invites in users table
 		$user->update_invites($_SESSION['user']['id'], -1);
@@ -93,7 +93,7 @@ include 'themes/'.$GLOBALS['app']['theme'].'/invites.php';
 
 // Show sent invites
 
-$invites_sent = invites_sent($_SESSION['user']['id']);
+$invites_sent = $invite->list_sent($_SESSION['user']['id']);
 include 'themes/'.$GLOBALS['app']['theme'].'/invites_list.php';
 
 // Footer

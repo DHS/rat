@@ -92,7 +92,7 @@ function invite() {
 	if ($_GET['email'] != '') {
 		
 		// add invite to database
-		$id = invites_add($_SESSION['user']['id'], $_GET['email']);
+		$id = $invite->add($_SESSION['user']['id'], $_GET['email']);
 		
 		// log invite
 		if (is_object($GLOBALS['log']))
