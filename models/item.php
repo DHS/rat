@@ -45,7 +45,7 @@ class item {
 
 			$item['user'] = user_get_by_id($item['user_id']);
 			$item['comments'] = $comment->get($id);
-			$item['likes'] = likes_get($id);
+			$item['likes'] = $like->get($id);
 
 		}
 
@@ -69,7 +69,7 @@ class item {
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
 			$item['comments'] = $comment->get($item['id']);
-			$item['likes'] = likes_get($item['id']);
+			$item['likes'] = $like->get($item['id']);
 			$item['user'] = user_get_by_id($item['user_id']);
 
 			$items[] = $item;
@@ -99,7 +99,7 @@ class item {
 
 			$item['user'] = user_get_by_id($item['user_id']);
 			$item['comments'] = $comment->get($item['id']);
-			$item['likes'] = likes_get($item['id']);
+			$item['likes'] = $like->get($item['id']);
 
 			$items[] = $item;
 
@@ -132,7 +132,7 @@ class item {
 
 			$item['user'] = user_get_by_id($item['user_id']);
 			$item['comments'] = $comment->get($item['id']);
-			$item['likes'] = likes_get($item['id']);
+			$item['likes'] = $like->get($item['id']);
 
 			$items[] = $item;
 
@@ -161,7 +161,7 @@ class item {
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
 			$item['comments'] = $comment->get($item['id']);
-			$item['likes'] = likes_get($item['id']);
+			$item['likes'] = $like->get($item['id']);
 			$item['user'] = user_get_by_id($item['user_id']);
 
 			$items[] = $item;

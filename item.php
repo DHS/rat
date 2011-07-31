@@ -187,7 +187,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		// Delete likes
 		if (is_array($item['comments'])) {
 			foreach ($item['likes'] as $key => $value) {
-				$id = likes_remove($value['user_id'], $item['id']);
+				$id = $like->remove($value['user_id'], $item['id']);
 				if (is_object($GLOBALS['log']))
 					$GLOBALS['log']->add($_SESSION['user']['id'], 'like', $id, 'remove');
 			}

@@ -9,7 +9,7 @@ if ($_GET['user_id'] != $_SESSION['user']['id'])
 
 if ($page['selector'] == 'like_add') {
 	
-	$like_id = likes_add($_GET['user_id'], $_GET['item_id']);
+	$like_id = $like->add($_GET['user_id'], $_GET['item_id']);
 	
 	if (is_object($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'like', $like_id, 'add');
@@ -19,7 +19,7 @@ if ($page['selector'] == 'like_add') {
 	
 } elseif ($page['selector'] == 'like_remove') {
 
-	$like_id = likes_remove($_GET['user_id'], $_GET['item_id']);
+	$like_id = $like->remove($_GET['user_id'], $_GET['item_id']);
 	
 	if (is_object($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'like', $like_id, 'remove');

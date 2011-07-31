@@ -47,6 +47,7 @@ require_once 'models/item.php';
 $item = new item;
 require_once 'models/comment.php';
 $comment = new comment;
-require_once 'models/likes.php';
+require_once 'models/like.php';
+$like = new like;
 
 ?>
