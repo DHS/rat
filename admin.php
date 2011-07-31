@@ -4,7 +4,7 @@ require_once 'config/init.php';
 
 // Critical: Setup wizard creates admin as first user
 
-if (count(admin_get_users()) == 0 && $_GET['page'] == '') {
+if (count($admin->list_users()) == 0 && $_GET['page'] == '') {
 	
 	$page['name'] = 'Setup';
 	
@@ -18,7 +18,7 @@ if (count(admin_get_users()) == 0 && $_GET['page'] == '') {
 	
 	exit();
 	
-} elseif (count(admin_get_users()) == 0 && $_GET['page'] == 'invite') {
+} elseif (count($admin->list_users()) == 0 && $_GET['page'] == 'invite') {
 	
 	$page['name'] = 'Setup';
 	
@@ -71,8 +71,8 @@ if (in_array($_SESSION['user']['id'], $app['admin_users']) != TRUE) {
 
 function dashboard() {
 	
-	$user_count = count(admin_get_users());
-	$waiting_user_count = count(admin_get_waiting_users());
+	$user_count = count($admin->list_users());
+	$waiting_user_count = count($admin->list_users_beta());
 	
 	include 'themes/'.$GLOBALS['app']['theme'].'/admin_dashboard.php';
 	
@@ -80,7 +80,7 @@ function dashboard() {
 
 function signups() {
 	
-	$waiting_users = admin_get_waiting_users();
+	$waiting_users = $admin->list_users_beta();
 	$waiting_user_count = count($waiting_users);
 	
 	include 'themes/'.$GLOBALS['app']['theme'].'/admin_signups.php';
@@ -127,7 +127,7 @@ function invite() {
 
 function users() {
 	
-	$users = admin_get_users();
+	$users = $admin->list_users();
 	$user_count = count($users);
 	
 	include 'themes/'.$GLOBALS['app']['theme'].'/admin_users.php';
@@ -138,7 +138,7 @@ function grant_invites() {
 			
 	if ($_GET['count'] > 0) {
 		
-		admin_grant_invites($_GET['count']);
+		$admin->update_invites($_GET['count']);
 		
 		$message = 'Invites updated!';
 		include 'themes/'.$GLOBALS['app']['theme'].'/message.php';
