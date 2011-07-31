@@ -30,7 +30,7 @@ if ($_POST['email'] != '') {
 		$error .= 'Email address cannot contain spaces.<br />';
 
 	// Check if already invited
-	if (invites_already_invited($_SESSION['user']['id'], $_POST['email']) == TRUE)
+	if ($invite->check_invited(($_SESSION['user']['id'], $_POST['email']) == TRUE)
 		$error .= 'You have already invited this person.<br />';
 	
 	// Check if already a user
