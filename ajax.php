@@ -57,8 +57,8 @@ if ($page['selector'] == 'like_add') {
 	if ($GLOBALS['app']['send_emails'] == TRUE) {
 		// Send 'new follower' email to writer
 
-		$user = user_get_by_id($_GET['user_id']);
-		$friend = user_get_by_id($_GET['friend_user_id']);
+		$user = $user->get($_GET['user_id']);
+		$friend = $user->get($_GET['friend_user_id']);
 		$link = $GLOBALS['app']['url'].'user.php?id='.$_GET['user_id'];
 
 		$to			= "{$friend['username']} <{$friend['email']}>";

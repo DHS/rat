@@ -24,10 +24,10 @@ if (count(admin_get_users()) == 0 && $_GET['page'] == '') {
 	
 	// Do signup
 
-	$user_id = user_add($_POST['email']);
-	user_signup($user_id, $_POST['username'], $_POST['password']);
+	$user_id = $user->add($_POST['email']);
+	$user->signup($user_id, $_POST['username'], $_POST['password']);
 	
-	$user = user_get_by_email($_POST['email']);
+	$user = $user->get_by_email($_POST['email']);
 	$_SESSION['user'] = $user;
 	
 	// Log login

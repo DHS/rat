@@ -31,7 +31,7 @@ class like {
 		$query = mysql_query($sql);
 
 		while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$row['user'] = user_get_by_id($row['user_id']);
+			$row['user'] = $user->get($row['user_id']);
 			$return[$row['id']] = $row;
 		}
 
@@ -57,7 +57,7 @@ class like {
 		while ($like = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
 			// Get info about the liker
-			$item['user'] = user_get_by_id($like['user_id']);
+			$item['user'] = $user->get($like['user_id']);
 
 			// Get item info
 			$sql2 = "SELECT * FROM items WHERE id = {$like['item_id']} LIMIT 1";
@@ -65,7 +65,7 @@ class like {
 			$item['item'] = mysql_fetch_array($query2, MYSQL_ASSOC);
 
 			// Get info on user who created the item
-			$item['item']['user'] = user_get_by_id($item['item']['user_id']);
+			$item['item']['user'] = $user->get($item['item']['user_id']);
 
 			$items[] = $item;
 

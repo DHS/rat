@@ -9,7 +9,7 @@ function friends_get($user_id) {
 	$query = mysql_query($sql);
 	
 	while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-		$row['user'] = user_get_by_id($row['friend_user_id']);
+		$row['user'] = $user->get($row['friend_user_id']);
 		$return[$row['id']] = $row;
 	}
 	
@@ -28,7 +28,7 @@ function friends_get_followers($user_id) {
 	$query = mysql_query($sql);
 	
 	while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-		$row['user'] = user_get_by_id($row['user_id']);
+		$row['user'] = $user->get($row['user_id']);
 		$return[$row['id']] = $row;
 	}
 

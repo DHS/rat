@@ -41,6 +41,7 @@ if ($_SESSION['user'] == NULL && $app['private'] == TRUE && in_array($result[0],
 
 // Load other models
 require_once 'models/user.php';
+$user = new user;
 require_once 'models/invites.php';
 require_once 'models/friends.php';
 require_once 'models/item.php';

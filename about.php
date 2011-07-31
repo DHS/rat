@@ -10,7 +10,7 @@ include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
 // Show About page
 
 foreach ($GLOBALS['app']['admin_users'] as $value) {
-	$author = user_get_by_id($value);
+	$author = $user->get($value);
 	if ($GLOBALS['app']['private'] != TRUE || $_SESSION['user'] != NULL) {
 		$authors .= '<a href="user.php?id='.$author['id'].'">'.$author['username'].'</a>, ';
 	} else {

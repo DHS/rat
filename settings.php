@@ -40,7 +40,7 @@ function password() {
 				// New passwords match
 				
 				// Call user_password_update in user model
-				user_update_password($_SESSION['user']['id'], $_POST['new_password1']);
+				$user->update_password($_SESSION['user']['id'], $_POST['new_password1']);
 				
 				// Update session
 				$_SESSION['user']['password'] = md5($_POST['new_password1'].$GLOBALS['app']['encryption_salt']);
@@ -91,7 +91,7 @@ function profile() {
 		}
 		
 		// Check for spaces
-		if (user_contains_spaces($_POST['url']) == TRUE)
+		if ($user->check_contains_spaces($_POST['url']) == TRUE)
 			$error = 'URL cannot contain spaces.';
 		
 		// End URL validation
@@ -109,7 +109,7 @@ function profile() {
 				$_SESSION['user']['url'] = $_POST['url'];
 	    	
 			// Call user_update_profile in user model
-			user_update_profile($_SESSION['user']['id'], $_POST['name'], $_POST['bio'], $_POST['url']);
+			$user->update_profile($_SESSION['user']['id'], $_POST['name'], $_POST['bio'], $_POST['url']);
 		
 			// Set success message
 			$message = 'Profile information updated!';

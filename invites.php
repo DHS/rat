@@ -26,7 +26,7 @@ if ($_POST['email'] != '') {
 		$error .= 'You don\'t have any invites remaining.<br />';
 
 	// Check if email contains spaces
-	if (user_contains_spaces($_POST['email']) == TRUE)
+	if ($user->check_contains_spaces($_POST['email']) == TRUE)
 		$error .= 'Email address cannot contain spaces.<br />';
 
 	// Check if already invited
@@ -34,7 +34,7 @@ if ($_POST['email'] != '') {
 		$error .= 'You have already invited this person.<br />';
 	
 	// Check if already a user
-	if (user_get_by_email($_POST['email']) == TRUE)
+	if ($user->get_by_email($_POST['email']) == TRUE)
 		$error .= 'This person is already using '.$GLOBALS['app']['name'].'!<br />';
 
 	if ($error == '') {
@@ -44,7 +44,7 @@ if ($_POST['email'] != '') {
 		$id = invites_add($_SESSION['user']['id'], $_POST['email']);
 
 		// decrement invites in users table
-		user_invites_update($_SESSION['user']['id'], -1);
+		$user->update_invites($_SESSION['user']['id'], -1);
 
 		// award points
 		if (is_object($GLOBALS['points']))

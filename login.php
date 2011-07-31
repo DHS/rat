@@ -6,7 +6,7 @@ require_once 'config/init.php';
 
 if ($_POST['email'] && $_POST['password']) {
 		
-	$user = user_get_by_email($_POST['email']);
+	$user = $user->get_by_email($_POST['email']);
 	$encrypted_password = md5($_POST['password'].$app['encryption_salt']);
 	
 	if ($user['password'] == $encrypted_password) {

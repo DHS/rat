@@ -38,7 +38,7 @@ class log {
 		$query = mysql_query($sql);
 
 		while ($entry = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$entry['user'] = user_get_by_id($entry['user_id']);
+			$entry['user'] = $user->get($entry['user_id']);
 			$entries[] = $entry;
 		}
 		

@@ -81,7 +81,7 @@ function validate_code() {
 function do_signup($mode = 'full') {
 
 	/*
-	*	Three modes			Code	Email	Username	Password	user_add	user_signup	invites	points
+	*	Three modes			Code	Email	Username	Password	user_add	$user->signup	invites	points
 	*		1. beta					X								X
 	*		2. code			X		X		X			X			if needed	X			X		X
 	*		3. full					X		X			X			X			X			X		X
@@ -104,13 +104,13 @@ function do_signup($mode = 'full') {
 	if ($_POST['email'] == '')
 		$error .= 'Email cannot be left blank.<br />';
 	
-	if (user_contains_spaces($_POST['email']) == TRUE)
+	if ($user->check_contains_spaces($_POST['email']) == TRUE)
 		$error .= 'Email cannot contain spaces.<br />';
 	
-	if (user_contains_at($_POST['email']) != TRUE)
+	if ($user->check_contains_at($_POST['email']) != TRUE)
 		$error .= 'Email must contain an @ symbol.<br />';
 	
-	if (user_email_available($_POST['email']) != TRUE)
+	if ($user->check_email_available($_POST['email']) != TRUE)
 		$error .= 'Email already in the system!<br />';
 	
 	// Check username
@@ -120,10 +120,10 @@ function do_signup($mode = 'full') {
 		if ($_POST['username'] == '')
 			$error .= 'Username cannot be left blank.<br />';
 		
-		if (user_alphanumeric($_POST['username']) != TRUE)
+		if ($user->check_alphanumeric($_POST['username']) != TRUE)
 			$error .= 'Username must only contain letters and numbers.<br />';
 		
-		if (user_username_available($_POST['username']) != TRUE)
+		if ($user->check_username_available($_POST['username']) != TRUE)
 			$error .= 'Username not available.<br />';
 		
 	}
@@ -146,13 +146,13 @@ function do_signup($mode = 'full') {
 		// No error so proceed...
 		
 		// First check if user added
-		$user = user_get_by_email($_POST['email']);
+		$user = $user->get_by_email($_POST['email']);
 
 		// If not then add
 		if ($user == NULL) {
 			
-			$user_id = user_add($_POST['email']);
-			$user = user_get_by_id($user_id);
+			$user_id = $user->add($_POST['email']);
+			$user = $user->get($user_id);
 			
 		}
 		
@@ -160,7 +160,7 @@ function do_signup($mode = 'full') {
 		if ($mode == 'code' || $mode == 'full') {
 		
 			// Do signup
-			user_signup($user['id'], $_POST['username'], $_POST['password1']);
+			$user->signup($user['id'], $_POST['username'], $_POST['password1']);
 			
 			if ($GLOBALS['app']['send_emails'] == TRUE) {
 				// Send 'thank you for signing up' email

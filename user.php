@@ -3,9 +3,9 @@
 require_once 'config/init.php';
 
 if ($_GET['id']) {
-	$user = user_get_by_id($_GET['id']);
+	$user = $user->get($_GET['id']);
 } elseif ($_SESSION['user']['id']) {
-	$user = user_get_by_id($_SESSION['user']['id']);
+	$user = $user->get($_SESSION['user']['id']);
 } else {
 	$user = NULL;
 }
