@@ -45,7 +45,8 @@ require_once 'models/invites.php';
 require_once 'models/friends.php';
 require_once 'models/item.php';
 $item = new item;
-require_once 'models/comments.php';
+require_once 'models/comment.php';
+$comment = new comment;
 require_once 'models/likes.php';
 
 ?>

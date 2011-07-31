@@ -178,7 +178,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		// Delete comments
 		if (is_array($item['comments'])) {
 			foreach ($item['comments'] as $key => $value) {
-				$id = comments_remove($value['user_id'], $item['id'], $value['id']);
+				$id = $comment->remove($value['user_id'], $item['id'], $value['id']);
 				if (is_object($GLOBALS['log']))
 					$GLOBALS['log']->add($_SESSION['user']['id'], 'comment', $id, 'remove');
 			}
