@@ -6,7 +6,7 @@ Rat is a boilerplate web app written in PHP/MySQL.
 History
 -------
 
-When you start building a web app you usually start with the same functionality: signup, login, change password, create 'objects' (whatever they may be), delete objects, add friends etc. Rat gives you that functionality straight out of the box. This frees you up to focus on the differentiating parts of your app: the design, making it useful and getting people using it. Why the name Rat? Because it's small, quick and dirty, and ultimately you should probably exterminate it (and replace it with your own code).
+When you start building a web app you usually start with the same functionality: signup, login, change password, create 'items' (whatever they may be), delete items, add friends etc. Rat gives you that functionality straight out of the box. This frees you up to focus on the differentiating parts of your app: the design, making it useful and getting people using it. Why the name Rat? Because it's small, quick and dirty, and ultimately you should probably exterminate it (and replace it with your own code).
 
 Getting started
 ---------------
@@ -29,10 +29,10 @@ Functionality
 - Sessions
 - Change password
 
-**Objects**
+**Items**
 
-- Create object
-- Delete object
+- Create item
+- Delete item
 - Titles (optional, re-namable)
 - Comments (optional, re-namable)
 - Likes (optional, re-namable)
@@ -83,7 +83,7 @@ Missing functionality
 - Plugin hooks similar to Wordpress
 - Connect accounts to Facebook/Twitter
 - Signup using Facebook/Twitter
-- Option to post new objects to Facebook/Twitter
+- Option to post new item to Facebook/Twitter
 - Option in Settings to auto-post to Facebook/Twitter
 - Enhance friends functionality (friend requests with emails)
 - Find friends on Facebook/Twitter
