@@ -2,10 +2,10 @@
 
 require_once 'config/init.php';
 
-if ($_GET['id']) {
-	$user = $user->get($_GET['id']);
-} elseif ($_SESSION['user']['id']) {
-	$user = $user->get($_SESSION['user']['id']);
+if (isset($_GET['id'])) {
+	$user = $app->user->get($_GET['id']);
+} elseif (isset($_SESSION['user'])) {
+	$user = $app->user->get($_SESSION['user']['id']);
 } else {
 	$user = NULL;
 }
@@ -15,49 +15,54 @@ if ($_GET['id']) {
 if ($user == NULL) {
 
 	$page['name'] = 'User not found';
-	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->theme.'/footer.php';
 	exit();
 
 }
 
 // Header
 
-if (is_object($GLOBALS['gravatar']))
-	$app['page_title_gravatar'] = $user['email'];
+if (isset($GLOBALS['gravatar']))
+	$app->page_title_gravatar = $user['email'];
 
-$page['head_title'] = $user['name'].' on '.$app['name'];
-$page['title'] = '<a href="user.php?id='.$user['id'].'">'.$user['name'].'</a> on <a href="index.php">'.$app['name'].'</a>';
+$page['head_title'] = $user['name'].' on '.$app->name;
+$page['title'] = '<a href="user.php?id='.$user['id'].'">'.$user['name'].'</a> on <a href="index.php">'.$app->name.'</a>';
 
-include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
+include 'themes/'.$app->theme.'/header.php';
 
 // Show profile
 
-include 'themes/'.$GLOBALS['app']['theme'].'/user_profile.php';
+include 'themes/'.$app->theme.'/user_profile.php';
 
 // Show follow button
 
-if ($GLOBALS['app']['friends']['enabled'] == TRUE)
-	include 'themes/'.$GLOBALS['app']['theme'].'/friends_button.php';
+if ($app->friends->enabled == TRUE)
+	include 'themes/'.$app->theme.'/friends_button.php';
 
 // Show number of points
 
 if (is_object($GLOBALS['points']))
-	include 'themes/'.$GLOBALS['app']['theme'].'/points.php';
+	include 'themes/'.$app->theme.'/points.php';
 
 // Show new item form
 
-if ($_SESSION['user']['post_permission'] == 1)
-	include 'themes/'.$GLOBALS['app']['theme'].'/items_add.php';
+//if ($_SESSION['user']['post_permission'] == 1)
+	//include 'themes/'.$app->theme.'/items_add.php';
 
 // List all items for this user
+//$items = 'ello';
+//$a = $app->item->get();
 
-$items = $item->list_user($user['id']);
+$items = $app->item->list_user($user['id']);
+//$a = function_exists($app->item->hi);
+//var_dump($items);
+//exit();
 
 if (count($items) > 0) {
 	
 	// Recycle homepage display of articles
-	include 'themes/'.$GLOBALS['app']['theme'].'/items_list_user.php';
+	include 'themes/'.$app->theme.'/items_list_user.php';
 
 } else {
 	
@@ -69,6 +74,6 @@ if (count($items) > 0) {
 
 // Footer
 
-include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+include 'themes/'.$app->theme.'/footer.php';
 
 ?>

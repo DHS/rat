@@ -97,9 +97,9 @@ class item {
 
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-			$item['user'] = $user->get($item['user_id']);
-			$item['comments'] = $comment->list_item($item['id']);
-			$item['likes'] = $like->list_item($item['id']);
+			$item['user'] = $GLOBALS['app']->user->get($item['user_id']);
+			$item['comments'] = $GLOBALS['app']->comment->list_item($item['id']);
+			$item['likes'] = $GLOBALS['app']->like->list_item($item['id']);
 
 			$items[] = $item;
 

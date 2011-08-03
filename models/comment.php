@@ -27,7 +27,7 @@ class comment {
 		$query = mysql_query($sql);
 
 		while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$row['user'] = $user->get($row['user_id']);
+			$row['user'] = $GLOBALS['app']->user->get($row['user_id']);
 			$return[] = $row;
 		}
 

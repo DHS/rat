@@ -24,21 +24,21 @@ if ($page['title'] != '') {
 		// Page name found
 
 		// Set the var that prints the page title
-		$page_title = '<a href="index.php">'.$GLOBALS['app']['name'].'</a> - '.$page['name'];
+		$page_title = '<a href="index.php">'.$app->name.'</a> - '.$page['name'];
 
 		// If no head title is found then set head title similar to page title
 		if ($head_title == NULL)
-			$head_title = $GLOBALS['app']['name'].' - '.$page['name'];
+			$head_title = $app->name.' - '.$page['name'];
 
 	} else {
 		// No page name found
 
 		// Set page title to app name
-		$page_title = '<a href="index.php">'.$GLOBALS['app']['name'].'</a>';
+		$page_title = '<a href="index.php">'.$app->name.'</a>';
 
 		// Set head title to app name
 		if ($head_title == NULL)
-			$head_title = $GLOBALS['app']['name'];
+			$head_title = $app->name;
 
 	}
 }
@@ -67,7 +67,7 @@ if ($page['title'] != '') {
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
   <!-- CSS: implied media="all" -->
-  <link rel="stylesheet" href="themes/<?php echo $GLOBALS['app']['theme']; ?>/css/style.css">
+  <link rel="stylesheet" href="themes/<?php echo $app->theme; ?>/css/style.css">
 
   <!-- More ideas for your <head> here: h5bp.com/docs/#head-Tips -->
 
@@ -91,14 +91,14 @@ if ($page['title'] != '') {
 				echo '<a href="index.php">Home</a> &middot; <a href="user.php">My profile</a> &middot; ';
 
 				if (is_object($GLOBALS['points']))
-					echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app['points']['name'].' &middot; ';
+					echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app->points->name.' &middot; ';
 
-				if ($GLOBALS['app']['invites']['enabled'] == TRUE)
+				if ($app->invites->enabled == TRUE)
 					echo '<a href="invites.php">Invites</a> &middot; ';
 
 				echo '<a href="settings.php">Settings</a> &middot; <a href="help.php">Help</a> &middot; ';
 
-				if (in_array($_SESSION['user']['id'], $app['admin_users']) == TRUE)
+				if (in_array($_SESSION['user']['id'], $app->admin_users) == TRUE)
 					echo '<a href="admin.php">Admin</a> &middot; ';
 
 				echo '<a href="logout.php">Logout</a>';
@@ -118,13 +118,13 @@ if ($page['title'] != '') {
     <!-- Page title -->
     <?php
 
-	if (is_object($GLOBALS['gravatar']) && !empty($app['page_title_gravatar'])) {
+	if (is_object($GLOBALS['gravatar']) && !empty($app->page_title_gravatar)) {
 		// Show gravatar
 
 	echo '<table class="center">
 	<tr>
 	<td>';
-	echo $GLOBALS['gravatar']->show($app['page_title_gravatar'], array('style' => "margin-right: 10px;"));
+	echo $GLOBALS['gravatar']->show($app->page_title_gravatar, array('style' => "margin-right: 10px;"));
 	echo '</td>
 	<td><h1>'.$page_title.'</h1></td>
 	</tr>
