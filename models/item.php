@@ -44,8 +44,8 @@ class item {
 		} else {
 
 			$item['user'] = $user->get($item['user_id']);
-			$item['comments'] = $comment->get($id);
-			$item['likes'] = $like->get($id);
+			$item['comments'] = $comment->list_item($id);
+			$item['likes'] = $like->list_item($id);
 
 		}
 
@@ -68,8 +68,8 @@ class item {
 
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-			$item['comments'] = $comment->get($item['id']);
-			$item['likes'] = $like->get($item['id']);
+			$item['comments'] = $comment->list_item($item['id']);
+			$item['likes'] = $like->list_item($item['id']);
 			$item['user'] = $user->get($item['user_id']);
 
 			$items[] = $item;
@@ -98,8 +98,8 @@ class item {
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
 			$item['user'] = $user->get($item['user_id']);
-			$item['comments'] = $comment->get($item['id']);
-			$item['likes'] = $like->get($item['id']);
+			$item['comments'] = $comment->list_item($item['id']);
+			$item['likes'] = $like->list_item($item['id']);
 
 			$items[] = $item;
 
@@ -131,8 +131,8 @@ class item {
 			$item = mysql_fetch_array($query2, MYSQL_ASSOC);
 
 			$item['user'] = $user->get($item['user_id']);
-			$item['comments'] = $comment->get($item['id']);
-			$item['likes'] = $like->get($item['id']);
+			$item['comments'] = $comment->list_item($item['id']);
+			$item['likes'] = $like->list_item($item['id']);
 
 			$items[] = $item;
 
@@ -160,8 +160,8 @@ class item {
 
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-			$item['comments'] = $comment->get($item['id']);
-			$item['likes'] = $like->get($item['id']);
+			$item['comments'] = $comment->list_item($item['id']);
+			$item['likes'] = $like->list_item($item['id']);
 			$item['user'] = $user->get($item['user_id']);
 
 			$items[] = $item;
@@ -189,8 +189,8 @@ class item {
 
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-			$item['comments'] = $comment->get($item['id']);
-			$item['likes'] = $like->get($item['id']);
+			$item['comments'] = $comment->list_item($item['id']);
+			$item['likes'] = $like->list_item($item['id']);
 			$item['user'] = $user->get($item['user_id']);
 
 			$items[] = $item;

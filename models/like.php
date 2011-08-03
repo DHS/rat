@@ -23,7 +23,7 @@ class like {
 	}
 
 	// Get likes for an item
-	function get($item_id) {
+	function list_item($item_id) {
 
 		$item_id = sanitize_input($item_id);
 
