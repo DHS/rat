@@ -172,6 +172,35 @@ class item {
 
 	}
 
+	// Search items
+	function list_search($query = '') {
+
+		$query = sanitize_input($query);
+
+		$sql = "SELECT * FROM items WHERE content OR title LIKE %$query% ORDER BY id DESC";
+
+		// Limit not null so create limit string
+		if ($limit != NULL) {
+			$limit = sanitize_input($limit);
+			$sql .= " LIMIT $limit";
+		}
+
+		$query = mysql_query($sql);
+
+		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
+
+			$item['comments'] = $comment->get($item['id']);
+			$item['likes'] = $like->get($item['id']);
+			$item['user'] = $user->get($item['user_id']);
+
+			$items[] = $item;
+
+		}
+
+		return $items;
+
+	}
+
 	// Remove an item
 	function remove($item_id) {
 
