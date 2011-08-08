@@ -7,7 +7,7 @@ require_once 'config/init.php';
 if ($_POST['email'] && $_POST['password']) {
 		
 	$user = $user->get_by_email($_POST['email']);
-	$encrypted_password = md5($_POST['password'].$app['encryption_salt']);
+	$encrypted_password = md5($_POST['password'].$app->encryption_salt);
 	
 	if ($user['password'] == $encrypted_password) {
 		
@@ -44,20 +44,20 @@ if ($_POST['email'] && $_POST['password']) {
 // Header
 
 //$page['name'] = 'Login';
-include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
+include 'themes/'.$app->theme.'/header.php';
 
 // Show login form
 
 if (empty($_SESSION['user'])) {
-	include 'themes/'.$GLOBALS['app']['theme'].'/login.php';
+	include 'themes/'.$app->theme.'/login.php';
 } else {
 	$message = 'You are already logged in!<br /><a href="logout.php">Click here</a> to logout.';
-	include 'themes/'.$GLOBALS['app']['theme'].'/message.php';
+	include 'themes/'.$app->theme.'/message.php';
 }
 
 // Footer
 
-include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+include 'themes/'.$app->theme.'/footer.php';
 
 
 

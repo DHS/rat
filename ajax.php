@@ -15,7 +15,7 @@ if ($page['selector'] == 'like_add') {
 		$GLOBALS['log']->add($_GET['user_id'], 'like', $like_id, 'add');
 	
 	$item = $item->get($_GET['item_id']);
-	include 'themes/'.$GLOBALS['app']['theme'].'/likes_list.php';
+	include 'themes/'.$app->theme.'/likes_list.php';
 	
 } elseif ($page['selector'] == 'like_remove') {
 
@@ -25,7 +25,7 @@ if ($page['selector'] == 'like_add') {
 		$GLOBALS['log']->add($_GET['user_id'], 'like', $like_id, 'remove');
 	
 	$item = $item->get($_GET['item_id']);
-	include 'themes/'.$GLOBALS['app']['theme'].'/likes_list.php';
+	include 'themes/'.$app->theme.'/likes_list.php';
 	
 } elseif ($page['selector'] == 'comment_add') {
 
@@ -35,7 +35,7 @@ if ($page['selector'] == 'like_add') {
 		$GLOBALS['log']->add($_GET['user_id'], 'comment', $comment_id, 'add', $_GET['content']);
 
 	$item = $item->get($_GET['item_id']);
-	include 'themes/'.$GLOBALS['app']['theme'].'/comments_list.php';
+	include 'themes/'.$app->theme.'/comments_list.php';
 
 } elseif ($page['selector'] == 'comment_remove') {
 	
@@ -45,7 +45,7 @@ if ($page['selector'] == 'like_add') {
 		$GLOBALS['log']->add($_GET['user_id'], 'comment', $_GET['comment_id'], 'remove');
 	
 	$item = $item->get($_GET['item_id']);
-	include 'themes/'.$GLOBALS['app']['theme'].'/comments_list.php';
+	include 'themes/'.$app->theme.'/comments_list.php';
 
 } elseif ($page['selector'] == 'friend_add') {
 
@@ -64,7 +64,7 @@ if ($page['selector'] == 'like_add') {
 		$to			= "{$friend['username']} <{$friend['email']}>";
 		$subject	= "[{$GLOBALS['app']['name']}] {$user['username']} is now following you on {$GLOBALS['app']['name']}!";
 		// Load template into $body variable
-		include 'themes/'.$GLOBALS['app']['theme'].'/email_follower.php';
+		include 'themes/'.$app->theme.'/email_follower.php';
 		$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 		// Email user
@@ -74,7 +74,7 @@ if ($page['selector'] == 'like_add') {
 
 	$user['id'] = $_GET['friend_user_id'];
 
-	include 'themes/'.$GLOBALS['app']['theme'].'/friends_remove.php';
+	include 'themes/'.$app->theme.'/friends_remove.php';
 
 } elseif ($page['selector'] == 'friend_remove') {
 
@@ -85,7 +85,7 @@ if ($page['selector'] == 'like_add') {
 
 	$user['id'] = $_GET['friend_user_id'];
 
-	include 'themes/'.$GLOBALS['app']['theme'].'/friends_add.php';
+	include 'themes/'.$app->theme.'/friends_add.php';
 
 }
 

@@ -28,18 +28,18 @@
 <?php
 // Untested
 if ($GLOBALS['app']['private'] != TRUE)
-	include 'themes/'.$GLOBALS['app']['theme'].'/items_share.php';
+	include 'themes/'.$app->theme.'/items_share.php';
 ?>
 
 <?php
 
 if ($GLOBALS['app']['items']['likes'] == TRUE)
-	include 'themes/'.$GLOBALS['app']['theme'].'/likes_list.php';
+	include 'themes/'.$app->theme.'/likes_list.php';
 
 if ($GLOBALS['app']['items']['comments'] == TRUE) {
-	include 'themes/'.$GLOBALS['app']['theme'].'/comments_list.php';
+	include 'themes/'.$app->theme.'/comments_list.php';
 	$comments_add_show = TRUE;
-	include 'themes/'.$GLOBALS['app']['theme'].'/comments_add.php';
+	include 'themes/'.$app->theme.'/comments_add.php';
 }
 
 ?>

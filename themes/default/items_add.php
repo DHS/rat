@@ -3,7 +3,7 @@
 
 if (!empty($_SESSION['user'])) { ?>
 
-<h2>New <?php echo $app['items']['name']; ?></h2>
+<h2>New <?php echo $app->items['name']; ?></h2>
 
 <form action="item.php" method="post" enctype="multipart/form-data">
 

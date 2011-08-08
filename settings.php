@@ -8,8 +8,8 @@ if ($_SESSION['user'] == NULL) {
 	
 	$page['name'] = 'Page not found';
 	$message = 'Please <a href="login.php?redirect_to=/settings.php">login</a> to view your settings.';
-	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->theme.'/footer.php';
 	exit();
 	
 }
@@ -66,7 +66,7 @@ function password() {
 		$message = 'There was a problem, please try again.';
 	}
 	
-	include 'themes/'.$GLOBALS['app']['theme'].'/message.php';
+	include 'themes/'.$app->theme.'/message.php';
 	
 }
 
@@ -121,7 +121,7 @@ function profile() {
 		}
 
 		// Show message
-		include 'themes/'.$GLOBALS['app']['theme'].'/message.php';
+		include 'themes/'.$app->theme.'/message.php';
 		
 	}
 	
@@ -137,7 +137,7 @@ if ($page['selector'] == NULL)
 // Header
 
 $page['name'] = 'Settings';
-include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
+include 'themes/'.$app->theme.'/header.php';
 
 // Show page determined by selector
 
@@ -145,11 +145,11 @@ $page['selector']();
 
 // Show profile info form
 
-include 'themes/'.$GLOBALS['app']['theme'].'/settings_profile.php';
+include 'themes/'.$app->theme.'/settings_profile.php';
 
 // Show password change form
 
-include 'themes/'.$GLOBALS['app']['theme'].'/settings_password.php';
+include 'themes/'.$app->theme.'/settings_password.php';
 
 // Gravatar settings
 
@@ -158,6 +158,6 @@ if (is_object($GLOBALS['gravatar']))
 
 // Footer
 
-include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+include 'themes/'.$app->theme.'/footer.php';
 
 ?>

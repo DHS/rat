@@ -6,8 +6,8 @@ require_once 'config/init.php';
 
 if ($_GET['id'] == '' && $_POST['title'] == '' && $_POST['content'] == '' && $_GET['delete'] == '') {
 	$page['name'] = ucfirst($GLOBALS['app']['items']['name']).' not found';
-	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->theme.'/footer.php';
 	exit;
 }
 
@@ -127,7 +127,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		
 		// Give points
 		if (is_object($GLOBALS['points']))
-			$GLOBALS['points']->update($_SESSION['user']['id'], $app['points']['per_item']);
+			$GLOBALS['points']->update($_SESSION['user']['id'], $app->points['per_item']);
 
 		// Log item add
 		if (is_object($GLOBALS['log']))
@@ -156,9 +156,9 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		
 		// Show error message
 		$message = $error;
-		include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-		include 'themes/'.$GLOBALS['app']['theme'].'/items_add.php';
-		include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+		include 'themes/'.$app->theme.'/header.php';
+		include 'themes/'.$app->theme.'/items_add.php';
+		include 'themes/'.$app->theme.'/footer.php';
 		exit();
 	
 	}
@@ -223,8 +223,8 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 	if ($item == NULL) {
 
 		$page['name'] = ucfirst($GLOBALS['app']['items']['name']).' not found';
-		include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-		include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+		include 'themes/'.$app->theme.'/header.php';
+		include 'themes/'.$app->theme.'/footer.php';
 		exit;
 		
 	}
@@ -234,19 +234,19 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 // Header
 
 if (is_object($GLOBALS['gravatar']))
-	$app['page_title_gravatar'] = $item['user']['email'];
+	$app->page_title_gravatar = $item['user']['email'];
 
 $page['head_title'] = $item['title'].' by '.$item['user']['name'];
-$page['title'] = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['name'].'</a> on <a href="index.php">'.$app['name'].'</a>';
+$page['title'] = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['name'].'</a> on <a href="index.php">'.$app->name.'</a>';
 
-include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
+include 'themes/'.$app->theme.'/header.php';
 
 // Show item
 
-include 'themes/'.$GLOBALS['app']['theme'].'/items_single.php';
+include 'themes/'.$app->theme.'/items_single.php';
 
 // Footer
 
-include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+include 'themes/'.$app->theme.'/footer.php';
 
 ?>

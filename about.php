@@ -5,7 +5,7 @@ require_once 'config/init.php';
 // Header
 
 $page['name'] = 'About';
-include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
+include 'themes/'.$app->theme.'/header.php';
 
 // Show About page
 
@@ -73,6 +73,6 @@ echo $content;
 
 // Footer
 
-include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+include 'themes/'.$app->theme.'/footer.php';
 
 ?>

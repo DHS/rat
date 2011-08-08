@@ -34,15 +34,15 @@ if ($_SESSION['user'] == NULL && $app->private == TRUE && in_array($result[0], $
 
 		// Make an exception for setup
 		
-		// So at the moment, setup requires $app['private'] to be TRUE
+		// So at the moment, setup requires $app->private to be TRUE
 		// and admin.php must NOT be in public_pages
 		
 	} else {
 
 		// Show splash page
-		include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-		include 'themes/'.$GLOBALS['app']['theme'].'/splash.php';
-		include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+		include 'themes/'.$app->theme.'/header.php';
+		include 'themes/'.$app->theme.'/splash.php';
+		include 'themes/'.$app->theme.'/footer.php';
 
 		// Stop processing the rest of the page
 		exit();		

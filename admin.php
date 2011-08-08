@@ -12,9 +12,9 @@ if (count($admin->list_users()) == 0 && $_GET['page'] == '') {
 	$password = generate_password();
 	
 	$message = 'Welcome to Rat! Please enter your details:';
-	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	include 'themes/'.$GLOBALS['app']['theme'].'/admin_setup.php';
-	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->theme.'/admin_setup.php';
+	include 'themes/'.$app->theme.'/footer.php';
 	
 	exit();
 	
@@ -49,11 +49,11 @@ if (count($admin->list_users()) == 0 && $_GET['page'] == '') {
 
 //	Critical: User must have admin capability
 
-if (in_array($_SESSION['user']['id'], $app['admin_users']) != TRUE) {
+if (in_array($_SESSION['user']['id'], $app->admin_users) != TRUE) {
 
 	$page['name'] = 'Page not found';
-	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->theme.'/footer.php';
 	exit;
 
 }
@@ -74,7 +74,7 @@ function dashboard() {
 	$user_count = count($admin->list_users());
 	$waiting_user_count = count($admin->list_users_beta());
 	
-	include 'themes/'.$GLOBALS['app']['theme'].'/admin_dashboard.php';
+	include 'themes/'.$app->theme.'/admin_dashboard.php';
 	
 }
 
@@ -83,7 +83,7 @@ function signups() {
 	$waiting_users = $admin->list_users_beta();
 	$waiting_user_count = count($waiting_users);
 	
-	include 'themes/'.$GLOBALS['app']['theme'].'/admin_signups.php';
+	include 'themes/'.$app->theme.'/admin_signups.php';
 	
 }
 
@@ -108,7 +108,7 @@ function invite() {
 		
 		$subject	= "Your {$GLOBALS['app']['name']} invite is here!";
 		// Load template into $body variable
-		include 'themes/'.$GLOBALS['app']['theme'].'/email_invite_admin.php';
+		include 'themes/'.$app->theme.'/email_invite_admin.php';
 		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 		
 		if ($GLOBALS['app']['send_emails'] == TRUE) {
@@ -117,7 +117,7 @@ function invite() {
 		}
 		
 		$message = 'User invited!';
-		include 'themes/'.$GLOBALS['app']['theme'].'/message.php';
+		include 'themes/'.$app->theme.'/message.php';
 		
 		signups();
 		
@@ -130,7 +130,7 @@ function users() {
 	$users = $admin->list_users();
 	$user_count = count($users);
 	
-	include 'themes/'.$GLOBALS['app']['theme'].'/admin_users.php';
+	include 'themes/'.$app->theme.'/admin_users.php';
 
 }
 
@@ -141,7 +141,7 @@ function grant_invites() {
 		$admin->update_invites($_GET['count']);
 		
 		$message = 'Invites updated!';
-		include 'themes/'.$GLOBALS['app']['theme'].'/message.php';
+		include 'themes/'.$app->theme.'/message.php';
 		
 		users();
 		
@@ -177,8 +177,8 @@ if ($page['selector'] == NULL)
 // Header
 
 $page['name'] = 'Admin - '.ucfirst(strtolower($page['selector']));
-include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-include 'themes/'.$GLOBALS['app']['theme'].'/admin_menu.php';
+include 'themes/'.$app->theme.'/header.php';
+include 'themes/'.$app->theme.'/admin_menu.php';
 
 // Show page determined by selector
 
@@ -186,6 +186,6 @@ $page['selector']();
 
 // Footer
 
-include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+include 'themes/'.$app->theme.'/footer.php';
 
 ?>

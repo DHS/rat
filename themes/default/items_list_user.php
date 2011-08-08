@@ -21,17 +21,17 @@ foreach ($items as $item) {
 			<?php
 
 			if ($GLOBALS['app']['items']['likes'] == TRUE)
-				include 'themes/'.$GLOBALS['app']['theme'].'/likes_list.php';
+				include 'themes/'.$app->theme.'/likes_list.php';
 			
 			if ($GLOBALS['app']['items']['comments'] == TRUE) {
 
-				include 'themes/'.$GLOBALS['app']['theme'].'/comments_list.php';
+				include 'themes/'.$app->theme.'/comments_list.php';
 				if (count($item['comments']) > 0) {
 					$comments_add_show = TRUE;
 				} else {
 					$comments_add_show = FALSE;
 				}
-				include 'themes/'.$GLOBALS['app']['theme'].'/comments_add.php';
+				include 'themes/'.$app->theme.'/comments_add.php';
 				
 			}
 

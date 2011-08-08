@@ -4,11 +4,11 @@ require_once 'config/init.php';
 
 //	Critical: Feature must be enabled and user must be logged in
 
-if ($app['invites']['enabled'] == FALSE || empty($_SESSION['user'])) {
+if ($app->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 	
 	$page['name'] = 'Page not found';
-	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->theme.'/footer.php';
 	exit;
 	
 }
@@ -16,7 +16,7 @@ if ($app['invites']['enabled'] == FALSE || empty($_SESSION['user'])) {
 // Header
 
 $page['name'] = 'Invites';
-include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
+include 'themes/'.$app->theme.'/header.php';
 
 // Process new invites
 
@@ -48,7 +48,7 @@ if ($_POST['email'] != '') {
 
 		// award points
 		if (is_object($GLOBALS['points']))
-			$GLOBALS['points']->update($_SESSION['user']['id'], $app['points']['per_invite_sent']);
+			$GLOBALS['points']->update($_SESSION['user']['id'], $app->points['per_invite_sent']);
 
 		// log invite
 		if (is_object($GLOBALS['log']))
@@ -64,7 +64,7 @@ if ($_POST['email'] != '') {
 
 		$subject	= "[{$GLOBALS['app']['name']}] An invitation from {$_SESSION['user']['username']}";
 		// Load template into $body variable
-		include 'themes/'.$GLOBALS['app']['theme'].'/email_invite_friend.php';
+		include 'themes/'.$app->theme.'/email_invite_friend.php';
 		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 		if ($GLOBALS['app']['send_emails'] == TRUE) {
@@ -73,14 +73,14 @@ if ($_POST['email'] != '') {
 		}
 
 		$message = 'Invite sent!';
-		include 'themes/'.$GLOBALS['app']['theme'].'/message.php';
+		include 'themes/'.$app->theme.'/message.php';
 
 	} else {
 		
 		$_GET['email'] = $_POST['email'];
 		
 		$message = $error;
-		include 'themes/'.$GLOBALS['app']['theme'].'/message.php';
+		include 'themes/'.$app->theme.'/message.php';
 		
 	}
 	
@@ -89,15 +89,15 @@ if ($_POST['email'] != '') {
 // Show invite form
 
 $invites_remaining = $_SESSION['user']['invites'];
-include 'themes/'.$GLOBALS['app']['theme'].'/invites.php';
+include 'themes/'.$app->theme.'/invites.php';
 
 // Show sent invites
 
 $invites_sent = $invite->list_sent($_SESSION['user']['id']);
-include 'themes/'.$GLOBALS['app']['theme'].'/invites_list.php';
+include 'themes/'.$app->theme.'/invites_list.php';
 
 // Footer
 
-include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+include 'themes/'.$app->theme.'/footer.php';
 
 ?>

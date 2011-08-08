@@ -10,7 +10,7 @@
 <?php
 
 if ($GLOBALS['app']['beta'] == TRUE)
-	include 'themes/'.$GLOBALS['app']['theme'].'/signup_beta.php';
+	include 'themes/'.$app->theme.'/signup_beta.php';
 
 ?>
 

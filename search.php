@@ -4,7 +4,7 @@ require_once 'config/init.php';
 
 // Header
 
-include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
+include 'themes/'.$app->theme.'/header.php';
 
 echo 'hi ';
 
@@ -13,10 +13,10 @@ echo 'hi ';
 $a = $item->list_all();
 var_dump($a);
 
-//include 'themes/'.$GLOBALS['app']['theme'].'/items_list.php';
+//include 'themes/'.$app->theme.'/items_list.php';
 
 // Footer
 
-include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+include 'themes/'.$app->theme.'/footer.php';
 
 ?>

@@ -1,7 +1,7 @@
 
 <p>Users: <strong><?php echo $user_count; ?></strong></p>
 
-<?php include 'themes/'.$GLOBALS['app']['theme'].'/admin_grant_invites.php'; ?>
+<?php include 'themes/'.$app->theme.'/admin_grant_invites.php'; ?>
 
 <?php if (is_array($users)) { ?>
 

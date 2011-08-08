@@ -8,8 +8,8 @@ if (!empty($_SESSION['user'])) {
 	
 	$page['name'] = 'Signup';
 	$message = 'You are already logged in!';
-	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
-	include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->theme.'/footer.php';
 	exit;
 	
 }
@@ -43,12 +43,12 @@ function show_form() {
 	if ($GLOBALS['app']['beta'] == TRUE) {
 		
 		// Show beta signup form
-		include 'themes/'.$GLOBALS['app']['theme'].'/signup_beta.php';
+		include 'themes/'.$app->theme.'/signup_beta.php';
 		
 	} else {
 		
 		// Show full signup form
-		include 'themes/'.$GLOBALS['app']['theme'].'/signup.php';
+		include 'themes/'.$app->theme.'/signup.php';
 		
 	}
 
@@ -60,17 +60,17 @@ function validate_code() {
 	if (validate_invite_code($_GET['code'], $_GET['email']) == TRUE) {
 		// Valid
 
-		include 'themes/'.$GLOBALS['app']['theme'].'/signup.php';
+		include 'themes/'.$app->theme.'/signup.php';
 		
 	} else {
 		// Invalid
 		
 		if ($GLOBALS['app']['beta'] == TRUE) {
 			$message = 'Your invite code is invalid.';
-			include 'themes/'.$GLOBALS['app']['theme'].'/message.php';
-			include 'themes/'.$GLOBALS['app']['theme'].'/signup_beta.php';
+			include 'themes/'.$app->theme.'/message.php';
+			include 'themes/'.$app->theme.'/signup_beta.php';
 		} else {
-			include 'themes/'.$GLOBALS['app']['theme'].'/signup.php';
+			include 'themes/'.$app->theme.'/signup.php';
 		}
 
 	}
@@ -168,7 +168,7 @@ function do_signup($mode = 'full') {
 				$to			= "{$_POST['username']} <{$_POST['email']}>";
 				$subject	= "[{$GLOBALS['app']['name']}] Welcome to {$GLOBALS['app']['name']}!";
 				// Load template into $body variable
-				include 'themes/'.$GLOBALS['app']['theme'].'/email_signup.php';
+				include 'themes/'.$app->theme.'/email_signup.php';
 				$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 				// Email user
@@ -253,7 +253,7 @@ function do_signup($mode = 'full') {
 			$message = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
 			$message .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
 	
-			//include 'themes/'.$GLOBALS['app']['theme'].'/message.php';
+			//include 'themes/'.$app->theme.'/message.php';
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
@@ -278,13 +278,13 @@ function do_signup($mode = 'full') {
 		
 		// Show error message
 		$message = $error;
-		include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
+		include 'themes/'.$app->theme.'/header.php';
 		
 		// Show relevant signup form
 		if ($mode == 'beta') {
-			include 'themes/'.$GLOBALS['app']['theme'].'/signup_beta.php';
+			include 'themes/'.$app->theme.'/signup_beta.php';
 		} else {
-			include 'themes/'.$GLOBALS['app']['theme'].'/signup.php';
+			include 'themes/'.$app->theme.'/signup.php';
 		}
 	
 	}
@@ -341,14 +341,14 @@ if ($page['selector'] == 'do_signup') {
 } else {
 	// Not doing signup so show a simpler page. Also call header.
 	
-	include 'themes/'.$GLOBALS['app']['theme'].'/header.php';
+	include 'themes/'.$app->theme.'/header.php';
 	$page['selector']();
 	
 }
 
 // Footer
 
-include 'themes/'.$GLOBALS['app']['theme'].'/footer.php';
+include 'themes/'.$app->theme.'/footer.php';
 
 
 ?>
