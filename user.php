@@ -48,20 +48,13 @@ if (is_object($GLOBALS['points']))
 // Show new item form
 
 //if ($_SESSION['user']['post_permission'] == 1)
-	//include 'themes/'.$app->theme.'/items_add.php';
+//	include 'themes/'.$app->theme.'/items_add.php';
 
 // List all items for this user
-//$items = 'ello';
-//$a = $app->item->get();
-
 $items = $app->item->list_user($user['id']);
-//$a = function_exists($app->item->hi);
-//var_dump($items);
-//exit();
 
 if (count($items) > 0) {
 	
-	// Recycle homepage display of articles
 	include 'themes/'.$app->theme.'/items_list_user.php';
 
 } else {
