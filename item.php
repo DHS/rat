@@ -137,7 +137,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 
 		// Go forth!
 		if (SITE_IDENTIFIER == 'live') {
-			header('Location: '.$GLOBALS['app']['url'].'user.php?message='.urlencode($message));
+			header('Location: '.$GLOBALS['app']->url.'user.php?message='.urlencode($message));
 		} else {
 			header('Location: '.$GLOBALS['app']['dev_url'].'user.php?message='.urlencode($message));
 		}
@@ -205,7 +205,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		
 		// Go forth
 		if (SITE_IDENTIFIER == 'live') {
-			header('Location: '.$GLOBALS['app']['url']);
+			header('Location: '.$GLOBALS['app']->url);
 		} else {
 			header('Location: '.$GLOBALS['app']['dev_url']);
 		}

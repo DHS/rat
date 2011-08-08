@@ -11,7 +11,7 @@
 		<tr><td></td><td class="align_left"><input type="submit" value="Login" /></td></tr>
 	</table>
 
-	<p class="small">New to <?php echo $GLOBALS['app']['name'] ?>? <a href="signup.php<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>">Signup</a> now!</p>
+	<p class="small">New to <?php echo $GLOBALS['app']->name ?>? <a href="signup.php<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>">Signup</a> now!</p>
 
 </form>
 

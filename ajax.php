@@ -54,15 +54,15 @@ if ($page['selector'] == 'like_add') {
 	if (is_object($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'friend', $friend_id, 'add');
 
-	if ($GLOBALS['app']['send_emails'] == TRUE) {
+	if ($GLOBALS['app']->send_emails == TRUE) {
 		// Send 'new follower' email to writer
 
 		$user = $user->get($_GET['user_id']);
 		$friend = $user->get($_GET['friend_user_id']);
-		$link = $GLOBALS['app']['url'].'user.php?id='.$_GET['user_id'];
+		$link = $GLOBALS['app']->url.'user.php?id='.$_GET['user_id'];
 
 		$to			= "{$friend['username']} <{$friend['email']}>";
-		$subject	= "[{$GLOBALS['app']['name']}] {$user['username']} is now following you on {$GLOBALS['app']['name']}!";
+		$subject	= "[{$GLOBALS['app']->name}] {$user['username']} is now following you on {$GLOBALS['app']->name}!";
 		// Load template into $body variable
 		include 'themes/'.$app->theme.'/email_follower.php';
 		$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";

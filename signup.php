@@ -40,7 +40,7 @@ if (!empty($_SESSION['user'])) {
 // Show signup form
 function show_form() {
 	
-	if ($GLOBALS['app']['beta'] == TRUE) {
+	if ($GLOBALS['app']->beta'] == TRUE) {
 		
 		// Show beta signup form
 		include 'themes/'.$app->theme.'/signup_beta.php';
@@ -65,7 +65,7 @@ function validate_code() {
 	} else {
 		// Invalid
 		
-		if ($GLOBALS['app']['beta'] == TRUE) {
+		if ($GLOBALS['app']->beta'] == TRUE) {
 			$message = 'Your invite code is invalid.';
 			include 'themes/'.$app->theme.'/message.php';
 			include 'themes/'.$app->theme.'/signup_beta.php';
@@ -90,7 +90,7 @@ function do_signup($mode = 'full') {
 	
 	// Check invite code (only really matters if app is in beta)
 
-	if ($mode == 'code' && $GLOBALS['app']['beta'] == TRUE) {
+	if ($mode == 'code' && $GLOBALS['app']->beta'] == TRUE) {
 
 		if (validate_invite_code($_POST['code'], $_POST['email']) != TRUE)
 			$error .= 'Invalid invite code.<br />';
@@ -162,11 +162,11 @@ function do_signup($mode = 'full') {
 			// Do signup
 			$user->signup($user['id'], $_POST['username'], $_POST['password1']);
 			
-			if ($GLOBALS['app']['send_emails'] == TRUE) {
+			if ($GLOBALS['app']->send_emails == TRUE) {
 				// Send 'thank you for signing up' email
 
 				$to			= "{$_POST['username']} <{$_POST['email']}>";
-				$subject	= "[{$GLOBALS['app']['name']}] Welcome to {$GLOBALS['app']['name']}!";
+				$subject	= "[{$GLOBALS['app']->name}] Welcome to {$GLOBALS['app']->name}!";
 				// Load template into $body variable
 				include 'themes/'.$app->theme.'/email_signup.php';
 				$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
@@ -229,11 +229,11 @@ function do_signup($mode = 'full') {
 			}
 			
 			// Set welcome message
-			$message = urlencode('Welcome to '.$GLOBALS['app']['name'].'!');
+			$message = urlencode('Welcome to '.$GLOBALS['app']->name.'!');
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$GLOBALS['app']['url'].'?message='.$message);
+				header('Location: '.$GLOBALS['app']->url.'?message='.$message);
 			} else {
 				header('Location: '.$GLOBALS['app']['dev_url'].'?message='.$message);
 			}
@@ -257,7 +257,7 @@ function do_signup($mode = 'full') {
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$GLOBALS['app']['url'].'?message='.$message);
+				header('Location: '.$GLOBALS['app']->url.'?message='.$message);
 			} else {
 				header('Location: '.$GLOBALS['app']['dev_url'].'?message='.$message);
 			}
@@ -308,7 +308,7 @@ if ($_GET['code'] != '') {
 		
 	} else {
 		
-		if ($GLOBALS['app']['beta'] == TRUE) {
+		if ($GLOBALS['app']->beta'] == TRUE) {
 			
 			$page['selector'] = 'do_signup';
 			$mode = 'beta';

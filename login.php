@@ -25,7 +25,7 @@ if ($_POST['email'] && $_POST['password']) {
 
 		// Go forth
 		if (SITE_IDENTIFIER == 'live') {
-			header('Location: '.$GLOBALS['app']['url']);
+			header('Location: '.$GLOBALS['app']->url);
 		} else {
 			header('Location: '.$GLOBALS['app']['dev_url']);
 		}

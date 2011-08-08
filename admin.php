@@ -38,7 +38,7 @@ if (count($admin->list_users()) == 0 && $_GET['page'] == '') {
 	
 	// Go forth!
 	if (SITE_IDENTIFIER == 'live') {
-		header('Location: '.$GLOBALS['app']['url'].'?message='.urlencode($message));
+		header('Location: '.$GLOBALS['app']->url.'?message='.urlencode($message));
 	} else {
 		header('Location: '.$GLOBALS['app']['dev_url'].'?message='.urlencode($message));
 	}
@@ -104,14 +104,14 @@ function invite() {
 			$to		= "{$_POST['username']} <davehs@gmail.com>";
 		}
 		
-		$url		= $GLOBALS['app']['url'].'signup.php?code='.$id.'&email='.urlencode($_GET['email']);
+		$url		= $GLOBALS['app']->url.'signup.php?code='.$id.'&email='.urlencode($_GET['email']);
 		
-		$subject	= "Your {$GLOBALS['app']['name']} invite is here!";
+		$subject	= "Your {$GLOBALS['app']->name} invite is here!";
 		// Load template into $body variable
 		include 'themes/'.$app->theme.'/email_invite_admin.php';
 		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 		
-		if ($GLOBALS['app']['send_emails'] == TRUE) {
+		if ($GLOBALS['app']->send_emails == TRUE) {
 			// Email user
 			mail($to, $subject, $body, $headers);
 		}

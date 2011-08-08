@@ -27,7 +27,7 @@
 
 <?php
 // Untested
-if ($GLOBALS['app']['private'] != TRUE)
+if ($GLOBALS['app']->private'] != TRUE)
 	include 'themes/'.$app->theme.'/items_share.php';
 ?>
 
