@@ -33,17 +33,17 @@ function password() {
 	if ($_POST['old_password'] != '' && $_POST['new_password1'] != '' && $_POST['new_password2'] != '') {
 		// Check variables are present
 		
-		if (md5($_POST['old_password'].$GLOBALS['app']['encryption_salt']) == $_SESSION['user']['password']) {
+		if (md5($_POST['old_password'].$app->encryption_salt) == $_SESSION['user']['password']) {
 			// Check old passwords match
 			
 			if ($_POST['new_password1'] == $_POST['new_password2']) {
 				// New passwords match
 				
 				// Call user_password_update in user model
-				$user->update_password($_SESSION['user']['id'], $_POST['new_password1']);
+				$app->user->update_password($_SESSION['user']['id'], $_POST['new_password1']);
 				
 				// Update session
-				$_SESSION['user']['password'] = md5($_POST['new_password1'].$GLOBALS['app']['encryption_salt']);
+				$_SESSION['user']['password'] = md5($_POST['new_password1'].$app->encryption_salt);
 				
 				// Log password update
 				if (is_object($GLOBALS['log']))
@@ -91,7 +91,7 @@ function profile() {
 		}
 		
 		// Check for spaces
-		if ($user->check_contains_spaces($_POST['url']) == TRUE)
+		if ($app->user->check_contains_spaces($_POST['url']) == TRUE)
 			$error = 'URL cannot contain spaces.';
 		
 		// End URL validation
@@ -109,7 +109,7 @@ function profile() {
 				$_SESSION['user']['url'] = $_POST['url'];
 	    	
 			// Call user_update_profile in user model
-			$user->update_profile($_SESSION['user']['id'], $_POST['name'], $_POST['bio'], $_POST['url']);
+			$app->user->update_profile($_SESSION['user']['id'], $_POST['name'], $_POST['bio'], $_POST['url']);
 		
 			// Set success message
 			$message = 'Profile information updated!';

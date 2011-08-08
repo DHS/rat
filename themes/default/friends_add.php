@@ -1,1 +1,1 @@
-<a href="#" class="friend" onclick="friend_add(<?php echo $_SESSION['user']['id']; ?>, <?php echo $user['id']; ?>); return false;"><?php if ($GLOBALS['app']['friends']['asymmetric'] == TRUE) { echo 'Follow'; } else { echo 'Add friend'; } ?></a>
+<a href="#" class="friend" onclick="friend_add(<?php echo $_SESSION['user']['id']; ?>, <?php echo $user['id']; ?>); return false;"><?php if ($app->friends->asymmetric == TRUE) { echo 'Follow'; } else { echo 'Add friend'; } ?></a>

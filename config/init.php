@@ -30,7 +30,7 @@ preg_match("/[a-zA-Z0-9]+\.php/", $_SERVER['PHP_SELF'], $result);
 // If user is logged out, app is private and page is not in public_pages then show splash page
 if ($_SESSION['user'] == NULL && $app->private == TRUE && in_array($result[0], $app->public_pages) == FALSE) {
 
-	if (count($admin->list_users()) == 0 && $result[0] == 'admin.php') {
+	if (count($app->admin->list_users()) == 0 && $result[0] == 'admin.php') {
 
 		// Make an exception for setup
 		

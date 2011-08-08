@@ -61,7 +61,7 @@ if (count($items) > 0) {
 	
 	// If own page and no post_permission OR someone else's page show 'no articles yet'
 	if (($_SESSION['user']['id'] == $user['id'] && $_SESSION['user']['post_permission'] == 0) || $_SESSION['user']['id'] != $user['id'])
-		echo '<p>'.$user['username'].' hasn\'t published any '.$GLOBALS['app']['items']['name_plural'].' yet.</p>';
+		echo '<p>'.$user['username'].' hasn\'t published any '.$app->items['name_plural'].' yet.</p>';
 	
 }
 

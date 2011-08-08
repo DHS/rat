@@ -6,7 +6,7 @@ require_once 'config/init.php';
 
 if ($_POST['email'] && $_POST['password']) {
 		
-	$user = $user->get_by_email($_POST['email']);
+	$user = $app->user->get_by_email($_POST['email']);
 	$encrypted_password = md5($_POST['password'].$app->encryption_salt);
 	
 	if ($user['password'] == $encrypted_password) {
@@ -25,9 +25,9 @@ if ($_POST['email'] && $_POST['password']) {
 
 		// Go forth
 		if (SITE_IDENTIFIER == 'live') {
-			header('Location: '.$GLOBALS['app']->url);
+			header('Location: '.$app->url);
 		} else {
-			header('Location: '.$GLOBALS['app']['dev_url']);
+			header('Location: '.$app->dev_url);
 		}
 		
 		exit();

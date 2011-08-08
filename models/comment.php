@@ -21,13 +21,15 @@ class comment {
 	// Get comments for an item
 	function list_item($id) {
 		
+		global $app;
+		
 		$id = sanitize_input($id);
 
 		$sql = "SELECT id, content, user_id, date FROM comments WHERE item_id = $id ORDER BY id ASC";
 		$query = mysql_query($sql);
 
 		while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$row['user'] = $GLOBALS['app']->user->get($row['user_id']);
+			$row['user'] = $app->user->get($row['user_id']);
 			$return[] = $row;
 		}
 

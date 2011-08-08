@@ -3,7 +3,7 @@
 if (count($item['likes']) > 0) {
 
 	echo '<span id="likes_'.$item['id'].'">
-	<p class="meta">'.$GLOBALS['app']['items']['likes']['past_tense'].' ';
+	<p class="meta">'.$app->items['likes']['past_tense'].' ';
 	
 	foreach ($item['likes'] as $like) {
 

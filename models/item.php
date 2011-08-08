@@ -2,6 +2,7 @@
 
 class item {
 
+
 	// Create an item	
 	function add($user_id, $content, $title = NULL, $image = NULL) {
 
@@ -31,6 +32,8 @@ class item {
 	// Get an item by id	
 	function get($id) {
 
+		global $app;
+
 		$id = sanitize_input($id);
 
 		$sql = "SELECT * FROM items WHERE id = $id ORDER BY id DESC";
@@ -43,9 +46,9 @@ class item {
 
 		} else {
 
-			$item['user'] = $user->get($item['user_id']);
-			$item['comments'] = $comment->list_item($id);
-			$item['likes'] = $like->list_item($id);
+			$item['user'] = $app->user->get($item['user_id']);
+			$item['comments'] = $app->comment->list_item($id);
+			$item['likes'] = $app->like->list_item($id);
 
 		}
 
@@ -55,6 +58,8 @@ class item {
 
 	// Get recent items
 	function list_all($limit = 20) {
+
+		global $app;
 
 		$sql = "SELECT * FROM items ORDER BY id DESC";
 
@@ -68,9 +73,9 @@ class item {
 
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-			$item['comments'] = $comment->list_item($item['id']);
-			$item['likes'] = $like->list_item($item['id']);
-			$item['user'] = $user->get($item['user_id']);
+			$item['comments'] = $app->comment->list_item($item['id']);
+			$item['likes'] = $app->like->list_item($item['id']);
+			$item['user'] = $app->user->get($item['user_id']);
 
 			$items[] = $item;
 
@@ -82,7 +87,9 @@ class item {
 
 	// Get a user's items
 	function list_user($user_id, $limit = 10) {
-
+		
+		global $app;
+		
 		$user_id = sanitize_input($user_id);
 
 		$sql = "SELECT * FROM items WHERE user_id = $user_id ORDER BY id DESC";
@@ -97,9 +104,9 @@ class item {
 
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-			$item['user'] = $GLOBALS['app']->user->get($item['user_id']);
-			$item['comments'] = $GLOBALS['app']->comment->list_item($item['id']);
-			$item['likes'] = $GLOBALS['app']->like->list_item($item['id']);
+			$item['user'] = $app->user->get($item['user_id']);
+			$item['comments'] = $app->comment->list_item($item['id']);
+			$item['likes'] = $app->like->list_item($item['id']);
 
 			$items[] = $item;
 
@@ -111,6 +118,8 @@ class item {
 
 	// Get items liked by a user
 	function list_user_liked($user_id, $limit = 10) {
+
+		global $app;
 
 		$user_id = sanitize_input($user_id);
 
@@ -130,9 +139,9 @@ class item {
 			$query2 = mysql_query("SELECT * FROM items WHERE id = {$item['item_id']} LIMIT 1");
 			$item = mysql_fetch_array($query2, MYSQL_ASSOC);
 
-			$item['user'] = $user->get($item['user_id']);
-			$item['comments'] = $comment->list_item($item['id']);
-			$item['likes'] = $like->list_item($item['id']);
+			$item['user'] = $app->user->get($item['user_id']);
+			$item['comments'] = $app->comment->list_item($item['id']);
+			$item['likes'] = $app->like->list_item($item['id']);
 
 			$items[] = $item;
 
@@ -145,11 +154,13 @@ class item {
 	// Get a feed of a friend's activity
 	function list_feed($user_id) {
 
+		global $app;
+
 		// Start by adding the viewer to the query string
 		$friends_string  = "user_id = $user_id";
 
 		// Fetch friends
-		$friends = $friend->get($user_id);
+		$friends = $app->friend->get($user_id);
 
 		// Loop through friends adding them to the query string
 		foreach ($friends as $friend)
@@ -160,9 +171,9 @@ class item {
 
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-			$item['comments'] = $comment->list_item($item['id']);
-			$item['likes'] = $like->list_item($item['id']);
-			$item['user'] = $user->get($item['user_id']);
+			$item['comments'] = $app->comment->list_item($item['id']);
+			$item['likes'] = $app->like->list_item($item['id']);
+			$item['user'] = $app->user->get($item['user_id']);
 
 			$items[] = $item;
 
@@ -174,6 +185,8 @@ class item {
 
 	// Search items
 	function list_search($query = '') {
+
+		global $app;
 
 		$query = sanitize_input($query);
 
@@ -189,9 +202,9 @@ class item {
 
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-			$item['comments'] = $comment->list_item($item['id']);
-			$item['likes'] = $like->list_item($item['id']);
-			$item['user'] = $user->get($item['user_id']);
+			$item['comments'] = $app->comment->list_item($item['id']);
+			$item['likes'] = $app->like->list_item($item['id']);
+			$item['user'] = $app->user->get($item['user_id']);
 
 			$items[] = $item;
 

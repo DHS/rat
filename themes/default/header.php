@@ -91,9 +91,9 @@ if ($page['title'] != '') {
 				echo '<a href="index.php">Home</a> &middot; <a href="user.php">My profile</a> &middot; ';
 
 				if (is_object($GLOBALS['points']))
-					echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app->points->name.' &middot; ';
+					echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app->points['name'].' &middot; ';
 
-				if ($app->invites->enabled == TRUE)
+				if ($app->invites['enabled'] == TRUE)
 					echo '<a href="invites.php">Invites</a> &middot; ';
 
 				echo '<a href="settings.php">Settings</a> &middot; <a href="help.php">Help</a> &middot; ';

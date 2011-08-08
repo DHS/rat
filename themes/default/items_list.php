@@ -16,11 +16,11 @@ foreach ($items as $item) { ?>
 		?>
 		<td style="padding-bottom: 10px;">
 		
-			<?php if ($GLOBALS['app']['items']['titles']['enabled'] == TRUE) { ?>
+			<?php if ($app->items['titles']['enabled'] == TRUE) { ?>
 				
 				<p><a href="item.php?id=<?php echo $item['id']; ?>"><?php echo $item['title']; ?></a> by <a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a></p>
-				<?php if ($GLOBALS['app']['items']['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
-					<a href="item.php?id=<?php echo $item['id']; ?>"><img src="<?php echo $GLOBALS['app']['items']['uploads']['directory']; ?>/stream/<?php echo $item['image']; ?>" /></a>
+				<?php if ($app->items['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
+					<a href="item.php?id=<?php echo $item['id']; ?>"><img src="<?php echo $app->items['uploads']['directory']; ?>/stream/<?php echo $item['image']; ?>" /></a>
 				<?php } ?>
 				<p><?php echo $item['content']; ?></p>
 
@@ -36,10 +36,10 @@ foreach ($items as $item) { ?>
 
 			<?php
 			
-			if ($GLOBALS['app']['items']['likes'] == TRUE)
+			if ($app->items['likes'] == TRUE)
 				include 'themes/'.$app->theme.'/likes_list.php';
 			
-			if ($GLOBALS['app']['items']['comments'] == TRUE) {
+			if ($app->items['comments'] == TRUE) {
 
 				include 'themes/'.$app->theme.'/comments_list.php';
 				if (count($item['comments']) > 0) {

@@ -20,10 +20,10 @@ foreach ($items as $item) {
 
 			<?php
 
-			if ($GLOBALS['app']['items']['likes'] == TRUE)
+			if ($app->items['likes'] == TRUE)
 				include 'themes/'.$app->theme.'/likes_list.php';
 			
-			if ($GLOBALS['app']['items']['comments'] == TRUE) {
+			if ($app->items['comments'] == TRUE) {
 
 				include 'themes/'.$app->theme.'/comments_list.php';
 				if (count($item['comments']) > 0) {

@@ -5,7 +5,7 @@ require_once 'config/init.php';
 //	Critical: One of the following must be set: item id (to show) or content (to add) or delete
 
 if ($_GET['id'] == '' && $_POST['title'] == '' && $_POST['content'] == '' && $_GET['delete'] == '') {
-	$page['name'] = ucfirst($GLOBALS['app']['items']['name']).' not found';
+	$page['name'] = ucfirst($app->items['name']).' not found';
 	include 'themes/'.$app->theme.'/header.php';
 	include 'themes/'.$app->theme.'/footer.php';
 	exit;
@@ -15,11 +15,11 @@ function generate_thumbnail($filename, $type, $max_width = 100, $max_height = 10
 	
 	// Create temporary source image resource
 	if ($type == 'image/jpeg' || $type == 'image/pjpeg') {
-		$src = imagecreatefromjpeg("{$GLOBALS['app']['items']['uploads']['directory']}/originals/$filename");
+		$src = imagecreatefromjpeg("{$app->items['uploads']['directory']}/originals/$filename");
 	} elseif ($type == 'image/png') {
-		$src = imagecreatefrompng("{$GLOBALS['app']['items']['uploads']['directory']}/originals/$filename");
+		$src = imagecreatefrompng("{$app->items['uploads']['directory']}/originals/$filename");
 	} elseif ($type == 'image/gif') {
-		$src = imagecreatefromgif("{$GLOBALS['app']['items']['uploads']['directory']}/originals/$filename");
+		$src = imagecreatefromgif("{$app->items['uploads']['directory']}/originals/$filename");
 	}
 	
 	// Find existing dimensions
@@ -53,11 +53,11 @@ function generate_thumbnail($filename, $type, $max_width = 100, $max_height = 10
 	
 	// Save new image
 	if ($type == 'image/jpeg' || $type == 'image/pjpeg') {
-		imagejpeg($new, "{$GLOBALS['app']['items']['uploads']['directory']}/$dir/$filename");
+		imagejpeg($new, "{$app->items['uploads']['directory']}/$dir/$filename");
 	} elseif ($type == 'image/png') {
-		imagepng($new, "{$GLOBALS['app']['items']['uploads']['directory']}/$dir/$filename");
+		imagepng($new, "{$app->items['uploads']['directory']}/$dir/$filename");
 	} elseif ($type == 'image/gif') {
-		imagegif($new, "{$GLOBALS['app']['items']['uploads']['directory']}/$dir/$filename");
+		imagegif($new, "{$app->items['uploads']['directory']}/$dir/$filename");
 	}
 	
 	// Delete temporary image resources
@@ -71,18 +71,18 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 
 	// Form validation
 	
-	if ($GLOBALS['app']['items']['titles'] == FALSE && $_POST['content'] == '')
-		$error .= ucfirst($GLOBALS['app']['items']['name']).' must include '.strtolower($GLOBALS['app']['items']['content']['name']).'.<br />';
+	if ($app->items['titles'] == FALSE && $_POST['content'] == '')
+		$error .= ucfirst($app->items['name']).' must include '.strtolower($app->items['content']['name']).'.<br />';
 
-	if ($GLOBALS['app']['items']['uploads']['enabled'] == TRUE) {
+	if ($app->items['uploads']['enabled'] == TRUE) {
 		
 		if ($_FILES['file']['error'] > 0)
 			$error .= 'Error code: '.$_FILES['file']['error'].'<br />';
 		
-		if (!in_array($_FILES['file']['type'], $GLOBALS['app']['items']['uploads']['mime-types']))
+		if (!in_array($_FILES['file']['type'], $app->items['uploads']['mime-types']))
 			$error .= 'Invalid file type: '.$_FILES['file']['type'].'<br />';
 		
-		if ($_FILES['file']['size'] > $GLOBALS['app']['items']['uploads']['max-size'])
+		if ($_FILES['file']['size'] > $app->items['uploads']['max-size'])
 			$error .= 'File too large.<br />';
 		
 	}
@@ -92,10 +92,10 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 	if ($error == '') {
 		// No error so proceed...
 		
-		if ($GLOBALS['app']['items']['uploads']['enabled'] == TRUE) {
+		if ($app->items['uploads']['enabled'] == TRUE) {
 			
 			// Check for file with same name and rename if neccessary
-			if (file_exists("{$GLOBALS['app']['items']['uploads']['directory']}/originals/{$_FILES['file']['name']}")) {
+			if (file_exists("{$app->items['uploads']['directory']}/originals/{$_FILES['file']['name']}")) {
 				
 				// Find filename and extension, works for filenames that include dots and any length extension!
 				$filename = substr($_FILES['file']['name'], 0, strrpos($_FILES['file']['name'], '.'));
@@ -106,12 +106,12 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 				do {
 					$_FILES['file']['name'] = "$filename-$i.$extension";
 					$i++;
-				} while (file_exists("{$GLOBALS['app']['items']['uploads']['directory']}/originals/{$_FILES['file']['name']}"));
+				} while (file_exists("{$app->items['uploads']['directory']}/originals/{$_FILES['file']['name']}"));
 				
 			}
 			
 			// Grab the file
-			move_uploaded_file($_FILES['file']['tmp_name'], "{$GLOBALS['app']['items']['uploads']['directory']}/originals/{$_FILES['file']['name']}");
+			move_uploaded_file($_FILES['file']['tmp_name'], "{$app->items['uploads']['directory']}/originals/{$_FILES['file']['name']}");
 			
 			// Generate thumbnail
 			generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 100, 100, 'thumbnails');
@@ -119,10 +119,10 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 			// Generate stream image
 			generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 350, 500, 'stream');
 
-			$item_id = $item->add($_SESSION['user']['id'], $_POST['content'], $_POST['title'], $_FILES['file']['name']);
+			$item_id = $app->item->add($_SESSION['user']['id'], $_POST['content'], $_POST['title'], $_FILES['file']['name']);
 			
 		} else {
-			$item_id = $item->add($_SESSION['user']['id'], $_POST['content'], $_POST['title']);
+			$item_id = $app->item->add($_SESSION['user']['id'], $_POST['content'], $_POST['title']);
 		}
 		
 		// Give points
@@ -133,13 +133,13 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		if (is_object($GLOBALS['log']))
 			$GLOBALS['log']->add($_SESSION['user']['id'], 'item', $item_id, 'add', "title = {$_POST['title']}\ncontent = {$_POST['content']}");
 
-		$message = ucfirst($GLOBALS['app']['items']['name']).' added!';
+		$message = ucfirst($app->items['name']).' added!';
 
 		// Go forth!
 		if (SITE_IDENTIFIER == 'live') {
-			header('Location: '.$GLOBALS['app']->url.'user.php?message='.urlencode($message));
+			header('Location: '.$app->url.'user.php?message='.urlencode($message));
 		} else {
-			header('Location: '.$GLOBALS['app']['dev_url'].'user.php?message='.urlencode($message));
+			header('Location: '.$app->dev_url.'user.php?message='.urlencode($message));
 		}
 		
 		exit();
@@ -152,7 +152,8 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		$_GET['title']		= $_POST['title'];
 		$_GET['content']	= $_POST['content'];
 		
-		$app = $GLOBALS['app'];
+		// Commented out the line below while objectifying $app
+		//$app = $GLOBALS['app'];
 		
 		// Show error message
 		$message = $error;
@@ -166,19 +167,19 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 } elseif ($_GET['delete'] != '') {
 	// Delete an item
 
-	$item = $item->get($_GET['delete']);
+	$item = $app->item->get($_GET['delete']);
 	
 	if ($_SESSION['user']['id'] == $item['user']['id'] && $item != NULL) {
 
 		// Delete item
-		$item->remove($_GET['delete']);
+		$app->item->remove($_GET['delete']);
 		if (is_object($GLOBALS['log']))
 			$GLOBALS['log']->add($_SESSION['user']['id'], 'item', $_GET['delete'], 'remove');
 
 		// Delete comments
 		if (is_array($item['comments'])) {
 			foreach ($item['comments'] as $key => $value) {
-				$id = $comment->remove($value['user_id'], $item['id'], $value['id']);
+				$id = $app->comment->remove($value['user_id'], $item['id'], $value['id']);
 				if (is_object($GLOBALS['log']))
 					$GLOBALS['log']->add($_SESSION['user']['id'], 'comment', $id, 'remove');
 			}
@@ -187,14 +188,14 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		// Delete likes
 		if (is_array($item['comments'])) {
 			foreach ($item['likes'] as $key => $value) {
-				$id = $like->remove($value['user_id'], $item['id']);
+				$id = $app->likeremove($value['user_id'], $item['id']);
 				if (is_object($GLOBALS['log']))
 					$GLOBALS['log']->add($_SESSION['user']['id'], 'like', $id, 'remove');
 			}
 		}
 		
 		// Set message
-		$message = ucfirst($GLOBALS['app']['items']['name']).' removed!';
+		$message = ucfirst($app->items['name']).' removed!';
 
 		// Return from whence you came
 		header('Location: '.$_SERVER['HTTP_REFERER']);
@@ -205,9 +206,9 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		
 		// Go forth
 		if (SITE_IDENTIFIER == 'live') {
-			header('Location: '.$GLOBALS['app']->url);
+			header('Location: '.$app->url);
 		} else {
-			header('Location: '.$GLOBALS['app']['dev_url']);
+			header('Location: '.$app->dev_url);
 		}
 		
 		exit();
@@ -217,12 +218,12 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 } elseif ($_GET['id'] != '') {
 	// No new item so get item info based on get var
 	
-	$item = $item->get($_GET['id']);
+	$item = $app->item->get($_GET['id']);
 
 	// Fail gracefully if item doesn't exist
 	if ($item == NULL) {
 
-		$page['name'] = ucfirst($GLOBALS['app']['items']['name']).' not found';
+		$page['name'] = ucfirst($app->items['name']).' not found';
 		include 'themes/'.$app->theme.'/header.php';
 		include 'themes/'.$app->theme.'/footer.php';
 		exit;

@@ -25,13 +25,15 @@ class friend {
 	// Get a users's friends
 	function get($user_id) {
 
+		global $app;
+
 		$user_id = sanitize_input($user_id);
 
 		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $user_id";
 		$query = mysql_query($sql);
 
 		while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$row['user'] = $user->get($row['friend_user_id']);
+			$row['user'] = $app->user->get($row['friend_user_id']);
 			$return[$row['id']] = $row;
 		}
 
@@ -42,6 +44,7 @@ class friend {
 	// Get a users's followers
 	function list_followers($user_id) {
 
+		global $app;
 
 		$user_id = sanitize_input($user_id);
 
@@ -51,7 +54,7 @@ class friend {
 		$query = mysql_query($sql);
 
 		while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$row['user'] = $user->get($row['user_id']);
+			$row['user'] = $app->user->get($row['user_id']);
 			$return[$row['id']] = $row;
 		}
 

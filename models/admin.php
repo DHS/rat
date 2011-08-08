@@ -49,9 +49,11 @@ class admin {
 	// Grants a given number of invites to all users
 	function update_invites($invites) {
 
+		global $app;
+
 		$invites = sanitize_input($invites);
 
-		$users = $admin->list_users();
+		$users = $app->admin->list_users();
 
 		foreach ($users as $user) {
 

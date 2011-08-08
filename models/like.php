@@ -25,13 +25,15 @@ class like {
 	// Get likes for an item
 	function list_item($item_id) {
 
+		global $app;
+
 		$item_id = sanitize_input($item_id);
 
 		$sql = "SELECT id, user_id, date FROM likes WHERE item_id = $item_id";
 		$query = mysql_query($sql);
 
 		while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$row['user'] = $GLOBALS['app']->user->get($row['user_id']);
+			$row['user'] = $app->user->get($row['user_id']);
 			$return[$row['id']] = $row;
 		}
 
@@ -41,6 +43,8 @@ class like {
 
 	// Get all liked items
 	function list_all($limit = 10) {
+		
+		global $app;
 		
 		$sql = "SELECT * FROM likes ORDER BY date DESC";
 
@@ -57,7 +61,7 @@ class like {
 		while ($like = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
 			// Get info about the liker
-			$item['user'] = $user->get($like['user_id']);
+			$item['user'] = $app->user->get($like['user_id']);
 
 			// Get item info
 			$sql2 = "SELECT * FROM items WHERE id = {$like['item_id']} LIMIT 1";
@@ -65,7 +69,7 @@ class like {
 			$item['item'] = mysql_fetch_array($query2, MYSQL_ASSOC);
 
 			// Get info on user who created the item
-			$item['item']['user'] = $user->get($item['item']['user_id']);
+			$item['item']['user'] = $app->user->get($item['item']['user_id']);
 
 			$items[] = $item;
 

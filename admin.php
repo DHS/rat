@@ -4,7 +4,7 @@ require_once 'config/init.php';
 
 // Critical: Setup wizard creates admin as first user
 
-if (count($admin->list_users()) == 0 && $_GET['page'] == '') {
+if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 	
 	$page['name'] = 'Setup';
 	
@@ -18,16 +18,16 @@ if (count($admin->list_users()) == 0 && $_GET['page'] == '') {
 	
 	exit();
 	
-} elseif (count($admin->list_users()) == 0 && $_GET['page'] == 'invite') {
+} elseif (count($app->admin->list_users()) == 0 && $_GET['page'] == 'invite') {
 	
 	$page['name'] = 'Setup';
 	
 	// Do signup
 
-	$user_id = $user->add($_POST['email']);
-	$user->signup($user_id, $_POST['username'], $_POST['password']);
+	$user_id = $app->user->add($_POST['email']);
+	$app->user->signup($user_id, $_POST['username'], $_POST['password']);
 	
-	$user = $user->get_by_email($_POST['email']);
+	$user = $app->user->get_by_email($_POST['email']);
 	$_SESSION['user'] = $user;
 	
 	// Log login
@@ -38,9 +38,9 @@ if (count($admin->list_users()) == 0 && $_GET['page'] == '') {
 	
 	// Go forth!
 	if (SITE_IDENTIFIER == 'live') {
-		header('Location: '.$GLOBALS['app']->url.'?message='.urlencode($message));
+		header('Location: '.$app->url.'?message='.urlencode($message));
 	} else {
-		header('Location: '.$GLOBALS['app']['dev_url'].'?message='.urlencode($message));
+		header('Location: '.$app->dev_url.'?message='.urlencode($message));
 	}
 		
 	exit();
@@ -71,8 +71,10 @@ if (in_array($_SESSION['user']['id'], $app->admin_users) != TRUE) {
 
 function dashboard() {
 	
-	$user_count = count($admin->list_users());
-	$waiting_user_count = count($admin->list_users_beta());
+	global $app;
+	
+	$user_count = count($app->admin->list_users());
+	$waiting_user_count = count($app->admin->list_users_beta());
 	
 	include 'themes/'.$app->theme.'/admin_dashboard.php';
 	
@@ -80,7 +82,9 @@ function dashboard() {
 
 function signups() {
 	
-	$waiting_users = $admin->list_users_beta();
+	global $app;
+	
+	$waiting_users = $app->admin->list_users_beta();
 	$waiting_user_count = count($waiting_users);
 	
 	include 'themes/'.$app->theme.'/admin_signups.php';
@@ -92,7 +96,7 @@ function invite() {
 	if ($_GET['email'] != '') {
 		
 		// add invite to database
-		$id = $invite->add($_SESSION['user']['id'], $_GET['email']);
+		$id = $app->invite->add($_SESSION['user']['id'], $_GET['email']);
 		
 		// log invite
 		if (is_object($GLOBALS['log']))
@@ -104,14 +108,14 @@ function invite() {
 			$to		= "{$_POST['username']} <davehs@gmail.com>";
 		}
 		
-		$url		= $GLOBALS['app']->url.'signup.php?code='.$id.'&email='.urlencode($_GET['email']);
+		$url		= $app->url.'signup.php?code='.$id.'&email='.urlencode($_GET['email']);
 		
-		$subject	= "Your {$GLOBALS['app']->name} invite is here!";
+		$subject	= "Your {$app->name} invite is here!";
 		// Load template into $body variable
 		include 'themes/'.$app->theme.'/email_invite_admin.php';
 		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 		
-		if ($GLOBALS['app']->send_emails == TRUE) {
+		if ($app->send_emails == TRUE) {
 			// Email user
 			mail($to, $subject, $body, $headers);
 		}
@@ -127,7 +131,9 @@ function invite() {
 
 function users() {
 	
-	$users = $admin->list_users();
+	global $app;
+	
+	$users = $app->admin->list_users();
 	$user_count = count($users);
 	
 	include 'themes/'.$app->theme.'/admin_users.php';
@@ -135,10 +141,12 @@ function users() {
 }
 
 function grant_invites() {
-			
+	
+	global $app;
+		
 	if ($_GET['count'] > 0) {
 		
-		$admin->update_invites($_GET['count']);
+		$app->admin->update_invites($_GET['count']);
 		
 		$message = 'Invites updated!';
 		include 'themes/'.$app->theme.'/message.php';

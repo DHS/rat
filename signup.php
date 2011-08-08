@@ -40,7 +40,9 @@ if (!empty($_SESSION['user'])) {
 // Show signup form
 function show_form() {
 	
-	if ($GLOBALS['app']->beta'] == TRUE) {
+	global $app;
+	
+	if ($app->beta == TRUE) {
 		
 		// Show beta signup form
 		include 'themes/'.$app->theme.'/signup_beta.php';
@@ -57,7 +59,9 @@ function show_form() {
 // Validate a code
 function validate_code() {
 
-	if (validate_invite_code($_GET['code'], $_GET['email']) == TRUE) {
+	global $app;
+
+	if ($app->user->validate_invite_code($_GET['code'], $_GET['email']) == TRUE) {
 		// Valid
 
 		include 'themes/'.$app->theme.'/signup.php';
@@ -65,7 +69,7 @@ function validate_code() {
 	} else {
 		// Invalid
 		
-		if ($GLOBALS['app']->beta'] == TRUE) {
+		if ($app->beta == TRUE) {
 			$message = 'Your invite code is invalid.';
 			include 'themes/'.$app->theme.'/message.php';
 			include 'themes/'.$app->theme.'/signup_beta.php';
@@ -80,8 +84,10 @@ function validate_code() {
 // Glorious new signup function
 function do_signup($mode = 'full') {
 
+	global $app;
+
 	/*
-	*	Three modes			Code	Email	Username	Password	user_add	$user->signup	invites	points
+	*	Three modes			Code	Email	Username	Password	user->add	user->signup	invites	points
 	*		1. beta					X								X
 	*		2. code			X		X		X			X			if needed	X			X		X
 	*		3. full					X		X			X			X			X			X		X
@@ -90,9 +96,9 @@ function do_signup($mode = 'full') {
 	
 	// Check invite code (only really matters if app is in beta)
 
-	if ($mode == 'code' && $GLOBALS['app']->beta'] == TRUE) {
+	if ($mode == 'code' && $app->beta == TRUE) {
 
-		if (validate_invite_code($_POST['code'], $_POST['email']) != TRUE)
+		if ($app->user->validate_invite_code($_POST['code'], $_POST['email']) != TRUE)
 			$error .= 'Invalid invite code.<br />';
 
 	}
@@ -104,13 +110,13 @@ function do_signup($mode = 'full') {
 	if ($_POST['email'] == '')
 		$error .= 'Email cannot be left blank.<br />';
 	
-	if ($user->check_contains_spaces($_POST['email']) == TRUE)
+	if ($app->user->check_contains_spaces($_POST['email']) == TRUE)
 		$error .= 'Email cannot contain spaces.<br />';
 	
-	if ($user->check_contains_at($_POST['email']) != TRUE)
+	if ($app->user->check_contains_at($_POST['email']) != TRUE)
 		$error .= 'Email must contain an @ symbol.<br />';
 	
-	if ($user->check_email_available($_POST['email']) != TRUE)
+	if ($app->user->check_email_available($_POST['email']) != TRUE)
 		$error .= 'Email already in the system!<br />';
 	
 	// Check username
@@ -120,10 +126,10 @@ function do_signup($mode = 'full') {
 		if ($_POST['username'] == '')
 			$error .= 'Username cannot be left blank.<br />';
 		
-		if ($user->check_alphanumeric($_POST['username']) != TRUE)
+		if ($app->user->check_alphanumeric($_POST['username']) != TRUE)
 			$error .= 'Username must only contain letters and numbers.<br />';
 		
-		if ($user->check_username_available($_POST['username']) != TRUE)
+		if ($app->user->check_username_available($_POST['username']) != TRUE)
 			$error .= 'Username not available.<br />';
 		
 	}
@@ -146,13 +152,13 @@ function do_signup($mode = 'full') {
 		// No error so proceed...
 		
 		// First check if user added
-		$user = $user->get_by_email($_POST['email']);
+		$user = $app->user->get_by_email($_POST['email']);
 
 		// If not then add
 		if ($user == NULL) {
 			
-			$user_id = $user->add($_POST['email']);
-			$user = $user->get($user_id);
+			$user_id = $app->user->add($_POST['email']);
+			$user = $app->user->get($user_id);
 			
 		}
 		
@@ -160,13 +166,13 @@ function do_signup($mode = 'full') {
 		if ($mode == 'code' || $mode == 'full') {
 		
 			// Do signup
-			$user->signup($user['id'], $_POST['username'], $_POST['password1']);
+			$app->user->signup($user['id'], $_POST['username'], $_POST['password1']);
 			
-			if ($GLOBALS['app']->send_emails == TRUE) {
+			if ($app->send_emails == TRUE) {
 				// Send 'thank you for signing up' email
 
 				$to			= "{$_POST['username']} <{$_POST['email']}>";
-				$subject	= "[{$GLOBALS['app']->name}] Welcome to {$GLOBALS['app']->name}!";
+				$subject	= "[{$app->name}] Welcome to {$app->name}!";
 				// Load template into $body variable
 				include 'themes/'.$app->theme.'/email_signup.php';
 				$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
@@ -184,7 +190,7 @@ function do_signup($mode = 'full') {
 			$_SESSION['user'] = $user;
 			
 			// Check invites are enabled and the code is valid
-			if ($GLOBALS['app']['invites']['enabled'] == TRUE && validate_invite_code($_POST['code'], $_POST['email']) == TRUE) {
+			if ($app->invites['enabled'] == TRUE && validate_invite_code($_POST['code'], $_POST['email']) == TRUE) {
 				
 				// Get invites
 				$invites = invites_get_by_code($_POST['code']);
@@ -193,21 +199,21 @@ function do_signup($mode = 'full') {
 					foreach ($invites as $invite) {
 						
 						// Update invites
-						$invite->update(($invite['id']);
+						$app->invite->update(($invite['id']);
 						
 						// Log invite update
 						if (is_object($GLOBALS['log']))
 							$GLOBALS['log']->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
 						
 						// Update points (but only if inviting user is not an admin)
-						if (is_object($GLOBALS['points']) && in_array($invite['user_id'], $GLOBALS['app']['admin_users']) != TRUE) {
+						if (is_object($GLOBALS['points']) && in_array($invite['user_id'], $app->admin_users) != TRUE) {
 							
 							// Update points
-							$GLOBALS['points']->update($invite['user_id'], $GLOBALS['app']['points']['per_invite_accepted']);
+							$GLOBALS['points']->update($invite['user_id'], $app->points['per_invite_accepted']);
 							
 							// Log points update
 							if (is_object($GLOBALS['log']))
-								$GLOBALS['log']->add($invite['user_id'], 'points', NULL, $GLOBALS['app']['points']['per_invite_accepted'], 'invite_accepted = '.$invite['id']);
+								$GLOBALS['log']->add($invite['user_id'], 'points', NULL, $app->points['per_invite_accepted'], 'invite_accepted = '.$invite['id']);
 							
 						}
 						
@@ -233,9 +239,9 @@ function do_signup($mode = 'full') {
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$GLOBALS['app']->url.'?message='.$message);
+				header('Location: '.$app->url.'?message='.$message);
 			} else {
-				header('Location: '.$GLOBALS['app']['dev_url'].'?message='.$message);
+				header('Location: '.$app->dev_url.'?message='.$message);
 			}
 	
 			exit();
@@ -257,9 +263,9 @@ function do_signup($mode = 'full') {
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$GLOBALS['app']->url.'?message='.$message);
+				header('Location: '.$app->url.'?message='.$message);
 			} else {
-				header('Location: '.$GLOBALS['app']['dev_url'].'?message='.$message);
+				header('Location: '.$app->dev_url.'?message='.$message);
 			}
 	
 			exit();
@@ -274,7 +280,8 @@ function do_signup($mode = 'full') {
 		$_GET['username']	= $_POST['username'];
 		$_GET['code']		= $_POST['code'];
 		
-		$app = $GLOBALS['app'];
+		// Commented out while objectifying $app
+		//$app = $GLOBALS['app'];
 		
 		// Show error message
 		$message = $error;
@@ -308,7 +315,7 @@ if ($_GET['code'] != '') {
 		
 	} else {
 		
-		if ($GLOBALS['app']->beta'] == TRUE) {
+		if ($app->beta == TRUE) {
 			
 			$page['selector'] = 'do_signup';
 			$mode = 'beta';
