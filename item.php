@@ -71,7 +71,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 
 	// Form validation
 	
-	if ($app->items['titles'] == FALSE && $_POST['content'] == '')
+	if ($app->items['titles']['enabled'] == FALSE && $_POST['content'] == '')
 		$error .= ucfirst($app->items['name']).' must include '.strtolower($app->items['content']['name']).'.<br />';
 
 	if ($app->items['uploads']['enabled'] == TRUE) {

@@ -2,7 +2,7 @@
 
 if (is_array($items)) {
 	
-echo '<table style="width: 500px;">';
+echo '<table style="width: 100%;">';
 
 foreach ($items as $item) { ?>
 
@@ -29,10 +29,8 @@ foreach ($items as $item) { ?>
 				<p><a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a> <?php echo $item['content']; ?></p>
 			
 			<?php } ?>
-					
-			<p>
+
 			<?php include 'items_meta.php'; ?>
-			</p>
 
 			<?php
 			
@@ -43,9 +41,9 @@ foreach ($items as $item) { ?>
 
 				include 'themes/'.$app->theme.'/comments_list.php';
 				if (count($item['comments']) > 0) {
-					$comments_add_show = TRUE;
+					$show_comment_form = TRUE;
 				} else {
-					$comments_add_show = FALSE;
+					$show_comment_form = FALSE;
 				}
 				include 'themes/'.$app->theme.'/comments_add.php';
 

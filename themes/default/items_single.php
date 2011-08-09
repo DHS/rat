@@ -38,7 +38,7 @@ if ($app->items['likes']['enabled'] == TRUE)
 
 if ($app->items['comments']['enabled'] == TRUE) {
 	include 'themes/'.$app->theme.'/comments_list.php';
-	$comments_add_show = TRUE;
+	$show_comment_form = TRUE;
 	include 'themes/'.$app->theme.'/comments_add.php';
 }
 
