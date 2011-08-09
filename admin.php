@@ -109,7 +109,7 @@ function invite() {
 			$to		= "{$_POST['username']} <davehs@gmail.com>";
 		}
 		
-		$url		= $app->url.'signup.php?code='.$id.'&email='.urlencode($_GET['email']);
+		$link		= $app->url.'signup.php?code='.$id.'&email='.urlencode($_GET['email']);
 		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 		
 		// Load template into $body variable
