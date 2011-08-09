@@ -73,7 +73,6 @@ Missing functionality
 - Delete user accounts
 - Native avatars
 - Search users
-- Search items
 - Edit items
 - @ mentions
 - Pagination/infinite scroll
