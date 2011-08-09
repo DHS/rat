@@ -10,6 +10,12 @@ CREATE TABLE `users` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
+CREATE TABLE `users_password_reset` (
+  `user_id` int(10) unsigned NOT NULL,
+  `reset_code` char(32) DEFAULT NULL,
+  `date` timestamp NOT NULL default CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 CREATE TABLE `items` (
   `id` int(10) NOT NULL auto_increment,
   `user_id` int(10) NOT NULL default '0',

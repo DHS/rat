@@ -68,7 +68,6 @@ Functionality
 Missing functionality
 ---------------------
 
-- Forgotten password
 - Confirm email address
 - Delete user accounts
 - Native avatars

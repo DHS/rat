@@ -244,6 +244,45 @@ class user {
 
 	}
 	
+	// Check if a password reset token is valid ie. <24hrs old
+	function check_password_reset_code($code) {
+		
+		$code = sanitize_input($code);
+        
+		$sql = "SELECT user_id FROM users_password_reset WHERE reset_code = $code AND date > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY date DESC";
+		$query = mysql_query($sql);
+		$count = mysql_num_rows($query);
+		
+		if ($count >= 1) {
+        
+			return mysql_result($query, 0);
+        
+		} else {
+        
+			return FALSE;
+        
+		}
+		
+	}
+	
+	// Generate a random password reset code
+	function generate_password_reset_code($user_id) {
+		
+		// Generate code
+		$code = '';
+		$source = 'abcdefghijklmnpqrstuvwxyz123456789';
+		while (strlen($code) < 6) {
+			$code .= $source[rand(0, strlen($source))];
+		}
+		
+		// Write to database
+		$sql = "INSERT INTO users_password_reset SET user_id = $user_id, reset_code = '$code'";
+		$query = mysql_query($sql);
+
+		return $code;
+		
+	}
+	
 }
 
 ?>
