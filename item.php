@@ -13,6 +13,8 @@ if ($_GET['id'] == '' && $_POST['title'] == '' && $_POST['content'] == '' && $_G
 
 function generate_thumbnail($filename, $type, $max_width = 100, $max_height = 100, $dir = 'thumbnails') {
 	
+	global $app;
+	
 	// Create temporary source image resource
 	if ($type == 'image/jpeg' || $type == 'image/pjpeg') {
 		$src = imagecreatefromjpeg("{$app->items['uploads']['directory']}/originals/$filename");

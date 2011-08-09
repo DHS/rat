@@ -93,6 +93,8 @@ function signups() {
 
 function invite() {
 
+	global $app;
+
 	if ($_GET['email'] != '') {
 		
 		// add invite to database

@@ -29,6 +29,8 @@ function index() {
 
 function password() {
 	// Change password
+	
+	global $app;
 
 	if ($_POST['old_password'] != '' && $_POST['new_password1'] != '' && $_POST['new_password2'] != '') {
 		// Check variables are present
@@ -72,6 +74,8 @@ function password() {
 
 function profile() {
 	// Update profile
+	
+	global $app;
 	
 	if ($_POST['name'] != '' || $_POST['bio'] != '' || $_POST['url'] != '') {
 		// Even if only one field set, do update
