@@ -1,5 +1,7 @@
 <?php
 
+$subject = "[$app->name] Welcome to $app->name!";
+
 $body = '<p>Hi '.$_POST['username'].',</p>
 <p>Thank you for joining '.$app->name.'!</p>
 <p>We\'ve got some great content - I hope you find something that takes your interest.</p>

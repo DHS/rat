@@ -1,5 +1,7 @@
 <?php
 
+$subject = "[$app->name] {$user['username']} is now following you on $app->name!";
+
 $body = '<p>Hi '.$friend['username'].',</p>
 <p>Just to let you know that you have a new follower on '.$app->name.':</p>
 <p>$link</p>

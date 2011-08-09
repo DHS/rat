@@ -109,11 +109,10 @@ function invite() {
 		}
 		
 		$url		= $app->url.'signup.php?code='.$id.'&email='.urlencode($_GET['email']);
+		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 		
-		$subject	= "Your {$app->name} invite is here!";
 		// Load template into $body variable
 		include 'themes/'.$app->theme.'/email_invite_admin.php';
-		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 		
 		if ($app->send_emails == TRUE) {
 			// Email user

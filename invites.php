@@ -61,11 +61,10 @@ if ($_POST['email'] != '') {
 		}
 
 		$link = $app->url.'signup.php?code='.$id.'&email='.urlencode($_POST['email']);
+		$headers = "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
-		$subject	= "[$app->name] An invitation from {$_SESSION['user']['username']}";
-		// Load template into $body variable
+		// Load subject and body from template
 		include 'themes/'.$app->theme.'/email_invite_friend.php';
-		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 		if ($app->send_emails == TRUE) {
 			// Email user

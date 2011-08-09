@@ -1,5 +1,7 @@
 <?php
 
+$subject = "Your $app->name invite is here!";
+
 $body = '<p>Hi there,</p>
 <p>Your '.$app->name.' invite is here! Click the following link to get started:</p>
 <p>'.$url.'</p>

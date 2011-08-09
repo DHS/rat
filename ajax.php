@@ -62,10 +62,10 @@ if ($page['selector'] == 'like_add') {
 		$link = $app->url.'user.php?id='.$_GET['user_id'];
 
 		$to			= "{$friend['username']} <{$friend['email']}>";
-		$subject	= "[$app->name] {$user['username']} is now following you on {$app->name}!";
-		// Load template into $body variable
-		include 'themes/'.$app->theme.'/email_follower.php';
 		$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
+
+		// Load subject and body from template
+		include 'themes/'.$app->theme.'/email_follower_new.php';
 
 		// Email user
 		mail($to, $subject, $body, $headers);
