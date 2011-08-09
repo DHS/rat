@@ -9,7 +9,7 @@ if ($_GET['user_id'] != $_SESSION['user']['id'])
 
 if ($page['selector'] == 'like_add') {
 	
-	$like_id = $app->likeadd($_GET['user_id'], $_GET['item_id']);
+	$like_id = $app->like->add($_GET['user_id'], $_GET['item_id']);
 	
 	if (is_object($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'like', $like_id, 'add');
@@ -19,7 +19,7 @@ if ($page['selector'] == 'like_add') {
 	
 } elseif ($page['selector'] == 'like_remove') {
 
-	$like_id = $app->likeremove($_GET['user_id'], $_GET['item_id']);
+	$like_id = $app->like->remove($_GET['user_id'], $_GET['item_id']);
 	
 	if (is_object($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'like', $like_id, 'remove');
@@ -29,7 +29,7 @@ if ($page['selector'] == 'like_add') {
 	
 } elseif ($page['selector'] == 'comment_add') {
 
-	$comment_id = $app->comment->get($_GET['user_id'], $_GET['item_id'], $_GET['content']);
+	$comment_id = $app->comment->add($_GET['user_id'], $_GET['item_id'], $_GET['content']);
 	
 	if (is_object($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'comment', $comment_id, 'add', $_GET['content']);
