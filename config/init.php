@@ -64,5 +64,7 @@ require_once 'models/comment.php';
 $app->comment = new comment;
 require_once 'models/like.php';
 $app->like = new like;
+require_once 'models/search.php';
+$app->search = new search;
 
 ?>

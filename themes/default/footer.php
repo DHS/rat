@@ -2,7 +2,7 @@
     <footer>
 
         <p class="float_right"><?php echo $app->name; ?> was created using <a href="http://github.com/DHS/rat">Rat</a></p>
-        <p><?php echo $app->name; ?> &copy; <?php echo date('Y'); ?> &middot; <a href="about.php">About</a> &middot; <a href="help.php">Help</a></p>
+        <p><?php echo $app->name; ?> &copy; <?php echo date('Y'); ?> &middot; <a href="about.php">About</a> &middot; <a href="help.php">Help</a> &middot; <a href="search.php">Search</a></p>
 
     </footer>
   </div> <!--! end of #container -->

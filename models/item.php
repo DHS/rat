@@ -2,7 +2,6 @@
 
 class item {
 
-
 	// Create an item	
 	function add($user_id, $content, $title = NULL, $image = NULL) {
 
@@ -167,37 +166,6 @@ class item {
 			$friends_string .= " OR user_id = {$friend['friend_user_id']}";
 
 		$sql = "SELECT * FROM items WHERE $friends_string ORDER BY id DESC LIMIT 100";
-		$query = mysql_query($sql);
-
-		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
-
-			$item['comments'] = $app->comment->list_item($item['id']);
-			$item['likes'] = $app->like->list_item($item['id']);
-			$item['user'] = $app->user->get($item['user_id']);
-
-			$items[] = $item;
-
-		}
-
-		return $items;
-
-	}
-
-	// Search items
-	function list_search($query = '') {
-
-		global $app;
-
-		$query = sanitize_input($query);
-
-		$sql = "SELECT * FROM items WHERE content OR title LIKE %$query% ORDER BY id DESC";
-
-		// Limit not null so create limit string
-		if ($limit != NULL) {
-			$limit = sanitize_input($limit);
-			$sql .= " LIMIT $limit";
-		}
-
 		$query = mysql_query($sql);
 
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {

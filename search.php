@@ -6,9 +6,12 @@ require_once 'config/init.php';
 
 include 'themes/'.$app->theme.'/header.php';
 
-$app->item->list_search($_GET['q']);
+include 'themes/'.$app->theme.'/search.php';
 
-include 'themes/'.$app->theme.'/items_list.php';
+if (isset($_GET['q'])) {
+	$items = $app->search->search($_GET['q']);
+	include 'themes/'.$app->theme.'/items_list.php';
+}
 
 // Footer
 
