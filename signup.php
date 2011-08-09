@@ -138,7 +138,7 @@ function do_signup($mode = 'full') {
 	
 	if ($mode == 'code' || $mode == 'full') {
 	
-		if ($_POST['password1'] == '' || $_POST['password1'] == '')
+		if ($_POST['password1'] == '' || $_POST['password2'] == '')
 			$error .= 'Please enter your password twice.<br />';
 		
 		if ($_POST['password1'] != $_POST['password2'])
