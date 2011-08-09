@@ -9,7 +9,6 @@ if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 	$page['name'] = 'Setup';
 	
 	$_GET['id'] = 1;
-	$password = generate_password();
 	
 	$message = 'Welcome to Rat! Please enter your details:';
 	include 'themes/'.$app->theme.'/header.php';
@@ -166,16 +165,6 @@ function history() {
 		$GLOBALS['log']->view();
 
 }
-
-function generate_password() {
-	$password = '';
-	$source = 'abcdefghijklmnpqrstuvwxyz123456789';
-	while (strlen($password) < 6) {
-		$password .= $source[rand(0, strlen($source))];
-	}
-	return $password;
-}
-
 
 // Selector
 
