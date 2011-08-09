@@ -2,7 +2,7 @@
 
 if (is_array($items)) {
 	
-echo '<table class="small" width="100%">';
+echo '<table width="100%">';
 
 foreach ($items as $item) {
 
@@ -20,10 +20,10 @@ foreach ($items as $item) {
 
 			<?php
 
-			if ($app->items['likes'] == TRUE)
+			if ($app->items['likes']['enabled'] == TRUE)
 				include 'themes/'.$app->theme.'/likes_list.php';
 			
-			if ($app->items['comments'] == TRUE) {
+			if ($app->items['comments']['enabled'] == TRUE) {
 
 				include 'themes/'.$app->theme.'/comments_list.php';
 				if (count($item['comments']) > 0) {

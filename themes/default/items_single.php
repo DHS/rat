@@ -33,10 +33,10 @@ if ($app->private != TRUE)
 
 <?php
 
-if ($app->items['likes'] == TRUE)
+if ($app->items['likes']['enabled'] == TRUE)
 	include 'themes/'.$app->theme.'/likes_list.php';
 
-if ($app->items['comments'] == TRUE) {
+if ($app->items['comments']['enabled'] == TRUE) {
 	include 'themes/'.$app->theme.'/comments_list.php';
 	$comments_add_show = TRUE;
 	include 'themes/'.$app->theme.'/comments_add.php';

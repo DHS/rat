@@ -33,7 +33,7 @@ $content .= '<p>It lets you create '.$app->items['name_plural'];
 if ($app->items['titles']['enabled'] == TRUE)
 	$content .= ' with '.strtolower($app->items['titles']['name_plural']);
 
-if ($app->items['comments'] == TRUE || $app->items['likes'] == TRUE) {
+if ($app->items['comments']['enabled'] == TRUE || $app->items['likes']['enabled'] == TRUE) {
 
 	$content .= ' and then ';
 

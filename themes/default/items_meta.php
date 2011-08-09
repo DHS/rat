@@ -8,7 +8,7 @@
 if ($app->items['comments']['enabled'] == TRUE)
 	echo ' &middot <a href="#" onclick="document.getElementById(\'comment_form_'.$item['id'].'\').style.visibility = \'visible\'; document.getElementById(\'comment_form_'.$item['id'].'\').style.height = \'auto\'; document.getElementById(\'comment_form_'.$item['id'].'\').content.focus(); return false;">'.$app->items['comments']['name'].'</a>';
 
-if ($app->items['likes'] == TRUE) {
+if ($app->items['likes']['enabled'] == TRUE) {
 	
 	// find if current user likes the item
 	if (is_array($item['likes'])) {
