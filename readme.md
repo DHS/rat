@@ -77,7 +77,6 @@ Missing functionality
 - @ mentions
 - Pagination/infinite scroll
 - Tidier date formats
-- Log viewer for admin section
 - Add an additional theme
 - Plugin hooks similar to Wordpress
 - Connect accounts to Facebook/Twitter
