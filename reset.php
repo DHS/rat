@@ -2,7 +2,6 @@
 
 require_once 'config/init.php';
 
-
 function show_form() {
 	
 	global $app;
@@ -77,7 +76,7 @@ function update_password() {
 		
 		$user_id = $app->user->check_password_reset_code($_POST['code']);
 		
-		// Do signup
+		// Do update
 		$app->user->update_password($user_id, $_POST['password1']);
 		
 		$user = $app->user->get($user_id);
@@ -119,8 +118,8 @@ function update_password() {
 	
 }
 
+// Selector
 if (isset($_POST['email'])) {
-	// Email form submitted
 	
 	generate_code();
 	
