@@ -34,6 +34,8 @@ class log {
 	function view() {
 		// View the log
 		
+		global $app;
+		
 		$sql = "SELECT * FROM log ORDER BY id DESC LIMIT 10";
 		$query = mysql_query($sql);
 
