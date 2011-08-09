@@ -30,7 +30,7 @@ if ($_POST['email'] != '') {
 		$error .= 'Email address cannot contain spaces.<br />';
 
 	// Check if already invited
-	if ($app->invite->check_invited(($_SESSION['user']['id'], $_POST['email']) == TRUE)
+	if ($app->invite->check_invited($_SESSION['user']['id'], $_POST['email']) == TRUE)
 		$error .= 'You have already invited this person.<br />';
 	
 	// Check if already a user
@@ -62,7 +62,7 @@ if ($_POST['email'] != '') {
 
 		$link = $app->url.'signup.php?code='.$id.'&email='.urlencode($_POST['email']);
 
-		$subject	= "[{$app->name}] An invitation from {$_SESSION['user']['username']}";
+		$subject	= "[$app->name] An invitation from {$_SESSION['user']['username']}";
 		// Load template into $body variable
 		include 'themes/'.$app->theme.'/email_invite_friend.php';
 		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";

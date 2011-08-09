@@ -172,7 +172,7 @@ function do_signup($mode = 'full') {
 				// Send 'thank you for signing up' email
 
 				$to			= "{$_POST['username']} <{$_POST['email']}>";
-				$subject	= "[{$app->name}] Welcome to {$app->name}!";
+				$subject	= "[$app->name] Welcome to {$app->name}!";
 				// Load template into $body variable
 				include 'themes/'.$app->theme.'/email_signup.php';
 				$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
