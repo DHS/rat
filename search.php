@@ -9,7 +9,7 @@ include 'themes/'.$app->theme.'/header.php';
 include 'themes/'.$app->theme.'/search.php';
 
 if (isset($_GET['q'])) {
-	$items = $app->search->search($_GET['q']);
+	$items = $app->search->do_search($_GET['q']);
 	include 'themes/'.$app->theme.'/items_list.php';
 }
 

@@ -41,7 +41,7 @@ class search {
 		return $out;
 	}
 	
-	function search($terms){
+	function do_search($terms){
 		
 		global $app;
 	
@@ -123,8 +123,5 @@ class search {
 	}
 
 }
-
-//$results = search($HTTP_GET_VARS['q']);
-//$term_list = search_pretty_terms(search_html_escape_terms(search_split_terms($HTTP_GET_VARS['q'])));
 
 ?>
