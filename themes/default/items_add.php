@@ -10,9 +10,9 @@ if (!empty($_SESSION['user'])) { ?>
 	<table>
 		<?php
 		if ($app->items['titles']['enabled'] == TRUE)
-			echo '<tr><td class="align_right">'.$app->items['titles']['name'].': </td><td class="alight_left"><input type="text" name="title" size="50" value="'.$_GET['title'].'" /></td></tr>';
+			echo '<tr><td class="align_right">'.$app->items['titles']['name'].': </td><td class="alight_left"><input type="text" name="title" size="50" value="'; if (isset($_GET['title'])) echo $_GET['title']; echo '" /></td></tr>';
 		?>
-		<tr><td class="align_right"><?php echo $app->items['content']['name']; ?>: </td><td class="align_left"><textarea name="content" rows="5" cols="50"><?php echo $_GET['content']; ?></textarea></td></tr>
+		<tr><td class="align_right"><?php echo $app->items['content']['name']; ?>: </td><td class="align_left"><textarea name="content" rows="5" cols="50"><?php if (isset($_GET['content'])) echo $_GET['content']; ?></textarea></td></tr>
 		<?php
 		if ($app->items['uploads']['enabled'] == TRUE)
 			echo '<tr><td class="align_right"><label for="file">'.$app->items['uploads']['name'].':</label></td><td class="alight_left"><input type="file" name="file" id="file" /></td></tr>';
