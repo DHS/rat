@@ -66,20 +66,10 @@ $app['encryption_salt']					= 'hw9e46';
 // Determine whether site is dev or live
 $domain = substr(substr($app['url'], 0, -1), 7);
 
-switch ($_SERVER['HTTP_HOST']) {
-
-	case $domain:
-		define('SITE_IDENTIFIER', 'live');
-		break;
-
-	case 'www.'.$domain:
-		define('SITE_IDENTIFIER', 'live');
-		break;
-
-	case $domain:
-		define('SITE_IDENTIFIER', 'dev');
-		break;
-
+if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.'.$domain) {
+	define('SITE_IDENTIFIER', 'live');
+} else {
+	define('SITE_IDENTIFIER', 'dev');
 }
 
 if (SITE_IDENTIFIER == 'live') {
