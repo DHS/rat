@@ -16,7 +16,7 @@
 <p>
 
 	<?php
-	if (is_object($GLOBALS['gravatar']))
+	if (isset($GLOBALS['gravatar']))
 		echo $GLOBALS['gravatar']->show($item['user']['email'], array('user_id' => $item['user']['id'], 'size' => 20, 'style' => "margin-bottom: -7px;"));
 	?>
 	<a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a>

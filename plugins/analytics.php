@@ -11,7 +11,7 @@
 *	
 *		To include Google Analytics tracking code:
 *		
-*			if (is_object($GLOBALS['analytics']))
+*			if (isset($GLOBALS['analytics']))
 *				echo $GLOBALS['analytics']->show();
 *
 */

@@ -11,7 +11,7 @@ if ($page['selector'] == 'like_add') {
 	
 	$like_id = $app->like->add($_GET['user_id'], $_GET['item_id']);
 	
-	if (is_object($GLOBALS['log']))
+	if (isset($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'like', $like_id, 'add');
 	
 	$item = $app->item->get($_GET['item_id']);
@@ -21,7 +21,7 @@ if ($page['selector'] == 'like_add') {
 
 	$like_id = $app->like->remove($_GET['user_id'], $_GET['item_id']);
 	
-	if (is_object($GLOBALS['log']))
+	if (isset($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'like', $like_id, 'remove');
 	
 	$item = $app->item->get($_GET['item_id']);
@@ -31,7 +31,7 @@ if ($page['selector'] == 'like_add') {
 
 	$comment_id = $app->comment->add($_GET['user_id'], $_GET['item_id'], $_GET['content']);
 	
-	if (is_object($GLOBALS['log']))
+	if (isset($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'comment', $comment_id, 'add', $_GET['content']);
 
 	$item = $app->item->get($_GET['item_id']);
@@ -41,7 +41,7 @@ if ($page['selector'] == 'like_add') {
 	
 	$app->comment->remove($_GET['user_id'], $_GET['item_id'], $_GET['comment_id']);
 	
-	if (is_object($GLOBALS['log']))
+	if (isset($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'comment', $_GET['comment_id'], 'remove');
 	
 	$item = $app->item->get($_GET['item_id']);
@@ -51,7 +51,7 @@ if ($page['selector'] == 'like_add') {
 
 	$friend_id = $app->friend->add($_GET['user_id'], $_GET['friend_user_id']);
 
-	if (is_object($GLOBALS['log']))
+	if (isset($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'friend', $friend_id, 'add');
 
 	if ($app->send_emails == TRUE) {
@@ -80,7 +80,7 @@ if ($page['selector'] == 'like_add') {
 
 	$friend_id = $app->friend->remove($_GET['user_id'], $_GET['friend_user_id']);
 
-	if (is_object($GLOBALS['log']))
+	if (isset($GLOBALS['log']))
 		$GLOBALS['log']->add($_GET['user_id'], 'friend', $friend_id, 'remove');
 
 	$user['id'] = $_GET['friend_user_id'];

@@ -183,7 +183,7 @@ function do_signup($mode = 'full') {
 			}
 			
 			// Log signup
-			if (is_object($GLOBALS['log']))
+			if (isset($GLOBALS['log']))
 				$GLOBALS['log']->add($user['id'], 'user', NULL, 'signup');
 			
 			// Start session
@@ -202,17 +202,17 @@ function do_signup($mode = 'full') {
 						$app->invite->update($invite['id']);
 						
 						// Log invite update
-						if (is_object($GLOBALS['log']))
+						if (isset($GLOBALS['log']))
 							$GLOBALS['log']->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
 						
 						// Update points (but only if inviting user is not an admin)
-						if (is_object($GLOBALS['points']) && in_array($invite['user_id'], $app->admin_users) != TRUE) {
+						if (isset($GLOBALS['points']) && in_array($invite['user_id'], $app->admin_users) != TRUE) {
 							
 							// Update points
 							$GLOBALS['points']->update($invite['user_id'], $app->points['per_invite_accepted']);
 							
 							// Log points update
-							if (is_object($GLOBALS['log']))
+							if (isset($GLOBALS['log']))
 								$GLOBALS['log']->add($invite['user_id'], 'points', NULL, $app->points['per_invite_accepted'], 'invite_accepted = '.$invite['id']);
 							
 						}
@@ -225,7 +225,7 @@ function do_signup($mode = 'full') {
 			}
 			
 			// Log login
-			if (is_object($GLOBALS['log']))
+			if (isset($GLOBALS['log']))
 				$GLOBALS['log']->add($_SESSION['user']['id'], 'user', NULL, 'login');
 			
 			// If redirect_to is set then redirect
@@ -252,7 +252,7 @@ function do_signup($mode = 'full') {
 		if ($mode == 'beta') {
 			
 			// Log beta signup
-			if (is_object($GLOBALS['log']))
+			if (isset($GLOBALS['log']))
 				$GLOBALS['log']->add($user_id, 'user', NULL, 'beta_signup', $_POST['email']);
 			
 			// Set thank you & tweet this message

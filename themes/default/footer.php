@@ -22,7 +22,7 @@
 
 
   <?php
-  if (is_object($GLOBALS['analytics']))
+  if (isset($GLOBALS['analytics']))
     $GLOBALS['analytics']->view();
   ?>
 

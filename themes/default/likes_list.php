@@ -7,7 +7,7 @@ if (count($item['likes']) > 0) {
 	
 	foreach ($item['likes'] as $like) {
 
-		if (is_object($GLOBALS['gravatar'])) {
+		if (isset($GLOBALS['gravatar'])) {
 			echo $GLOBALS['gravatar']->show($like['user']['email'], array('user_id' => $like['user']['id'], 'size' => 20, 'style' => "margin-bottom: -5px;")).' ';
 		} else {
 			echo '<a href="user.php?id='.$like['user']['id'].'">';

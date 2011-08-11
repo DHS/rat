@@ -47,11 +47,11 @@ if ($_POST['email'] != '') {
 		$app->user->update_invites($_SESSION['user']['id'], -1);
 
 		// award points
-		if (is_object($GLOBALS['points']))
+		if (isset($GLOBALS['points']))
 			$GLOBALS['points']->update($_SESSION['user']['id'], $app->points['per_invite_sent']);
 
 		// log invite
-		if (is_object($GLOBALS['log']))
+		if (isset($GLOBALS['log']))
 			$GLOBALS['log']->add($_SESSION['user']['id'], 'invite', $id, 'add', $_POST['email']);
 
 		if (SITE_IDENTIFIER == 'live') {

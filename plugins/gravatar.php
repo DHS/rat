@@ -11,7 +11,7 @@
 *	
 *		To display a users's gravatar:
 *		
-*			if (is_object($GLOBALS['gravatar']))
+*			if (isset($GLOBALS['gravatar']))
 *				echo $GLOBALS['gravatar']->show($_SESSION['user']['email'], array('user_id' => $_SESSION['user']['id'], 'size' => 20, 'style' => "margin: 10px;"));
 *
 */

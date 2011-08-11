@@ -42,7 +42,7 @@ if ($app->friends->enabled == TRUE)
 
 // Show number of points
 
-if (is_object($GLOBALS['points']))
+if (isset($GLOBALS['points']))
 	include 'themes/'.$app->theme.'/points.php';
 
 // Show new item form

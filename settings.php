@@ -48,7 +48,7 @@ function password() {
 				$_SESSION['user']['password'] = md5($_POST['new_password1'].$app->encryption_salt);
 				
 				// Log password update
-				if (is_object($GLOBALS['log']))
+				if (isset($GLOBALS['log']))
 					$GLOBALS['log']->add($_SESSION['user']['id'], 'user', NULL, 'change_password');
 
 				$message = 'Password udpated!';
@@ -157,7 +157,7 @@ include 'themes/'.$app->theme.'/settings_password.php';
 
 // Gravatar settings
 
-if (is_object($GLOBALS['gravatar']))
+if (isset($GLOBALS['gravatar']))
 	$GLOBALS['gravatar']->show_settings($_SESSION['user']['email']);
 
 // Footer

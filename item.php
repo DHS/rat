@@ -128,11 +128,11 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		}
 		
 		// Give points
-		if (is_object($GLOBALS['points']))
+		if (isset($GLOBALS['points']))
 			$GLOBALS['points']->update($_SESSION['user']['id'], $app->points['per_item']);
 
 		// Log item add
-		if (is_object($GLOBALS['log']))
+		if (isset($GLOBALS['log']))
 			$GLOBALS['log']->add($_SESSION['user']['id'], 'item', $item_id, 'add', "title = {$_POST['title']}\ncontent = {$_POST['content']}");
 
 		$message = ucfirst($app->items['name']).' added!';
@@ -175,14 +175,14 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 
 		// Delete item
 		$app->item->remove($_GET['delete']);
-		if (is_object($GLOBALS['log']))
+		if (isset($GLOBALS['log']))
 			$GLOBALS['log']->add($_SESSION['user']['id'], 'item', $_GET['delete'], 'remove');
 
 		// Delete comments
 		if (is_array($item['comments'])) {
 			foreach ($item['comments'] as $key => $value) {
 				$id = $app->comment->remove($value['user_id'], $item['id'], $value['id']);
-				if (is_object($GLOBALS['log']))
+				if (isset($GLOBALS['log']))
 					$GLOBALS['log']->add($_SESSION['user']['id'], 'comment', $id, 'remove');
 			}
 		}
@@ -191,7 +191,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		if (is_array($item['comments'])) {
 			foreach ($item['likes'] as $key => $value) {
 				$id = $app->likeremove($value['user_id'], $item['id']);
-				if (is_object($GLOBALS['log']))
+				if (isset($GLOBALS['log']))
 					$GLOBALS['log']->add($_SESSION['user']['id'], 'like', $id, 'remove');
 			}
 		}
@@ -236,7 +236,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 
 // Header
 
-if (is_object($GLOBALS['gravatar']))
+if (isset($GLOBALS['gravatar']))
 	$app->page_title_gravatar = $item['user']['email'];
 
 $page['head_title'] = $item['title'].' by '.$item['user']['name'];

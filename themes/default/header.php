@@ -118,7 +118,7 @@ if (isset($page['title'])) {
     <!-- Page title -->
     <?php
 
-	if (is_object($GLOBALS['gravatar']) && !empty($app->page_title_gravatar)) {
+	if (isset($GLOBALS['gravatar']) && !empty($app->page_title_gravatar)) {
 		// Show gravatar
 
 	echo '<table class="center">

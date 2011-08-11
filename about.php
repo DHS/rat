@@ -55,7 +55,7 @@ $content .= ". </p>\n";
 if ($app->invites['enabled'] == TRUE)
 	$content .= "<p>It also has an invite system so that you can invite your friends.</p>\n";
 
-if (is_object($GLOBALS['points'])) {
+if (isset($GLOBALS['points'])) {
 	
 	$content .= '<p>It also has a points system';
 	
@@ -66,7 +66,7 @@ if (is_object($GLOBALS['points'])) {
 	
 }
 
-if (is_object($GLOBALS['gravatar']))
+if (isset($GLOBALS['gravatar']))
 	$content .= '<p>'.$app->name.' is <a href="http://gravatar.com/">Gravatar</a>-enabled.</p>'."\n";
 
 echo $content;

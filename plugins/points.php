@@ -15,7 +15,7 @@
 *		
 *		To display users's points:
 *		
-*			if (is_object($GLOBALS['points']))
+*			if (isset($GLOBALS['points']))
 *				echo 'You have '.$_SESSION['user']['points'].' '.$app->points['name'];
 *
 */

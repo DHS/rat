@@ -11,7 +11,7 @@
 *	
 *		To log an event:
 *		
-*			if (is_object($GLOBALS['log']))
+*			if (isset($GLOBALS['log']))
 *				$GLOBALS['log']->add($_SESSION['user']['id'], 'user', NULL, 'signup');
 *
 */
