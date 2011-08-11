@@ -4,17 +4,17 @@
 // The next few lines process these and output $head_title (for <title></title>) and $page_title (for <h1></h1>)
 
 // Set the var that is printed in head title
-if ($page['head_title'] != NULL)
+if (isset($page['head_title']))
 	$head_title = $page['head_title'];
 
-if ($page['title'] != '') {
+if (isset($page['title'])) {
 	// Page title is set = override!
 
 	// Set the var that prints the page title
 	$page_title = $page['title'];
 
 	// If no head title is found then set head title equal to page title
-	if ($head_title == NULL)
+	if (!isset($head_title))
 		$head_title = $page['title'];
 
 } else {
@@ -22,12 +22,12 @@ if ($page['title'] != '') {
 
 	if (isset($page['name'])) {
 		// Page name found
-
+		
 		// Set the var that prints the page title
 		$page_title = '<a href="index.php">'.$app->name.'</a> - '.$page['name'];
 
 		// If no head title is found then set head title similar to page title
-		if ($head_title == NULL)
+		if (!isset($head_title))
 			$head_title = $app->name.' - '.$page['name'];
 
 	} else {
@@ -37,7 +37,7 @@ if ($page['title'] != '') {
 		$page_title = '<a href="index.php">'.$app->name.'</a>';
 
 		// Set head title to app name
-		if ($head_title == NULL)
+		if (!isset($head_title))
 			$head_title = $app->name;
 
 	}
@@ -86,11 +86,11 @@ if ($page['title'] != '') {
 
 	<?php
 
-			if ($_SESSION['user']) {
+			if (isset($_SESSION['user'])) {
 
 				echo '<a href="index.php">Home</a> &middot; <a href="user.php">My profile</a> &middot; ';
 
-				if (is_object($GLOBALS['points']))
+				if (isset($GLOBALS['points']))
 					echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app->points['name'].' &middot; ';
 
 				if ($app->invites['enabled'] == TRUE)
@@ -140,15 +140,13 @@ if ($page['title'] != '') {
 
 <?php
 
-if ($_GET['message'] != '') {
+if (isset($_GET['message']))
 	$message = $_GET['message'];
-}
 
-if ($message) {
+if (isset($message)) {
 
 	echo '<!-- Message -->
 <p class="message">'.$message.'</p>';
 }
 
 ?>
-
