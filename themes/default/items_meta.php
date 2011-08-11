@@ -10,6 +10,8 @@ if ($app->items['comments']['enabled'] == TRUE)
 
 if ($app->items['likes']['enabled'] == TRUE) {
 	
+	$i_like = FALSE;
+	
 	// find if current user likes the item
 	if (is_array($item['likes'])) {
 		foreach ($item['likes'] as $value) {
