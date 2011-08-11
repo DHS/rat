@@ -28,6 +28,8 @@ class comment {
 		$sql = "SELECT id, content, user_id, date FROM comments WHERE item_id = $id ORDER BY id ASC";
 		$query = mysql_query($sql);
 
+		$return = array();
+
 		while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$row['user'] = $app->user->get($row['user_id']);
 			$return[] = $row;

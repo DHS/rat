@@ -32,6 +32,8 @@ class like {
 		$sql = "SELECT id, user_id, date FROM likes WHERE item_id = $item_id";
 		$query = mysql_query($sql);
 
+		$return = array();
+
 		while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$row['user'] = $app->user->get($row['user_id']);
 			$return[$row['id']] = $row;
