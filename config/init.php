@@ -4,7 +4,7 @@
 class app {
 	
 	function __construct() {
-
+		
 		// Load config
 		$this->loadConfig();
 		
@@ -17,7 +17,15 @@ class app {
 				$this->$model = new $model;
 			}
 		}
-
+		
+		// Load plugins
+		foreach ($this->config->plugins as $key => $value) {
+			if ($value == TRUE) {
+				include "plugins/$key.php";
+				$this->plugins->$key = new $key;
+			}
+		}
+		
 	}
 	
 	function loadConfig() {
@@ -32,13 +40,6 @@ class app {
 			define('SITE_IDENTIFIER', 'live');
 		} else {
 			define('SITE_IDENTIFIER', 'dev');
-		}
-		
-		foreach ($this->config->plugins as $key => $value) {
-			if ($value == TRUE) {
-				include "plugins/$key.php";
-				$this->plugins->$key = new $key;
-			}
 		}
 		
 	}
