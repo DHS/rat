@@ -22,7 +22,6 @@ if (!empty($_SESSION['user'])) {
 
 // Header
 
-//$app->page->name = 'Logout';
 include 'themes/'.$app->config->theme.'/header.php';
 
 // Show login form

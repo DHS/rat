@@ -1,3 +1,3 @@
 
-<p>Beta signups: <strong><?php echo $waiting_user_count; ?></strong></p>
-<p>Users: <strong><?php echo $user_count; ?></strong></p>
+<p>Beta signups: <strong><?php echo count($app->page->users); ?></strong></p>
+<p>Users: <strong><?php echo count($app->page->users_beta); ?></strong></p>

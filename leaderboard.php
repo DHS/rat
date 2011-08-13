@@ -18,7 +18,7 @@ include 'themes/'.$app->config->theme.'/header.php';
 
 // Show leaderboard
 
-$leaderboard = 	$app->plugins->points->get_leaderboard(20);
+$app->page->leaderboard = 	$app->plugins->points->get_leaderboard(20);
 include 'themes/'.$app->config->theme.'/leaderboard.php';
 
 // Footer

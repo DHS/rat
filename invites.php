@@ -92,7 +92,7 @@ include 'themes/'.$app->config->theme.'/invites.php';
 
 // Show sent invites
 
-$invites_sent = $app->invite->list_sent($_SESSION['user']['id']);
+$app->page->invites = $app->invite->list_sent($_SESSION['user']['id']);
 include 'themes/'.$app->config->theme.'/invites_list.php';
 
 // Footer

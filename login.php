@@ -43,7 +43,6 @@ if ($_POST['email'] && $_POST['password']) {
 
 // Header
 
-//$app->page->name = 'Login';
 include 'themes/'.$app->config->theme.'/header.php';
 
 // Show login form
@@ -58,7 +57,5 @@ if (empty($_SESSION['user'])) {
 // Footer
 
 include 'themes/'.$app->config->theme.'/footer.php';
-
-
 
 ?>

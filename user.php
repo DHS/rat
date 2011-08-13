@@ -51,12 +51,12 @@ if (isset($app->plugins->points))
 //	include 'themes/'.$app->config->theme.'/items_add.php';
 
 // List all items for this user
-$items = $app->item->list_user($user['id']);
+$app->page->items = $app->item->list_user($user['id']);
 
-if (count($items) > 0) {
+if (count($app->page->items) > 0) {
 	
 	include 'themes/'.$app->config->theme.'/items_list_user.php';
-
+	
 } else {
 	
 	// If own page and no post_permission OR someone else's page show 'no articles yet'

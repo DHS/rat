@@ -1,10 +1,10 @@
 <?php
 
-if (is_array($items)) {
+if (is_array($app->page->items)) {
 	
 echo '<table style="width: 100%;">';
 
-foreach ($items as $item) { ?>
+foreach ($app->page->items as $item) { ?>
 
 	<tr>
 		<?php 

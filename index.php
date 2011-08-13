@@ -27,7 +27,7 @@ if ($app->config->friends['enabled'] == TRUE) {
 		
 		// Show feed of friends' activity
 		
-		$items = $app->item->list_feed();
+		$app->page->items = $app->item->list_feed();
 		include 'themes/'.$app->config->theme.'/items_list.php';
 		
 	}
@@ -36,7 +36,7 @@ if ($app->config->friends['enabled'] == TRUE) {
 	
 	// Friends not enabled so don't show recent items
 
-	$items = $app->item->list_all();
+	$app->page->items = $app->item->list_all();
 	include 'themes/'.$app->config->theme.'/items_list.php';	
 	
 }

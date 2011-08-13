@@ -2,7 +2,7 @@
 
 <?php $i = 1; ?>
 
-<?php foreach ($leaderboard as $row) { ?>
+<?php foreach ($app->page->leaderboard as $row) { ?>
 	
 	<tr>
 		<td><?php echo $i; ?>.</td>

@@ -72,8 +72,8 @@ function dashboard() {
 	
 	global $app;
 	
-	$user_count = count($app->admin->list_users());
-	$waiting_user_count = count($app->admin->list_users_beta());
+	$app->page->users = $app->admin->list_users();
+	$app->page->users_beta = $app->admin->list_users_beta();
 	
 	include 'themes/'.$app->config->theme.'/admin_dashboard.php';
 	
@@ -83,8 +83,7 @@ function signups() {
 	
 	global $app;
 	
-	$waiting_users = $app->admin->list_users_beta();
-	$waiting_user_count = count($waiting_users);
+	$app->page->users = $app->admin->list_users_beta();
 	
 	include 'themes/'.$app->config->theme.'/admin_signups.php';
 	
@@ -133,8 +132,7 @@ function users() {
 	
 	global $app;
 	
-	$users = $app->admin->list_users();
-	$user_count = count($users);
+	$app->page->users = $app->admin->list_users();
 	
 	include 'themes/'.$app->config->theme.'/admin_users.php';
 
@@ -160,6 +158,8 @@ function grant_invites() {
 function history() {
 	// Should be log() but that's a native PHP function
 	// Show most recent entries in the log
+	
+	global $app;
 	
 	if (isset($app->plugins->log))
 		$app->plugins->log->view();
