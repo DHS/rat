@@ -1,6 +1,6 @@
 <?php
 
-class user extends application {
+class user {
 
 	// Add a user (beta signup)	
 	function add($email) {
