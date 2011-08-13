@@ -24,6 +24,12 @@ class app {
 
 	}
 	
+	function loadView($view) {
+		
+		include "themes/$app->theme/$view.php";
+		
+	}
+	
 }
 
 // Create new instance of app
@@ -56,9 +62,9 @@ if ($_SESSION['user'] == NULL && $app->private == TRUE && in_array($result[0], $
 	} else {
 
 		// Show splash page
-		include 'themes/'.$app->theme.'/header.php';
-		include 'themes/'.$app->theme.'/splash.php';
-		include 'themes/'.$app->theme.'/footer.php';
+		$app->loadView('header');
+		$app->loadView('splash');
+		$app->loadView('footer');
 
 		// Stop processing the rest of the page
 		exit();		

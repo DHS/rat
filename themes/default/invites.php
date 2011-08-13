@@ -3,13 +3,13 @@
 	
 	<p>You have one invite remaining.</p>
 	
-	<?php include 'themes/'.$app->theme.'/invites_add.php'; ?>
+	<?php $app->loadView('invites_add'); ?>
 	
 <?php } elseif ($invites_remaining > 1) { ?>
 
 	<p>You have <?php echo $invites_remaining; ?> invites remaining.</p>
 	
-	<?php include 'themes/'.$app->theme.'/invites_add.php'; ?>
+	<?php $app->loadView('invites_add'); ?>
 	
 <?php } else { ?>
 	

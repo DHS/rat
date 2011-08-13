@@ -23,14 +23,14 @@ if (!empty($_SESSION['user'])) {
 // Header
 
 //$page['name'] = 'Logout';
-include 'themes/'.$app->theme.'/header.php';
+$app->loadView('header');
 
 // Show login form
 
-include 'themes/'.$app->theme.'/login.php';
+$app->loadView('login');
 
 // Footer
 
-include 'themes/'.$app->theme.'/footer.php';
+$app->loadView('footer');
 
 ?>

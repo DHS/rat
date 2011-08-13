@@ -30,22 +30,22 @@ foreach ($items as $item) { ?>
 			
 			<?php } ?>
 
-			<?php include 'items_meta.php'; ?>
+			<?php $app->loadView('items_meta'); ?>
 
 			<?php
 			
 			if ($app->items['likes']['enabled'] == TRUE)
-				include 'themes/'.$app->theme.'/likes_list.php';
+				$app->loadView('likes_list');
 			
 			if ($app->items['comments']['enabled'] == TRUE) {
 
-				include 'themes/'.$app->theme.'/comments_list.php';
+				$app->loadView('comments_list');
 				if (count($item['comments']) > 0) {
 					$show_comment_form = TRUE;
 				} else {
 					$show_comment_form = FALSE;
 				}
-				include 'themes/'.$app->theme.'/comments_add.php';
+				$app->loadView('comments_add');
 
 			}
 

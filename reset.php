@@ -6,9 +6,9 @@ function show_form() {
 	
 	global $app;
 	
-	include 'themes/'.$app->theme.'/header.php';
-	include 'themes/'.$app->theme.'/reset_begin.php';
-	include 'themes/'.$app->theme.'/footer.php';
+	$app->loadView('header');
+	$app->loadView('reset_begin');
+	$app->loadView('footer');
 	
 }
 
@@ -29,7 +29,7 @@ function generate_code() {
 		$headers = "From: $app->name <robot@blah.com>\r\nContent-type: text/html\r\n";
 		
 		// Load subject and body from template
-		include 'themes/'.$app->theme.'/email_password_reset.php';
+		$app->loadView('email_password_reset');
 		
 		// Email user
 		if ($app->send_emails == TRUE)
@@ -37,10 +37,10 @@ function generate_code() {
 		
 	}
 	
-	include 'themes/'.$app->theme.'/header.php';
+	$app->loadView('header');
 	$message = 'Check your email for instructions about how to reset your password!';
-	include 'themes/'.$app->theme.'/message.php';
-	include 'themes/'.$app->theme.'/footer.php';
+	$app->loadView('message');
+	$app->loadView('footer');
 		
 }
 
@@ -48,12 +48,12 @@ function check_code() {
 	
 	global $app;
 	
-	include 'themes/'.$app->theme.'/header.php';
+	$app->loadView('header');
 	
 	if ($app->user->check_password_reset_code($_GET['code']) != FALSE)
-		include 'themes/'.$app->theme.'/reset_confirm.php';
+		$app->loadView('reset_confirm');
 
-	include 'themes/'.$app->theme.'/footer.php';
+	$app->loadView('footer');
 	
 }
 
@@ -109,10 +109,10 @@ function update_password() {
 	} else {
 		
 		$message = $error;
-		include 'themes/'.$app->theme.'/header.php';
+		$app->loadView('header');
 		if ($app->user->check_password_reset_code($_POST['code']) != FALSE)
-			include 'themes/'.$app->theme.'/reset_confirm.php';
-		include 'themes/'.$app->theme.'/footer.php';
+			$app->loadView('reset_confirm');
+		$app->loadView('footer');
 		
 	}
 	

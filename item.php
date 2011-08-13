@@ -6,8 +6,8 @@ require_once 'config/init.php';
 
 if ($_GET['id'] == '' && $_POST['title'] == '' && $_POST['content'] == '' && $_GET['delete'] == '') {
 	$page['name'] = ucfirst($app->items['name']).' not found';
-	include 'themes/'.$app->theme.'/header.php';
-	include 'themes/'.$app->theme.'/footer.php';
+	$app->loadView('header');
+	$app->loadView('footer');
 	exit;
 }
 
@@ -159,9 +159,9 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		
 		// Show error message
 		$message = $error;
-		include 'themes/'.$app->theme.'/header.php';
-		include 'themes/'.$app->theme.'/items_add.php';
-		include 'themes/'.$app->theme.'/footer.php';
+		$app->loadView('header');
+		$app->loadView('items_add');
+		$app->loadView('footer');
 		exit();
 	
 	}
@@ -226,8 +226,8 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 	if ($item == NULL) {
 
 		$page['name'] = ucfirst($app->items['name']).' not found';
-		include 'themes/'.$app->theme.'/header.php';
-		include 'themes/'.$app->theme.'/footer.php';
+		$app->loadView('header');
+		$app->loadView('footer');
 		exit;
 		
 	}
@@ -242,14 +242,14 @@ if (isset($GLOBALS['gravatar']))
 $page['head_title'] = $item['title'].' by '.$item['user']['name'];
 $page['title'] = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['name'].'</a> on <a href="index.php">'.$app->name.'</a>';
 
-include 'themes/'.$app->theme.'/header.php';
+$app->loadView('header');
 
 // Show item
 
-include 'themes/'.$app->theme.'/items_single.php';
+$app->loadView('items_single');
 
 // Footer
 
-include 'themes/'.$app->theme.'/footer.php';
+$app->loadView('footer');
 
 ?>

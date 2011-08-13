@@ -10,7 +10,7 @@
 <?php
 
 if ($app->beta == TRUE)
-	include 'themes/'.$app->theme.'/signup_beta.php';
+	$app->loadView('signup_beta');
 
 ?>
 
