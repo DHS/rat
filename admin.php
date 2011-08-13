@@ -11,9 +11,9 @@ if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 	$_GET['id'] = 1;
 	
 	$message = 'Welcome to Rat! Please enter your details:';
-	include 'themes/'.$app->theme.'/header.php';
-	include 'themes/'.$app->theme.'/admin_setup.php';
-	include 'themes/'.$app->theme.'/footer.php';
+	include 'themes/'.$app->config->theme.'/header.php';
+	include 'themes/'.$app->config->theme.'/admin_setup.php';
+	include 'themes/'.$app->config->theme.'/footer.php';
 	
 	exit();
 	
@@ -37,9 +37,9 @@ if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 	
 	// Go forth!
 	if (SITE_IDENTIFIER == 'live') {
-		header('Location: '.$app->url.'?message='.urlencode($message));
+		header('Location: '.$app->config->url.'?message='.urlencode($message));
 	} else {
-		header('Location: '.$app->dev_url.'?message='.urlencode($message));
+		header('Location: '.$app->config->dev_url.'?message='.urlencode($message));
 	}
 		
 	exit();
@@ -48,11 +48,11 @@ if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 
 //	Critical: User must have admin capability
 
-if (in_array($_SESSION['user']['id'], $app->admin_users) != TRUE) {
+if (in_array($_SESSION['user']['id'], $app->config->admin_users) != TRUE) {
 
 	$page['name'] = 'Page not found';
-	include 'themes/'.$app->theme.'/header.php';
-	include 'themes/'.$app->theme.'/footer.php';
+	include 'themes/'.$app->config->theme.'/header.php';
+	include 'themes/'.$app->config->theme.'/footer.php';
 	exit;
 
 }
@@ -75,7 +75,7 @@ function dashboard() {
 	$user_count = count($app->admin->list_users());
 	$waiting_user_count = count($app->admin->list_users_beta());
 	
-	include 'themes/'.$app->theme.'/admin_dashboard.php';
+	include 'themes/'.$app->config->theme.'/admin_dashboard.php';
 	
 }
 
@@ -86,7 +86,7 @@ function signups() {
 	$waiting_users = $app->admin->list_users_beta();
 	$waiting_user_count = count($waiting_users);
 	
-	include 'themes/'.$app->theme.'/admin_signups.php';
+	include 'themes/'.$app->config->theme.'/admin_signups.php';
 	
 }
 
@@ -109,19 +109,19 @@ function invite() {
 			$to		= "{$_POST['username']} <davehs@gmail.com>";
 		}
 		
-		$link		= $app->url.'signup.php?code='.$id.'&email='.urlencode($_GET['email']);
+		$link		= $app->config->url.'signup.php?code='.$id.'&email='.urlencode($_GET['email']);
 		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 		
 		// Load template into $body variable
-		include 'themes/'.$app->theme.'/email_invite_admin.php';
+		include 'themes/'.$app->config->theme.'/email_invite_admin.php';
 		
-		if ($app->send_emails == TRUE) {
+		if ($app->config->send_emails == TRUE) {
 			// Email user
 			mail($to, $subject, $body, $headers);
 		}
 		
 		$message = 'User invited!';
-		include 'themes/'.$app->theme.'/message.php';
+		include 'themes/'.$app->config->theme.'/message.php';
 		
 		signups();
 		
@@ -136,7 +136,7 @@ function users() {
 	$users = $app->admin->list_users();
 	$user_count = count($users);
 	
-	include 'themes/'.$app->theme.'/admin_users.php';
+	include 'themes/'.$app->config->theme.'/admin_users.php';
 
 }
 
@@ -149,7 +149,7 @@ function grant_invites() {
 		$app->admin->update_invites($_GET['count']);
 		
 		$message = 'Invites updated!';
-		include 'themes/'.$app->theme.'/message.php';
+		include 'themes/'.$app->config->theme.'/message.php';
 		
 		users();
 		
@@ -175,8 +175,8 @@ if ($page['selector'] == NULL)
 // Header
 
 $page['name'] = 'Admin - '.ucfirst(strtolower($page['selector']));
-include 'themes/'.$app->theme.'/header.php';
-include 'themes/'.$app->theme.'/admin_menu.php';
+include 'themes/'.$app->config->theme.'/header.php';
+include 'themes/'.$app->config->theme.'/admin_menu.php';
 
 // Show page determined by selector
 
@@ -184,6 +184,6 @@ $page['selector']();
 
 // Footer
 
-include 'themes/'.$app->theme.'/footer.php';
+include 'themes/'.$app->config->theme.'/footer.php';
 
 ?>

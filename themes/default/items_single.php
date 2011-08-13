@@ -1,9 +1,9 @@
 
-<?php if ($app->items['titles']['enabled'] == TRUE) { ?>
+<?php if ($app->config->items['titles']['enabled'] == TRUE) { ?>
 
 <p style="font-size: 200%; line-height: 100%; width: 500px; text-align: left;"><?php echo $item['title']; ?></p>
-<?php if ($app->items['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
-	<a href="<?php echo $app->items['uploads']['directory']; ?>/originals/<?php echo $item['image']; ?>"><img src="<?php echo $app->items['uploads']['directory']; ?>/stream/<?php echo $item['image']; ?>" /></a>
+<?php if ($app->config->items['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
+	<a href="<?php echo $app->config->items['uploads']['directory']; ?>/originals/<?php echo $item['image']; ?>"><img src="<?php echo $app->config->items['uploads']['directory']; ?>/stream/<?php echo $item['image']; ?>" /></a>
 <?php } ?>
 <p><?php echo $item['content'] ?></p>
 
@@ -27,19 +27,19 @@
 
 <?php
 // Untested
-if ($app->private != TRUE)
-	include 'themes/'.$app->theme.'/items_share.php';
+if ($app->config->private != TRUE)
+	include 'themes/'.$app->config->theme.'/items_share.php';
 ?>
 
 <?php
 
-if ($app->items['likes']['enabled'] == TRUE)
-	include 'themes/'.$app->theme.'/likes_list.php';
+if ($app->config->items['likes']['enabled'] == TRUE)
+	include 'themes/'.$app->config->theme.'/likes_list.php';
 
-if ($app->items['comments']['enabled'] == TRUE) {
-	include 'themes/'.$app->theme.'/comments_list.php';
+if ($app->config->items['comments']['enabled'] == TRUE) {
+	include 'themes/'.$app->config->theme.'/comments_list.php';
 	$show_comment_form = TRUE;
-	include 'themes/'.$app->theme.'/comments_add.php';
+	include 'themes/'.$app->config->theme.'/comments_add.php';
 }
 
 ?>

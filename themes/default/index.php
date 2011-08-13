@@ -1,7 +1,7 @@
 
 <div class="center_container">
 
-<p><?php echo $app->name; ?> is blah.</p>
+<p><?php echo $app->config->name; ?> is blah.</p>
 
 <p>Here's how it works...</p>
 

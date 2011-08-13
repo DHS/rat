@@ -16,11 +16,11 @@ foreach ($items as $item) { ?>
 		?>
 		<td style="padding-bottom: 10px;">
 		
-			<?php if ($app->items['titles']['enabled'] == TRUE) { ?>
+			<?php if ($app->config->items['titles']['enabled'] == TRUE) { ?>
 				
 				<p><a href="item.php?id=<?php echo $item['id']; ?>"><?php echo $item['title']; ?></a> by <a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a></p>
-				<?php if ($app->items['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
-					<a href="item.php?id=<?php echo $item['id']; ?>"><img src="<?php echo $app->items['uploads']['directory']; ?>/stream/<?php echo $item['image']; ?>" /></a>
+				<?php if ($app->config->items['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
+					<a href="item.php?id=<?php echo $item['id']; ?>"><img src="<?php echo $app->config->items['uploads']['directory']; ?>/stream/<?php echo $item['image']; ?>" /></a>
 				<?php } ?>
 				<p><?php echo $item['content']; ?></p>
 
@@ -34,18 +34,18 @@ foreach ($items as $item) { ?>
 
 			<?php
 			
-			if ($app->items['likes']['enabled'] == TRUE)
-				include 'themes/'.$app->theme.'/likes_list.php';
+			if ($app->config->items['likes']['enabled'] == TRUE)
+				include 'themes/'.$app->config->theme.'/likes_list.php';
 			
-			if ($app->items['comments']['enabled'] == TRUE) {
+			if ($app->config->items['comments']['enabled'] == TRUE) {
 
-				include 'themes/'.$app->theme.'/comments_list.php';
+				include 'themes/'.$app->config->theme.'/comments_list.php';
 				if (count($item['comments']) > 0) {
 					$show_comment_form = TRUE;
 				} else {
 					$show_comment_form = FALSE;
 				}
-				include 'themes/'.$app->theme.'/comments_add.php';
+				include 'themes/'.$app->config->theme.'/comments_add.php';
 
 			}
 

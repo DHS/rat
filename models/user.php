@@ -1,6 +1,6 @@
 <?php
 
-class user {
+class user extends application {
 
 	// Add a user (beta signup)	
 	function add($email) {
@@ -81,7 +81,7 @@ class user {
 		$user_id = sanitize_input($user_id);
 		$username = sanitize_input($username);
 
-		$encrypted_password = md5($password.$app->encryption_salt);
+		$encrypted_password = md5($password.$app->config->encryption_salt);
 
 		$sql = "UPDATE users SET username = $username, password = '$encrypted_password', date_joined = NOW() WHERE id = $user_id";
 		$query = mysql_query($sql);
@@ -95,7 +95,7 @@ class user {
 
 		$user_id = sanitize_input($user_id);
 
-		$encrypted_password = md5($new_password.$app->encryption_salt);
+		$encrypted_password = md5($new_password.$app->config->encryption_salt);
 
 		$sql = "UPDATE users SET password = '{$encrypted_password}' WHERE id = $user_id";
 		$query = mysql_query($sql);

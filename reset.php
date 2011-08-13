@@ -6,9 +6,9 @@ function show_form() {
 	
 	global $app;
 	
-	include 'themes/'.$app->theme.'/header.php';
-	include 'themes/'.$app->theme.'/reset_begin.php';
-	include 'themes/'.$app->theme.'/footer.php';
+	include 'themes/'.$app->config->theme.'/header.php';
+	include 'themes/'.$app->config->theme.'/reset_begin.php';
+	include 'themes/'.$app->config->theme.'/footer.php';
 	
 }
 
@@ -25,22 +25,22 @@ function generate_code() {
 		$code = $app->user->generate_password_reset_code($user['id']);
 		
 		$to = $_POST['email'];
-		$link = $app->url.'forgot.php?code='.$code;
-		$headers = "From: $app->name <robot@blah.com>\r\nContent-type: text/html\r\n";
+		$link = $app->config->url.'forgot.php?code='.$code;
+		$headers = "From: $app->config->name <robot@blah.com>\r\nContent-type: text/html\r\n";
 		
 		// Load subject and body from template
-		include 'themes/'.$app->theme.'/email_password_reset.php';
+		include 'themes/'.$app->config->theme.'/email_password_reset.php';
 		
 		// Email user
-		if ($app->send_emails == TRUE)
+		if ($app->config->send_emails == TRUE)
 			mail($to, $subject, $body, $headers);
 		
 	}
 	
-	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->config->theme.'/header.php';
 	$message = 'Check your email for instructions about how to reset your password!';
-	include 'themes/'.$app->theme.'/message.php';
-	include 'themes/'.$app->theme.'/footer.php';
+	include 'themes/'.$app->config->theme.'/message.php';
+	include 'themes/'.$app->config->theme.'/footer.php';
 		
 }
 
@@ -48,12 +48,12 @@ function check_code() {
 	
 	global $app;
 	
-	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->config->theme.'/header.php';
 	
 	if ($app->user->check_password_reset_code($_GET['code']) != FALSE)
-		include 'themes/'.$app->theme.'/reset_confirm.php';
+		include 'themes/'.$app->config->theme.'/reset_confirm.php';
 
-	include 'themes/'.$app->theme.'/footer.php';
+	include 'themes/'.$app->config->theme.'/footer.php';
 	
 }
 
@@ -95,13 +95,13 @@ function update_password() {
 		}
 		
 		// Set welcome message
-		$message = urlencode('Password updated.<br />Welcome back to '.$app->name.'!');
+		$message = urlencode('Password updated.<br />Welcome back to '.$app->config->name.'!');
 		
 		// Go forth!
 		if (SITE_IDENTIFIER == 'live') {
-			header('Location: '.$app->url.'?message='.$message);
+			header('Location: '.$app->config->url.'?message='.$message);
 		} else {
-			header('Location: '.$app->dev_url.'?message='.$message);
+			header('Location: '.$app->config->dev_url.'?message='.$message);
 		}
 
 		exit();
@@ -109,10 +109,10 @@ function update_password() {
 	} else {
 		
 		$message = $error;
-		include 'themes/'.$app->theme.'/header.php';
+		include 'themes/'.$app->config->theme.'/header.php';
 		if ($app->user->check_password_reset_code($_POST['code']) != FALSE)
-			include 'themes/'.$app->theme.'/reset_confirm.php';
-		include 'themes/'.$app->theme.'/footer.php';
+			include 'themes/'.$app->config->theme.'/reset_confirm.php';
+		include 'themes/'.$app->config->theme.'/footer.php';
 		
 	}
 	

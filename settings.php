@@ -8,8 +8,8 @@ if ($_SESSION['user'] == NULL) {
 	
 	$page['name'] = 'Page not found';
 	$message = 'Please <a href="login.php?redirect_to=/settings.php">login</a> to view your settings.';
-	include 'themes/'.$app->theme.'/header.php';
-	include 'themes/'.$app->theme.'/footer.php';
+	include 'themes/'.$app->config->theme.'/header.php';
+	include 'themes/'.$app->config->theme.'/footer.php';
 	exit();
 	
 }
@@ -35,7 +35,7 @@ function password() {
 	if ($_POST['old_password'] != '' && $_POST['new_password1'] != '' && $_POST['new_password2'] != '') {
 		// Check variables are present
 		
-		if (md5($_POST['old_password'].$app->encryption_salt) == $_SESSION['user']['password']) {
+		if (md5($_POST['old_password'].$app->config->encryption_salt) == $_SESSION['user']['password']) {
 			// Check old passwords match
 			
 			if ($_POST['new_password1'] == $_POST['new_password2']) {
@@ -45,7 +45,7 @@ function password() {
 				$app->user->update_password($_SESSION['user']['id'], $_POST['new_password1']);
 				
 				// Update session
-				$_SESSION['user']['password'] = md5($_POST['new_password1'].$app->encryption_salt);
+				$_SESSION['user']['password'] = md5($_POST['new_password1'].$app->config->encryption_salt);
 				
 				// Log password update
 				if (isset($GLOBALS['log']))
@@ -68,7 +68,7 @@ function password() {
 		$message = 'There was a problem, please try again.';
 	}
 	
-	include 'themes/'.$app->theme.'/message.php';
+	include 'themes/'.$app->config->theme.'/message.php';
 	
 }
 
@@ -125,7 +125,7 @@ function profile() {
 		}
 
 		// Show message
-		include 'themes/'.$app->theme.'/message.php';
+		include 'themes/'.$app->config->theme.'/message.php';
 		
 	}
 	
@@ -141,7 +141,7 @@ if ($page['selector'] == NULL)
 // Header
 
 $page['name'] = 'Settings';
-include 'themes/'.$app->theme.'/header.php';
+include 'themes/'.$app->config->theme.'/header.php';
 
 // Show page determined by selector
 
@@ -149,11 +149,11 @@ $page['selector']();
 
 // Show profile info form
 
-include 'themes/'.$app->theme.'/settings_profile.php';
+include 'themes/'.$app->config->theme.'/settings_profile.php';
 
 // Show password change form
 
-include 'themes/'.$app->theme.'/settings_password.php';
+include 'themes/'.$app->config->theme.'/settings_password.php';
 
 // Gravatar settings
 
@@ -162,6 +162,6 @@ if (isset($GLOBALS['gravatar']))
 
 // Footer
 
-include 'themes/'.$app->theme.'/footer.php';
+include 'themes/'.$app->config->theme.'/footer.php';
 
 ?>

@@ -15,8 +15,8 @@ if (isset($_GET['id'])) {
 if ($user == NULL) {
 
 	$page['name'] = 'User not found';
-	include 'themes/'.$app->theme.'/header.php';
-	include 'themes/'.$app->theme.'/footer.php';
+	include 'themes/'.$app->config->theme.'/header.php';
+	include 'themes/'.$app->config->theme.'/footer.php';
 	exit();
 
 }
@@ -26,47 +26,47 @@ if ($user == NULL) {
 if (isset($GLOBALS['gravatar']))
 	$app->page_title_gravatar = $user['email'];
 
-$page['head_title'] = $user['name'].' on '.$app->name;
-$page['title'] = '<a href="user.php?id='.$user['id'].'">'.$user['name'].'</a> on <a href="index.php">'.$app->name.'</a>';
+$page['head_title'] = $user['name'].' on '.$app->config->name;
+$page['title'] = '<a href="user.php?id='.$user['id'].'">'.$user['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';
 
-include 'themes/'.$app->theme.'/header.php';
+include 'themes/'.$app->config->theme.'/header.php';
 
 // Show profile
 
-include 'themes/'.$app->theme.'/user_profile.php';
+include 'themes/'.$app->config->theme.'/user_profile.php';
 
 // Show follow button
 
-if ($app->friends->enabled == TRUE)
-	include 'themes/'.$app->theme.'/friends_button.php';
+if ($app->config->friends->enabled == TRUE)
+	include 'themes/'.$app->config->theme.'/friends_button.php';
 
 // Show number of points
 
 if (isset($GLOBALS['points']))
-	include 'themes/'.$app->theme.'/points.php';
+	include 'themes/'.$app->config->theme.'/points.php';
 
 // Show new item form
 
 //if ($_SESSION['user']['post_permission'] == 1)
-//	include 'themes/'.$app->theme.'/items_add.php';
+//	include 'themes/'.$app->config->theme.'/items_add.php';
 
 // List all items for this user
 $items = $app->item->list_user($user['id']);
 
 if (count($items) > 0) {
 	
-	include 'themes/'.$app->theme.'/items_list_user.php';
+	include 'themes/'.$app->config->theme.'/items_list_user.php';
 
 } else {
 	
 	// If own page and no post_permission OR someone else's page show 'no articles yet'
 	if (($_SESSION['user']['id'] == $user['id'] && $_SESSION['user']['post_permission'] == 0) || $_SESSION['user']['id'] != $user['id'])
-		echo '<p>'.$user['username'].' hasn\'t published any '.$app->items['name_plural'].' yet.</p>';
+		echo '<p>'.$user['username'].' hasn\'t published any '.$app->config->items['name_plural'].' yet.</p>';
 	
 }
 
 // Footer
 
-include 'themes/'.$app->theme.'/footer.php';
+include 'themes/'.$app->config->theme.'/footer.php';
 
 ?>

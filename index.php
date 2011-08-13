@@ -4,20 +4,20 @@ require_once 'config/init.php';
 
 // Header
 
-$page['name'] = $app->tagline;
-include 'themes/'.$app->theme.'/header.php';
+$page['name'] = $app->config->tagline;
+include 'themes/'.$app->config->theme.'/header.php';
 
 // Intro paragraph
 
-//include 'themes/'.$app->theme.'/index.php';
+//include 'themes/'.$app->config->theme.'/index.php';
 
 // New item form
 
-include 'themes/'.$app->theme.'/items_add.php';
+include 'themes/'.$app->config->theme.'/items_add.php';
 
 // If friends is enabled, show feed of their activity
 
-if ($app->friends['enabled'] == TRUE) {
+if ($app->config->friends['enabled'] == TRUE) {
 
 	if (empty($_SESSION['user'])) {
 		
@@ -28,7 +28,7 @@ if ($app->friends['enabled'] == TRUE) {
 		// Show feed of friends' activity
 		
 		$items = $app->item->list_feed();
-		include 'themes/'.$app->theme.'/items_list.php';
+		include 'themes/'.$app->config->theme.'/items_list.php';
 		
 	}
 
@@ -37,12 +37,12 @@ if ($app->friends['enabled'] == TRUE) {
 	// Friends not enabled so don't show recent items
 
 	$items = $app->item->list_all();
-	include 'themes/'.$app->theme.'/items_list.php';	
+	include 'themes/'.$app->config->theme.'/items_list.php';	
 	
 }
 
 // Footer
 
-include 'themes/'.$app->theme.'/footer.php';
+include 'themes/'.$app->config->theme.'/footer.php';
 
 ?>

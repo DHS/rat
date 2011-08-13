@@ -4,11 +4,11 @@ require_once 'config/init.php';
 
 //	Critical: Feature must be enabled and user must be logged in
 
-if ($app->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
+if ($app->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 	
 	$page['name'] = 'Page not found';
-	include 'themes/'.$app->theme.'/header.php';
-	include 'themes/'.$app->theme.'/footer.php';
+	include 'themes/'.$app->config->theme.'/header.php';
+	include 'themes/'.$app->config->theme.'/footer.php';
 	exit;
 	
 }
@@ -16,7 +16,7 @@ if ($app->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 // Header
 
 $page['name'] = 'Invites';
-include 'themes/'.$app->theme.'/header.php';
+include 'themes/'.$app->config->theme.'/header.php';
 
 // Process new invites
 
@@ -35,7 +35,7 @@ if ($_POST['email'] != '') {
 	
 	// Check if already a user
 	if ($app->user->get_by_email($_POST['email']) == TRUE)
-		$error .= 'This person is already using '.$app->name.'!<br />';
+		$error .= 'This person is already using '.$app->config->name.'!<br />';
 
 	if ($error == '') {
 		// no problems so do signup + login
@@ -60,26 +60,26 @@ if ($_POST['email'] != '') {
 			$to		= "{$_POST['username']} <davehs@gmail.com>";
 		}
 
-		$link = $app->url.'signup.php?code='.$id.'&email='.urlencode($_POST['email']);
+		$link = $app->config->url.'signup.php?code='.$id.'&email='.urlencode($_POST['email']);
 		$headers = "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 		// Load subject and body from template
-		include 'themes/'.$app->theme.'/email_invite_friend.php';
+		include 'themes/'.$app->config->theme.'/email_invite_friend.php';
 
-		if ($app->send_emails == TRUE) {
+		if ($app->config->send_emails == TRUE) {
 			// Email user
 			mail($to, $subject, $body, $headers);
 		}
 
 		$message = 'Invite sent!';
-		include 'themes/'.$app->theme.'/message.php';
+		include 'themes/'.$app->config->theme.'/message.php';
 
 	} else {
 		
 		$_GET['email'] = $_POST['email'];
 		
 		$message = $error;
-		include 'themes/'.$app->theme.'/message.php';
+		include 'themes/'.$app->config->theme.'/message.php';
 		
 	}
 	
@@ -88,15 +88,15 @@ if ($_POST['email'] != '') {
 // Show invite form
 
 $invites_remaining = $_SESSION['user']['invites'];
-include 'themes/'.$app->theme.'/invites.php';
+include 'themes/'.$app->config->theme.'/invites.php';
 
 // Show sent invites
 
 $invites_sent = $app->invite->list_sent($_SESSION['user']['id']);
-include 'themes/'.$app->theme.'/invites_list.php';
+include 'themes/'.$app->config->theme.'/invites_list.php';
 
 // Footer
 
-include 'themes/'.$app->theme.'/footer.php';
+include 'themes/'.$app->config->theme.'/footer.php';
 
 ?>

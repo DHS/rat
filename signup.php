@@ -8,8 +8,8 @@ if (!empty($_SESSION['user'])) {
 	
 	$page['name'] = 'Signup';
 	$message = 'You are already logged in!';
-	include 'themes/'.$app->theme.'/header.php';
-	include 'themes/'.$app->theme.'/footer.php';
+	include 'themes/'.$app->config->theme.'/header.php';
+	include 'themes/'.$app->config->theme.'/footer.php';
 	exit;
 	
 }
@@ -42,15 +42,15 @@ function show_form() {
 	
 	global $app;
 	
-	if ($app->beta == TRUE) {
+	if ($app->config->beta == TRUE) {
 		
 		// Show beta signup form
-		include 'themes/'.$app->theme.'/signup_beta.php';
+		include 'themes/'.$app->config->theme.'/signup_beta.php';
 		
 	} else {
 		
 		// Show full signup form
-		include 'themes/'.$app->theme.'/signup.php';
+		include 'themes/'.$app->config->theme.'/signup.php';
 		
 	}
 
@@ -64,17 +64,17 @@ function validate_code() {
 	if ($app->user->validate_invite_code($_GET['code'], $_GET['email']) == TRUE) {
 		// Valid
 
-		include 'themes/'.$app->theme.'/signup.php';
+		include 'themes/'.$app->config->theme.'/signup.php';
 		
 	} else {
 		// Invalid
 		
-		if ($app->beta == TRUE) {
+		if ($app->config->beta == TRUE) {
 			$message = 'Your invite code is invalid.';
-			include 'themes/'.$app->theme.'/message.php';
-			include 'themes/'.$app->theme.'/signup_beta.php';
+			include 'themes/'.$app->config->theme.'/message.php';
+			include 'themes/'.$app->config->theme.'/signup_beta.php';
 		} else {
-			include 'themes/'.$app->theme.'/signup.php';
+			include 'themes/'.$app->config->theme.'/signup.php';
 		}
 
 	}
@@ -96,7 +96,7 @@ function do_signup($mode = 'full') {
 	
 	// Check invite code (only really matters if app is in beta)
 
-	if ($mode == 'code' && $app->beta == TRUE) {
+	if ($mode == 'code' && $app->config->beta == TRUE) {
 
 		if ($app->user->validate_invite_code($_POST['code'], $_POST['email']) != TRUE)
 			$error .= 'Invalid invite code.<br />';
@@ -168,14 +168,14 @@ function do_signup($mode = 'full') {
 			// Do signup
 			$app->user->signup($user['id'], $_POST['username'], $_POST['password1']);
 			
-			if ($app->send_emails == TRUE) {
+			if ($app->config->send_emails == TRUE) {
 				// Send 'thank you for signing up' email
 
 				$to = "{$_POST['username']} <{$_POST['email']}>";
 				$headers = "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 				// Load subject and body from template
-				include 'themes/'.$app->theme.'/email_signup.php';
+				include 'themes/'.$app->config->theme.'/email_signup.php';
 
 				// Email user
 				mail($to, $subject, $body, $headers);
@@ -190,7 +190,7 @@ function do_signup($mode = 'full') {
 			$_SESSION['user'] = $user;
 			
 			// Check invites are enabled and the code is valid
-			if ($app->invites['enabled'] == TRUE && validate_invite_code($_POST['code'], $_POST['email']) == TRUE) {
+			if ($app->config->invites['enabled'] == TRUE && validate_invite_code($_POST['code'], $_POST['email']) == TRUE) {
 				
 				// Get invites
 				$invites = invites_get_by_code($_POST['code']);
@@ -206,7 +206,7 @@ function do_signup($mode = 'full') {
 							$GLOBALS['log']->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
 						
 						// Update points (but only if inviting user is not an admin)
-						if (isset($GLOBALS['points']) && in_array($invite['user_id'], $app->admin_users) != TRUE) {
+						if (isset($GLOBALS['points']) && in_array($invite['user_id'], $app->config->admin_users) != TRUE) {
 							
 							// Update points
 							$GLOBALS['points']->update($invite['user_id'], $app->points['per_invite_accepted']);
@@ -239,9 +239,9 @@ function do_signup($mode = 'full') {
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->url.'?message='.$message);
+				header('Location: '.$app->config->url.'?message='.$message);
 			} else {
-				header('Location: '.$app->dev_url.'?message='.$message);
+				header('Location: '.$app->config->dev_url.'?message='.$message);
 			}
 	
 			exit();
@@ -259,13 +259,13 @@ function do_signup($mode = 'full') {
 			$message = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
 			$message .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
 	
-			//include 'themes/'.$app->theme.'/message.php';
+			//include 'themes/'.$app->config->theme.'/message.php';
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->url.'?message='.$message);
+				header('Location: '.$app->config->url.'?message='.$message);
 			} else {
-				header('Location: '.$app->dev_url.'?message='.$message);
+				header('Location: '.$app->config->dev_url.'?message='.$message);
 			}
 	
 			exit();
@@ -285,13 +285,13 @@ function do_signup($mode = 'full') {
 		
 		// Show error message
 		$message = $error;
-		include 'themes/'.$app->theme.'/header.php';
+		include 'themes/'.$app->config->theme.'/header.php';
 		
 		// Show relevant signup form
 		if ($mode == 'beta') {
-			include 'themes/'.$app->theme.'/signup_beta.php';
+			include 'themes/'.$app->config->theme.'/signup_beta.php';
 		} else {
-			include 'themes/'.$app->theme.'/signup.php';
+			include 'themes/'.$app->config->theme.'/signup.php';
 		}
 	
 	}
@@ -315,7 +315,7 @@ if ($_GET['code'] != '') {
 		
 	} else {
 		
-		if ($app->beta == TRUE) {
+		if ($app->config->beta == TRUE) {
 			
 			$page['selector'] = 'do_signup';
 			$mode = 'beta';
@@ -348,14 +348,14 @@ if ($page['selector'] == 'do_signup') {
 } else {
 	// Not doing signup so show a simpler page. Also call header.
 	
-	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->config->theme.'/header.php';
 	$page['selector']();
 	
 }
 
 // Footer
 
-include 'themes/'.$app->theme.'/footer.php';
+include 'themes/'.$app->config->theme.'/footer.php';
 
 
 ?>

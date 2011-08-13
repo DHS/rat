@@ -5,14 +5,14 @@ require_once 'config/init.php';
 // Header
 
 $page['name'] = 'Help';
-include 'themes/'.$app->theme.'/header.php';
+include 'themes/'.$app->config->theme.'/header.php';
 
 // Content
 
-include 'themes/'.$app->theme.'/help.php';
+include 'themes/'.$app->config->theme.'/help.php';
 
 // Footer
 
-include 'themes/'.$app->theme.'/footer.php';
+include 'themes/'.$app->config->theme.'/footer.php';
 
 ?>

@@ -24,21 +24,21 @@ if (isset($page['title'])) {
 		// Page name found
 		
 		// Set the var that prints the page title
-		$page_title = '<a href="index.php">'.$app->name.'</a> - '.$page['name'];
+		$page_title = '<a href="index.php">'.$app->config->name.'</a> - '.$page['name'];
 
 		// If no head title is found then set head title similar to page title
 		if (!isset($head_title))
-			$head_title = $app->name.' - '.$page['name'];
+			$head_title = $app->config->name.' - '.$page['name'];
 
 	} else {
 		// No page name found
 
 		// Set page title to app name
-		$page_title = '<a href="index.php">'.$app->name.'</a>';
+		$page_title = '<a href="index.php">'.$app->config->name.'</a>';
 
 		// Set head title to app name
 		if (!isset($head_title))
-			$head_title = $app->name;
+			$head_title = $app->config->name;
 
 	}
 }
@@ -67,7 +67,7 @@ if (isset($page['title'])) {
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
   <!-- CSS: implied media="all" -->
-  <link rel="stylesheet" href="themes/<?php echo $app->theme; ?>/css/style.css">
+  <link rel="stylesheet" href="themes/<?php echo $app->config->theme; ?>/css/style.css">
 
   <!-- More ideas for your <head> here: h5bp.com/docs/#head-Tips -->
 
@@ -93,12 +93,12 @@ if (isset($page['title'])) {
 				if (isset($GLOBALS['points']))
 					echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app->points['name'].' &middot; ';
 
-				if ($app->invites['enabled'] == TRUE)
+				if ($app->config->invites['enabled'] == TRUE)
 					echo '<a href="invites.php">Invites</a> &middot; ';
 
 				echo '<a href="settings.php">Settings</a> &middot; <a href="help.php">Help</a> &middot; ';
 
-				if (in_array($_SESSION['user']['id'], $app->admin_users) == TRUE)
+				if (in_array($_SESSION['user']['id'], $app->config->admin_users) == TRUE)
 					echo '<a href="admin.php">Admin</a> &middot; ';
 
 				echo '<a href="logout.php">Logout</a>';
