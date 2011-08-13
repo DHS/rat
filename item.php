@@ -246,7 +246,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 // Header
 
 if (isset($app->plugins->gravatar))
-	$app->page_title_gravatar = $item['user']['email'];
+	$app->page->title_gravatar = $item['user']['email'];
 
 $app->page->head_title['head_title'] = $item['title'].' by '.$item['user']['name'];
 $app->page->title = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';

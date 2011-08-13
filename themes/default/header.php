@@ -118,13 +118,13 @@ if (isset($app->page->title)) {
     <!-- Page title -->
     <?php
 
-	if (isset($app->plugins->gravatar) && !empty($app->page_title_gravatar)) {
+	if (isset($app->plugins->gravatar) && !empty($app->page->title_gravatar)) {
 		// Show gravatar
 
 	echo '<table class="center">
 	<tr>
 	<td>';
-	echo $app->plugins->gravatar->show($app->page_title_gravatar, array('style' => "margin-right: 10px;"));
+	echo $app->plugins->gravatar->show($app->page->title_gravatar, array('style' => "margin-right: 10px;"));
 	echo '</td>
 	<td><h1>'.$app->page->head_title_title.'</h1></td>
 	</tr>
