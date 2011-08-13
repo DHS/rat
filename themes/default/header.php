@@ -1,11 +1,11 @@
 <?php
 // Set page_name for this format: <h1>App name - $app->page->name</h1>
-// Overwrite with $app->page->title (and $app->page->head_title['head_title'] if necessary)
+// Overwrite with $app->page->title (and $app->page->head_title if necessary)
 // The next few lines process these and output $head_title (for <title></title>) and $app->page->head_title_title (for <h1></h1>)
 
 // Set the var that is printed in head title
-if (isset($app->page->head_title['head_title']))
-	$head_title = $app->page->head_title['head_title'];
+if (isset($app->page->head_title))
+	$head_title = $app->page->head_title;
 
 if (isset($app->page->title)) {
 	// Page title is set = override!
@@ -141,12 +141,10 @@ if (isset($app->page->title)) {
 <?php
 
 if (isset($_GET['message']))
-	$message = $_GET['message'];
+	$app->page->message = $_GET['message'];
 
-if (isset($message)) {
-
+if (isset($app->page->message))
 	echo '<!-- Message -->
-<p class="message">'.$message.'</p>';
-}
+<p class="message">'.$app->page->message.'</p>';
 
 ?>

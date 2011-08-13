@@ -34,7 +34,7 @@ if ($_POST['email'] && $_POST['password']) {
 		
 	} else {
 		
-		$message .= 'Something isn\'t quite right.<br />Please try again...';
+		$app->page->message .= 'Something isn\'t quite right.<br />Please try again...';
 		$email = $_POST['email'];
 		
 	}
@@ -50,7 +50,7 @@ $app->loadView('header');
 if (empty($_SESSION['user'])) {
 	$app->loadView('login');
 } else {
-	$message = 'You are already logged in!<br /><a href="logout.php">Click here</a> to logout.';
+	$app->page->message = 'You are already logged in!<br /><a href="logout.php">Click here</a> to logout.';
 	$app->loadView('message');
 }
 

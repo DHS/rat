@@ -38,7 +38,7 @@ function generate_code() {
 	}
 	
 	$app->loadView('header');
-	$message = 'Check your email for instructions about how to reset your password!';
+	$app->page->message = 'Check your email for instructions about how to reset your password!';
 	$app->loadView('message');
 	$app->loadView('footer');
 		
@@ -95,20 +95,20 @@ function update_password() {
 		}
 		
 		// Set welcome message
-		$message = urlencode('Password updated.<br />Welcome back to '.$app->config->name.'!');
+		$app->page->message = urlencode('Password updated.<br />Welcome back to '.$app->config->name.'!');
 		
 		// Go forth!
 		if (SITE_IDENTIFIER == 'live') {
-			header('Location: '.$app->config->url.'?message='.$message);
+			header('Location: '.$app->config->url.'?message='.$app->page->message);
 		} else {
-			header('Location: '.$app->config->dev_url.'?message='.$message);
+			header('Location: '.$app->config->dev_url.'?message='.$app->page->message);
 		}
 
 		exit();
 		
 	} else {
 		
-		$message = $error;
+		$app->page->message = $error;
 		$app->loadView('header');
 		if ($app->user->check_password_reset_code($_POST['code']) != FALSE)
 			$app->loadView('reset_confirm');

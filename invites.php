@@ -71,14 +71,14 @@ if ($_POST['email'] != '') {
 			mail($to, $subject, $body, $headers);
 		}
 
-		$message = 'Invite sent!';
+		$app->page->message = 'Invite sent!';
 		$app->loadView('message');
 
 	} else {
 		
 		$_GET['email'] = $_POST['email'];
 		
-		$message = $error;
+		$app->page->message = $error;
 		$app->loadView('message');
 		
 	}

@@ -26,7 +26,7 @@ if ($user == NULL) {
 if (isset($app->plugins->gravatar))
 	$app->page->title_gravatar = $user['email'];
 
-$app->page->head_title['head_title'] = $user['name'].' on '.$app->config->name;
+$app->page->head_title = $user['name'].' on '.$app->config->name;
 $app->page->title = '<a href="user.php?id='.$user['id'].'">'.$user['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';
 
 $app->loadView('header');

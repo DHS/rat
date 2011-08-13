@@ -10,7 +10,7 @@ if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 	
 	$_GET['id'] = 1;
 	
-	$message = 'Welcome to Rat! Please enter your details:';
+	$app->page->message = 'Welcome to Rat! Please enter your details:';
 	$app->loadView('header');
 	$app->loadView('admin_setup');
 	$app->loadView('footer');
@@ -33,13 +33,13 @@ if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 	if (isset($app->plugins->log))
 		$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'signup');
 	
-	$message = 'Rat is now setup and you are logged in!';
+	$app->page->message = 'Rat is now setup and you are logged in!';
 	
 	// Go forth!
 	if (SITE_IDENTIFIER == 'live') {
-		header('Location: '.$app->config->url.'?message='.urlencode($message));
+		header('Location: '.$app->config->url.'?message='.urlencode($app->page->message));
 	} else {
-		header('Location: '.$app->config->dev_url.'?message='.urlencode($message));
+		header('Location: '.$app->config->dev_url.'?message='.urlencode($app->page->message));
 	}
 		
 	exit();
@@ -119,7 +119,7 @@ function invite() {
 			mail($to, $subject, $body, $headers);
 		}
 		
-		$message = 'User invited!';
+		$app->page->message = 'User invited!';
 		$app->loadView('message');
 		
 		signups();
@@ -146,7 +146,7 @@ function grant_invites() {
 		
 		$app->admin->update_invites($_GET['count']);
 		
-		$message = 'Invites updated!';
+		$app->page->message = 'Invites updated!';
 		$app->loadView('message');
 		
 		users();

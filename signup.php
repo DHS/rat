@@ -7,7 +7,7 @@ require_once 'config/init.php';
 if (!empty($_SESSION['user'])) {
 	
 	$app->page->name = 'Signup';
-	$message = 'You are already logged in!';
+	$app->page->message = 'You are already logged in!';
 	$app->loadView('header');
 	$app->loadView('footer');
 	exit;
@@ -70,7 +70,7 @@ function validate_code() {
 		// Invalid
 		
 		if ($app->config->beta == TRUE) {
-			$message = 'Your invite code is invalid.';
+			$app->page->message = 'Your invite code is invalid.';
 			$app->loadView('message');
 			$app->loadView('signup_beta');
 		} else {
@@ -235,13 +235,13 @@ function do_signup($mode = 'full') {
 			}
 			
 			// Set welcome message
-			$message = urlencode('Welcome to '.$GLOBALS['app']->name.'!');
+			$app->page->message = urlencode('Welcome to '.$GLOBALS['app']->name.'!');
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url.'?message='.$message);
+				header('Location: '.$app->config->url.'?message='.$app->page->message);
 			} else {
-				header('Location: '.$app->config->dev_url.'?message='.$message);
+				header('Location: '.$app->config->dev_url.'?message='.$app->page->message);
 			}
 	
 			exit();
@@ -256,16 +256,16 @@ function do_signup($mode = 'full') {
 				$app->plugins->log->add($user_id, 'user', NULL, 'beta_signup', $_POST['email']);
 			
 			// Set thank you & tweet this message
-			$message = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
-			$message .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
+			$app->page->message = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
+			$app->page->message .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
 	
 			//$app->loadView('message');
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url.'?message='.$message);
+				header('Location: '.$app->config->url.'?message='.$app->page->message);
 			} else {
-				header('Location: '.$app->config->dev_url.'?message='.$message);
+				header('Location: '.$app->config->dev_url.'?message='.$app->page->message);
 			}
 	
 			exit();
@@ -284,7 +284,7 @@ function do_signup($mode = 'full') {
 		//$app = $GLOBALS['app'];
 		
 		// Show error message
-		$message = $error;
+		$app->page->message = $error;
 		$app->loadView('header');
 		
 		// Show relevant signup form

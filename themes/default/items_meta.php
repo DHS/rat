@@ -23,9 +23,9 @@ if ($app->config->items['likes']['enabled'] == TRUE) {
 		}
 	}
 	if ($i_like == TRUE) {
-		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_remove('.$_SESSION['user']['id'].', '.$item['id'].'); return false;">'.$app->config->items['likes']['opposite_name'].'</a></a>';
+		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_remove('.$_SESSION['user']['id'].', '.$item['id'].'); return false;">'.$app->config->items['likes']['opposite_name'].'</a></a></span>';
 	} else {
-		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_add('.$_SESSION['user']['id'].', '.$item['id'].'); return false;">'.$app->config->items['likes']['name'].'</a></a>';
+		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_add('.$_SESSION['user']['id'].', '.$item['id'].'); return false;">'.$app->config->items['likes']['name'].'</a></a></span>';
 	}
 	unset ($i_like);
 

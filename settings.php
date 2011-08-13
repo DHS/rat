@@ -7,7 +7,7 @@ require_once 'config/init.php';
 if ($_SESSION['user'] == NULL) {
 	
 	$app->page->name = 'Page not found';
-	$message = 'Please <a href="login.php?redirect_to=/settings.php">login</a> to view your settings.';
+	$app->page->message = 'Please <a href="login.php?redirect_to=/settings.php">login</a> to view your settings.';
 	$app->loadView('header');
 	$app->loadView('footer');
 	exit();
@@ -51,21 +51,21 @@ function password() {
 				if (isset($app->plugins->log))
 					$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'change_password');
 
-				$message = 'Password udpated!';
+				$app->page->message = 'Password udpated!';
 				
 			} else {
 				// New passwords don't match
-				$message = 'There was a problem, please try again.';
+				$app->page->message = 'There was a problem, please try again.';
 			}
 			
 		} else {
 			// Old passwords don't match
-			$message = 'There was a problem, please try again.';
+			$app->page->message = 'There was a problem, please try again.';
 		}
 		
 	} else {
 		// Variables missing
-		$message = 'There was a problem, please try again.';
+		$app->page->message = 'There was a problem, please try again.';
 	}
 	
 	$app->loadView('message');
@@ -116,11 +116,11 @@ function profile() {
 			$app->user->update_profile($_SESSION['user']['id'], $_POST['name'], $_POST['bio'], $_POST['url']);
 		
 			// Set success message
-			$message = 'Profile information updated!';
+			$app->page->message = 'Profile information updated!';
 			
 		} else {
 			
-			$message = $error;
+			$app->page->message = $error;
 			
 		}
 

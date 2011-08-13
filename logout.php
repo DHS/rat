@@ -16,7 +16,7 @@ if (!empty($_SESSION['user'])) {
 
 	$_SESSION['user'] = array();
 	
-	$message = 'You are now logged out.';
+	$app->page->message = 'You are now logged out.';
 	
 }
 

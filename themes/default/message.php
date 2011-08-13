@@ -1,8 +1,8 @@
 
 <?php
 
-if ($message) {
-	echo '<p class="message">'.$message.'</p>';
+if ($app->page->message) {
+	echo '<p class="message">'.$app->page->message.'</p>';
 }
 
 ?>

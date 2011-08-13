@@ -144,13 +144,13 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		if (isset($app->plugins->log))
 			$app->plugins->log->add($_SESSION['user']['id'], 'item', $item_id, 'add', "title = {$_POST['title']}\ncontent = {$_POST['content']}");
 
-		$message = ucfirst($app->config->items['name']).' added!';
+		$app->page->message = ucfirst($app->config->items['name']).' added!';
 
 		// Go forth!
 		if (SITE_IDENTIFIER == 'live') {
-			header('Location: '.$app->config->url.'user.php?message='.urlencode($message));
+			header('Location: '.$app->config->url.'user.php?message='.urlencode($app->page->message));
 		} else {
-			header('Location: '.$app->config->dev_url.'user.php?message='.urlencode($message));
+			header('Location: '.$app->config->dev_url.'user.php?message='.urlencode($app->page->message));
 		}
 		
 		exit();
@@ -167,7 +167,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		//$app = $GLOBALS['app'];
 		
 		// Show error message
-		$message = $error;
+		$app->page->message = $error;
 		$app->loadView('header');
 		$app->loadView('items_add');
 		$app->loadView('footer');
@@ -206,7 +206,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		}
 		
 		// Set message
-		$message = ucfirst($app->config->items['name']).' removed!';
+		$app->page->message = ucfirst($app->config->items['name']).' removed!';
 
 		// Return from whence you came
 		header('Location: '.$_SERVER['HTTP_REFERER']);
@@ -248,8 +248,8 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 if (isset($app->plugins->gravatar))
 	$app->page->title_gravatar = $item['user']['email'];
 
-$app->page->head_title['head_title'] = $item['title'].' by '.$item['user']['name'];
-$app->page->title = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';
+$app->page->head_title = $app->page->item['title'].' by '.$app->page->item['user']['name'];
+$app->page->title = '<a href="user.php?id='.$app->page->item['user']['id'].'">'.$app->page->item['user']['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';
 
 $app->loadView('header');
 
