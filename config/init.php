@@ -64,9 +64,9 @@ if ($_SESSION['user'] == NULL && $app->config->private == TRUE && in_array($resu
 	} else {
 
 		// Show splash page
-		$app->loadView('header');
-		$app->loadView('splash');
-		$app->loadView('footer');
+		include 'themes/'.$app->config->theme.'/header.php';
+		include 'themes/'.$app->config->theme.'/splash.php';
+		include 'themes/'.$app->config->theme.'/footer.php';
 
 		// Stop processing the rest of the page
 		exit();		
