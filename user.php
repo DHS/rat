@@ -23,7 +23,7 @@ if ($user == NULL) {
 
 // Header
 
-if (isset($GLOBALS['gravatar']))
+if (isset($app->plugins->gravatar))
 	$app->page_title_gravatar = $user['email'];
 
 $page['head_title'] = $user['name'].' on '.$app->config->name;
@@ -42,7 +42,7 @@ if ($app->config->friends->enabled == TRUE)
 
 // Show number of points
 
-if (isset($GLOBALS['points']))
+if (isset($app->plugins->points))
 	include 'themes/'.$app->config->theme.'/points.php';
 
 // Show new item form

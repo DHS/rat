@@ -14,8 +14,8 @@ if ($_POST['email'] && $_POST['password']) {
 		$_SESSION['user'] = $user;
 
 		// Log login
-		if (isset($GLOBALS['log']))
-			$GLOBALS['log']->add($_SESSION['user']['id'], 'user', NULL, 'login');
+		if (isset($app->plugins->log))
+			$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
 
 		// Get redirected
 		if ($_GET['redirect_to']) {

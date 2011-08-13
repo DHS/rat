@@ -11,8 +11,8 @@ if (!empty($_SESSION['user'])) {
 	session_destroy();
 
 	// log logout
-	if (isset($GLOBALS['log']))
-		$GLOBALS['log']->add($user_id, 'user', NULL, 'logout');
+	if (isset($app->plugins->log))
+		$app->plugins->log->add($user_id, 'user', NULL, 'logout');
 
 	$_SESSION['user'] = array();
 	

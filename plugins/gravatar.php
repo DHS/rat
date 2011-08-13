@@ -11,8 +11,8 @@
 *	
 *		To display a users's gravatar:
 *		
-*			if (isset($GLOBALS['gravatar']))
-*				echo $GLOBALS['gravatar']->show($_SESSION['user']['email'], array('user_id' => $_SESSION['user']['id'], 'size' => 20, 'style' => "margin: 10px;"));
+*			if (isset($app->plugins->gravatar))
+*				echo $app->plugins->gravatar->show($_SESSION['user']['email'], array('user_id' => $_SESSION['user']['id'], 'size' => 20, 'style' => "margin: 10px;"));
 *
 */
 

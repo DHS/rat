@@ -15,8 +15,8 @@
 *		
 *		To display users's points:
 *		
-*			if (isset($GLOBALS['points']))
-*				echo 'You have '.$_SESSION['user']['points'].' '.$app->points['name'];
+*			if (isset($app->plugins->points))
+*				echo 'You have '.$_SESSION['user']['points'].' '.$app->plugins->points['name'];
 *
 */
 

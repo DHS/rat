@@ -22,8 +22,8 @@
 
 
   <?php
-  if (isset($GLOBALS['analytics']))
-    $GLOBALS['analytics']->view();
+  if (isset($app->plugins->analytics))
+    $app->plugins->analytics->view();
   ?>
 
 

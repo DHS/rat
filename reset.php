@@ -85,8 +85,8 @@ function update_password() {
 		$_SESSION['user'] = $user;
 		
 		// Log login
-		if (isset($GLOBALS['log']))
-			$GLOBALS['log']->add($_SESSION['user']['id'], 'user', NULL, 'login');
+		if (isset($app->plugins->log))
+			$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
 		
 		// If redirect_to is set then redirect
 		if ($_GET['redirect_to']) {

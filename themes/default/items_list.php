@@ -8,9 +8,9 @@ foreach ($items as $item) { ?>
 
 	<tr>
 		<?php 
-		if (isset($GLOBALS['gravatar'])) {
+		if (isset($app->plugins->gravatar)) {
 			echo '<td style="text-align: center;" valign="top">';
-			echo $GLOBALS['gravatar']->show($item['user']['email'], array('user_id' => $item['user']['id'], 'size' => 48, 'style' => "margin-right: 5px;"));
+			echo $app->plugins->gravatar->show($item['user']['email'], array('user_id' => $item['user']['id'], 'size' => 48, 'style' => "margin-right: 5px;"));
 			echo '</td>';
 		}
 		?>
@@ -56,7 +56,7 @@ foreach ($items as $item) { ?>
 	
 	<tr>
 		<?php 
-		if (isset($GLOBALS['gravatar'])) {
+		if (isset($app->plugins->gravatar)) {
 			echo '<td colspan="2" style="border-top: 1px solid #CCCCCC; height: 10px;"></td>';
 		} else {
 			echo '<td colspan="2" style="border-top: 1px solid #CCCCCC; height: 10px;"></td>';

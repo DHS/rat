@@ -48,8 +48,8 @@ function password() {
 				$_SESSION['user']['password'] = md5($_POST['new_password1'].$app->config->encryption_salt);
 				
 				// Log password update
-				if (isset($GLOBALS['log']))
-					$GLOBALS['log']->add($_SESSION['user']['id'], 'user', NULL, 'change_password');
+				if (isset($app->plugins->log))
+					$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'change_password');
 
 				$message = 'Password udpated!';
 				
@@ -157,8 +157,8 @@ include 'themes/'.$app->config->theme.'/settings_password.php';
 
 // Gravatar settings
 
-if (isset($GLOBALS['gravatar']))
-	$GLOBALS['gravatar']->show_settings($_SESSION['user']['email']);
+if (isset($app->plugins->gravatar))
+	$app->plugins->gravatar->show_settings($_SESSION['user']['email']);
 
 // Footer
 

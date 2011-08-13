@@ -183,8 +183,8 @@ function do_signup($mode = 'full') {
 			}
 			
 			// Log signup
-			if (isset($GLOBALS['log']))
-				$GLOBALS['log']->add($user['id'], 'user', NULL, 'signup');
+			if (isset($app->plugins->log))
+				$app->plugins->log->add($user['id'], 'user', NULL, 'signup');
 			
 			// Start session
 			$_SESSION['user'] = $user;
@@ -202,18 +202,18 @@ function do_signup($mode = 'full') {
 						$app->invite->update($invite['id']);
 						
 						// Log invite update
-						if (isset($GLOBALS['log']))
-							$GLOBALS['log']->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
+						if (isset($app->plugins->log))
+							$app->plugins->log->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
 						
 						// Update points (but only if inviting user is not an admin)
-						if (isset($GLOBALS['points']) && in_array($invite['user_id'], $app->config->admin_users) != TRUE) {
+						if (isset($app->plugins->points) && in_array($invite['user_id'], $app->config->admin_users) != TRUE) {
 							
 							// Update points
-							$GLOBALS['points']->update($invite['user_id'], $app->points['per_invite_accepted']);
+							$app->plugins->points->update($invite['user_id'], $app->plugins->points['per_invite_accepted']);
 							
 							// Log points update
-							if (isset($GLOBALS['log']))
-								$GLOBALS['log']->add($invite['user_id'], 'points', NULL, $app->points['per_invite_accepted'], 'invite_accepted = '.$invite['id']);
+							if (isset($app->plugins->log))
+								$app->plugins->log->add($invite['user_id'], 'points', NULL, $app->plugins->points['per_invite_accepted'], 'invite_accepted = '.$invite['id']);
 							
 						}
 						
@@ -225,8 +225,8 @@ function do_signup($mode = 'full') {
 			}
 			
 			// Log login
-			if (isset($GLOBALS['log']))
-				$GLOBALS['log']->add($_SESSION['user']['id'], 'user', NULL, 'login');
+			if (isset($app->plugins->log))
+				$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
 			
 			// If redirect_to is set then redirect
 			if ($_GET['redirect_to']) {
@@ -252,8 +252,8 @@ function do_signup($mode = 'full') {
 		if ($mode == 'beta') {
 			
 			// Log beta signup
-			if (isset($GLOBALS['log']))
-				$GLOBALS['log']->add($user_id, 'user', NULL, 'beta_signup', $_POST['email']);
+			if (isset($app->plugins->log))
+				$app->plugins->log->add($user_id, 'user', NULL, 'beta_signup', $_POST['email']);
 			
 			// Set thank you & tweet this message
 			$message = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';

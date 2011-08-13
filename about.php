@@ -55,18 +55,18 @@ $content .= ". </p>\n";
 if ($app->config->invites['enabled'] == TRUE)
 	$content .= "<p>It also has an invite system so that you can invite your friends.</p>\n";
 
-if (isset($GLOBALS['points'])) {
+if (isset($app->plugins->points)) {
 	
 	$content .= '<p>It also has a points system';
 	
-	if ($app->points['leaderboard'] == TRUE)
+	if ($app->plugins->points['leaderboard'] == TRUE)
 		$content .= ' and a leaderboard so you can see how you\'re doing relative to everyone else';
 	
 	$content .= ".</p>\n";
 	
 }
 
-if (isset($GLOBALS['gravatar']))
+if (isset($app->plugins->gravatar))
 	$content .= '<p>'.$app->config->name.' is <a href="http://gravatar.com/">Gravatar</a>-enabled.</p>'."\n";
 
 echo $content;

@@ -30,8 +30,8 @@ if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 	$_SESSION['user'] = $user;
 	
 	// Log login
-	if (isset($GLOBALS['log']))
-		$GLOBALS['log']->add($_SESSION['user']['id'], 'user', NULL, 'signup');
+	if (isset($app->plugins->log))
+		$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'signup');
 	
 	$message = 'Rat is now setup and you are logged in!';
 	
@@ -100,8 +100,8 @@ function invite() {
 		$id = $app->invite->add($_SESSION['user']['id'], $_GET['email']);
 		
 		// log invite
-		if (isset($GLOBALS['log']))
-			$GLOBALS['log']->add($_SESSION['user']['id'], 'invite', $id, 'admin_add', $_GET['email']);
+		if (isset($app->plugins->log))
+			$app->plugins->log->add($_SESSION['user']['id'], 'invite', $id, 'admin_add', $_GET['email']);
 		
 		if (SITE_IDENTIFIER == 'live') {
 			$to		= "{$_POST['username']} <{$_GET['email']}>";
@@ -161,8 +161,8 @@ function history() {
 	// Should be log() but that's a native PHP function
 	// Show most recent entries in the log
 	
-	if (isset($GLOBALS['log']))
-		$GLOBALS['log']->view();
+	if (isset($app->plugins->log))
+		$app->plugins->log->view();
 
 }
 

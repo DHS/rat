@@ -11,8 +11,8 @@
 *	
 *		To log an event:
 *		
-*			if (isset($GLOBALS['log']))
-*				$GLOBALS['log']->add($_SESSION['user']['id'], 'user', NULL, 'signup');
+*			if (isset($app->plugins->log))
+*				$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'signup');
 *
 */
 

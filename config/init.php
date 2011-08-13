@@ -34,6 +34,12 @@ class app {
 			define('SITE_IDENTIFIER', 'dev');
 		}
 		
+		foreach ($this->config->plugins as $key => $value) {
+			if ($value == TRUE) {
+				include "plugins/$key.php";
+				$this->plugins->$key = new $key;
+			}
+		}
 		
 	}
 	

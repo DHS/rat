@@ -90,8 +90,8 @@ if (isset($page['title'])) {
 
 				echo '<a href="index.php">Home</a> &middot; <a href="user.php">My profile</a> &middot; ';
 
-				if (isset($GLOBALS['points']))
-					echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app->points['name'].' &middot; ';
+				if (isset($app->plugins->points))
+					echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app->plugins->points['name'].' &middot; ';
 
 				if ($app->config->invites['enabled'] == TRUE)
 					echo '<a href="invites.php">Invites</a> &middot; ';
@@ -118,13 +118,13 @@ if (isset($page['title'])) {
     <!-- Page title -->
     <?php
 
-	if (isset($GLOBALS['gravatar']) && !empty($app->page_title_gravatar)) {
+	if (isset($app->plugins->gravatar) && !empty($app->page_title_gravatar)) {
 		// Show gravatar
 
 	echo '<table class="center">
 	<tr>
 	<td>';
-	echo $GLOBALS['gravatar']->show($app->page_title_gravatar, array('style' => "margin-right: 10px;"));
+	echo $app->plugins->gravatar->show($app->page_title_gravatar, array('style' => "margin-right: 10px;"));
 	echo '</td>
 	<td><h1>'.$page_title.'</h1></td>
 	</tr>
