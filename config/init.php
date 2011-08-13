@@ -44,6 +44,14 @@ class app {
 		
 	}
 	
+	function loadView($view) {
+		
+		global $app;
+		
+		include "themes/{$app->config->theme}/$view.php";
+		
+	}
+	
 }
 
 // Create new instance of app
