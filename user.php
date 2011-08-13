@@ -55,7 +55,7 @@ $items = $app->item->list_user($user['id']);
 
 if (count($items) > 0) {
 	
-	$app->loadView('items_list_user');
+	$app->loadView('items_list_user', array('items' => $items));
 
 } else {
 	

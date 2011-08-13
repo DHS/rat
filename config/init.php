@@ -24,7 +24,14 @@ class app {
 
 	}
 	
-	function loadView($view) {
+	function loadView($view, $contents) {
+
+		global $app;
+		
+		foreach ($contents as $key => $value) {
+			global $$key;
+			$$key = $value;
+		}
 		
 		include "themes/$app->theme/$view.php";
 		
@@ -35,7 +42,7 @@ class app {
 // Create new instance of app
 $app = new app;
 
-// Add app vars back in
+// Load config
 foreach ($app_vars as $key => $value) {
 	$app->$key = $value;
 }
