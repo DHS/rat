@@ -176,7 +176,7 @@ if ($app->page->selector == NULL)
 
 $app->page->name = 'Admin - '.ucfirst(strtolower($app->page->selector));
 $app->loadView('header');
-$app->loadView('admin_menu';
+$app->loadView('admin_menu');
 
 // Show page determined by selector
 

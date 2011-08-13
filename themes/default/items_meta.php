@@ -1,4 +1,7 @@
 
+<?php if (!isset($item))
+	$item = $app->page->item; ?>
+
 <span class="item_meta">
 
 <a href="item.php?id=<?php echo $item['id']; ?>"><?php echo $item['date']; ?></a> 

@@ -1,5 +1,8 @@
 <?php
 
+if (!isset($item))
+	$item = $app->page->item;
+
 if (count($item['comments']) > 0) {
 
 	echo '<span id="comments_'.$item['id'].'">';

@@ -1,5 +1,8 @@
 <?php
 
+if (!isset($item))
+	$item = $app->page->item;
+
 if (count($item['likes']) > 0) {
 
 	echo '<span id="likes_'.$item['id'].'">
@@ -25,3 +28,5 @@ if (count($item['likes']) > 0) {
 	echo '<span id="likes_'.$item['id'].'"></span>';
 	
 }
+
+?>

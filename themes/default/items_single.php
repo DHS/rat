@@ -1,4 +1,6 @@
 
+<?php $item = $app->page->item; ?>
+
 <?php if ($app->config->items['titles']['enabled'] == TRUE) { ?>
 
 <p style="font-size: 200%; line-height: 100%; width: 500px; text-align: left;"><?php echo $item['title']; ?></p>
@@ -21,7 +23,7 @@
 	?>
 	<a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a>
 
-	&middot; <?php include 'items_meta.php'; ?>
+	&middot; <?php $app->loadView('items_meta'); ?>
 	
 </p>
 
@@ -38,7 +40,7 @@ if ($app->config->items['likes']['enabled'] == TRUE)
 
 if ($app->config->items['comments']['enabled'] == TRUE) {
 	$app->loadView('comments_list');
-	$show_comment_form = TRUE;
+	$app->page->show_comment_form = TRUE;
 	$app->loadView('comments_add');
 }
 

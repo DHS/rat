@@ -4,7 +4,11 @@ if (is_array($app->page->items)) {
 	
 echo '<table style="width: 100%;">';
 
-foreach ($app->page->items as $item) { ?>
+foreach ($app->page->items as $item) {
+
+	$app->page->item = $item;
+
+?>
 
 	<tr>
 		<?php 
@@ -30,7 +34,7 @@ foreach ($app->page->items as $item) { ?>
 			
 			<?php } ?>
 
-			<?php include 'items_meta.php'; ?>
+			<?php $app->loadView('items_meta'); ?>
 
 			<?php
 			
@@ -41,9 +45,9 @@ foreach ($app->page->items as $item) { ?>
 
 				$app->loadView('comments_list');
 				if (count($item['comments']) > 0) {
-					$show_comment_form = TRUE;
+					$app->page->show_comment_form = TRUE;
 				} else {
-					$show_comment_form = FALSE;
+					$app->page->show_comment_form = FALSE;
 				}
 				$app->loadView('comments_add');
 
@@ -65,6 +69,8 @@ foreach ($app->page->items as $item) { ?>
 	</tr>
 	
 <?php
+
+	unset($app->page->item);
 
 }
 // end foreach loop

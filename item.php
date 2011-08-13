@@ -229,10 +229,10 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 } elseif ($_GET['id'] != '') {
 	// No new item so get item info based on get var
 	
-	$item = $app->item->get($_GET['id']);
+	$app->page->item = $app->item->get($_GET['id']);
 
 	// Fail gracefully if item doesn't exist
-	if ($item == NULL) {
+	if ($app->page->item == NULL) {
 
 		$app->page->name = ucfirst($app->config->items['name']).' not found';
 		$app->loadView('header');
