@@ -145,7 +145,7 @@ include 'themes/'.$app->config->theme.'/header.php';
 
 // Show page determined by selector
 
-$app->page->selector();
+call_user_func($app->page->selector);
 
 // Show profile info form
 

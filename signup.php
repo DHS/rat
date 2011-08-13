@@ -349,7 +349,7 @@ if ($app->page->selector == 'do_signup') {
 	// Not doing signup so show a simpler page. Also call header.
 	
 	include 'themes/'.$app->config->theme.'/header.php';
-	$app->page->selector();
+	call_user_func($app->page->selector);
 	
 }
 

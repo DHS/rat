@@ -180,7 +180,7 @@ include 'themes/'.$app->config->theme.'/admin_menu.php';
 
 // Show page determined by selector
 
-$app->page->selector();
+call_user_func($app->page->selector);
 
 // Footer
 
