@@ -28,18 +28,18 @@
 <?php
 // Untested
 if ($app->config->private != TRUE)
-	include 'themes/'.$app->config->theme.'/items_share.php';
+	$app->loadView('items_share');
 ?>
 
 <?php
 
 if ($app->config->items['likes']['enabled'] == TRUE)
-	include 'themes/'.$app->config->theme.'/likes_list.php';
+	$app->loadView('likes_list');
 
 if ($app->config->items['comments']['enabled'] == TRUE) {
-	include 'themes/'.$app->config->theme.'/comments_list.php';
+	$app->loadView('comments_list');
 	$show_comment_form = TRUE;
-	include 'themes/'.$app->config->theme.'/comments_add.php';
+	$app->loadView('comments_add');
 }
 
 ?>

@@ -5,15 +5,15 @@ require_once 'config/init.php';
 // Header
 
 $app->page->name = $app->config->tagline;
-include 'themes/'.$app->config->theme.'/header.php';
+$app->loadView('header');
 
 // Intro paragraph
 
-//include 'themes/'.$app->config->theme.'/index.php';
+//$app->loadView('index');
 
 // New item form
 
-include 'themes/'.$app->config->theme.'/items_add.php';
+$app->loadView('items_add');
 
 // If friends is enabled, show feed of their activity
 
@@ -28,7 +28,7 @@ if ($app->config->friends['enabled'] == TRUE) {
 		// Show feed of friends' activity
 		
 		$app->page->items = $app->item->list_feed();
-		include 'themes/'.$app->config->theme.'/items_list.php';
+		$app->loadView('items_list');
 		
 	}
 
@@ -37,12 +37,12 @@ if ($app->config->friends['enabled'] == TRUE) {
 	// Friends not enabled so don't show recent items
 
 	$app->page->items = $app->item->list_all();
-	include 'themes/'.$app->config->theme.'/items_list.php';	
+	$app->loadView('items_list');	
 	
 }
 
 // Footer
 
-include 'themes/'.$app->config->theme.'/footer.php';
+$app->loadView('footer');
 
 ?>

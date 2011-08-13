@@ -11,9 +11,9 @@ if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 	$_GET['id'] = 1;
 	
 	$message = 'Welcome to Rat! Please enter your details:';
-	include 'themes/'.$app->config->theme.'/header.php';
-	include 'themes/'.$app->config->theme.'/admin_setup.php';
-	include 'themes/'.$app->config->theme.'/footer.php';
+	$app->loadView('header');
+	$app->loadView('admin_setup');
+	$app->loadView('footer');
 	
 	exit();
 	
@@ -51,8 +51,8 @@ if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 if (in_array($_SESSION['user']['id'], $app->config->admin_users) != TRUE) {
 
 	$app->page->name = 'Page not found';
-	include 'themes/'.$app->config->theme.'/header.php';
-	include 'themes/'.$app->config->theme.'/footer.php';
+	$app->loadView('header');
+	$app->loadView('footer');
 	exit;
 
 }
@@ -75,7 +75,7 @@ function dashboard() {
 	$app->page->users = $app->admin->list_users();
 	$app->page->users_beta = $app->admin->list_users_beta();
 	
-	include 'themes/'.$app->config->theme.'/admin_dashboard.php';
+	$app->loadView('admin_dashboard');
 	
 }
 
@@ -85,7 +85,7 @@ function signups() {
 	
 	$app->page->users = $app->admin->list_users_beta();
 	
-	include 'themes/'.$app->config->theme.'/admin_signups.php';
+	$app->loadView('admin_signups');
 	
 }
 
@@ -112,7 +112,7 @@ function invite() {
 		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 		
 		// Load template into $body variable
-		include 'themes/'.$app->config->theme.'/email_invite_admin.php';
+		$app->loadView('email_invite_admin');
 		
 		if ($app->config->send_emails == TRUE) {
 			// Email user
@@ -120,7 +120,7 @@ function invite() {
 		}
 		
 		$message = 'User invited!';
-		include 'themes/'.$app->config->theme.'/message.php';
+		$app->loadView('message');
 		
 		signups();
 		
@@ -134,7 +134,7 @@ function users() {
 	
 	$app->page->users = $app->admin->list_users();
 	
-	include 'themes/'.$app->config->theme.'/admin_users.php';
+	$app->loadView('admin_users');
 
 }
 
@@ -147,7 +147,7 @@ function grant_invites() {
 		$app->admin->update_invites($_GET['count']);
 		
 		$message = 'Invites updated!';
-		include 'themes/'.$app->config->theme.'/message.php';
+		$app->loadView('message');
 		
 		users();
 		
@@ -175,8 +175,8 @@ if ($app->page->selector == NULL)
 // Header
 
 $app->page->name = 'Admin - '.ucfirst(strtolower($app->page->selector));
-include 'themes/'.$app->config->theme.'/header.php';
-include 'themes/'.$app->config->theme.'/admin_menu.php';
+$app->loadView('header');
+$app->loadView('admin_menu';
 
 // Show page determined by selector
 
@@ -184,6 +184,6 @@ call_user_func($app->page->selector);
 
 // Footer
 
-include 'themes/'.$app->config->theme.'/footer.php';
+$app->loadView('footer');
 
 ?>

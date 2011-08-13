@@ -5,14 +5,14 @@ require_once 'config/init.php';
 // Header
 
 $app->page->name = 'Help';
-include 'themes/'.$app->config->theme.'/header.php';
+$app->loadView('header');
 
 // Content
 
-include 'themes/'.$app->config->theme.'/help.php';
+$app->loadView('help');
 
 // Footer
 
-include 'themes/'.$app->config->theme.'/footer.php';
+$app->loadView('footer');
 
 ?>

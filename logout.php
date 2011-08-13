@@ -22,14 +22,14 @@ if (!empty($_SESSION['user'])) {
 
 // Header
 
-include 'themes/'.$app->config->theme.'/header.php';
+$app->loadView('header');
 
 // Show login form
 
-include 'themes/'.$app->config->theme.'/login.php';
+$app->loadView('login');
 
 // Footer
 
-include 'themes/'.$app->config->theme.'/footer.php';
+$app->loadView('footer');
 
 ?>

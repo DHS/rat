@@ -1,7 +1,7 @@
 
 <p>Users: <strong><?php echo count($app->page->users); ?></strong></p>
 
-<?php include 'themes/'.$app->config->theme.'/admin_grant_invites.php'; ?>
+<?php $app->loadView('admin_grant_invites'); ?>
 
 <?php if (is_array($app->page->users)) { ?>
 

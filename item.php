@@ -7,14 +7,14 @@ require_once 'config/init.php';
 if ($_GET['id'] == '' && $_POST['title'] == '' && $_POST['content'] == '' && $_GET['delete'] == '') {
 	
 	if ($_SESSION['user'] != NULL) {
-		include 'themes/'.$app->config->theme.'/header.php';
-		include 'themes/'.$app->config->theme.'/items_add.php';
-		include 'themes/'.$app->config->theme.'/footer.php';
+		$app->loadView('header');
+		$app->loadView('items_add');
+		$app->loadView('footer');
 		exit;
 	} else {
 		$app->page->name = ucfirst($app->config->items['name']).' not found';
-		include 'themes/'.$app->config->theme.'/header.php';
-		include 'themes/'.$app->config->theme.'/footer.php';
+		$app->loadView('header');
+		$app->loadView('footer');
 		exit;
 	}
 	
@@ -168,9 +168,9 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		
 		// Show error message
 		$message = $error;
-		include 'themes/'.$app->config->theme.'/header.php';
-		include 'themes/'.$app->config->theme.'/items_add.php';
-		include 'themes/'.$app->config->theme.'/footer.php';
+		$app->loadView('header');
+		$app->loadView('items_add');
+		$app->loadView('footer');
 		exit();
 	
 	}
@@ -235,8 +235,8 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 	if ($item == NULL) {
 
 		$app->page->name = ucfirst($app->config->items['name']).' not found';
-		include 'themes/'.$app->config->theme.'/header.php';
-		include 'themes/'.$app->config->theme.'/footer.php';
+		$app->loadView('header');
+		$app->loadView('footer');
 		exit;
 		
 	}
@@ -251,14 +251,14 @@ if (isset($app->plugins->gravatar))
 $app->page->head_title['head_title'] = $item['title'].' by '.$item['user']['name'];
 $app->page->title = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';
 
-include 'themes/'.$app->config->theme.'/header.php';
+$app->loadView('header');
 
 // Show item
 
-include 'themes/'.$app->config->theme.'/items_single.php';
+$app->loadView('items_single');
 
 // Footer
 
-include 'themes/'.$app->config->theme.'/footer.php';
+$app->loadView('footer');
 
 ?>

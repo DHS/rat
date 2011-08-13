@@ -4,17 +4,17 @@ require_once 'config/init.php';
 
 // Header
 
-include 'themes/'.$app->config->theme.'/header.php';
+$app->loadView('header');
 
-include 'themes/'.$app->config->theme.'/search.php';
+$app->loadView('search');
 
 if (isset($_GET['q'])) {
 	$app->page->items = $app->search->do_search($_GET['q']);
-	include 'themes/'.$app->config->theme.'/items_list.php';
+	$app->loadView('items_list');
 }
 
 // Footer
 
-include 'themes/'.$app->config->theme.'/footer.php';
+$app->loadView('footer');
 
 ?>

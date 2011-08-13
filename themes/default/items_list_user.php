@@ -22,17 +22,17 @@ foreach ($app->page->items as $item) {
 			<?php
 
 			if ($app->config->items['likes']['enabled'] == TRUE)
-				include 'themes/'.$app->config->theme.'/likes_list.php';
+				$app->loadView('likes_list');
 			
 			if ($app->config->items['comments']['enabled'] == TRUE) {
 
-				include 'themes/'.$app->config->theme.'/comments_list.php';
+				$app->loadView('comments_list');
 				if (count($item['comments']) > 0) {
 					$show_comment_form = TRUE;
 				} else {
 					$show_comment_form = FALSE;
 				}
-				include 'themes/'.$app->config->theme.'/comments_add.php';
+				$app->loadView('comments_add');
 				
 			}
 

@@ -43,19 +43,19 @@ if ($_POST['email'] && $_POST['password']) {
 
 // Header
 
-include 'themes/'.$app->config->theme.'/header.php';
+$app->loadView('header');
 
 // Show login form
 
 if (empty($_SESSION['user'])) {
-	include 'themes/'.$app->config->theme.'/login.php';
+	$app->loadView('login');
 } else {
 	$message = 'You are already logged in!<br /><a href="logout.php">Click here</a> to logout.';
-	include 'themes/'.$app->config->theme.'/message.php';
+	$app->loadView('message');
 }
 
 // Footer
 
-include 'themes/'.$app->config->theme.'/footer.php';
+$app->loadView('footer');
 
 ?>
