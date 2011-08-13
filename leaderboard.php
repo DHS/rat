@@ -5,7 +5,7 @@ require_once 'config/init.php';
 //	Critical: Feature must be enabled
 
 if (!isset($app->plugins->points) || $app->plugins->points['leaderboard'] == FALSE) {
-	$page['name'] = 'Page not found';
+	$app->page->name = 'Page not found';
 	include 'themes/'.$app->config->theme.'/header.php';
 	include 'themes/'.$app->config->theme.'/footer.php';
 	exit;
@@ -13,7 +13,7 @@ if (!isset($app->plugins->points) || $app->plugins->points['leaderboard'] == FAL
 
 // Header
 
-$page['name'] = 'Leaderboard';
+$app->page->name = 'Leaderboard';
 include 'themes/'.$app->config->theme.'/header.php';
 
 // Show leaderboard

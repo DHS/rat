@@ -4,7 +4,7 @@ require_once 'config/init.php';
 
 // Header
 
-$page['name'] = $app->config->tagline;
+$app->page->name = $app->config->tagline;
 include 'themes/'.$app->config->theme.'/header.php';
 
 // Intro paragraph

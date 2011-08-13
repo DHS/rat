@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
 
 if ($user == NULL) {
 
-	$page['name'] = 'User not found';
+	$app->page->name = 'User not found';
 	include 'themes/'.$app->config->theme.'/header.php';
 	include 'themes/'.$app->config->theme.'/footer.php';
 	exit();
@@ -26,8 +26,8 @@ if ($user == NULL) {
 if (isset($app->plugins->gravatar))
 	$app->page_title_gravatar = $user['email'];
 
-$page['head_title'] = $user['name'].' on '.$app->config->name;
-$page['title'] = '<a href="user.php?id='.$user['id'].'">'.$user['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';
+$app->page->head_title['head_title'] = $user['name'].' on '.$app->config->name;
+$app->page->title = '<a href="user.php?id='.$user['id'].'">'.$user['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';
 
 include 'themes/'.$app->config->theme.'/header.php';
 

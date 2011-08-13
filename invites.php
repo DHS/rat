@@ -6,7 +6,7 @@ require_once 'config/init.php';
 
 if ($app->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 	
-	$page['name'] = 'Page not found';
+	$app->page->name = 'Page not found';
 	include 'themes/'.$app->config->theme.'/header.php';
 	include 'themes/'.$app->config->theme.'/footer.php';
 	exit;
@@ -15,7 +15,7 @@ if ($app->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 
 // Header
 
-$page['name'] = 'Invites';
+$app->page->name = 'Invites';
 include 'themes/'.$app->config->theme.'/header.php';
 
 // Process new invites

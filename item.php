@@ -5,7 +5,7 @@ require_once 'config/init.php';
 //	Critical: One of the following must be set: item id (to show) or content (to add) or delete
 
 if ($_GET['id'] == '' && $_POST['title'] == '' && $_POST['content'] == '' && $_GET['delete'] == '') {
-	$page['name'] = ucfirst($app->config->items['name']).' not found';
+	$app->page->name = ucfirst($app->config->items['name']).' not found';
 	include 'themes/'.$app->config->theme.'/header.php';
 	include 'themes/'.$app->config->theme.'/footer.php';
 	exit;
@@ -225,7 +225,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 	// Fail gracefully if item doesn't exist
 	if ($item == NULL) {
 
-		$page['name'] = ucfirst($app->config->items['name']).' not found';
+		$app->page->name = ucfirst($app->config->items['name']).' not found';
 		include 'themes/'.$app->config->theme.'/header.php';
 		include 'themes/'.$app->config->theme.'/footer.php';
 		exit;
@@ -239,8 +239,8 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 if (isset($app->plugins->gravatar))
 	$app->page_title_gravatar = $item['user']['email'];
 
-$page['head_title'] = $item['title'].' by '.$item['user']['name'];
-$page['title'] = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';
+$app->page->head_title['head_title'] = $item['title'].' by '.$item['user']['name'];
+$app->page->title = '<a href="user.php?id='.$item['user']['id'].'">'.$item['user']['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';
 
 include 'themes/'.$app->config->theme.'/header.php';
 

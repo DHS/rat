@@ -6,7 +6,7 @@ require_once 'config/init.php';
 
 if (!empty($_SESSION['user'])) {
 	
-	$page['name'] = 'Signup';
+	$app->page->name = 'Signup';
 	$message = 'You are already logged in!';
 	include 'themes/'.$app->config->theme.'/header.php';
 	include 'themes/'.$app->config->theme.'/footer.php';
@@ -304,25 +304,25 @@ $mode = NULL;
 
 if ($_GET['code'] != '') {
 	
-	$page['selector'] = 'validate_code';
+	$app->page->selector = 'validate_code';
 	
 } elseif ($_POST['email'] != '') {
 	
 	if ($_POST['code'] != '') {
 		
-		$page['selector'] = 'do_signup';
+		$app->page->selector = 'do_signup';
 		$mode = 'code';
 		
 	} else {
 		
 		if ($app->config->beta == TRUE) {
 			
-			$page['selector'] = 'do_signup';
+			$app->page->selector = 'do_signup';
 			$mode = 'beta';
 			
 		} else {
 			
-			$page['selector'] = 'do_signup';
+			$app->page->selector = 'do_signup';
 			$mode = 'full';
 			
 		}
@@ -331,16 +331,16 @@ if ($_GET['code'] != '') {
 	
 } else {
 	
-	$page['selector'] = 'show_form';
+	$app->page->selector = 'show_form';
 	
 }
 
-//var_dump($page['selector']);
+//var_dump($app->page->selector);
 //var_dump($mode);
 
 // Show page determined by selector
 
-if ($page['selector'] == 'do_signup') {
+if ($app->page->selector == 'do_signup') {
 	// Do signup. No headers to allow redirects. Error pages load their own page header.
 	
 	do_signup($mode);
@@ -349,7 +349,7 @@ if ($page['selector'] == 'do_signup') {
 	// Not doing signup so show a simpler page. Also call header.
 	
 	include 'themes/'.$app->config->theme.'/header.php';
-	$page['selector']();
+	$app->page->selector();
 	
 }
 

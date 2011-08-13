@@ -1,40 +1,40 @@
 <?php
-// Set page_name for this format: <h1>App name - $page['name']</h1>
-// Overwrite with $page['title'] (and $page['head_title'] if necessary)
-// The next few lines process these and output $head_title (for <title></title>) and $page_title (for <h1></h1>)
+// Set page_name for this format: <h1>App name - $app->page->name</h1>
+// Overwrite with $app->page->title (and $app->page->head_title['head_title'] if necessary)
+// The next few lines process these and output $head_title (for <title></title>) and $app->page->head_title_title (for <h1></h1>)
 
 // Set the var that is printed in head title
-if (isset($page['head_title']))
-	$head_title = $page['head_title'];
+if (isset($app->page->head_title['head_title']))
+	$head_title = $app->page->head_title['head_title'];
 
-if (isset($page['title'])) {
+if (isset($app->page->title)) {
 	// Page title is set = override!
 
 	// Set the var that prints the page title
-	$page_title = $page['title'];
+	$app->page->head_title_title = $app->page->title;
 
 	// If no head title is found then set head title equal to page title
 	if (!isset($head_title))
-		$head_title = $page['title'];
+		$head_title = $app->page->title;
 
 } else {
 	// No page title set
 
-	if (isset($page['name'])) {
+	if (isset($app->page->name)) {
 		// Page name found
 		
 		// Set the var that prints the page title
-		$page_title = '<a href="index.php">'.$app->config->name.'</a> - '.$page['name'];
+		$app->page->head_title_title = '<a href="index.php">'.$app->config->name.'</a> - '.$app->page->name;
 
 		// If no head title is found then set head title similar to page title
 		if (!isset($head_title))
-			$head_title = $app->config->name.' - '.$page['name'];
+			$head_title = $app->config->name.' - '.$app->page->name;
 
 	} else {
 		// No page name found
 
 		// Set page title to app name
-		$page_title = '<a href="index.php">'.$app->config->name.'</a>';
+		$app->page->head_title_title = '<a href="index.php">'.$app->config->name.'</a>';
 
 		// Set head title to app name
 		if (!isset($head_title))
@@ -126,13 +126,13 @@ if (isset($page['title'])) {
 	<td>';
 	echo $app->plugins->gravatar->show($app->page_title_gravatar, array('style' => "margin-right: 10px;"));
 	echo '</td>
-	<td><h1>'.$page_title.'</h1></td>
+	<td><h1>'.$app->page->head_title_title.'</h1></td>
 	</tr>
 	</table>';
 
 	} else {
 
-		echo '<h1>'.$page_title.'</h1>';
+		echo '<h1>'.$app->page->head_title_title.'</h1>';
 
 	}
 

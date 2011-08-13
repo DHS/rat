@@ -4,7 +4,7 @@ require_once 'config/init.php';
 
 // Header
 
-$page['name'] = 'About';
+$app->page->name = 'About';
 include 'themes/'.$app->config->theme.'/header.php';
 
 // Show About page

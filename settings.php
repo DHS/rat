@@ -6,7 +6,7 @@ require_once 'config/init.php';
 
 if ($_SESSION['user'] == NULL) {
 	
-	$page['name'] = 'Page not found';
+	$app->page->name = 'Page not found';
 	$message = 'Please <a href="login.php?redirect_to=/settings.php">login</a> to view your settings.';
 	include 'themes/'.$app->config->theme.'/header.php';
 	include 'themes/'.$app->config->theme.'/footer.php';
@@ -134,18 +134,18 @@ function profile() {
 
 // Selector
 
-$page['selector'] = $_GET['page'];
-if ($page['selector'] == NULL)
-	$page['selector'] = 'index';
+$app->page->selector = $_GET['page'];
+if ($app->page->selector == NULL)
+	$app->page->selector = 'index';
 
 // Header
 
-$page['name'] = 'Settings';
+$app->page->name = 'Settings';
 include 'themes/'.$app->config->theme.'/header.php';
 
 // Show page determined by selector
 
-$page['selector']();
+$app->page->selector();
 
 // Show profile info form
 

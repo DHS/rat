@@ -4,7 +4,7 @@ require_once 'config/init.php';
 
 // Header
 
-$page['name'] = 'Help';
+$app->page->name = 'Help';
 include 'themes/'.$app->config->theme.'/header.php';
 
 // Content

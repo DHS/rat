@@ -6,7 +6,7 @@ require_once 'config/init.php';
 
 if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 	
-	$page['name'] = 'Setup';
+	$app->page->name = 'Setup';
 	
 	$_GET['id'] = 1;
 	
@@ -19,7 +19,7 @@ if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 	
 } elseif (count($app->admin->list_users()) == 0 && $_GET['page'] == 'invite') {
 	
-	$page['name'] = 'Setup';
+	$app->page->name = 'Setup';
 	
 	// Do signup
 
@@ -50,7 +50,7 @@ if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 
 if (in_array($_SESSION['user']['id'], $app->config->admin_users) != TRUE) {
 
-	$page['name'] = 'Page not found';
+	$app->page->name = 'Page not found';
 	include 'themes/'.$app->config->theme.'/header.php';
 	include 'themes/'.$app->config->theme.'/footer.php';
 	exit;
@@ -168,19 +168,19 @@ function history() {
 
 // Selector
 
-$page['selector'] = $_GET['page'];
-if ($page['selector'] == NULL)
-	$page['selector'] = 'dashboard';
+$app->page->selector = $_GET['page'];
+if ($app->page->selector == NULL)
+	$app->page->selector = 'dashboard';
 
 // Header
 
-$page['name'] = 'Admin - '.ucfirst(strtolower($page['selector']));
+$app->page->name = 'Admin - '.ucfirst(strtolower($app->page->selector));
 include 'themes/'.$app->config->theme.'/header.php';
 include 'themes/'.$app->config->theme.'/admin_menu.php';
 
 // Show page determined by selector
 
-$page['selector']();
+$app->page->selector();
 
 // Footer
 

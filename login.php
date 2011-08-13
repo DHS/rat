@@ -43,7 +43,7 @@ if ($_POST['email'] && $_POST['password']) {
 
 // Header
 
-//$page['name'] = 'Login';
+//$app->page->name = 'Login';
 include 'themes/'.$app->config->theme.'/header.php';
 
 // Show login form

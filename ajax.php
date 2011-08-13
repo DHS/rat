@@ -2,12 +2,12 @@
 
 require_once 'config/init.php';
 
-$page['selector'] = $_GET['page'];
+$app->page->selector = $_GET['page'];
 
 if ($_GET['user_id'] != $_SESSION['user']['id'])
 	exit();
 
-if ($page['selector'] == 'like_add') {
+if ($app->page->selector == 'like_add') {
 	
 	$like_id = $app->like->add($_GET['user_id'], $_GET['item_id']);
 	
@@ -17,7 +17,7 @@ if ($page['selector'] == 'like_add') {
 	$item = $app->item->get($_GET['item_id']);
 	include 'themes/'.$app->config->theme.'/likes_list.php';
 	
-} elseif ($page['selector'] == 'like_remove') {
+} elseif ($app->page->selector == 'like_remove') {
 
 	$like_id = $app->like->remove($_GET['user_id'], $_GET['item_id']);
 	
@@ -27,7 +27,7 @@ if ($page['selector'] == 'like_add') {
 	$item = $app->item->get($_GET['item_id']);
 	include 'themes/'.$app->config->theme.'/likes_list.php';
 	
-} elseif ($page['selector'] == 'comment_add') {
+} elseif ($app->page->selector == 'comment_add') {
 
 	$comment_id = $app->comment->add($_GET['user_id'], $_GET['item_id'], $_GET['content']);
 	
@@ -37,7 +37,7 @@ if ($page['selector'] == 'like_add') {
 	$item = $app->item->get($_GET['item_id']);
 	include 'themes/'.$app->config->theme.'/comments_list.php';
 
-} elseif ($page['selector'] == 'comment_remove') {
+} elseif ($app->page->selector == 'comment_remove') {
 	
 	$app->comment->remove($_GET['user_id'], $_GET['item_id'], $_GET['comment_id']);
 	
@@ -47,7 +47,7 @@ if ($page['selector'] == 'like_add') {
 	$item = $app->item->get($_GET['item_id']);
 	include 'themes/'.$app->config->theme.'/comments_list.php';
 
-} elseif ($page['selector'] == 'friend_add') {
+} elseif ($app->page->selector == 'friend_add') {
 
 	$friend_id = $app->friend->add($_GET['user_id'], $_GET['friend_user_id']);
 
@@ -76,7 +76,7 @@ if ($page['selector'] == 'like_add') {
 
 	include 'themes/'.$app->config->theme.'/friends_remove.php';
 
-} elseif ($page['selector'] == 'friend_remove') {
+} elseif ($app->page->selector == 'friend_remove') {
 
 	$friend_id = $app->friend->remove($_GET['user_id'], $_GET['friend_user_id']);
 
