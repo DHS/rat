@@ -5,10 +5,19 @@ require_once 'config/init.php';
 //	Critical: One of the following must be set: item id (to show) or content (to add) or delete
 
 if ($_GET['id'] == '' && $_POST['title'] == '' && $_POST['content'] == '' && $_GET['delete'] == '') {
-	$app->page->name = ucfirst($app->config->items['name']).' not found';
-	include 'themes/'.$app->config->theme.'/header.php';
-	include 'themes/'.$app->config->theme.'/footer.php';
-	exit;
+	
+	if ($_SESSION['user'] != NULL) {
+		include 'themes/'.$app->config->theme.'/header.php';
+		include 'themes/'.$app->config->theme.'/items_add.php';
+		include 'themes/'.$app->config->theme.'/footer.php';
+		exit;
+	} else {
+		$app->page->name = ucfirst($app->config->items['name']).' not found';
+		include 'themes/'.$app->config->theme.'/header.php';
+		include 'themes/'.$app->config->theme.'/footer.php';
+		exit;
+	}
+	
 }
 
 function generate_thumbnail($filename, $type, $max_width = 100, $max_height = 100, $dir = 'thumbnails') {
