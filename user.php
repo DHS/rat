@@ -3,16 +3,16 @@
 require_once 'config/init.php';
 
 if (isset($_GET['id'])) {
-	$user = $app->user->get($_GET['id']);
+	$app->page->user = $app->user->get($_GET['id']);
 } elseif (isset($_SESSION['user'])) {
-	$user = $app->user->get($_SESSION['user']['id']);
+	$app->page->user = $app->user->get($_SESSION['user']['id']);
 } else {
-	$user = NULL;
+	$app->page->user = NULL;
 }
 
 // Critical: user must exist
 
-if ($user == NULL) {
+if ($app->page->user == NULL) {
 
 	$app->page->name = 'User not found';
 	$app->loadView('header');
@@ -24,10 +24,10 @@ if ($user == NULL) {
 // Header
 
 if (isset($app->plugins->gravatar))
-	$app->page->title_gravatar = $user['email'];
+	$app->page->title_gravatar = $app->page->user['email'];
 
-$app->page->head_title = $user['name'].' on '.$app->config->name;
-$app->page->title = '<a href="user.php?id='.$user['id'].'">'.$user['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';
+$app->page->head_title = $app->page->user['name'].' on '.$app->config->name;
+$app->page->title = '<a href="user.php?id='.$app->page->user['id'].'">'.$app->page->user['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';
 
 $app->loadView('header');
 
@@ -37,7 +37,7 @@ $app->loadView('user_profile');
 
 // Show follow button
 
-if ($app->config->friends->enabled == TRUE)
+if ($app->config->friends['enabled'] == TRUE)
 	$app->loadView('friends_button');
 
 // Show number of points
@@ -51,7 +51,7 @@ if (isset($app->plugins->points))
 //	$app->loadView('items_add');
 
 // List all items for this user
-$app->page->items = $app->item->list_user($user['id']);
+$app->page->items = $app->item->list_user($app->page->user['id']);
 
 if (count($app->page->items) > 0) {
 	
@@ -60,8 +60,8 @@ if (count($app->page->items) > 0) {
 } else {
 	
 	// If own page and no post_permission OR someone else's page show 'no articles yet'
-	if (($_SESSION['user']['id'] == $user['id'] && $_SESSION['user']['post_permission'] == 0) || $_SESSION['user']['id'] != $user['id'])
-		echo '<p>'.$user['username'].' hasn\'t published any '.$app->config->items['name_plural'].' yet.</p>';
+	if (($_SESSION['user']['id'] == $app->page->user['id'] && $_SESSION['user']['post_permission'] == 0) || $_SESSION['user']['id'] != $app->page->user['id'])
+		echo '<p>'.$app->page->user['username'].' hasn\'t published any '.$app->config->items['name_plural'].' yet.</p>';
 	
 }
 

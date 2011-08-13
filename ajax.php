@@ -72,7 +72,7 @@ if ($app->page->selector == 'like_add') {
 
 	}
 
-	$user['id'] = $_GET['friend_user_id'];
+	$app->page->user['id'] = $_GET['friend_user_id'];
 
 	$app->loadView('friends_remove');
 
@@ -83,7 +83,7 @@ if ($app->page->selector == 'like_add') {
 	if (isset($app->plugins->log))
 		$app->plugins->log->add($_GET['user_id'], 'friend', $friend_id, 'remove');
 
-	$user['id'] = $_GET['friend_user_id'];
+	$app->page->user['id'] = $_GET['friend_user_id'];
 
 	$app->loadView('friends_add');
 
