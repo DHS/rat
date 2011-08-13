@@ -1,17 +1,13 @@
 <?php
 
-// Config file contains lots of handy variables
-require_once 'config/config.php';
-
-// Save config vars for later
-$app_vars = $app;
-unset($app);
-
 // Define app class
 class app {
 	
 	function __construct() {
 
+		// Load config
+		$this->loadConfig();
+		
 		// Load models
 		$handle = opendir('models');
 		while (false !== ($file = readdir($handle))) {
@@ -24,15 +20,27 @@ class app {
 
 	}
 	
+	function loadConfig() {
+		
+		require_once 'config/config.php';
+		$this->config = new config;
+		
+		// Determine whether site is dev or live
+		$domain = substr(substr($url, 0, -1), 7);
+		
+		if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.'.$domain) {
+			define('SITE_IDENTIFIER', 'live');
+		} else {
+			define('SITE_IDENTIFIER', 'dev');
+		}
+		
+		
+	}
+	
 }
 
 // Create new instance of app
 $app = new app;
-
-// Load config
-foreach ($app_vars as $key => $value) {
-	$app->$key = $value;
-}
 
 // Setup database
 require_once 'config/database.php';

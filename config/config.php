@@ -1,129 +1,94 @@
 <?php
 
-/*
-*	Contents
-*
-*		1. Basic app variables
-*		2. URLs
-*		3. Beta
-*		4. Privacy
-*		5. Items
-*		6. Invites
-*		7. Friends
-*		8. Admin
-*		9. Encryption
-*		10. Database
-*		11. Themes
-*		12. Plugins
-*		
-*/
+class config {
 
-// Basic app variables
-$app['name']							= 'Ratter';
-$app['tagline']							= 'Demo of rat\'s functionality';
+	/*
+	*	Contents
+	*
+	*		1. Basic app variables
+	*		2. URLs
+	*		3. Beta
+	*		4. Privacy
+	*		5. Items
+	*		6. Invites
+	*		7. Friends
+	*		8. Admin
+	*		9. Encryption
+	*		10. Database
+	*		11. Themes
+	*		12. Plugins
+	*		
+	*/
 
-// URLs - must include http:// and trailing slash
-$app['url']								= 'http://example.com/';
-$app['dev_url']							= 'http://localhost:8888/';
+	// Basic app variables
+	public $name							= 'Ratter';
+	public $tagline							= 'Demo of rat\'s functionality';
 
-// Beta - users can't signup, can only enter their email addresses
-$app['beta']							= TRUE;
+	// URLs - must include http:// and trailing slash
+	public $url								= 'http://example.com/';
+	public $dev_url							= 'http://localhost/';
 
-// Email enabled - search project for "// Email user" to find what this affects
-$app['send_emails']						= FALSE;
+	// Beta - users can't signup, can only enter their email addresses
+	public $beta							= TRUE;
 
-// Private app - requires login to view pages (except public_pages), no share buttons
-$app['private']							= TRUE;
-$app['public_pages']					= array('signup.php', 'login.php', 'logout.php', 'help.php');
+	// Email enabled - search project for "// Email user" to find what this affects
+	public $send_emails						= FALSE;
 
-// Items
-// Notes about uploads: max-size is in bytes (default: 5MB), directory should contain three subdirectories: originals, thumbnails, stream
-$app['items'] = array(	'name'			=> 'post',
-						'name_plural'	=> 'posts',
-						'titles'		=> array('enabled' => TRUE, 'name' => 'Title'),
-						'content'		=> array('enabled' => TRUE, 'name' => 'Content'),
-						'uploads'		=> array('enabled' => TRUE, 'name' => 'Image', 'directory' => 'uploads', 'max-size' => '5242880', 'mime-types' => array('image/jpeg', 'image/png', 'image/gif', 'image/pjpeg')),
-						'comments'		=> array('enabled' => TRUE, 'name' => 'Comment', 'name_plural' => 'Comments'),
-						'likes'			=> array('enabled' => TRUE, 'name' => 'Like', 'opposite_name' => 'Unlike', 'past_tense' => 'Liked by')
-						);
+	// Private app - requires login to view pages (except public_pages), no share buttons
+	public $private							= TRUE;
+	public $public_pages					= array('signup.php', 'login.php', 'logout.php', 'help.php');
 
-// Invites system
-$app['invites']['enabled']				= TRUE;
-
-// Friends - still testing, works with asymmetric set to true... just! (Shows 'Follow' link & generates homepage feed)
-$app['friends']['enabled']				= FALSE;
-$app['friends']['asymmetric']			= FALSE;
-
-// Admin users - array of user IDs who have access to admin area
-$app['admin_users']						= array(1);
-
-// Encryption salt - change to a random six character string, do not change after first use of application
-$app['encryption_salt']					= 'hw9e46';
-
-
-// DATABASE
-
-// Determine whether site is dev or live
-$domain = substr(substr($app['url'], 0, -1), 7);
-
-if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.'.$domain) {
-	define('SITE_IDENTIFIER', 'live');
-} else {
-	define('SITE_IDENTIFIER', 'dev');
-}
-
-if (SITE_IDENTIFIER == 'live') {
-	// Live database vars
-
-	$app['database'] = array(	'host'		=> 'localhost',
-								'username'	=> 'username',
-								'password'	=> 'password',
-								'database'	=> 'database'
+	// Items
+	// Notes about uploads: max-size is in bytes (default: 5MB), directory should contain three subdirectories: originals, thumbnails, stream
+	public $items = array(	'name'			=> 'post',
+							'name_plural'	=> 'posts',
+							'titles'		=> array('enabled' => TRUE, 'name' => 'Title', 'name_plural' => 'Titles'),
+							'content'		=> array('enabled' => TRUE, 'name' => 'Content', 'name_plural' => 'Contents'),
+							'uploads'		=> array('enabled' => FALSE, 'name' => 'Image', 'directory' => 'uploads', 'max-size' => '5242880', 'mime-types' => array('image/jpeg', 'image/png', 'image/gif', 'image/pjpeg')),
+							'comments'		=> array('enabled' => TRUE, 'name' => 'Comment', 'name_plural' => 'Comments'),
+							'likes'			=> array('enabled' => TRUE, 'name' => 'Like', 'name_plural' => 'Likes', 'opposite_name' => 'Unlike', 'past_tense' => 'Liked by')
 							);
 
-} else {
-	// Dev database vars
+	// Invites system
+	public $invites = array('enabled' => TRUE);
 
-	$app['database'] = array(	'host'		=> 'localhost',
-								'username'	=> 'root',
-								'password'	=> 'root',
-								'database'	=> 'rat'
+	// Friends - still testing, works with asymmetric set to true... just! (Shows 'Follow' link & generates homepage feed)
+	public $friends = array('enabled' => FALSE, 'asymmetric' => FALSE);
+
+	// Admin users - array of user IDs who have access to admin area
+	public $admin_users						= array(1);
+
+	// Encryption salt - change to a random six character string, do not change after first use of application
+	public $encryption_salt					= 'hw9e46';
+
+	// THEMES
+
+	public $theme = 'default';
+
+	// DATABASE
+	
+	public $database = array(	'dev'	=> array(	'host'		=> 'localhost',
+												'username'	=> 'root',
+												'password'	=> 'root',
+												'database'	=> 'rat'
+												),
+												
+								'live'	=> array(	'host'		=> 'localhost',
+													'username'	=> 'root',
+													'password'	=> 'root',
+													'database'	=> 'rat'
+												)
+							);
+	
+	// PLUGINS
+    
+	public $plugins = array(	'log'		=> TRUE,
+								'gravatar'	=> TRUE,
+								'points'	=> FALSE,
+								'analytics'	=> FALSE
 							);
 
+	
 }
-
-
-// THEMES
-
-$app['theme'] = 'default';
-
-
-// PLUGINS
-
-// Log plugin
-
-include_once 'plugins/log.php';
-$log = new log;
-
-// Gravatar plugin
-
-include_once 'plugins/gravatar.php';
-$gravatar = new gravatar;
-
-// Points system plugin
-
-//include_once 'plugins/points.php';
-//$points = new points;
-//
-//$app['points']['name']					= 'points';
-//$app['points']['per_item']				= 1;
-//$app['points']['per_invite_sent']		= 1;
-//$app['points']['per_invite_accepted']	= 10;
-//$app['points']['leaderboard']			= FALSE;
-
-// Google analytics plugin
-
-//include_once 'plugins/analytics.php';
-//$analytics = new analytics('123');
 
 ?>
