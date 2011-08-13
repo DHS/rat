@@ -62,7 +62,7 @@ require_once 'config/database.php';
 
 // Start session
 session_start();
-
+/*
 // Finds page name
 preg_match("/[a-zA-Z0-9]+\.php/", $_SERVER['PHP_SELF'], $result);
 
@@ -89,5 +89,5 @@ if ($_SESSION['user'] == NULL && $app->config->private == TRUE && in_array($resu
 	}
 
 }
-
+*/
 ?>
