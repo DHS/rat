@@ -26,7 +26,7 @@ class config {
 
 	// URLs - must include http:// and trailing slash
 	public $url								= 'http://example.com/';
-	public $dev_url							= 'http://localhost/';
+	public $dev_url							= 'http://localhost:8888/';
 
 	// Beta - users can't signup, can only enter their email addresses
 	public $beta							= TRUE;
