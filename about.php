@@ -5,7 +5,7 @@ require_once 'config/init.php';
 // Header
 
 $page['name'] = 'About';
-$app->loadView('header');
+include 'themes/'.$app->theme.'/header.php';
 
 // Show About page
 
@@ -73,6 +73,6 @@ echo $content;
 
 // Footer
 
-$app->loadView('footer.php');
+include 'themes/'.$app->theme.'/footer.php';
 
 ?>

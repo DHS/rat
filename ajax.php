@@ -15,7 +15,7 @@ if ($page['selector'] == 'like_add') {
 		$GLOBALS['log']->add($_GET['user_id'], 'like', $like_id, 'add');
 	
 	$item = $app->item->get($_GET['item_id']);
-	$app->loadView('likes_list');
+	include 'themes/'.$app->theme.'/likes_list.php';
 	
 } elseif ($page['selector'] == 'like_remove') {
 
@@ -25,7 +25,7 @@ if ($page['selector'] == 'like_add') {
 		$GLOBALS['log']->add($_GET['user_id'], 'like', $like_id, 'remove');
 	
 	$item = $app->item->get($_GET['item_id']);
-	$app->loadView('likes_list');
+	include 'themes/'.$app->theme.'/likes_list.php';
 	
 } elseif ($page['selector'] == 'comment_add') {
 
@@ -35,7 +35,7 @@ if ($page['selector'] == 'like_add') {
 		$GLOBALS['log']->add($_GET['user_id'], 'comment', $comment_id, 'add', $_GET['content']);
 
 	$item = $app->item->get($_GET['item_id']);
-	$app->loadView('comments_list');
+	include 'themes/'.$app->theme.'/comments_list.php';
 
 } elseif ($page['selector'] == 'comment_remove') {
 	
@@ -45,7 +45,7 @@ if ($page['selector'] == 'like_add') {
 		$GLOBALS['log']->add($_GET['user_id'], 'comment', $_GET['comment_id'], 'remove');
 	
 	$item = $app->item->get($_GET['item_id']);
-	$app->loadView('comments_list');
+	include 'themes/'.$app->theme.'/comments_list.php';
 
 } elseif ($page['selector'] == 'friend_add') {
 
@@ -65,7 +65,7 @@ if ($page['selector'] == 'like_add') {
 		$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 		// Load subject and body from template
-		$app->loadView('email_follower_new');
+		include 'themes/'.$app->theme.'/email_follower_new.php';
 
 		// Email user
 		mail($to, $subject, $body, $headers);
@@ -74,7 +74,7 @@ if ($page['selector'] == 'like_add') {
 
 	$user['id'] = $_GET['friend_user_id'];
 
-	$app->loadView('friends_remove');
+	include 'themes/'.$app->theme.'/friends_remove.php';
 
 } elseif ($page['selector'] == 'friend_remove') {
 
@@ -85,7 +85,7 @@ if ($page['selector'] == 'like_add') {
 
 	$user['id'] = $_GET['friend_user_id'];
 
-	$app->loadView('friends_add');
+	include 'themes/'.$app->theme.'/friends_add.php';
 
 }
 

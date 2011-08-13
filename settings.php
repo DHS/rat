@@ -8,8 +8,8 @@ if ($_SESSION['user'] == NULL) {
 	
 	$page['name'] = 'Page not found';
 	$message = 'Please <a href="login.php?redirect_to=/settings.php">login</a> to view your settings.';
-	$app->loadView('header');
-	$app->loadView('footer');
+	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->theme.'/footer.php';
 	exit();
 	
 }
@@ -68,7 +68,7 @@ function password() {
 		$message = 'There was a problem, please try again.';
 	}
 	
-	$app->loadView('message');
+	include 'themes/'.$app->theme.'/message.php';
 	
 }
 
@@ -125,7 +125,7 @@ function profile() {
 		}
 
 		// Show message
-		$app->loadView('message');
+		include 'themes/'.$app->theme.'/message.php';
 		
 	}
 	
@@ -141,7 +141,7 @@ if ($page['selector'] == NULL)
 // Header
 
 $page['name'] = 'Settings';
-$app->loadView('header');
+include 'themes/'.$app->theme.'/header.php';
 
 // Show page determined by selector
 
@@ -149,11 +149,11 @@ $page['selector']();
 
 // Show profile info form
 
-$app->loadView('settings_profile');
+include 'themes/'.$app->theme.'/settings_profile.php';
 
 // Show password change form
 
-$app->loadView('settings_password');
+include 'themes/'.$app->theme.'/settings_password.php';
 
 // Gravatar settings
 
@@ -162,6 +162,6 @@ if (isset($GLOBALS['gravatar']))
 
 // Footer
 
-$app->loadView('footer');
+include 'themes/'.$app->theme.'/footer.php';
 
 ?>

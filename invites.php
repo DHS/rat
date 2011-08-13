@@ -7,8 +7,8 @@ require_once 'config/init.php';
 if ($app->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 	
 	$page['name'] = 'Page not found';
-	$app->loadView('header');
-	$app->loadView('footer');
+	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->theme.'/footer.php';
 	exit;
 	
 }
@@ -16,7 +16,7 @@ if ($app->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 // Header
 
 $page['name'] = 'Invites';
-$app->loadView('header');
+include 'themes/'.$app->theme.'/header.php';
 
 // Process new invites
 
@@ -64,7 +64,7 @@ if ($_POST['email'] != '') {
 		$headers = "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 		// Load subject and body from template
-		$app->loadView('email_invite_friend');
+		include 'themes/'.$app->theme.'/email_invite_friend.php';
 
 		if ($app->send_emails == TRUE) {
 			// Email user
@@ -72,14 +72,14 @@ if ($_POST['email'] != '') {
 		}
 
 		$message = 'Invite sent!';
-		$app->loadView('message');
+		include 'themes/'.$app->theme.'/message.php';
 
 	} else {
 		
 		$_GET['email'] = $_POST['email'];
 		
 		$message = $error;
-		$app->loadView('message');
+		include 'themes/'.$app->theme.'/message.php';
 		
 	}
 	
@@ -88,15 +88,15 @@ if ($_POST['email'] != '') {
 // Show invite form
 
 $invites_remaining = $_SESSION['user']['invites'];
-$app->loadView('invites');
+include 'themes/'.$app->theme.'/invites.php';
 
 // Show sent invites
 
 $invites_sent = $app->invite->list_sent($_SESSION['user']['id']);
-$app->loadView('invites_list');
+include 'themes/'.$app->theme.'/invites_list.php';
 
 // Footer
 
-$app->loadView('footer');
+include 'themes/'.$app->theme.'/footer.php';
 
 ?>

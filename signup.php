@@ -8,8 +8,8 @@ if (!empty($_SESSION['user'])) {
 	
 	$page['name'] = 'Signup';
 	$message = 'You are already logged in!';
-	$app->loadView('header');
-	$app->loadView('footer');
+	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->theme.'/footer.php';
 	exit;
 	
 }
@@ -45,12 +45,12 @@ function show_form() {
 	if ($app->beta == TRUE) {
 		
 		// Show beta signup form
-		$app->loadView('signup_beta');
+		include 'themes/'.$app->theme.'/signup_beta.php';
 		
 	} else {
 		
 		// Show full signup form
-		$app->loadView('signup');
+		include 'themes/'.$app->theme.'/signup.php';
 		
 	}
 
@@ -64,17 +64,17 @@ function validate_code() {
 	if ($app->user->validate_invite_code($_GET['code'], $_GET['email']) == TRUE) {
 		// Valid
 
-		$app->loadView('signup');
+		include 'themes/'.$app->theme.'/signup.php';
 		
 	} else {
 		// Invalid
 		
 		if ($app->beta == TRUE) {
 			$message = 'Your invite code is invalid.';
-			$app->loadView('message');
-			$app->loadView('signup_beta');
+			include 'themes/'.$app->theme.'/message.php';
+			include 'themes/'.$app->theme.'/signup_beta.php';
 		} else {
-			$app->loadView('signup');
+			include 'themes/'.$app->theme.'/signup.php';
 		}
 
 	}
@@ -175,7 +175,7 @@ function do_signup($mode = 'full') {
 				$headers = "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 				// Load subject and body from template
-				$app->loadView('email_signup');
+				include 'themes/'.$app->theme.'/email_signup.php';
 
 				// Email user
 				mail($to, $subject, $body, $headers);
@@ -259,7 +259,7 @@ function do_signup($mode = 'full') {
 			$message = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
 			$message .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
 	
-			//$app->loadView('message');
+			//include 'themes/'.$app->theme.'/message.php';
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
@@ -285,13 +285,13 @@ function do_signup($mode = 'full') {
 		
 		// Show error message
 		$message = $error;
-		$app->loadView('header');
+		include 'themes/'.$app->theme.'/header.php';
 		
 		// Show relevant signup form
 		if ($mode == 'beta') {
-			$app->loadView('signup_beta');
+			include 'themes/'.$app->theme.'/signup_beta.php';
 		} else {
-			$app->loadView('signup');
+			include 'themes/'.$app->theme.'/signup.php';
 		}
 	
 	}
@@ -348,14 +348,14 @@ if ($page['selector'] == 'do_signup') {
 } else {
 	// Not doing signup so show a simpler page. Also call header.
 	
-	$app->loadView('header');
+	include 'themes/'.$app->theme.'/header.php';
 	$page['selector']();
 	
 }
 
 // Footer
 
-$app->loadView('footer');
+include 'themes/'.$app->theme.'/footer.php';
 
 
 ?>

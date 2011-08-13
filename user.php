@@ -15,8 +15,8 @@ if (isset($_GET['id'])) {
 if ($user == NULL) {
 
 	$page['name'] = 'User not found';
-	$app->loadView('header');
-	$app->loadView('footer');
+	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->theme.'/footer.php';
 	exit();
 
 }
@@ -29,33 +29,33 @@ if (isset($GLOBALS['gravatar']))
 $page['head_title'] = $user['name'].' on '.$app->name;
 $page['title'] = '<a href="user.php?id='.$user['id'].'">'.$user['name'].'</a> on <a href="index.php">'.$app->name.'</a>';
 
-$app->loadView('header');
+include 'themes/'.$app->theme.'/header.php';
 
 // Show profile
 
-$app->loadView('user_profile');
+include 'themes/'.$app->theme.'/user_profile.php';
 
 // Show follow button
 
 if ($app->friends->enabled == TRUE)
-	$app->loadView('friends_button');
+	include 'themes/'.$app->theme.'/friends_button.php';
 
 // Show number of points
 
 if (isset($GLOBALS['points']))
-	$app->loadView('points');
+	include 'themes/'.$app->theme.'/points.php';
 
 // Show new item form
 
 //if ($_SESSION['user']['post_permission'] == 1)
-//	$app->loadView('items_add');
+//	include 'themes/'.$app->theme.'/items_add.php';
 
 // List all items for this user
 $items = $app->item->list_user($user['id']);
 
 if (count($items) > 0) {
 	
-	$app->loadView('items_list_user', array('items' => $items));
+	include 'themes/'.$app->theme.'/items_list_user.php';
 
 } else {
 	
@@ -67,6 +67,6 @@ if (count($items) > 0) {
 
 // Footer
 
-$app->loadView('footer');
+include 'themes/'.$app->theme.'/footer.php';
 
 ?>

@@ -5,9 +5,9 @@
 <?php } else {
 
 	if ($app->friend->check($_SESSION['user']['id'], $user['id']) == TRUE) {
-		$app->loadView('friends_remove');
+		include 'friends_remove.php';
 	} else {
-		$app->loadView('friends_add');
+		include 'friends_add.php';
 	}
 	
 } ?>

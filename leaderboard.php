@@ -6,23 +6,23 @@ require_once 'config/init.php';
 
 if (!isset($GLOBALS['points']) || $app->points['leaderboard'] == FALSE) {
 	$page['name'] = 'Page not found';
-	$app->loadView('header');
-	$app->loadView('footer');
+	include 'themes/'.$app->theme.'/header.php';
+	include 'themes/'.$app->theme.'/footer.php';
 	exit;
 }
 
 // Header
 
 $page['name'] = 'Leaderboard';
-$app->loadView('header');
+include 'themes/'.$app->theme.'/header.php';
 
 // Show leaderboard
 
 $leaderboard = 	$GLOBALS['points']->get_leaderboard(20);
-$app->loadView('leaderboard');
+include 'themes/'.$app->theme.'/leaderboard.php';
 
 // Footer
 
-$app->loadView('footer');
+include 'themes/'.$app->theme.'/footer.php';
 
 ?>

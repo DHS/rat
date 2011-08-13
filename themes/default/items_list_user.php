@@ -17,22 +17,22 @@ foreach ($items as $item) {
 			
 			<p><?php echo $item['content']; ?></p>
 
-			<?php $app->loadView('items_meta'); ?>
+			<?php include 'items_meta.php'; ?>
 
 			<?php
 
 			if ($app->items['likes']['enabled'] == TRUE)
-				$app->loadView('likes_list');
+				include 'themes/'.$app->theme.'/likes_list.php';
 			
 			if ($app->items['comments']['enabled'] == TRUE) {
 
-				$app->loadView('comments_list');
+				include 'themes/'.$app->theme.'/comments_list.php';
 				if (count($item['comments']) > 0) {
 					$show_comment_form = TRUE;
 				} else {
 					$show_comment_form = FALSE;
 				}
-				$app->loadView('comments_add');
+				include 'themes/'.$app->theme.'/comments_add.php';
 				
 			}
 

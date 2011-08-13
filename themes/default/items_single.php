@@ -21,25 +21,25 @@
 	?>
 	<a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a>
 
-	&middot; <?php $app->loadView('items_meta'); ?>
+	&middot; <?php include 'items_meta.php'; ?>
 	
 </p>
 
 <?php
 // Untested
 if ($app->private != TRUE)
-	$app->loadView('items_share');
+	include 'themes/'.$app->theme.'/items_share.php';
 ?>
 
 <?php
 
 if ($app->items['likes']['enabled'] == TRUE)
-	$app->loadView('likes_list');
+	include 'themes/'.$app->theme.'/likes_list.php';
 
 if ($app->items['comments']['enabled'] == TRUE) {
-	$app->loadView('comments_list');
+	include 'themes/'.$app->theme.'/comments_list.php';
 	$show_comment_form = TRUE;
-	$app->loadView('comments_add');
+	include 'themes/'.$app->theme.'/comments_add.php';
 }
 
 ?>
