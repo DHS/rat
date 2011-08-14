@@ -48,15 +48,28 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 	}
 	
 } elseif (file_exists("controllers/$segment1.php") == TRUE) {
-	// Controller exists, call with function and params if available
+	// Controller file exists, load with function and params if available
 	
-	//echo "Call $segment2($segment3) in $segment1.php";
-	$app->loadController('index');
+	$app->controller = $app->loadController($segment1);
+
+	// Check to see if controller has been updated with a class, still works if not :)
+	if (get_class($app->controller)) {
+		
+		if ($segment2 != '') {
+			$app->controller->$segment2($segment3);
+		} else {
+			$app->controller->index();
+		}
+		
+	}
 
 } elseif (is_numeric($segment2) == TRUE) {
 	// Paginated user view
 	
-	echo "Username: $segment1, page: $segment2";
+	//echo "Username: $segment1, page: $segment2";
+	$user = $app->user->get_by_username($segment1);	
+	$_GET['id'] = $user['id'];
+	$app->loadController('user');	
 	
 } elseif ($segment2 == $app->config->items['name']) {
 	

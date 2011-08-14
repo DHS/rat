@@ -1,16 +1,23 @@
 <?php
 
-// Header
+class help {
+	
+	function index() {
+		
+		global $app;
+		
+		// Header
+		$app->page->name = 'Help';
+		$app->loadView('header');
 
-$app->page->name = 'Help';
-$app->loadView('header');
+		// Content
+		$app->loadView('help');
 
-// Content
-
-$app->loadView('help');
-
-// Footer
-
-$app->loadView('footer');
+		// Footer
+		$app->loadView('footer');
+		
+	}
+	
+}
 
 ?>

@@ -42,6 +42,7 @@ class app {
 		global $app;
 		
 		include "controllers/$controller.php";
+		return new $controller;
 		
 	}
 	
