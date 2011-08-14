@@ -15,7 +15,7 @@ Getting started
 2. Create a MySQL database and run rat.sql in it
 3. Rename config/config-sample.php → config/config.php
 4. Update the variables in config/config.php, in particular the database variables
-5. Visit admin.php to create your account
+5. Visit /admin/setup to create your account
 
 Functionality
 -------------

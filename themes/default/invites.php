@@ -1,11 +1,11 @@
 
-<?php if ($invites_remaining == 1) { ?>
+<?php if (isset($invites_remaining) && $invites_remaining == 1) { ?>
 	
 	<p>You have one invite remaining.</p>
 	
 	<?php $app->loadView('invites_add'); ?>
 	
-<?php } elseif ($invites_remaining > 1) { ?>
+<?php } elseif (isset($invites_remaining) && $invites_remaining > 1) { ?>
 
 	<p>You have <?php echo $invites_remaining; ?> invites remaining.</p>
 	

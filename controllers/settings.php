@@ -134,8 +134,9 @@ function profile() {
 
 // Selector
 
-$app->page->selector = $_GET['page'];
-if ($app->page->selector == NULL)
+if (isset($_GET['page']))
+	$app->page->selector = $_GET['page'];
+if (!isset($app->page->selector))
 	$app->page->selector = 'index';
 
 // Header

@@ -23,7 +23,7 @@ function like_add(user_id, item_id) {
 		}
 	}
 
-	xmlhttp.open("GET", 'controllers/ajax.php?page=like_add&user_id='+user_id+'&item_id='+item_id, true);
+	xmlhttp.open("GET", 'ajax.php?page=like_add&user_id='+user_id+'&item_id='+item_id, true);
 	xmlhttp.send();
 	
 }
@@ -60,7 +60,7 @@ function like_remove(user_id, item_id) {
 function comment_add(user_id, item_id) {
 	
 	var content = document.forms('comment_form_'+item_id).content.value;
-
+	
 	if (window.XMLHttpRequest) {
 		// IE7+, Firefox, Chrome, Opera, Safari
 		xmlhttp = new XMLHttpRequest();
@@ -82,7 +82,7 @@ function comment_add(user_id, item_id) {
 			}
 		}
 	}
-
+	
 	xmlhttp.open("GET", 'ajax.php?page=comment_add&user_id='+user_id+'&item_id='+item_id+'&content='+content, true);
 	xmlhttp.send();
 	

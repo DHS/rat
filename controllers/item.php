@@ -2,7 +2,7 @@
 
 //	Critical: One of the following must be set: item id (to show) or content (to add) or delete
 
-if ($_GET['id'] == '' && $_POST['title'] == '' && $_POST['content'] == '' && $_GET['delete'] == '') {
+if (!isset($_GET['id']) && !isset($_POST['title']) && !isset($_POST['content']) && !isset($_GET['delete'])) {
 	
 	if ($_SESSION['user'] != NULL) {
 		$app->loadView('header');
@@ -75,7 +75,7 @@ function generate_thumbnail($filename, $type, $max_width = 100, $max_height = 10
 	
 }
 
-if ($_POST['title'] != '' || $_POST['content'] != '') {
+if (isset($_POST['title']) || isset($_POST['content'])) {
 	// Process new item
 
 	// Form validation
@@ -173,7 +173,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 	
 	}
 	
-} elseif ($_GET['delete'] != '') {
+} elseif (isset($_GET['delete'])) {
 	// Delete an item
 
 	$item = $app->item->get($_GET['delete']);
@@ -224,7 +224,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 		
 	}
 	
-} elseif ($_GET['id'] != '') {
+} elseif (isset($_GET['id'])) {
 	// No new item so get item info based on get var
 	
 	$app->page->item = $app->item->get($_GET['id']);
@@ -244,7 +244,7 @@ if ($_POST['title'] != '' || $_POST['content'] != '') {
 // Header
 
 if (isset($app->plugins->gravatar))
-	$app->page->title_gravatar = $item['user']['email'];
+	$app->page->title_gravatar = $app->page->item['user']['email'];
 
 $app->page->head_title = $app->page->item['title'].' by '.$app->page->item['user']['name'];
 $app->page->title = '<a href="/'.$app->page->item['user']['username'].'">'.$app->page->item['user']['name'].'</a> on <a href="/">'.$app->config->name.'</a>';

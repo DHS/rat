@@ -32,19 +32,19 @@ class gravatar {
 		$return = '<img src="http://www.gravatar.com/avatar/'.$email;
 
 		// if size is set, add it in
-		if ($params['size'])
+		if (isset($params['size']))
 			$return .= '?s='.$params['size'];
 		
 		$return .= '"';
 		
 		// if style is set, add it in
-		if ($params['style'])
+		if (isset($params['style']))
 			$return .= ' style="'.$params['style'].'"';
 
 		$return .= ' />';
 		
 		// if user_id is set, make it a link
-		if ($params['link'])
+		if (isset($params['link']))
 			$return = '<a href="'.$params['link'].'">'.$return.'</a>';
 		
 		return $return;

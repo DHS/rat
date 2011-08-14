@@ -18,7 +18,7 @@ $app->loadView('header');
 
 // Process new invites
 
-if ($_POST['email'] != '') {
+if (isset($_POST['email'])) {
 	
 	if ($_SESSION['user']['invites'] < 1)
 		$error .= 'You don\'t have any invites remaining.<br />';
