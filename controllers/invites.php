@@ -1,7 +1,5 @@
 <?php
 
-require_once 'config/init.php';
-
 //	Critical: Feature must be enabled and user must be logged in
 
 if ($app->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {

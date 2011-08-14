@@ -14,7 +14,7 @@ if ($app->page->selector == 'like_add') {
 	if (isset($app->plugins->log))
 		$app->plugins->log->add($_GET['user_id'], 'like', $like_id, 'add');
 	
-	$app->page->item = $app->item->get($_GET['item_id']);
+	$item = $app->item->get($_GET['item_id']);
 	$app->loadView('likes_list');
 	
 } elseif ($app->page->selector == 'like_remove') {

@@ -19,9 +19,9 @@
 
 	<?php
 	if (isset($app->plugins->gravatar))
-		echo $app->plugins->gravatar->show($item['user']['email'], array('user_id' => $item['user']['id'], 'size' => 20, 'style' => "margin-bottom: -7px;"));
+		echo $app->plugins->gravatar->show($item['user']['email'], array('link' => "/{$item['user']['username']}", 'size' => 20, 'style' => "margin-bottom: -7px;"));
 	?>
-	<a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a>
+	<a href="/<?php echo $item['user']['username']; ?>"><?php echo $item['user']['username']; ?></a>
 
 	&middot; <?php $app->loadView('items_meta'); ?>
 	

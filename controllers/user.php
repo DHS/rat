@@ -1,7 +1,5 @@
 <?php
 
-require_once 'config/init.php';
-
 if (isset($_GET['id'])) {
 	$app->page->user = $app->user->get($_GET['id']);
 } elseif (isset($_SESSION['user'])) {
@@ -27,7 +25,7 @@ if (isset($app->plugins->gravatar))
 	$app->page->title_gravatar = $app->page->user['email'];
 
 $app->page->head_title = $app->page->user['name'].' on '.$app->config->name;
-$app->page->title = '<a href="user.php?id='.$app->page->user['id'].'">'.$app->page->user['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';
+$app->page->title = '<a href="/'.$app->page->user['username'].'">'.$app->page->user['name'].'</a> on <a href="/">'.$app->config->name.'</a>';
 
 $app->loadView('header');
 

@@ -24,7 +24,7 @@ if (isset($app->page->title)) {
 		// Page name found
 		
 		// Set the var that prints the page title
-		$page_title = '<a href="index.php">'.$app->config->name.'</a> - '.$app->page->name;
+		$page_title = '<a href="/">'.$app->config->name.'</a> - '.$app->page->name;
 
 		// If no head title is found then set head title similar to page title
 		if (!isset($head_title))
@@ -34,7 +34,7 @@ if (isset($app->page->title)) {
 		// No page name found
 
 		// Set page title to app name
-		$page_title = '<a href="index.php">'.$app->config->name.'</a>';
+		$page_title = '<a href="/">'.$app->config->name.'</a>';
 
 		// Set head title to app name
 		if (!isset($head_title))
@@ -67,7 +67,7 @@ if (isset($app->page->title)) {
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
   <!-- CSS: implied media="all" -->
-  <link rel="stylesheet" href="themes/<?php echo $app->config->theme; ?>/css/style.css">
+  <link rel="stylesheet" href="/themes/<?php echo $app->config->theme; ?>/css/style.css">
 
   <!-- More ideas for your <head> here: h5bp.com/docs/#head-Tips -->
 
@@ -88,24 +88,24 @@ if (isset($app->page->title)) {
 
 			if (isset($_SESSION['user'])) {
 
-				echo '<a href="index.php">Home</a> &middot; <a href="user.php">My profile</a> &middot; ';
+				echo '<a href="/">Home</a> &middot; <a href="/'.$_SESSION['user']['username'].'">My profile</a> &middot; ';
 
 				if (isset($app->plugins->points))
 					echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app->plugins->points['name'].' &middot; ';
 
 				if ($app->config->invites['enabled'] == TRUE)
-					echo '<a href="invites.php">Invites</a> &middot; ';
+					echo '<a href="/invites">Invites</a> &middot; ';
 
-				echo '<a href="settings.php">Settings</a> &middot; <a href="help.php">Help</a> &middot; ';
+				echo '<a href="/settings">Settings</a> &middot; <a href="/help">Help</a> &middot; ';
 
 				if (in_array($_SESSION['user']['id'], $app->config->admin_users) == TRUE)
-					echo '<a href="admin.php">Admin</a> &middot; ';
+					echo '<a href="admin">Admin</a> &middot; ';
 
-				echo '<a href="logout.php">Logout</a>';
+				echo '<a href="/logout">Logout</a>';
 
 			} else {
 
-				echo '<a href="signup.php">Signup</a> &middot; <a href="login.php">Login</a> &middot; <a href="help.php">Help</a>';
+				echo '<a href="/signup">Signup</a> &middot; <a href="/login">Login</a> &middot; <a href="/help">Help</a>';
 
 			}
 

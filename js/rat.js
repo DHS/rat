@@ -23,7 +23,7 @@ function like_add(user_id, item_id) {
 		}
 	}
 
-	xmlhttp.open("GET", 'ajax.php?page=like_add&user_id='+user_id+'&item_id='+item_id, true);
+	xmlhttp.open("GET", 'controllers/ajax.php?page=like_add&user_id='+user_id+'&item_id='+item_id, true);
 	xmlhttp.send();
 	
 }

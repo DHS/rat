@@ -37,12 +37,12 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 	
 	echo "Username: $segment1, page: $segment2";
 	
-} elseif ($segment2 == 'item') {
+} elseif ($segment2 == $app->config->items['name']) {
 	
 	if ($segment3 == '' || $segment3 == 'add') {
 		// No third part so show new item form
 		
-		echo 'New item';
+		include 'controllers/item.php';
 		exit();
 		
 	} elseif (substr($segment3, -5) == '.json') {
@@ -115,16 +115,32 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 
 	} else {
 		
-		//echo "Show item #$segment3. ";
 		$_GET['id'] = $segment3;
 		include "controllers/item.php";
 		exit();
 				
 	}
 		
+} elseif ($segment1 != '') {
+	// User profile
+
+	$user = $app->user->get_by_username($segment1);
+	
+	if ($user == NULL) {
+		
+		echo '404 - Page not found';
+		
+	} else {
+		
+		$_GET['id'] = $user['id'];
+		include "controllers/user.php";
+		exit();
+		
+	}
+
 } else {
 	
-	echo 'Routing error';
+	echo '404 - Page not found';
 	
 }
 

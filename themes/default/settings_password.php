@@ -1,7 +1,7 @@
 
 <h2>Change password</h2>
 
-<form action="settings.php?page=password" method="post">
+<form action="/settings/password" method="post">
 
 	<table>
 		<tr><td class="align_right">Old password:</td><td><input type="password" name="old_password" /></td></tr>

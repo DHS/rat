@@ -49,9 +49,9 @@ class log {
 			echo '<table>';
 			echo '<tr><th>Action</th><th>Object</th><th>Params</th><th>Timestamp</th></tr>';
 			foreach ($entries as $entry) {
-				echo '<tr><td><a href="user.php?id='.$entry['user_id'].'">'.$entry['user']['name'].'</a> '.$entry['object_type'].' '.$entry['action'].'</td><td>';
+				echo '<tr><td><a href="/'.$entry['user']['username'].'">'.$entry['user']['name'].'</a> '.$entry['object_type'].' '.$entry['action'].'</td><td>';
 				if ($entry['object_id'] != NULL)
-					echo '<a href="item.php?id='.$entry['object_id'].'">'.$entry['object_id'].'</a>';
+					echo $entry['object_id'];
 				echo '</td><td>';
 				if ($entry['params'] != NULL)
 					echo $entry['params'];

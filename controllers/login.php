@@ -1,7 +1,5 @@
 <?php
 
-require_once 'config/init.php';
-
 //	Critical: If email + pass ok then login
 
 if ($_POST['email'] && $_POST['password']) {

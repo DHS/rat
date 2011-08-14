@@ -1,7 +1,5 @@
 <?php
 
-require_once 'config/init.php';
-
 //	Critical: One of the following must be set: item id (to show) or content (to add) or delete
 
 if ($_GET['id'] == '' && $_POST['title'] == '' && $_POST['content'] == '' && $_GET['delete'] == '') {
@@ -249,7 +247,7 @@ if (isset($app->plugins->gravatar))
 	$app->page->title_gravatar = $item['user']['email'];
 
 $app->page->head_title = $app->page->item['title'].' by '.$app->page->item['user']['name'];
-$app->page->title = '<a href="user.php?id='.$app->page->item['user']['id'].'">'.$app->page->item['user']['name'].'</a> on <a href="index.php">'.$app->config->name.'</a>';
+$app->page->title = '<a href="/'.$app->page->item['user']['username'].'">'.$app->page->item['user']['name'].'</a> on <a href="/">'.$app->config->name.'</a>';
 
 $app->loadView('header');
 

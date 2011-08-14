@@ -2,7 +2,7 @@
     <footer>
 
         <p class="float_right"><?php echo $app->config->name; ?> was created using <a href="http://github.com/DHS/rat">Rat</a></p>
-        <p><?php echo $app->config->name; ?> &copy; <?php echo date('Y'); ?> &middot; <a href="about.php">About</a> &middot; <a href="help.php">Help</a> &middot; <a href="search.php">Search</a></p>
+        <p><?php echo $app->config->name; ?> &copy; <?php echo date('Y'); ?> &middot; <a href="/about">About</a> &middot; <a href="/help">Help</a> &middot; <a href="/search">Search</a></p>
 
     </footer>
   </div> <!--! end of #container -->
@@ -16,8 +16,8 @@
 
 
   <!-- scripts concatenated and minified via ant build script-->
-  <script src="js/plugins.js"></script>
-  <script src="js/rat.js"></script>
+  <script src="/js/plugins.js"></script>
+  <script src="/js/rat.js"></script>
   <!-- end scripts-->
 
 

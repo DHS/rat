@@ -1,7 +1,5 @@
 <?php
 
-require_once 'config/init.php';
-
 //	Critical: Feature must be enabled
 
 if (!isset($app->plugins->points) || $app->plugins->points['leaderboard'] == FALSE) {

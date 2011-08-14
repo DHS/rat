@@ -1,7 +1,7 @@
 
 <h2>Update profile</h2>
 
-<form action="settings.php?page=profile" method="post">
+<form action="/settings/profile" method="post">
 
 	<table>
 		<tr><td class="align_right">Full name:</td><td><input type="text" name="name" value="<?php echo $_SESSION['user']['name']; ?>" /></td></tr>

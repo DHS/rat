@@ -1,7 +1,5 @@
 <?php
 
-require_once 'config/init.php';
-
 // Critical: Setup wizard creates admin as first user
 
 if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {

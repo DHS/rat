@@ -44,8 +44,8 @@ class gravatar {
 		$return .= ' />';
 		
 		// if user_id is set, make it a link
-		if ($params['user_id'])
-			$return = '<a href="user.php?id='.$params['user_id'].'">'.$return.'</a>';
+		if ($params['link'])
+			$return = '<a href="'.$params['link'].'">'.$return.'</a>';
 		
 		return $return;
 		

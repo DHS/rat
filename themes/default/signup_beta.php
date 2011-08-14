@@ -1,7 +1,7 @@
 
 <div class="center_container">
 
-<form action="signup.php" method="post">
+<form action="/signup" method="post">
 
 	<input type="hidden" name="code" value="<?php echo $_GET['code']; ?>" />
 	<input type="hidden" name="email" value="<?php echo $_GET['email']; ?>" />

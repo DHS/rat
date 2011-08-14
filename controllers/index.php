@@ -1,7 +1,5 @@
 <?php
 
-require_once 'config/init.php';
-
 // Header
 
 $app->page->name = $app->config->tagline;
@@ -21,7 +19,7 @@ if ($app->config->friends['enabled'] == TRUE) {
 
 	if (empty($_SESSION['user'])) {
 		
-		echo '<p>Please <a href="login.php">login</a>.</p>';
+		echo '<p>Please <a href="/login">login</a>.</p>';
 		
 	} else {
 		

@@ -4,7 +4,7 @@
 
 <span class="item_meta">
 
-<a href="item.php?id=<?php echo $item['id']; ?>"><?php echo $item['date']; ?></a> 
+<a href="/<?php echo $item['user']['username']; ?>/<?php echo $app->config->items['name']; ?>/<?php echo $item['id']; ?>"><?php echo $item['date']; ?></a> 
 
 <?php
 

@@ -1,7 +1,5 @@
 <?php
 
-require_once 'config/init.php';
-
 // Header
 
 $app->page->name = 'About';
@@ -12,7 +10,7 @@ $app->loadView('header');
 foreach ($app->config->admin_users as $value) {
 	$author = $app->user->get($value);
 	if ($app->config->private != TRUE || $_SESSION['user'] != NULL) {
-		$authors .= '<a href="user.php?id='.$author['id'].'">'.$author['username'].'</a>, ';
+		$authors .= '<a href="/'.$author['username'].'">'.$author['username'].'</a>, ';
 	} else {
 		$authors .= $author['username'].', ';
 	}

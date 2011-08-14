@@ -11,9 +11,9 @@ if (count($item['likes']) > 0) {
 	foreach ($item['likes'] as $like) {
 
 		if (isset($app->plugins->gravatar)) {
-			echo $app->plugins->gravatar->show($like['user']['email'], array('user_id' => $like['user']['id'], 'size' => 20, 'style' => "margin-bottom: -5px;")).' ';
+			echo $app->plugins->gravatar->show($like['user']['email'], array('link' => "/{$like['user']['username']}", 'size' => 20, 'style' => "margin-bottom: -5px;")).' ';
 		} else {
-			echo '<a href="user.php?id='.$like['user']['id'].'">';
+			echo '<a href="/'.$like['user']['username'].'">';
 			echo $like['user']['username'];
 			echo '</a> ';
 		}

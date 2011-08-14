@@ -14,7 +14,7 @@ foreach ($app->page->items as $item) {
 		<?php 
 		if (isset($app->plugins->gravatar)) {
 			echo '<td style="text-align: center;" valign="top">';
-			echo $app->plugins->gravatar->show($item['user']['email'], array('user_id' => $item['user']['id'], 'size' => 48, 'style' => "margin-right: 5px;"));
+			echo $app->plugins->gravatar->show($item['user']['email'], array('link' => "/{$item['user']['username']}", 'size' => 48, 'style' => "margin-right: 5px;"));
 			echo '</td>';
 		}
 		?>
@@ -22,15 +22,15 @@ foreach ($app->page->items as $item) {
 		
 			<?php if ($app->config->items['titles']['enabled'] == TRUE) { ?>
 				
-				<p><a href="item.php?id=<?php echo $item['id']; ?>"><?php echo $item['title']; ?></a> by <a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a></p>
+				<p><a href="/<?php echo $item['user']['username']; ?>/<?php echo $app->config->items['name']; ?>/<?php echo $item['id']; ?>"><?php echo $item['title']; ?></a> by <a href="/<?php echo $item['user']['username']; ?>"><?php echo $item['user']['username']; ?></a></p>
 				<?php if ($app->config->items['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
-					<a href="item.php?id=<?php echo $item['id']; ?>"><img src="<?php echo $app->config->items['uploads']['directory']; ?>/stream/<?php echo $item['image']; ?>" /></a>
+					<a href="/<?php echo $item['user']['username']; ?>/item/<?php echo $item['id']; ?>"><img src="<?php echo $app->config->items['uploads']['directory']; ?>/stream/<?php echo $item['image']; ?>" /></a>
 				<?php } ?>
 				<p><?php echo $item['content']; ?></p>
 
 			<?php } else { ?>
 				
-				<p><a href="user.php?id=<?php echo $item['user']['id']; ?>"><?php echo $item['user']['username']; ?></a> <?php echo $item['content']; ?></p>
+				<p><a href="/<?php echo $item['user']['username']; ?>"><?php echo $item['user']['username']; ?></a> <?php echo $item['content']; ?></p>
 			
 			<?php } ?>
 

@@ -1,7 +1,7 @@
 
 <div class="center_container">
 
-<form action="signup.php<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>" method="post">
+<form action="/signup<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>" method="post">
 
 	<?php
 	

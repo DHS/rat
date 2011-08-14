@@ -47,6 +47,33 @@ class user {
 	}
 
 	// Fetch a user's info given an email
+	function get_by_username($username) {
+
+		$username = sanitize_input($username);
+
+		$query = mysql_query("SELECT * FROM users WHERE username = $username");
+
+		if (mysql_num_rows($query) > 0) {
+
+			$user = mysql_fetch_array($query, MYSQL_ASSOC);
+
+			if ($user['full_name'] != NULL) {
+				$user['name'] = $user['full_name'];
+			} else {
+				$user['name'] = $user['username'];
+			}
+
+		} else {
+
+			$user = NULL;
+
+		}
+
+		return $user;
+
+	}
+
+	// Fetch a user's info given an email
 	function get_by_email($email) {
 
 		$email = sanitize_input($email);
