@@ -62,32 +62,5 @@ require_once 'config/database.php';
 
 // Start session
 session_start();
-/*
-// Finds page name
-preg_match("/[a-zA-Z0-9]+\.php/", $_SERVER['PHP_SELF'], $result);
 
-// If user is logged out, app is private and page is not in public_pages then show splash page
-if ($_SESSION['user'] == NULL && $app->config->private == TRUE && in_array($result[0], $app->config->public_pages) == FALSE) {
-
-	if (count($app->admin->list_users()) == 0 && $result[0] == 'admin.php') {
-
-		// Make an exception for setup
-		
-		// So at the moment, setup requires $app->config->private to be TRUE
-		// and admin.php must NOT be in public_pages
-		
-	} else {
-
-		// Show splash page
-		$app->loadView('header');
-		$app->loadView('splash');
-		$app->loadView('footer');
-
-		// Stop processing the rest of the page
-		exit();		
-		
-	}
-
-}
-*/
 ?>

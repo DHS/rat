@@ -36,7 +36,7 @@ class config {
 
 	// Private app - requires login to view pages (except public_pages), no share buttons
 	public $private							= TRUE;
-	public $public_pages					= array('signup.php', 'login.php', 'logout.php', 'help.php');
+	public $public_pages					= array('signup', 'login', 'logout', 'help', 'about');
 
 	// Items
 	// Notes about uploads: max-size is in bytes (default: 5MB), directory should contain three subdirectories: originals, thumbnails, stream

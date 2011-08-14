@@ -9,6 +9,30 @@ $segment4 = $_GET['segment4'];
 $segment5 = $_GET['segment5'];
 $segment6 = $_GET['segment6'];
 
+// If user is logged out, app is private and page is not in public_pages then show splash page
+if ($_SESSION['user'] == NULL && $app->config->private == TRUE && in_array($segment1, $app->config->public_pages) == FALSE) {
+
+	if (count($app->admin->list_users()) == 0 && $result[0] == 'admin.php') {
+
+		// Make an exception for setup
+		
+		// So at the moment, setup requires $app->config->private to be TRUE
+		// and admin.php must NOT be in public_pages
+		
+	} else {
+
+		// Show splash page
+		$app->loadView('header');
+		$app->loadView('splash');
+		$app->loadView('footer');
+
+		// Stop processing the rest of the page
+		exit();		
+		
+	}
+
+}
+
 if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && $segment5 == '' && $segment6 == '') {
 	
 	include "controllers/index.php";
