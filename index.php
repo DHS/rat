@@ -36,7 +36,7 @@ if ($_SESSION['user'] == NULL && $app->config->private == TRUE && in_array($segm
 if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && $segment5 == '' && $segment6 == '') {
 	// All segments empty ie. root url
 	
-	include 'controllers/index.php';
+	$app->loadController('index');
 	
 } elseif (substr($segment1, -5) == '.json') {
 	// Segment1 ends in .json so either search or user
@@ -51,7 +51,7 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 	// Controller exists, call with function and params if available
 	
 	//echo "Call $segment2($segment3) in $segment1.php";
-	include "controllers/$segment1.php";
+	$app->loadController('index');
 
 } elseif (is_numeric($segment2) == TRUE) {
 	// Paginated user view
@@ -63,7 +63,7 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 	if ($segment3 == '' || $segment3 == 'add') {
 		// Show new item form
 		
-		include 'controllers/item.php';
+		$app->loadController('item');
 		
 	} elseif (substr($segment3, -5) == '.json') {
 		// Item json
@@ -132,7 +132,8 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 		// No extra gubbins so just show item
 		
 		$_GET['id'] = $segment3;
-		include "controllers/item.php";
+		//include "controllers/item.php";
+		$app->loadController('item');
 		
 	}
 		
@@ -150,7 +151,7 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 		// Show user profile
 		
 		$_GET['id'] = $user['id'];
-		include "controllers/user.php";
+		$app->loadController('user');
 		
 	}
 

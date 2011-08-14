@@ -37,6 +37,14 @@ class app {
 		
 	}
 	
+	function loadController($controller) {
+		
+		global $app;
+		
+		include "controllers/$controller.php";
+		
+	}
+	
 }
 
 // Create new instance of app
