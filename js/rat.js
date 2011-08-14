@@ -1,6 +1,8 @@
 
-function like_add(user_id, item_id) {
-
+function like_add(item_id, url) {
+	
+	var new_url = url.substr(0, url.length - 3) + 'remove';
+	
 	if (window.XMLHttpRequest) {
 		// IE7+, Firefox, Chrome, Opera, Safari
 		xmlhttp = new XMLHttpRequest();
@@ -14,7 +16,7 @@ function like_add(user_id, item_id) {
 			if (xmlhttp.responseText != '') {
 				
 				if (like_link = document.getElementById('like_link_'+item_id))
-					like_link.innerHTML = '<a href="#" onclick="like_remove('+user_id+', '+item_id+'); return false;">Unlike</a>';
+					like_link.innerHTML = '<a href="#" onclick="like_remove('+item_id+', \''+new_url+'\'); return false;">Unlike</a>';
 				
 				if (likes = document.getElementById('likes_'+item_id))
 					likes.innerHTML = xmlhttp.responseText;
@@ -23,12 +25,14 @@ function like_add(user_id, item_id) {
 		}
 	}
 
-	xmlhttp.open("GET", 'ajax.php?page=like_add&user_id='+user_id+'&item_id='+item_id, true);
+	xmlhttp.open("GET", url, true);
 	xmlhttp.send();
 	
 }
 
-function like_remove(user_id, item_id) {
+function like_remove(item_id, url) {
+	
+	var new_url = url.substr(0, url.length - 6) + 'add';
 
 	if (window.XMLHttpRequest) {
 		// IE7+, Firefox, Chrome, Opera, Safari
@@ -43,7 +47,7 @@ function like_remove(user_id, item_id) {
 			if (xmlhttp.responseText != '') {
 				
 				if (like_link = document.getElementById('like_link_'+item_id))
-					like_link.innerHTML = '<a href="#" onclick="like_add('+user_id+', '+item_id+'); return false;">Like</a>';
+					like_link.innerHTML = '<a href="#" onclick="like_add('+item_id+', \''+new_url+'\'); return false;">Like</a>';
 				
 				if (likes = document.getElementById('likes_'+item_id))
 					likes.innerHTML = xmlhttp.responseText;
@@ -52,7 +56,7 @@ function like_remove(user_id, item_id) {
 		}
 	}
 
-	xmlhttp.open("GET", 'ajax.php?page=like_remove&user_id='+user_id+'&item_id='+item_id, true);
+	xmlhttp.open("GET", url, true);
 	xmlhttp.send();
 	
 }

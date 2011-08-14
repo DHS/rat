@@ -98,24 +98,28 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 	} elseif ($segment4 == 'likes') {
 		// List likes
 	
-		echo "Likes for #$segment3";
+		//echo "Likes for #$segment3";
+		$app->loadController('likes')->show($segment3);
 	
 	} elseif ($segment4 == 'likes.json') {
 		// Likes json
 		
-		echo "Likes JSON for #$segment3";
+		//echo "Likes JSON for #$segment3";
+		$app->loadController('likes')->json($segment3);
 
 	} elseif ($segment4 == 'like') {
 		
 		if ($segment5 == 'add') {
 			// Add like
 			
-			echo "Add like to #$segment3";
+			//echo "Add like to #$segment3";
+			$app->loadController('likes')->add($_SESSION['user']['id'], $segment3);
 			
 		} elseif($segment5 == 'remove') {
 			// Remove like
 			
-			echo "Remove like from #$segment3";
+			//echo "Remove like from #$segment3";
+			$app->loadController('likes')->remove($_SESSION['user']['id'], $segment3);
 			
 		}
 
