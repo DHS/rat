@@ -42,9 +42,11 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 	// Segment1 ends in .json so either search or user
 	
 	if (substr($segment1, 0, 6) == 'search') {
-		echo 'Search results json for: "'.urlencode($segment2).'"';
+		//echo 'Search results json for: "'.urlencode($segment2).'"';
+		$app->loadController('search')->json($_GET['q']);
 	} else {
-		echo 'User json for: "'.substr($segment1, 0, -5).'"';
+		//echo 'User json for: "'.substr($segment1, 0, -5).'"';
+		$app->loadController('users')->json(substr($segment1, 0, -5));
 	}
 	
 } elseif (file_exists("controllers/$segment1.php") == TRUE) {
@@ -55,7 +57,9 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 	// Check to see if controller has been updated with a class, still works if not :)
 	if (get_class($app->controller)) {
 		
-		if ($segment2 != '') {
+		if ($segment1 == 'search') {
+			$app->controller->index($_GET['q']);
+		} elseif ($segment2 != '') {
 			$app->controller->$segment2($segment3);
 		} else {
 			$app->controller->index();
@@ -67,9 +71,7 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 	// Paginated user view
 	
 	//echo "Username: $segment1, page: $segment2";
-	$user = $app->user->get_by_username($segment1);	
-	$_GET['id'] = $user['id'];
-	$app->loadController('user');	
+	$app->loadController('users')->show($segment1, $segment2);
 	
 } elseif ($segment2 == $app->config->items['name']) {
 	
@@ -145,7 +147,6 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 		// No extra gubbins so just show item
 		
 		$_GET['id'] = $segment3;
-		//include "controllers/item.php";
 		$app->loadController('item');
 		
 	}
@@ -153,20 +154,7 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 } elseif ($segment1 != '') {
 	// User profile
 
-	$user = $app->user->get_by_username($segment1);
-	
-	if ($user == NULL) {
-		// User not found
-		
-		echo '404 - Page not found';
-		
-	} else {
-		// Show user profile
-		
-		$_GET['id'] = $user['id'];
-		$app->loadController('user');
-		
-	}
+	$app->loadController('users')->show($segment1);
 
 } else {
 	// Router is puzzled

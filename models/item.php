@@ -85,7 +85,7 @@ class item {
 	}
 
 	// Get a user's items
-	function list_user($user_id, $limit = 10) {
+	function list_user($user_id, $limit = 10, $offset = 0) {
 		
 		global $app;
 		
@@ -97,6 +97,12 @@ class item {
 		if ($limit != NULL) {
 			$limit = sanitize_input($limit);
 			$sql .= " LIMIT $limit";
+		}
+
+		// Offset not zero so create offset string
+		if ($offset != NULL) {
+			$offset = sanitize_input($offset);
+			$sql .= " OFFSET $offset";
 		}
 
 		$query = mysql_query($sql);
