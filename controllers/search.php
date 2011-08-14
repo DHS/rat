@@ -27,8 +27,9 @@ class search {
 		
 		global $app;
 		
-		$app->page->items['items'] = $app->searches->do_search($q);
-		$app->loadView('items_json');
+		$items['items'] = $app->searches->do_search($q);
+		$app->page->json = $items;
+		$app->loadView('json');
 		
 	}
 

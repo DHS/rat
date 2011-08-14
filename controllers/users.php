@@ -65,10 +65,10 @@ class users {
 		
 		global $app;
 		
-		$app->page->user['user'] = $app->user->get_by_username($username);
-		$app->page->user['items'] = $app->item->list_user($app->page->user['user']['id']);
-		
-		$app->loadView('user_json');
+		$user['user'] = $app->user->get_by_username($username);
+		$user['items'] = $app->item->list_user($user['user']['id']);
+		$app->page->json = $user;
+		$app->loadView('json');
 		
 	}
 	

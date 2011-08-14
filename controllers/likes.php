@@ -45,8 +45,9 @@ class likes {
 		
 		global $app;
 		
-		$app->page->item = $app->item->get($item_id);
-		$app->loadView('likes_json');
+		$item = $app->item->get($item_id);
+		$app->page->json = $item['likes'];
+		$app->loadView('json');
 		
 	}
 	
