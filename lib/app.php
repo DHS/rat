@@ -48,22 +48,4 @@ class app {
 	
 }
 
-// Create new instance of app
-$app = new app;
-
-// Determine whether site is dev or live
-$domain = substr(substr($app->config->url, 0, -1), 7);
-
-if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.'.$domain) {
-	define('SITE_IDENTIFIER', 'live');
-} else {
-	define('SITE_IDENTIFIER', 'dev');
-}
-
-// Setup database
-require_once 'database.php';
-
-// Start session
-session_start();
-
 ?>

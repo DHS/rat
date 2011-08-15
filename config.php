@@ -68,9 +68,9 @@ class config {
 	// DATABASE
 	
 	public $database = array(	'dev'	=> array(	'host'		=> 'localhost',
-												'username'	=> 'root',
-												'password'	=> 'root',
-												'database'	=> 'rat'
+													'username'	=> 'root',
+													'password'	=> 'root',
+													'database'	=> 'rat'
 												),
 												
 								'live'	=> array(	'host'		=> 'localhost',

@@ -1,6 +1,25 @@
 <?php
 
-require_once 'config/init.php';
+// Include app class
+require_once 'lib/app.php';
+
+// Create new instance of app
+$app = new app;
+
+// Determine whether site is dev or live
+$domain = substr(substr($app->config->url, 0, -1), 7);
+
+if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.'.$domain) {
+	define('SITE_IDENTIFIER', 'live');
+} else {
+	define('SITE_IDENTIFIER', 'dev');
+}
+
+// Setup database
+require_once 'lib/database.php';
+
+// Start session
+session_start();
 
 $segment1 = $_GET['segment1'];
 $segment2 = $_GET['segment2'];
