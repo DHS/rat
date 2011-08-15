@@ -13,9 +13,8 @@ Getting started
 
 1. Copy all files to your application directory
 2. Create a MySQL database and run rat.sql in it
-3. Rename config/config-sample.php → config/config.php
-4. Update the variables in config/config.php, in particular the database variables
-5. Visit /admin/setup to create your account
+3. Update the variables in config.php, in particular dev_url and the database variables
+4. Visit /admin/setup to create your account
 
 Functionality
 -------------
@@ -27,15 +26,16 @@ Functionality
 - Login
 - Logout
 - Sessions
-- Change password
+- Forgotten password
+- User profiles (name, bio, url)
 
 **Items**
 
 - Create item
 - Delete item
-- Titles (optional, re-namable)
-- Comments (optional, re-namable)
-- Likes (optional, re-namable)
+- Titles (optional)
+- Comments (optional)
+- Likes (optional)
 
 **Invites**
 
@@ -45,7 +45,6 @@ Functionality
 
 **Friends**
 
-- Symmetrical friending (send request, request must be accepted)
 - Asymmetrical friending (following)
 - Feed of friends' activity
 
@@ -68,6 +67,7 @@ Functionality
 Missing functionality
 ---------------------
 
+- Symmetrical friending (send request, request must be accepted)
 - Confirm email address
 - Delete user accounts
 - Native avatars
