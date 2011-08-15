@@ -7,47 +7,7 @@ $app->page->selector = $_GET['page'];
 if ($_GET['user_id'] != $_SESSION['user']['id'])
 	exit();
 
-if ($app->page->selector == 'like_add') {
-	
-	$like_id = $app->like->add($_GET['user_id'], $_GET['item_id']);
-	
-	if (isset($app->plugins->log))
-		$app->plugins->log->add($_GET['user_id'], 'like', $like_id, 'add');
-	
-	$app->page->item = $app->item->get($_GET['item_id']);
-	$app->loadView('likes_list');
-	
-} elseif ($app->page->selector == 'like_remove') {
-
-	$like_id = $app->like->remove($_GET['user_id'], $_GET['item_id']);
-	
-	if (isset($app->plugins->log))
-		$app->plugins->log->add($_GET['user_id'], 'like', $like_id, 'remove');
-	
-	$app->page->item = $app->item->get($_GET['item_id']);
-	$app->loadView('likes_list');
-	
-} elseif ($app->page->selector == 'comment_add') {
-
-	$comment_id = $app->comment->add($_GET['user_id'], $_GET['item_id'], $_GET['content']);
-	
-	if (isset($app->plugins->log))
-		$app->plugins->log->add($_GET['user_id'], 'comment', $comment_id, 'add', $_GET['content']);
-
-	$app->page->item = $app->item->get($_GET['item_id']);
-	$app->loadView('comments_list');
-
-} elseif ($app->page->selector == 'comment_remove') {
-	
-	$app->comment->remove($_GET['user_id'], $_GET['item_id'], $_GET['comment_id']);
-	
-	if (isset($app->plugins->log))
-		$app->plugins->log->add($_GET['user_id'], 'comment', $_GET['comment_id'], 'remove');
-	
-	$app->page->item = $app->item->get($_GET['item_id']);
-	$app->loadView('comments_list');
-
-} elseif ($app->page->selector == 'friend_add') {
+if ($app->page->selector == 'friend_add') {
 
 	$friend_id = $app->friend->add($_GET['user_id'], $_GET['friend_user_id']);
 

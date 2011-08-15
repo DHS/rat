@@ -126,25 +126,29 @@ if ($segment1 == '' && $segment2 == '' && $segment3 == '' && $segment4 == '' && 
 	} elseif ($segment4 == 'comments') {
 		// List comments
 
-		echo "Comments for #$segment3";
+		//echo "Comments for #$segment3";
+		$app->loadController('comments')->show($segment3);
 
 	} elseif ($segment4 == 'comments.json') {
 		// Comments json
    
-		echo "Comments JSON for #$segment3";
-   
+		//echo "Comments JSON for #$segment3";
+		$app->loadController('comments')->json($segment3);
+		
 	} elseif ($segment4 == 'comment') {
-   
+		
 		if ($segment5 == 'add') {
    			// Add comment
-
-			echo "Add comment to #$segment3";
-   
-		} elseif($segment5 == 'remove') {
+			
+			//echo "Add comment to item #$segment3";
+			$app->loadController('comments')->add($_SESSION['user']['id'], $segment3, $_POST['content']);
+			
+		} elseif($segment6 == 'remove') {
    			// Remove comment
 			
-			echo "Remove comment from #$segment3";
-   
+			//echo "Remove comment #$segment5";
+			$app->loadController('comments')->remove($_SESSION['user']['id'], $segment3, $segment5);
+			
 		}
 
 	} else {

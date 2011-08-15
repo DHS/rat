@@ -61,9 +61,9 @@ function like_remove(item_id, url) {
 	
 }
 
-function comment_add(user_id, item_id) {
+function comment_add(item_id, url) {
 	
-	var content = document.forms('comment_form_'+item_id).content.value;
+	var content = 'content=' + document.forms('comment_form_'+item_id).content.value;
 	
 	if (window.XMLHttpRequest) {
 		// IE7+, Firefox, Chrome, Opera, Safari
@@ -87,12 +87,13 @@ function comment_add(user_id, item_id) {
 		}
 	}
 	
-	xmlhttp.open("GET", 'ajax.php?page=comment_add&user_id='+user_id+'&item_id='+item_id+'&content='+content, true);
-	xmlhttp.send();
+	xmlhttp.open("POST", url, true);
+	xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+	xmlhttp.send(content);
 	
 }
 
-function comment_remove(user_id, item_id, comment_id) {
+function comment_remove(item_id, url) {
 	
 	if (window.XMLHttpRequest) {
 		// IE7+, Firefox, Chrome, Opera, Safari
@@ -113,7 +114,8 @@ function comment_remove(user_id, item_id, comment_id) {
 		}
 	}
 
-	xmlhttp.open("GET", 'ajax.php?page=comment_remove&user_id='+user_id+'&item_id='+item_id+'&comment_id='+comment_id, true);
+	xmlhttp.open("POST", url, true);
+	xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 	xmlhttp.send();
 	
 }

@@ -40,10 +40,9 @@ class comment {
 	}
 	
 	// Remove a comment from an item
-	function remove($user_id, $item_id, $comment_id) {
+	function remove($user_id, $comment_id) {
 
 		$user_id = sanitize_input($user_id);
-		$item_id = sanitize_input($item_id);
 		$comment_id = sanitize_input($comment_id);
 
 		$count_sql = "SELECT id FROM comments WHERE user_id = $user_id AND id = $comment_id";
