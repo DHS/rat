@@ -45,7 +45,8 @@ class comments {
 		
 		global $app;
 		
-		$app->page->json = $app->item->get($item_id);
+		$item = $app->item->get($item_id);
+		$app->page->json = $item['comments'];		
 		$app->loadView('json');
 		
 	}
