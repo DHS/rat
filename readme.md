@@ -85,5 +85,4 @@ Missing functionality
 - Enhance friends functionality (friend requests with emails)
 - Find friends on Facebook/Twitter
 - Incorporate more defaults from [HTML5 Boilerplate](https://github.com/paulirish/html5-boilerplate)
-- Read-only JSON API
 - OAuth API and developer section
