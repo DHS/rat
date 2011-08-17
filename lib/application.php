@@ -70,7 +70,15 @@ class application {
 		
 	}
 
-	function loadView($view, $layout = NULL) {
+	function loadView($view) {
+		
+		global $app;
+		
+		include "themes/{$this->config->theme}/{$layout}.php";
+		
+	}
+	
+	function loadLayout($view, $layout = NULL) {
 		
 		global $app;
 		
