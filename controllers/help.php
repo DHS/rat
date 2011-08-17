@@ -6,15 +6,8 @@ class help {
 		
 		global $app;
 		
-		// Header
 		$app->page->name = 'Help';
-		$app->loadView('header');
-
-		// Content
-		$app->loadView('help');
-
-		// Footer
-		$app->loadView('footer');
+		$app->loadLayout('help');
 		
 	}
 	

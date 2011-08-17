@@ -65,6 +65,7 @@ class about {
 		if (isset($app->plugins->gravatar))
 			$content .= '<p>'.$app->config->name.' is <a href="http://gravatar.com/">Gravatar</a>-enabled.</p>'."\n";
 
+		$app->page->name = 'About';
 		$app->loadPartial('header');
 		echo $content;
 		$app->loadPartial('footer');
