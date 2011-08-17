@@ -26,14 +26,14 @@ class config {
 
 	// URLs - must include http:// and a trailing slash
 	public $url								= 'http://example.com/';
-	public $dev_url							= 'http://localhost/rat-private/';
+	public $dev_url							= 'http://localhost:8888/';
 
-  // Base directory - the directory in which your site resides if not in the server root
-  public $base_dir          = '/';
-  public $dev_base_dir      = '/rat-private';
+	// Base directory - the directory in which your site resides if not in the server root
+	public $base_dir          = '/';
+	public $dev_base_dir      = '/rat-private';
 
-  // Default route - the controller to use if not specified in the URL
-  public $default_controller = 'index';
+	// Default route - the controller to use if not specified in the URL
+	public $default_controller = 'index';
 
 	// Beta - users can't signup, can only enter their email addresses
 	public $beta							= TRUE;
@@ -75,9 +75,9 @@ class config {
 	// DATABASE
 	
 	public $database = array(	'dev'	=> array(	'host'		=> 'localhost',
-												'username'	=> 'root',
-												'password'	=> '',
-												'database'	=> 'rat'
+													'username'	=> 'root',
+													'password'	=> 'root',
+													'database'	=> 'rat'
 												),
 												
 								'live'	=> array(	'host'		=> 'localhost',
