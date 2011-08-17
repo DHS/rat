@@ -33,7 +33,7 @@ class config {
 	public $dev_base_dir      = '/rat-private';
 
 	// Default route - the controller to use if not specified in the URL
-	public $default_controller = 'index';
+	public $default_controller = 'home';
 
 	// Beta - users can't signup, can only enter their email addresses
 	public $beta							= TRUE;
