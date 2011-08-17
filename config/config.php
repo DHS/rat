@@ -30,7 +30,7 @@ class config {
 
 	// Base directory - the directory in which your site resides if not in the server root
 	public $base_dir          = '/';
-	public $dev_base_dir      = '/rat-private';
+	public $dev_base_dir      = '';
 
 	// Default route - the controller to use if not specified in the URL
 	public $default_controller = 'home';
