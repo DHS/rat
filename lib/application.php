@@ -76,7 +76,7 @@ class application {
 		
 		global $app;
 		
-		include "themes/{$this->config->theme}/{$layout}.php";
+		include "themes/{$this->config->theme}/{$view}.php";
 		
 	}
 	
