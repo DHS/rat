@@ -67,7 +67,7 @@ if (isset($app->page->title)) {
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
   <!-- CSS: implied media="all" -->
-  <link rel="stylesheet" href="/themes/<?php echo $app->config->theme; ?>/css/style.css">
+  <link rel="stylesheet" href="themes/<?php echo $app->config->theme; ?>/css/style.css">
 
   <!-- More ideas for your <head> here: h5bp.com/docs/#head-Tips -->
 

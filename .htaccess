@@ -1,2 +1,3 @@
 RewriteEngine On
+RewriteCond $1 !^(js|themes) 
 RewriteRule ^(.*)$ index.php 
