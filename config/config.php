@@ -24,9 +24,16 @@ class config {
 	public $name							= 'Ratter';
 	public $tagline							= 'Demo of rat\'s functionality';
 
-	// URLs - must include http:// and trailing slash
+	// URLs - must include http:// and a trailing slash
 	public $url								= 'http://example.com/';
-	public $dev_url							= 'http://localhost:8888/';
+	public $dev_url							= 'http://localhost/rat-private/';
+
+  // Base directory - the directory in which your site resides if not in the server root
+  public $base_dir          = '/';
+  public $dev_base_dir      = '/rat-private';
+
+  // Default route - the controller to use if not specified in the URL
+  public $default_controller = 'index';
 
 	// Beta - users can't signup, can only enter their email addresses
 	public $beta							= TRUE;
@@ -36,7 +43,7 @@ class config {
 
 	// Private app - requires login to view pages (except public_pages), no share buttons
 	public $private							= TRUE;
-	public $public_pages					= array('signup', 'login', 'logout', 'help', 'about');
+	public $public_pages					= array('signup.php', 'login.php', 'logout.php', 'help.php');
 
 	// Items
 	// Notes about uploads: max-size is in bytes (default: 5MB), directory should contain three subdirectories: originals, thumbnails, stream
@@ -68,14 +75,14 @@ class config {
 	// DATABASE
 	
 	public $database = array(	'dev'	=> array(	'host'		=> 'localhost',
-													'username'	=> 'root',
-													'password'	=> 'root',
-													'database'	=> 'rat'
+												'username'	=> 'root',
+												'password'	=> '',
+												'database'	=> 'rat'
 												),
 												
 								'live'	=> array(	'host'		=> 'localhost',
 													'username'	=> 'root',
-													'password'	=> 'root',
+													'password'	=> '',
 													'database'	=> 'rat'
 												)
 							);

@@ -3,7 +3,6 @@
 // Header
 
 $app->page->name = $app->config->tagline;
-$app->loadView('header');
 
 // Intro paragraph
 
@@ -39,8 +38,6 @@ if ($app->config->friends['enabled'] == TRUE) {
 	
 }
 
-// Footer
 
-$app->loadView('footer');
 
 ?>
