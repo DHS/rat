@@ -19,9 +19,9 @@ $format = $format[0];
 // Split request at each '/' to obtain route
 $segments = preg_split("/\//", $segments[0]);
 
-$uri = array(	'controller'	=> $segments[1],
-				'view'			=> $segments[2],
-				'id'			=> $segments[3],
+$uri = array(	'controller'	=> $segments[0],
+				'view'			=> $segments[1],
+				'id'			=> $segments[2],
 				'format'		=> $format,
 				'params'		=> $_GET
 			);
