@@ -16,8 +16,8 @@
 
 
   <!-- scripts concatenated and minified via ant build script-->
-  <script src="/js/plugins.js"></script>
-  <script src="/js/rat.js"></script>
+  <script src="<?php echo base_dir; ?>/js/plugins.js"></script>
+  <script src="<?php echo base_dir; ?>/js/rat.js"></script>
   <!-- end scripts-->
 
 

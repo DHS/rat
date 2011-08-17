@@ -24,8 +24,10 @@ class application {
 
 		if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.'.$domain) {
 			define('SITE_IDENTIFIER', 'live');
+			define('BASE_DIR', $this->config->base_dir);
 		} else {
 			define('SITE_IDENTIFIER', 'dev');
+			define('BASE_DIR', $this->config->dev_base_dir);
 		}
 		
 	}
