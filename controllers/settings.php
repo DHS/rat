@@ -1,27 +1,27 @@
 <?php
 
-require_once 'config/init.php';
-
-// Critical: user must be logged in
-
-if ($_SESSION['user'] == NULL) {
+class settings {
 	
-	$app->page->name = 'Page not found';
-	$app->page->message = 'Please <a href="login.php?redirect_to=/settings.php">login</a> to view your settings.';
-	$app->loadView('header');
-	$app->loadView('footer');
-	exit();
+	function index() {
+
+		global $app;
+		
+		$app->page->name = 'Settings';
+		$app->loadPartial('header');
+		
+		// Show profile info form
+		$app->loadView('settings_profile');
+		
+		// Show password change form
+		$app->loadView('settings_password');
+		
+		$app->loadPartial('footer');
+		
+	}
 	
 }
 
 /*
-*	Settings functions:
-*
-*		Show settings page
-*		Change password
-*		Update profile info
-*		
-*/
 
 function index() {
 	
@@ -164,5 +164,7 @@ if (isset($app->plugins->gravatar))
 // Footer
 
 $app->loadView('footer');
+
+*/
 
 ?>
