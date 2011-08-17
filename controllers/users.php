@@ -2,6 +2,31 @@
 
 class users {
 	
+	function show($id) {
+		
+		global $app;
+		
+		$app->page->items = $app->item->list_user($id);
+		$app->loadLayout('items_list_user');
+		
+	}
+	
+	function json($username) {
+		
+		global $app;
+		
+		$user['user'] = $app->user->get_by_username($username);
+		$user['items'] = $app->item->list_user($user['user']['id']);
+		$app->page->json = $user;
+		$app->loadView('json');
+		
+	}
+	
+}
+
+/*
+class users {
+	
 	function show($username, $page = 1) {
 		
 		global $app;
@@ -73,5 +98,5 @@ class users {
 	}
 	
 }
-
+*/
 ?>
