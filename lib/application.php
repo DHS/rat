@@ -1,19 +1,24 @@
 <?php
 
-// Define app class
 class Application {
 
 	public $uri, $config;
 
-	function __construct($uri = NULL) {
-		
-		$this->uri = $uri;
+	function __construct() {
 		
 		$this->loadConfig();
 		$this->loadModels();
 		$this->loadPlugins();
 		
 	}
+
+  function request($uri) {
+    
+    $this->uri = $uri;
+   
+    $this->loadController($uri['controller']);
+
+  }
 
 	function loadConfig() {
 		
@@ -24,13 +29,18 @@ class Application {
 
 		if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.'.$domain) {
 			define('SITE_IDENTIFIER', 'live');
-			define('BASE_DIR', $this->config->base_dir);
+			$base_dir = $this->config->base_dir;
 		} else {
 			define('SITE_IDENTIFIER', 'dev');
-			define('BASE_DIR', $this->config->dev_base_dir);
+			$base_dir = $this->config->dev_base_dir;
 		}
-		
-	}
+
+    if (is_null($base_dir))
+      $base_dir = '/';
+
+    define('BASE_DIR', $base_dir);
+	
+  }
 
 	function loadModels() {
 	
