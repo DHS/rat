@@ -33,7 +33,7 @@ class config {
 	public $dev_base_dir      = '';
 
 	// Default route - the controller to use if not specified in the URL
-	public $default_controller = 'home';
+	public $default_controller = 'items';
 
 	// Beta - users can't signup, can only enter their email addresses
 	public $beta							= TRUE;
