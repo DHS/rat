@@ -1,6 +1,6 @@
 <?php
 
-class search {
+class SearchController {
 	
 	function index($q = NULL) {
 		

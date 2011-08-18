@@ -1,6 +1,6 @@
 <?php
 
-class likes {
+class LikesController {
 	
 	function add($user_id, $item_id) {
 		

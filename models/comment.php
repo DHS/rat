@@ -1,6 +1,6 @@
 <?php
 
-class comment {
+class Comment {
 	
 	// Add a comment to an item
 	function add($user_id, $item_id, $content) {

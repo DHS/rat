@@ -1,6 +1,6 @@
 <?php
 
-class user {
+class User {
 
 	// Add a user (beta signup)	
 	function add($email) {

@@ -3,7 +3,7 @@
 // Not sure search deserves its own model but ho hom
 // Code courtesy of the awesome Cal Henderson: http://www.iamcal.com/publish/articles/php/search/
 
-class searches {
+class Searches {
 
 	function search_split_terms($terms){
 	

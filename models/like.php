@@ -1,6 +1,6 @@
 <?php
 
-class like {
+class Like {
 
 	// Add a like for an item
 	function add($user_id, $item_id) {

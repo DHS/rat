@@ -1,6 +1,6 @@
 <?php
 
-class comments {
+class CommentsController {
 	
 	function add($user_id, $item_id, $content) {
 		

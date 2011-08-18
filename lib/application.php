@@ -1,7 +1,7 @@
 <?php
 
 // Define app class
-class application {
+class Application {
 
 	public $uri, $config;
 
@@ -17,8 +17,8 @@ class application {
 
 	function loadConfig() {
 		
-		require_once 'config/config.php';
-		$this->config = new config;
+		require_once 'config/Config.php';
+		$this->config = new Config;
 	
 		$domain = substr(substr($this->config->url, 0, -1), 7);
 
@@ -39,7 +39,8 @@ class application {
 			$model = substr($file, 0, -4);
 			if ($file[0] != '.') {
 				require_once "models/$model.php";
-				$this->$model = new $model;
+				$modelLower = strtolower($model);
+        $this->$modelLower = new $model;
 			}
 		}
 
@@ -60,6 +61,9 @@ class application {
  
 		global $app;
 		
+    $c = ucfirst($c);
+    $c .= "Controller";
+
 		require_once "controllers/{$c}.php";
 
 		$controller = new $c;

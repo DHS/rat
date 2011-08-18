@@ -1,6 +1,6 @@
 <?php
 
-class settings {
+class SettingsController {
 	
 	function index() {
 

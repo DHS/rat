@@ -1,6 +1,6 @@
 <?php
 
-class home {
+class HomeController {
 	
 	// Show stream of everyone's activity
 	function index() {

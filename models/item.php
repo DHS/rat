@@ -1,6 +1,6 @@
 <?php
 
-class item {
+class Item {
 
 	// Create an item	
 	function add($user_id, $content, $title = NULL, $image = NULL) {

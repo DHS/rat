@@ -1,6 +1,6 @@
 <?php
 
-class users {
+class UsersController {
 	
 	function show($id) {
 		

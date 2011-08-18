@@ -1,6 +1,6 @@
 <?php
 
-class help {
+class HelpController {
 	
 	function index() {
 		

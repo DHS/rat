@@ -2,11 +2,11 @@
 
 session_start();
 
-require_once 'lib/application.php';
+require_once 'lib/Application.php';
 
 // Load config early to get base_dev_dir and default_controller
-require_once 'config/config.php';
-$config = new config;
+require_once 'config/Config.php';
+$config = new Config;
 
 // Get request from server, split into segments, store as controller, view, id and params
 $request = substr($_SERVER['REQUEST_URI'], strlen($config->dev_base_dir));
@@ -30,10 +30,10 @@ if (empty($uri['controller']))
 	$uri['controller'] = $config->default_controller;
 
 // Instantiate a new application
-$app = new application($uri);
+$app = new Application($uri);
 
 // Load database config
-require_once 'lib/database.php';
+require_once 'lib/Database.php';
 
 // Load the controller
 $app->loadController($uri['controller']);
