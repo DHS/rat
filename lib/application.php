@@ -113,11 +113,18 @@ class Application {
 		
 	}
 
-	public function isPublic() {
-		
-		return TRUE;
-		
-	}
+  function link_to($value, $controller, $action = "", $id = "") {
+  
+    $link = "<a href='" . BASE_DIR . "/{$controller}";
+
+    if (! empty($action)) $link .= "/{$action}";
+    if (! empty($id))     $link .= "/{$id}";
+
+    $link .= "'>{$value}</a>";
+
+    return $link;
+    
+  }
 
 }
 
