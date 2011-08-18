@@ -64,7 +64,7 @@ class application {
 
 		$controller = new $c;
 		
-		if (method_exists($controller, $this->$uri['action'])) {
+		if (method_exists($controller, $this->uri['action'])) {
 			$controller->{$this->uri['action']}($this->uri['id']);
 		} else {
 			$controller->index();
