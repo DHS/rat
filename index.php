@@ -21,7 +21,7 @@ $segments = preg_split("/\//", $segments[0]);
 
 $uri = array(	'controller'	=> $segments[1],
 				'view'			=> $segments[2],
-				'id'			=> $segments[3],
+				'action'		=> $segments[3],
 				'format'		=> $format,
 				'params'		=> $_GET
 			);
