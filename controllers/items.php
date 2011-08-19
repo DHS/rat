@@ -2,7 +2,7 @@
 
 class ItemsController {
 	
-	// Show stream of everyone's activity
+	// Show stream of everyone's items
 	function index() {
 		
 		global $app;
@@ -14,6 +14,7 @@ class ItemsController {
 		
 	}
 	
+	// Add an item
 	function add() {
 		
 		global $app;
@@ -22,6 +23,7 @@ class ItemsController {
 		
 	}
 	
+	// Show a single item
 	function show($id) {
 		
 		global $app;
@@ -32,7 +34,7 @@ class ItemsController {
 		
 	}
 	
-	// Show feed of friends' activity
+	// Show feed of friends' new items
 	function feed() {
 		
 		global $app;
