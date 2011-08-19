@@ -1,5 +1,38 @@
 <?php
 
+class InvitesController {
+	
+	function index() {
+		
+		global $app;
+		
+		$app->page->invites_remaining = $_SESSION['user']['invites'];
+		$app->page->invites = $app->invite->list_sent($_SESSION['user']['id']);
+		
+		$app->loadLayout('invites');
+		
+	}
+	
+	function add() {
+		
+		global $app;
+		
+		
+		
+	}
+	
+	function remove() {
+		
+		global $app;
+		
+		
+		
+	}
+	
+}
+
+/*
+
 //	Critical: Feature must be enabled and user must be logged in
 
 if ($app->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
@@ -96,5 +129,7 @@ $app->loadView('invites_list');
 // Footer
 
 $app->loadView('footer');
+
+*/
 
 ?>

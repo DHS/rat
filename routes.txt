@@ -21,9 +21,9 @@ example.com/sessions/index              	N/A
 example.com/sessions/add                	DONE	needs POST
 example.com/sessions/remove             	
 
-example.com/invites/index               	
-example.com/invites/show/123            	
-example.com/invites/add                 	
+example.com/invites/index               	DONE
+example.com/invites/show/123            	N/A
+example.com/invites/add                 			needs POST
 
 example.com/items/index						DONE
 example.com/items/add                   	DONE	needs POST
