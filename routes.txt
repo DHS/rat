@@ -17,8 +17,8 @@ example.com/users/reset/123
 example.com/users/confirm/index         	
 example.com/users/confirm/123           	
 
-example.com/sessions/index              	
-example.com/sessions/add                	
+example.com/sessions/index              	N/A
+example.com/sessions/add                	DONE	needs POST
 example.com/sessions/remove             	
 
 example.com/invites/index               	
