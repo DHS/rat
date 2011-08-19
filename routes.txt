@@ -1,58 +1,58 @@
 
 Proposed routing for Rat
 
-example.com/pages/index
-example.com/pages/about
-example.com/pages/help
-example.com/pages/contact
+example.com/pages/index						
+example.com/pages/about                 	
+example.com/pages/help                  	
+example.com/pages/contact               	
 
-example.com/users/index
-example.com/users/add
-example.com/users/show/123
-example.com/users/remove/123
-example.com/users/update/123
+example.com/users/index                 	
+example.com/users/add                   	
+example.com/users/show/123              	
+example.com/users/remove/123            	
+example.com/users/update/123            	
 
-example.com/users/reset/index
-example.com/users/reset/123
-example.com/users/confirm/index
-example.com/users/confirm/123
+example.com/users/reset/index           	
+example.com/users/reset/123             	
+example.com/users/confirm/index         	
+example.com/users/confirm/123           	
 
-example.com/sessions/index
-example.com/sessions/add
-example.com/sessions/remove
+example.com/sessions/index              	
+example.com/sessions/add                	
+example.com/sessions/remove             	
 
-example.com/invites/index
-example.com/invites/show/123
-example.com/invites/add
+example.com/invites/index               	
+example.com/invites/show/123            	
+example.com/invites/add                 	
 
-example.com/items/index
-example.com/items/add
-example.com/items/show/123
-example.com/items/remove/123
-example.com/items/update/123
+example.com/items/index						DONE
+example.com/items/add                   	DONE	needs POST
+example.com/items/show/123              	DONE
+example.com/items/remove/123            			needs POST
+example.com/items/update/123            			needs POST
 
-example.com/searches/index
-example.com/searches?q=term
+example.com/searches/index              	
+example.com/searches?q=term             	
 
-example.com/comments/index
-example.com/comments/add
-example.com/comments/show/123
-example.com/comments/remove/123
-example.com/comments/update/123
+example.com/comments/index              	
+example.com/comments/add                	
+example.com/comments/show/123           	
+example.com/comments/remove/123         	
+example.com/comments/update/123         	
 
-example.com/likes/index
-example.com/likes/add
-example.com/likes/show/123
-example.com/likes/remove/123
-example.com/likes/update/123
+example.com/likes/index                 	
+example.com/likes/add                   	
+example.com/likes/show/123              	
+example.com/likes/remove/123            	
+example.com/likes/update/123            	
 
-example.com/admins/index
-example.com/admins/beta
-example.com/admins/beta/invite
-example.com/admins/users
-example.com/admins/users/grant_invites
-example.com/admins/log
-example.com/admins/signup
+example.com/admins/index                	
+example.com/admins/beta                 	
+example.com/admins/beta/invite          	
+example.com/admins/users                	
+example.com/admins/users/grant_invites		
+example.com/admins/log                  	
+example.com/admins/signup               	
 
 
 Controllers:
