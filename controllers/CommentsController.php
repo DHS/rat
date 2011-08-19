@@ -47,7 +47,7 @@ class CommentsController {
 		
 		$item = $app->item->get($item_id);
 		$app->page->json = $item['comments'];		
-		$app->loadView('json');
+		$app->loadView('pages/json');
 		
 	}
 	

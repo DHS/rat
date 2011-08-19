@@ -138,7 +138,7 @@ class UsersController {
 		$user['user'] = $app->user->get_by_username($username);
 		$user['items'] = $app->item->list_user($user['user']['id']);
 		$app->page->json = $user;
-		$app->loadView('json');
+		$app->loadView('pages/json');
 		
 	}
 	

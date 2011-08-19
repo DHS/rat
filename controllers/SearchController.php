@@ -29,7 +29,7 @@ class SearchController {
 		
 		$items['items'] = $app->searches->do_search($q);
 		$app->page->json = $items;
-		$app->loadView('json');
+		$app->loadView('pages/json');
 		
 	}
 

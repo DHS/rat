@@ -47,7 +47,7 @@ class LikesController {
 		
 		$item = $app->item->get($item_id);
 		$app->page->json = $item['likes'];
-		$app->loadView('json');
+		$app->loadView('pages/json');
 		
 	}
 	
