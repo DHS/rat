@@ -49,7 +49,7 @@ class users {
 
 		// Show profile
 
-		$app->loadView('user_profile');
+		$app->loadView('users/profile');
 
 		// Show follow button
 
