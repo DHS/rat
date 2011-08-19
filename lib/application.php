@@ -12,17 +12,17 @@ class Application {
 		
 	}
 
-  function request($uri) {
-    
-    $this->uri = $uri;
-   
-    $this->loadController($uri['controller']);
+	function request($uri) {
+		
+		$this->uri = $uri;
+		
+		$this->loadController($uri['controller']);
 
-  }
+	}
 
 	function loadConfig() {
 		
-		require_once 'config/Config.php';
+		require_once 'config/config.php';
 		$this->config = new Config;
 	
 		$domain = substr(substr($this->config->url, 0, -1), 7);
@@ -35,12 +35,12 @@ class Application {
 			$base_dir = $this->config->dev_base_dir;
 		}
 
-    if (is_null($base_dir))
-      $base_dir = '/';
-
-    define('BASE_DIR', $base_dir);
-	
-  }
+		if (is_null($base_dir))
+			$base_dir = '/';
+		
+		define('BASE_DIR', $base_dir);
+		
+	}
 
 	function loadModels() {
 	
@@ -53,7 +53,7 @@ class Application {
         $this->$modelLower = new $model;
 			}
 		}
-
+		
 	}
 
 	function loadPlugins() {
@@ -70,14 +70,9 @@ class Application {
 	function loadController($c) {
  
 		global $app;
-		
-    $c = ucfirst($c);
-    $c .= "Controller";
-
-		require_once "controllers/{$c}.php";
 
 		$classname = ucfirst($c).'Controller';
-
+		require_once "controllers/$classname.php";
 		$controller = new $classname;
 		
 		if (method_exists($controller, $this->uri['action'])) {
@@ -115,17 +110,20 @@ class Application {
 		
 	}
 
-  function link_to($value, $controller, $action = "", $id = "") {
-  
-    $link = "<a href='" . BASE_DIR . "/{$controller}";
+	function link_to($value, $controller, $action = "", $id = "") {
+	
+		$link = "<a href='" . BASE_DIR . "/{$controller}";
 
-    if (! empty($action)) $link .= "/{$action}";
-    if (! empty($id))     $link .= "/{$id}";
-
-    $link .= "'>{$value}</a>";
-
-    return $link;
-    
+		if (! empty($action))
+			$link .= "/{$action}";
+			
+		if (! empty($id))
+			$link .= "/{$id}";
+		
+		$link .= "'>{$value}</a>";
+		
+		return $link;
+		
   }
 
 }
