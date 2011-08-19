@@ -34,7 +34,7 @@ foreach ($app->page->items as $item) {
 			
 			<?php } ?>
 
-			<?php $app->loadView('items_meta'); ?>
+			<?php $app->loadView('items/meta'); ?>
 
 			<?php
 			
