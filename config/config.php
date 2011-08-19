@@ -1,6 +1,6 @@
 <?php
 
-class config {
+class Config {
 
 	/*
 	*	Contents
@@ -26,11 +26,11 @@ class config {
 
 	// URLs - must include http:// and a trailing slash
 	public $url								= 'http://example.com/';
-	public $dev_url							= 'http://localhost:8888/';
+	public $dev_url							= 'http://localhost/rat-private/';
 
 	// Base directory - the directory in which your site resides if not in the server root
 	public $base_dir          = '/';
-	public $dev_base_dir      = '';
+	public $dev_base_dir      = '/rat-private';
 
 	// Default route - the controller to use if not specified in the URL
 	public $default_controller = 'items';
@@ -76,7 +76,7 @@ class config {
 	
 	public $database = array(	'dev'	=> array(	'host'		=> 'localhost',
 													'username'	=> 'root',
-													'password'	=> 'root',
+													'password'	=> '',
 													'database'	=> 'rat'
 												),
 												

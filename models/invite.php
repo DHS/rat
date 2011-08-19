@@ -1,6 +1,6 @@
 <?php
 
-class invite {
+class Invite {
 	
 	// Add an invite
 	function add($user_id, $email) {

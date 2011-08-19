@@ -1,13 +1,10 @@
 <?php
 
-// Define app class
-class application {
+class Application {
 
 	public $uri, $config;
 
-	function __construct($uri = NULL) {
-		
-		$this->uri = $uri;
+	function __construct() {
 		
 		$this->loadConfig();
 		$this->loadModels();
@@ -15,22 +12,35 @@ class application {
 		
 	}
 
+  function request($uri) {
+    
+    $this->uri = $uri;
+   
+    $this->loadController($uri['controller']);
+
+  }
+
 	function loadConfig() {
 		
-		require_once 'config/config.php';
-		$this->config = new config;
+		require_once 'config/Config.php';
+		$this->config = new Config;
 	
 		$domain = substr(substr($this->config->url, 0, -1), 7);
 
 		if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.'.$domain) {
 			define('SITE_IDENTIFIER', 'live');
-			define('BASE_DIR', $this->config->base_dir);
+			$base_dir = $this->config->base_dir;
 		} else {
 			define('SITE_IDENTIFIER', 'dev');
-			define('BASE_DIR', $this->config->dev_base_dir);
+			$base_dir = $this->config->dev_base_dir;
 		}
-		
-	}
+
+    if (is_null($base_dir))
+      $base_dir = '/';
+
+    define('BASE_DIR', $base_dir);
+	
+  }
 
 	function loadModels() {
 	
@@ -39,7 +49,8 @@ class application {
 			$model = substr($file, 0, -4);
 			if ($file[0] != '.') {
 				require_once "models/$model.php";
-				$this->$model = new $model;
+				$modelLower = strtolower($model);
+        $this->$modelLower = new $model;
 			}
 		}
 
@@ -60,6 +71,9 @@ class application {
  
 		global $app;
 		
+    $c = ucfirst($c);
+    $c .= "Controller";
+
 		require_once "controllers/{$c}.php";
 
 		$classname = ucfirst($c).'Controller';
@@ -101,11 +115,18 @@ class application {
 		
 	}
 
-	public function isPublic() {
-		
-		return TRUE;
-		
-	}
+  function link_to($value, $controller, $action = "", $id = "") {
+  
+    $link = "<a href='" . BASE_DIR . "/{$controller}";
+
+    if (! empty($action)) $link .= "/{$action}";
+    if (! empty($id))     $link .= "/{$id}";
+
+    $link .= "'>{$value}</a>";
+
+    return $link;
+    
+  }
 
 }
 

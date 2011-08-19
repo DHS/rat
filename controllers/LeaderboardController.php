@@ -1,6 +1,6 @@
 <?php
 
-class leaderboard {
+class LeaderboardController {
 	
 	function index() {
 		

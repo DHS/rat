@@ -1,6 +1,6 @@
 <?php
 
-class friend {
+class Friend {
 
 	// Add a friend	
 	function add($user_id, $friend_user_id) {

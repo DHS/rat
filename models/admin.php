@@ -1,6 +1,6 @@
 <?php
 
-class admin {
+class Admin {
 
 	// Get all users	
 	function list_users() {

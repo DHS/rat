@@ -2,14 +2,14 @@
 
 session_start();
 
-require_once 'lib/application.php';
+require_once 'lib/Application.php';
 
-// Load config early to get base_dev_dir and default_controller
-require_once 'config/config.php';
-$config = new config;
+$app = new Application();
+
+require_once 'lib/Database.php';
 
 // Get request from server, split into segments, store as controller, view, id and params
-$request = substr($_SERVER['REQUEST_URI'], strlen($config->dev_base_dir));
+$request = substr($_SERVER['REQUEST_URI'], strlen(BASE_DIR));
 
 // Split at '.' and before '?' to obtain request format
 $segments = preg_split("/\./", $request);
@@ -26,16 +26,11 @@ $uri = array(	'controller'	=> $segments[1],
 				'params'		=> $_GET
 			);
 
+// Set the controller to the default if not in URI
 if (empty($uri['controller']))
-	$uri['controller'] = $config->default_controller;
+	$uri['controller'] = $app->config->default_controller;
 
-// Instantiate a new application
-$app = new application($uri);
-
-// Load database config
-require_once 'lib/database.php';
-
-// Load the controller
-$app->loadController($uri['controller']);
+// Request the URI
+$app->request($uri);
 
 ?>

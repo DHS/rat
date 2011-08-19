@@ -1,33 +1,33 @@
 <?php
 
-class comments {
+class LikesController {
 	
-	function add($user_id, $item_id, $content) {
+	function add($user_id, $item_id) {
 		
 		global $app;
 		
 		$this->auth_check($user_id);
 		
-		$comment_id = $app->comment->add($user_id, $item_id, $content);
-		
+		$like_id = $app->like->add($user_id, $item_id);
+
 		if (isset($app->plugins->log))
-			$app->plugins->log->add($user_id, 'comment', $comment_id, 'add', $content);
-		
+			$app->plugins->log->add($user_id, 'like', $like_id, 'add');
+
 		$this->show($item_id);
 		
 	}
 	
-	function remove($user_id, $item_id, $comment_id) {
+	function remove($user_id, $item_id) {
 		
 		global $app;
 		
 		$this->auth_check($user_id);
 		
-		$app->comment->remove($user_id, $comment_id);
-		
+		$like_id = $app->like->remove($user_id, $item_id);
+
 		if (isset($app->plugins->log))
-			$app->plugins->log->add($user_id, 'comment', $comment_id, 'remove');
-		
+			$app->plugins->log->add($user_id, 'like', $like_id, 'remove');
+
 		$this->show($item_id);
 		
 	}
@@ -37,7 +37,7 @@ class comments {
 		global $app;
 		
 		$app->page->item = $app->item->get($item_id);
-		$app->loadView('comments');
+		$app->loadView('likes');
 		
 	}
 	
@@ -46,7 +46,7 @@ class comments {
 		global $app;
 		
 		$item = $app->item->get($item_id);
-		$app->page->json = $item['comments'];		
+		$app->page->json = $item['likes'];
 		$app->loadView('json');
 		
 	}
