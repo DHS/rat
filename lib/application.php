@@ -62,7 +62,9 @@ class application {
 		
 		require_once "controllers/{$c}.php";
 
-		$controller = new $c;
+		$classname = ucfirst($c).'Controller';
+
+		$controller = new $classname;
 		
 		if (method_exists($controller, $this->uri['action'])) {
 			$controller->{$this->uri['action']}($this->uri['id']);
