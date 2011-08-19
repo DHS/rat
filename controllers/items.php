@@ -14,6 +14,14 @@ class ItemsController {
 		
 	}
 	
+	function add() {
+		
+		global $app;
+		
+		$app->loadLayout('items/add');
+		
+	}
+	
 	// Show feed of friends' activity
 	function feed() {
 		
