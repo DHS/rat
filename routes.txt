@@ -1,16 +1,16 @@
 
 Proposed routing for Rat
 
-example.com/pages/index						
-example.com/pages/about                 	
-example.com/pages/help                  	
-example.com/pages/contact               	
+example.com/pages/index						N/A
+example.com/pages/show/about                DONE
+example.com/pages/show/help                 DONE
+example.com/pages/show/contact              DONE
 
-example.com/users/index                 	
-example.com/users/add                   	
-example.com/users/show/123              	
+example.com/users/index                 	N/A
+example.com/users/add                   	DONE	needs POST
+example.com/users/show/123              	DONE
 example.com/users/remove/123            	
-example.com/users/update/123            	
+example.com/users/update/123            	DONE	needs POST
 
 example.com/users/reset/index           	
 example.com/users/reset/123             	
