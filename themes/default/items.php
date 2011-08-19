@@ -43,13 +43,12 @@ foreach ($app->page->items as $item) {
 			
 			if ($app->config->items['comments']['enabled'] == TRUE) {
 
-				$app->loadView('comments_list');
 				if (count($item['comments']) > 0) {
 					$app->page->show_comment_form = TRUE;
 				} else {
 					$app->page->show_comment_form = FALSE;
 				}
-				$app->loadView('comments_add');
+				$app->loadView('comments');
 
 			}
 

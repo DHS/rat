@@ -39,9 +39,8 @@ if ($app->config->items['likes']['enabled'] == TRUE)
 	$app->loadView('likes');
 
 if ($app->config->items['comments']['enabled'] == TRUE) {
-	$app->loadView('comments_list');
 	$app->page->show_comment_form = TRUE;
-	$app->loadView('comments_add');
+	$app->loadView('comments');
 }
 
 ?>
