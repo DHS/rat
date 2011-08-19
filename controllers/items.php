@@ -1,6 +1,6 @@
 <?php
 
-class home {
+class ItemsController {
 	
 	// Show stream of everyone's activity
 	function index() {
@@ -10,7 +10,7 @@ class home {
 		$app->page->name = $app->config->tagline;
 		$app->page->items = $app->item->list_all();
 		
-		$app->loadLayout('items_list');
+		$app->loadLayout('items');
 		
 	}
 	
@@ -25,7 +25,7 @@ class home {
 			
 			$app->page->name = $app->config->tagline;
 			$app->page->items = $app->item->list_feed($_SESSION['user']['id']);
-			$app->loadLayout('items_list');
+			$app->loadLayout('items');
 			
 		} else {
 			
