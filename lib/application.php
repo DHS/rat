@@ -71,7 +71,7 @@ class Application {
 		global $app;
 
 		$classname = ucfirst($c).'Controller';
-		require_once "controllers/$classname.php";
+		require_once "controllers/{$c}_controller.php";
 		$controller = new $classname;
 		
 		if (method_exists($controller, $this->uri['action'])) {
