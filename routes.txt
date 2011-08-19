@@ -25,6 +25,11 @@ example.com/invites/index               	DONE
 example.com/invites/show/123            	N/A
 example.com/invites/add                 			needs POST
 
+example.com/friends/index               	
+example.com/friends/show/123            	
+example.com/friends/add                 	
+example.com/friends/remove             		
+
 example.com/items/index						DONE
 example.com/items/add                   	DONE	needs POST
 example.com/items/show/123              	DONE
@@ -35,7 +40,7 @@ example.com/searches/index
 example.com/searches?q=term             	
 
 example.com/comments/index              	
-example.com/comments/add                	N/A
+example.com/comments/add                	
 example.com/comments/show/123           	
 example.com/comments/remove/123         	
 example.com/comments/update/123         	
