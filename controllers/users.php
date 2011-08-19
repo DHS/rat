@@ -1,7 +1,26 @@
 <?php
 
-class users {
+class UsersController {
 	
+	// Show a list of users
+	function index() {
+		
+		global $app;
+		
+		
+		
+	}
+	
+	// Add a user
+	function add() {
+		
+		global $app;
+		
+		$app->loadLayout('users/add');
+		
+	}
+	
+	// Show a user
 	function show($id) {
 		
 		global $app;
