@@ -25,7 +25,7 @@ if ($app->page->selector == 'friend_add') {
 		$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 		// Load subject and body from template
-		$app->loadView('email_follower_new');
+		$app->loadView('email/follower_new');
 
 		// Email user
 		mail($to, $subject, $body, $headers);

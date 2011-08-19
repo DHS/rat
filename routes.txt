@@ -35,7 +35,7 @@ example.com/searches/index
 example.com/searches?q=term             	
 
 example.com/comments/index              	
-example.com/comments/add                	
+example.com/comments/add                	N/A
 example.com/comments/show/123           	
 example.com/comments/remove/123         	
 example.com/comments/update/123         	

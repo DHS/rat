@@ -175,7 +175,7 @@ function do_signup($mode = 'full') {
 				$headers = "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 				// Load subject and body from template
-				$app->loadView('email_signup');
+				$app->loadView('email/signup');
 
 				// Email user
 				mail($to, $subject, $body, $headers);

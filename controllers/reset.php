@@ -29,7 +29,7 @@ function generate_code() {
 		$headers = "From: $app->config->name <robot@blah.com>\r\nContent-type: text/html\r\n";
 		
 		// Load subject and body from template
-		$app->loadView('email_password_reset');
+		$app->loadView('email/password_reset');
 		
 		// Email user
 		if ($app->config->send_emails == TRUE)

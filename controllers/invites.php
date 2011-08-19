@@ -95,7 +95,7 @@ if (isset($_POST['email'])) {
 		$headers = "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 		// Load subject and body from template
-		$app->loadView('email_invite_friend');
+		$app->loadView('email/invite_friend');
 
 		if ($app->config->send_emails == TRUE) {
 			// Email user

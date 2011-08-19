@@ -110,7 +110,7 @@ function invite() {
 		$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 		
 		// Load template into $body variable
-		$app->loadView('email_invite_admin');
+		$app->loadView('email/invite_admin');
 		
 		if ($app->config->send_emails == TRUE) {
 			// Email user
