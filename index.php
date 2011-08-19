@@ -2,11 +2,10 @@
 
 session_start();
 
-require_once 'lib/Application.php';
-
+require_once 'lib/application.php';
 $app = new Application();
 
-require_once 'lib/Database.php';
+require_once 'lib/mysql.php';
 
 // Get request from server, split into segments, store as controller, view, id and params
 $request = substr($_SERVER['REQUEST_URI'], strlen(BASE_DIR));
