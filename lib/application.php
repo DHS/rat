@@ -22,8 +22,7 @@ class Application {
 
 	function loadConfig() {
 		
-		require_once 'config/config.php';
-		$this->config = new Config;
+		$this->config = new AppConfig;
 	
 		$domain = substr(substr($this->config->url, 0, -1), 7);
 

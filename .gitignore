@@ -2,7 +2,7 @@
 
 # Rat-specific
 
-config/Config.php
+config/server.php
 uploads/originals/*
 uploads/stream/*
 uploads/thumbnails/*

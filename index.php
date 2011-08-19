@@ -3,6 +3,10 @@
 // Start session
 session_start();
 
+// Prepare config classes, ready to be loaded inside application class
+require_once 'config/server.php';
+require_once 'config/application.php';
+
 // Instantiate new application
 require_once 'lib/application.php';
 $app = new Application();
