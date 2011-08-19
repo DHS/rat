@@ -22,6 +22,16 @@ class ItemsController {
 		
 	}
 	
+	function show($id) {
+		
+		global $app;
+		
+		$app->page->item = $app->item->get($id);
+		
+		$app->loadLayout('items/single');
+		
+	}
+	
 	// Show feed of friends' activity
 	function feed() {
 		
