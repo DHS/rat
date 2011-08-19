@@ -12,7 +12,7 @@ if ($app->config->friends['enabled'] == TRUE)
 // Show number of points
 
 if (isset($app->plugins->points))
-	$app->loadView('points');
+	$app->plugins->points->view();
 
 // Show new item form
 

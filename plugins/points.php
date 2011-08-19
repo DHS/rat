@@ -41,15 +41,49 @@ class points {
 		}
 
 	}
+
+	function view() {
+		
+		if ($id == $_SESSION['user']['id']) {
+				echo '<p>You have '.$user['points'].' '.$app->plugins->points['name'].'!</p>';
+			if ($app->plugins->points['leaderboard'] == TRUE) {
+				echo '<p class="small">Where do you rank on the <a href="leaderboard.php">leaderboard</a>?</p>';
+			}
+		} else {
+			echo '<p>'.$user['username'].' has '.$user['points'].' '.$app->plugins->points['name'].'!</p>';
+			if ($app->plugins->points['leaderboard'] == TRUE) {
+				echo '<p class="small">See where they rank on the <a href="leaderboard.php">leaderboard</a>.</p>';
+			}
+		}
+
+		echo '<p>&nbsp;</p>';
+		
+	}
 	
-	function get_leaderboard($limit = 10) {
+	function view_leaderboard($limit = 10) {
 		
 		$query = mysql_query("SELECT id, username, points FROM users WHERE date_joined IS NOT NULL ORDER BY points DESC LIMIT $limit");
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$leaderboard[] = $result;
 		}
 		
-		return $leaderboard;
+		echo '<table>';
+
+		$i = 1;
+
+		foreach ($app->page->leaderboard as $row) {
+
+			echo '<tr>
+				<td>'.$i.'.</td>
+				<td><a href="/'.$row['username'].'">'.$row['username'].'</a></td>
+				<td>'.$row['points'].'</td>
+			</tr>';
+
+			$i++;
+
+		}
+
+		echo '</table>';
 		
 	}
 
