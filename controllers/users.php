@@ -25,8 +25,10 @@ class UsersController {
 		
 		global $app;
 		
+		$app->page->user = $app->user->get($id);
 		$app->page->items = $app->item->list_user($id);
-		$app->loadLayout('items_list_user');
+		
+		$app->loadLayout('users');
 		
 	}
 	
