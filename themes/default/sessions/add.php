@@ -1,7 +1,7 @@
 
 <div class="center_container">
 
-<form action="login<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>" method="post">
+<form action="/sessions/add<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>" method="post">
 
 	<h2>Login</h2>
 

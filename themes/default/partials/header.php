@@ -103,7 +103,7 @@ if (isset($app->page->title)) {
 				if (in_array($_SESSION['user']['id'], $app->config->admin_users) == TRUE)
 					echo $this->link_to('Admin', 'admin').' &middot; ';
 
-				echo $this->link_to('Logout', 'sessions', 'remove').' &middot; ';
+				echo $this->link_to('Logout', 'sessions', 'remove');
 
 			} else {
 
