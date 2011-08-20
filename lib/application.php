@@ -109,17 +109,27 @@ class Application {
 		
 	}
 
-	function link_to($value, $controller, $action = "", $id = "") {
-	
-		$link = "<a href='" . BASE_DIR . "/{$controller}";
-
-		if (! empty($action))
-			$link .= "/{$action}";
-			
-		if (! empty($id))
-			$link .= "/{$id}";
+	function link_to($link_text, $controller, $action = "", $id = "") {
 		
-		$link .= "'>{$value}</a>";
+		$url = BASE_DIR . "/{$controller}";
+		
+		if (!empty($action))
+			$url .= "/$action";
+			
+		if (!empty($id))
+			$url .= "/$id";
+		
+		if ($link_text == NULL) {
+			// No link text so just return url
+			
+			$link = $url;
+			
+		} else {
+			// Link text set so return full link
+			
+			$link = '<a href="'.$url.'">'.$link_text.'</a>';
+			
+		}
 		
 		return $link;
 		
