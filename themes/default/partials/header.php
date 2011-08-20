@@ -88,24 +88,28 @@ if (isset($app->page->title)) {
 
 			if (isset($_SESSION['user'])) {
 
-				echo '<a href="/">Home</a> &middot; <a href="/'.$_SESSION['user']['username'].'">My profile</a> &middot; ';
+				echo $this->link_to('Home', $this->config->default_controller).' &middot; ';
+				echo $this->link_to('My profile', 'users', 'show', $_SESSION['user']['id']).' &middot; ';
 
 				if (isset($app->plugins->points))
 					echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app->plugins->points['name'].' &middot; ';
 
 				if ($app->config->invites['enabled'] == TRUE)
-					echo '<a href="/invites">Invites</a> &middot; ';
+					echo $this->link_to('Invites', 'invites').' &middot; ';
 
-				echo '<a href="/settings">Settings</a> &middot; <a href="/help">Help</a> &middot; ';
+				echo $this->link_to('Settings', 'users', 'update', $_SESSION['user']['id']).' &middot; ';
+				echo $this->link_to('Help', 'pages', 'show', 'help').' &middot; ';
 
 				if (in_array($_SESSION['user']['id'], $app->config->admin_users) == TRUE)
-					echo '<a href="admin">Admin</a> &middot; ';
+					echo $this->link_to('Admin', 'admin').' &middot; ';
 
-				echo '<a href="/logout">Logout</a>';
+				echo $this->link_to('Logout', 'sessions', 'remove').' &middot; ';
 
 			} else {
 
-				echo '<a href="/signup">Signup</a> &middot; <a href="/login">Login</a> &middot; <a href="/help">Help</a>';
+				echo $this->link_to('Signup', 'users', 'add').' &middot; ';
+				echo $this->link_to('Login', 'sessions', 'add').' &middot; ';
+				echo $this->link_to('Help', 'pages', 'show', 'help');
 
 			}
 

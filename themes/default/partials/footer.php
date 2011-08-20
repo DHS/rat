@@ -2,7 +2,12 @@
     <footer>
 
         <p class="float_right"><?php echo $app->config->name; ?> was created using <a href="http://github.com/DHS/rat">Rat</a></p>
-        <p><?php echo $app->config->name; ?> &copy; <?php echo date('Y'); ?> &middot; <a href="/about">About</a> &middot; <a href="/help">Help</a> &middot; <a href="/search">Search</a></p>
+        <p>
+			<?php echo $app->config->name; ?> &copy; <?php echo date('Y'); ?> &middot;
+			<?php echo $this->link_to('About', 'pages', 'show', 'about'); ?> &middot;
+			<?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?> &middot;
+			<?php echo $this->link_to('Search', 'search'); ?>
+		</p>
 
     </footer>
   </div> <!--! end of #container -->
