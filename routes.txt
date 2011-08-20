@@ -18,8 +18,8 @@ example.com/users/confirm/index
 example.com/users/confirm/123           	
 
 example.com/sessions/index              	N/A
-example.com/sessions/add                	DONE	needs POST
-example.com/sessions/remove             	
+example.com/sessions/add                	DONE
+example.com/sessions/remove             	DONE
 
 example.com/invites/index               	DONE
 example.com/invites/show/123            	N/A
@@ -36,7 +36,7 @@ example.com/items/show/123              	DONE
 example.com/items/remove/123            			needs POST
 example.com/items/update/123            			needs POST
 
-example.com/searches/index              	
+example.com/searches/index              	DONE
 example.com/searches?q=term             	
 
 example.com/comments/index              	
