@@ -19,7 +19,7 @@
 
 	<?php
 	if (isset($app->plugins->gravatar)) {
-		$gravatar = $app->plugins->gravatar->show($item['user']['email'], array('size' => 20, 'style' => "margin-bottom: -5px;"));
+		$gravatar = $app->plugins->gravatar->show($item['user']['email'], array('size' => 20, 'style' => "margin-top: -5px;"));
 		echo $this->link_to($gravatar, 'users', 'show', $item['user']['id']).' ';
 	}
 	?>

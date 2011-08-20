@@ -14,7 +14,8 @@ foreach ($app->page->items as $item) {
 		<?php 
 		if (isset($app->plugins->gravatar)) {
 			echo '<td style="text-align: center;" valign="top">';
-			echo $app->plugins->gravatar->show($item['user']['email'], array('link' => "/{$item['user']['username']}", 'size' => 48, 'style' => "margin-right: 5px;"));
+			$gravatar = $app->plugins->gravatar->show($item['user']['email'], array('size' => 48, 'style' => "margin-right: 5px;"));
+			echo $this->link_to($gravatar, 'users', 'show', $item['user']['id']).' ';
 			echo '</td>';
 		}
 		?>
