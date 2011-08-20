@@ -10,7 +10,7 @@ class ItemsController {
 		$app->page->name = $app->config->tagline;
 		$app->page->items = $app->item->list_all();
 		
-		$app->loadLayout('items');
+		$app->loadLayout('items/index');
 		
 	}
 	
@@ -45,7 +45,7 @@ class ItemsController {
 			
 			$app->page->name = $app->config->tagline;
 			$app->page->items = $app->item->list_feed($_SESSION['user']['id']);
-			$app->loadLayout('items');
+			$app->loadLayout('items/index');
 			
 		} else {
 			

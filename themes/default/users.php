@@ -23,7 +23,7 @@ if (isset($app->plugins->points))
 
 if (count($app->page->items) > 0) {
 
-	$app->loadView('users/items');
+	$app->loadView('items/user');
 
 } else {
 
