@@ -18,6 +18,31 @@ class Comment {
 
 	}
 	
+	// Get a single comment
+	function get($id) {
+		
+		global $app;
+			
+		$id = sanitize_input($id);
+        
+		$sql = "SELECT * FROM comments WHERE id = $id";
+		$query = mysql_query($sql);
+		$comment = mysql_fetch_array($query, MYSQL_ASSOC);
+
+		if (!is_array($comment)) {
+
+			$comment = NULL;
+
+		} else {
+		
+			$comment['user'] = $app->user->get($row['user_id']);
+			
+		}
+        
+		return $comment;
+		
+	}
+	
 	// Get comments for an item
 	function list_item($id) {
 		

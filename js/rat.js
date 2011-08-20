@@ -63,7 +63,7 @@ function like_remove(item_id, url) {
 
 function comment_add(item_id, url) {
 	
-	var content = 'content=' + document.forms('comment_form_'+item_id).content.value;
+	var content = 'item_id=' + item_id + '&content=' + document.forms('comment_form_'+item_id).content.value;
 	
 	if (window.XMLHttpRequest) {
 		// IE7+, Firefox, Chrome, Opera, Safari

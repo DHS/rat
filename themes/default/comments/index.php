@@ -13,7 +13,8 @@ if (count($item['comments']) > 0) {
 		<p class="meta">
 		"'.$comment['content'].'" - '.$this->link_to($comment['user']['username'], 'users', 'show', $comment['user']['id']);
 		if ($comment['user']['id'] == $_SESSION['user']['id']) {
-			echo ' &middot; <span style="font-size: 50%;"><a href="#" onclick="comment_remove('.$item['id'].', \'/'.$item['user']['username'].'/'.$app->config->items['name'].'/'.$item['id'].'/comment/'.$comment['id'].'/remove\'); return false;">Delete</a></span>';
+			$url = $this->link_to(NULL, 'comments', 'remove', $comment['id']);
+			echo ' &middot; <span style="font-size: 50%;"><a href="#" onclick="comment_remove('.$item['id'].', \''.$url.'\'); return false;">Delete</a></span>';
 		}
 		echo '
 		</p>';
@@ -36,9 +37,11 @@ if ($app->page->show_comment_form == TRUE) {
 	
 	if ($app->config->items['comments']['enabled'] == TRUE && ($app->config->private == TRUE || $_SESSION['user'] != NULL)) {
 	
-	?>
+		$url = $this->link_to(NULL, 'comments', 'add');
 	
-		<form action="javascript:comment_add(<?php echo $item['id']; ?>, '/<?php echo $item['user']['username']; ?>/<?php echo $app->config->items['name']; ?>/<?php echo $item['id']; ?>/comment/add');" id="comment_form_<?php echo $item['id']; ?>" class="meta" style="margin: 0px; <?php if ($app->page->show_comment_form != TRUE) { echo 'visibility: hidden; height: 0px;'; }?>" method="post">
+		?>
+	
+		<form action="javascript:comment_add(<?php echo $item['id']; ?>, '<?php echo $url; ?>');" id="comment_form_<?php echo $item['id']; ?>" class="meta" style="margin: 0px; <?php if ($app->page->show_comment_form != TRUE) { echo 'visibility: hidden; height: 0px;'; }?>" method="post">
 			<input type="text" name="content" size="30" value="" /> <input type="submit" value="<?php echo $app->config->items['comments']['name']; ?>" />
 		</form>
 	

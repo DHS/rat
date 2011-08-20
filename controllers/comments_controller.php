@@ -2,33 +2,31 @@
 
 class CommentsController {
 	
-	function add($user_id, $item_id, $content) {
+	function add() {
 		
 		global $app;
 		
-		$this->auth_check($user_id);
-		
-		$comment_id = $app->comment->add($user_id, $item_id, $content);
+		$comment_id = $app->comment->add($_SESSION['user']['id'], $_POST['item_id'], $_POST['content']);
 		
 		if (isset($app->plugins->log))
-			$app->plugins->log->add($user_id, 'comment', $comment_id, 'add', $content);
+			$app->plugins->log->add($_SESSION['user']['id'], 'comment', $comment_id, 'add', $_POST['content']);
 		
-		$this->show($item_id);
+		$this->show($_POST['item_id']);
 		
 	}
 	
-	function remove($user_id, $item_id, $comment_id) {
+	function remove($comment_id) {
 		
 		global $app;
 		
-		$this->auth_check($user_id);
+		$comment = $app->comment->get($comment_id);
 		
-		$app->comment->remove($user_id, $comment_id);
+		$app->comment->remove($_SESSION['user']['id'], $comment_id);
 		
 		if (isset($app->plugins->log))
-			$app->plugins->log->add($user_id, 'comment', $comment_id, 'remove');
+			$app->plugins->log->add($_SESSION['user']['id'], 'comment', $comment_id, 'remove');
 		
-		$this->show($item_id);
+		$this->show($comment['item_id']);
 		
 	}
 	
@@ -51,12 +49,6 @@ class CommentsController {
 		
 	}
 	
-	function auth_check($user_id) {
-		
-		if ($user_id != $_SESSION['user']['id'])
-			exit();
-		
-	}
-	
 }
 
+?>
