@@ -45,7 +45,7 @@ if ($app->page->selector == 'friend_add') {
 
 	$app->page->user['id'] = $_GET['friend_user_id'];
 
-	$app->loadView('friends_add');
+	$app->loadView('friends/add');
 
 }
 

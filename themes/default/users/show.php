@@ -24,7 +24,7 @@
 // Show follow button
 
 if ($app->config->friends['enabled'] == TRUE)
-	$app->loadView('friends_button');
+	$app->loadView('index');
 
 // Show number of points
 
