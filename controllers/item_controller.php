@@ -253,7 +253,7 @@ $app->loadView('header');
 
 // Show item
 
-$app->loadView('items/single');
+$app->loadView('items/show');
 
 // Footer
 

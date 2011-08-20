@@ -30,7 +30,7 @@ class ItemsController {
 		
 		$app->page->item = $app->item->get($id);
 		
-		$app->loadLayout('items/single');
+		$app->loadLayout('items/show');
 		
 	}
 	
