@@ -22,15 +22,15 @@ foreach ($app->page->items as $item) {
 		
 			<?php if ($app->config->items['titles']['enabled'] == TRUE) { ?>
 				
-				<p><a href="/<?php echo $item['user']['username']; ?>/<?php echo $app->config->items['name']; ?>/<?php echo $item['id']; ?>"><?php echo $item['title']; ?></a> by <a href="/<?php echo $item['user']['username']; ?>"><?php echo $item['user']['username']; ?></a></p>
+				<p><?php echo $this->link_to($item['title'], 'items', 'show', $item['id']); ?> by <?php echo $this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']); ?></p>
 				<?php if ($app->config->items['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
-					<a href="/<?php echo $item['user']['username']; ?>/item/<?php echo $item['id']; ?>"><img src="<?php echo $app->config->items['uploads']['directory']; ?>/stream/<?php echo $item['image']; ?>" /></a>
+					<?php echo $this->link_to('<img src="'.$app->config->items['uploads']['directory'].'/stream/'.$item['image'].'" />', 'items', 'show', $item['id']); ?>
 				<?php } ?>
 				<p><?php echo $item['content']; ?></p>
 
 			<?php } else { ?>
 				
-				<p><a href="/<?php echo $item['user']['username']; ?>"><?php echo $item['user']['username']; ?></a> <?php echo $item['content']; ?></p>
+				<p><?php echo $this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']); ?> <?php echo $item['content']; ?></p>
 			
 			<?php } ?>
 

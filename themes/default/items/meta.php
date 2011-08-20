@@ -4,7 +4,7 @@
 
 <span class="item_meta">
 
-<a href="/<?php echo $item['user']['username']; ?>/<?php echo $app->config->items['name']; ?>/<?php echo $item['id']; ?>"><?php echo $item['date']; ?></a> 
+<?php echo $this->link_to($item['date'], 'items', 'show', $item['id']); ?>
 
 <?php
 

@@ -11,7 +11,7 @@ if (count($item['comments']) > 0) {
 		
 		echo '
 		<p class="meta">
-		"'.$comment['content'].'" - <a href="/'.$comment['user']['username'].'">'.$comment['user']['username'].'</a>';
+		"'.$comment['content'].'" - '.$this->link_to($comment['user']['username'], 'users', 'show', $comment['user']['id']);
 		if ($comment['user']['id'] == $_SESSION['user']['id']) {
 			echo ' &middot; <span style="font-size: 50%;"><a href="#" onclick="comment_remove('.$item['id'].', \'/'.$item['user']['username'].'/'.$app->config->items['name'].'/'.$item['id'].'/comment/'.$comment['id'].'/remove\'); return false;">Delete</a></span>';
 		}
