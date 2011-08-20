@@ -23,16 +23,20 @@ if ($app->config->items['likes']['enabled'] == TRUE) {
 		}
 	}
 	if ($i_like == TRUE) {
-		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_remove('.$item['id'].', \'/'.$item['user']['username'].'/'.$app->config->items['name'].'/'.$item['id'].'/like/remove\'); return false;">'.$app->config->items['likes']['opposite_name'].'</a></a></span>';
+		$url = $this->link_to(NULL, 'likes', 'remove', $item['id']);
+		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_remove('.$item['id'].', \''.$url.'\'); return false;">'.$app->config->items['likes']['opposite_name'].'</a></a></span>';
 	} else {
-		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_add('.$item['id'].', \'/'.$item['user']['username'].'/'.$app->config->items['name'].'/'.$item['id'].'/like/add\'); return false;">'.$app->config->items['likes']['name'].'</a></a></span>';
+		$url = $this->link_to(NULL, 'likes', 'add', $item['id']);
+		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_add('.$item['id'].', \''.$url.'\'); return false;">'.$app->config->items['likes']['name'].'</a></a></span>';
 	}
 	unset ($i_like);
 
 }
 
-if ($item['user']['id'] == $_SESSION['user']['id'])
-	echo ' &middot; <a onclick="return confirm(\'Are you sure you want to delete this?\')" href="item.php?delete='.$item['id'].'">Delete</a>';
+if ($item['user']['id'] == $_SESSION['user']['id']) {
+	$url = $this->link_to(NULL, 'items', 'remove', $item['id']);
+	echo ' &middot; <a onclick="return confirm(\'Are you sure you want to delete this?\')" href="'.$url.'">Delete</a>';
+}
 
 ?>
 
