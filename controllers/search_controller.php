@@ -15,8 +15,11 @@ class SearchController {
 	function show($q) {
 		
 		global $app;
-
-		$app->page->items = $app->searches->do_search($q);
+		
+		include 'lib/search.php';
+		$search = new Search;
+		
+		$app->page->items = $search->do_search($q);
 		$app->loadLayout('items/index');
 		
 	}
@@ -25,7 +28,10 @@ class SearchController {
 		
 		global $app;
 		
-		$items['items'] = $app->searches->do_search($q);
+		include 'lib/search.php';
+		$search = new Search;
+		
+		$items['items'] = $search->do_search($q);
 		$app->page->json = $items;
 		$app->loadView('pages/json');
 		
