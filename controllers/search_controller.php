@@ -6,11 +6,9 @@ class SearchController {
 		
 		global $app;
 		
-		$app->loadView('header');
-		$app->loadView('search');
+		$app->loadLayout('search/add');
 		if (isset($q))
 			$this->show($q);
-		$app->loadView('footer');
 		
 	}
 	
@@ -19,7 +17,7 @@ class SearchController {
 		global $app;
 
 		$app->page->items = $app->searches->do_search($q);
-		$app->loadView('items_list');
+		$app->loadLayout('items/index');
 		
 	}
 	
