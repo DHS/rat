@@ -37,7 +37,7 @@ class LikesController {
 		global $app;
 		
 		$app->page->item = $app->item->get($item_id);
-		$app->loadView('likes');
+		$app->loadView('likes/index');
 		
 	}
 	

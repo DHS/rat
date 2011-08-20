@@ -36,7 +36,7 @@ if ($app->config->private != TRUE)
 <?php
 
 if ($app->config->items['likes']['enabled'] == TRUE)
-	$app->loadView('likes');
+	$app->loadView('likes/index');
 
 if ($app->config->items['comments']['enabled'] == TRUE) {
 	$app->page->show_comment_form = TRUE;

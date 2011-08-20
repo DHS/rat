@@ -39,7 +39,7 @@ foreach ($app->page->items as $item) {
 			<?php
 			
 			if ($app->config->items['likes']['enabled'] == TRUE)
-				$app->loadView('likes');
+				$app->loadView('likes/index');
 			
 			if ($app->config->items['comments']['enabled'] == TRUE) {
 
