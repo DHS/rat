@@ -48,7 +48,7 @@ foreach ($app->page->items as $item) {
 				} else {
 					$app->page->show_comment_form = FALSE;
 				}
-				$app->loadView('comments');
+				$app->loadView('comments/index');
 
 			}
 

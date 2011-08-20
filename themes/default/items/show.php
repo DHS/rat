@@ -40,7 +40,7 @@ if ($app->config->items['likes']['enabled'] == TRUE)
 
 if ($app->config->items['comments']['enabled'] == TRUE) {
 	$app->page->show_comment_form = TRUE;
-	$app->loadView('comments');
+	$app->loadView('comments/index');
 }
 
 ?>
