@@ -71,7 +71,7 @@ function validate_code() {
 		
 		if ($app->config->beta == TRUE) {
 			$app->page->message = 'Your invite code is invalid.';
-			$app->loadView('message');
+			$app->loadView('partials/message');
 			$app->loadView('signup_beta');
 		} else {
 			$app->loadView('signup');
@@ -259,7 +259,7 @@ function do_signup($mode = 'full') {
 			$app->page->message = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
 			$app->page->message .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
 	
-			//$app->loadView('message');
+			//$app->loadView('partials/message');
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {

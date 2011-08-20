@@ -103,14 +103,14 @@ if (isset($_POST['email'])) {
 		}
 
 		$app->page->message = 'Invite sent!';
-		$app->loadView('message');
+		$app->loadView('partials/message');
 
 	} else {
 		
 		$_GET['email'] = $_POST['email'];
 		
 		$app->page->message = $error;
-		$app->loadView('message');
+		$app->loadView('partials/message');
 		
 	}
 	

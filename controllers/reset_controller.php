@@ -39,7 +39,7 @@ function generate_code() {
 	
 	$app->loadView('header');
 	$app->page->message = 'Check your email for instructions about how to reset your password!';
-	$app->loadView('message');
+	$app->loadView('partials/message');
 	$app->loadView('footer');
 		
 }

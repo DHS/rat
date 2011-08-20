@@ -68,7 +68,7 @@ function password() {
 		$app->page->message = 'There was a problem, please try again.';
 	}
 	
-	$app->loadView('message');
+	$app->loadView('partials/message');
 	
 }
 
@@ -125,7 +125,7 @@ function profile() {
 		}
 
 		// Show message
-		$app->loadView('message');
+		$app->loadView('partials/message');
 		
 	}
 	

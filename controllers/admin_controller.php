@@ -118,7 +118,7 @@ function invite() {
 		}
 		
 		$app->page->message = 'User invited!';
-		$app->loadView('message');
+		$app->loadView('partials/message');
 		
 		signups();
 		
@@ -145,7 +145,7 @@ function grant_invites() {
 		$app->admin->update_invites($_GET['count']);
 		
 		$app->page->message = 'Invites updated!';
-		$app->loadView('message');
+		$app->loadView('partials/message');
 		
 		users();
 		
