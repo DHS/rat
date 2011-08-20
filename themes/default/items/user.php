@@ -19,7 +19,7 @@ foreach ($app->page->items as $item) {
 			
 			<p><?php echo $item['content']; ?></p>
 
-			<?php $app->loadView('items_meta'); ?>
+			<?php $app->loadView('items/meta'); ?>
 
 			<?php
 

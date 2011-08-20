@@ -34,7 +34,7 @@ if (isset($app->plugins->points))
 // Show new item form
 
 //if ($_SESSION['user']['post_permission'] == 1)
-//	$app->loadView('items_add');
+//	$app->loadView('items/add');
 
 // List all items for this user
 

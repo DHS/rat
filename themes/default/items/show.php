@@ -18,12 +18,14 @@
 <p>
 
 	<?php
-	if (isset($app->plugins->gravatar))
-		echo $app->plugins->gravatar->show($item['user']['email'], array('link' => "/{$item['user']['username']}", 'size' => 20, 'style' => "margin-bottom: -7px;"));
+	if (isset($app->plugins->gravatar)) {
+		$gravatar = $app->plugins->gravatar->show($item['user']['email'], array('size' => 20, 'style' => "margin-bottom: -5px;"));
+		echo $this->link_to($gravatar, 'users', 'show', $item['user']['id']).' ';
+	}
 	?>
-	<a href="/<?php echo $item['user']['username']; ?>"><?php echo $item['user']['username']; ?></a>
+	<?php echo $this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']); ?>
 
-	&middot; <?php $app->loadView('items_meta'); ?>
+	&middot; <?php $app->loadView('items/meta'); ?>
 	
 </p>
 
