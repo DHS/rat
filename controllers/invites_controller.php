@@ -9,7 +9,7 @@ class InvitesController {
 		$app->page->invites_remaining = $_SESSION['user']['invites'];
 		$app->page->invites = $app->invite->list_sent($_SESSION['user']['id']);
 		
-		$app->loadLayout('invites');
+		$app->loadLayout('invites/index');
 		
 	}
 	
@@ -119,7 +119,7 @@ if (isset($_POST['email'])) {
 // Show invite form
 
 $invites_remaining = $_SESSION['user']['invites'];
-$app->loadView('invites');
+$app->loadView('invites/index');
 
 // Show sent invites
 
