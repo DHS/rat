@@ -74,8 +74,10 @@ class Search {
 	
 			$rows[] = $row;
 		}
-	
-		uasort($rows, 'search_sort_results');
+		
+		if (count($rows) > 1) {
+			uasort($rows, 'search_sort_results');
+		}
 	
 		return $rows;
 	}

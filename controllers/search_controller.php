@@ -2,13 +2,23 @@
 
 class SearchController {
 	
-	function index($q = NULL) {
+	function index() {
+		
+		global $app;
+		
+		if (isset($_GET['q'])) {
+			$this->show($_GET['q']);
+		} else {
+			$this->add();
+		}
+		
+	}
+	
+	function add() {
 		
 		global $app;
 		
 		$app->loadLayout('search/add');
-		if (isset($q))
-			$this->show($q);
 		
 	}
 	
@@ -20,7 +30,11 @@ class SearchController {
 		$search = new Search;
 		
 		$app->page->items = $search->do_search($q);
-		$app->loadLayout('items/index');
+		
+		$app->loadView('partials/header');
+		$app->loadView('search/add');
+		$app->loadView('items/index');
+		$app->loadView('partials/footer');
 		
 	}
 	
