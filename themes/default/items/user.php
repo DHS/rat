@@ -1,5 +1,9 @@
 <?php
 
+if ($app->page->user['id'] == $_SESSION['user']['id']) {
+	$app->loadView('items/add');
+}
+
 if (is_array($app->page->items)) {
 	
 echo '<table style="width: 100%;">';
