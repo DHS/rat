@@ -217,37 +217,6 @@ a:active { color: #999999; }
 a:visited { color: #000000; }
 a:hover { color: #0033FF; }
 
-#container {
-  position: absolute;
-  margin-left: 25%;
-  margin-right: 25%;
-  width: 50%;
-  word-wrap: break-word;
-  min-height: 600px;
-  padding-bottom: 60px;
-}
-
-header {
-  float: right;
-  text-align: right;
-  top: 0px;
-  right: 0px;
-  border-left: 1px #CCCCCC solid;
-  border-right: 1px #CCCCCC solid;
-  border-bottom: 1px #CCCCCC solid;
-  padding: 10px;
-}
-
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  color: #666666;
-  text-align: left;
-  border-top: 1px #CCCCCC solid;
-  font-size: 75%;
-}
-
 footer a, footer a:visited { color: #666666; }
 
 a.friend {

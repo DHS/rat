@@ -83,7 +83,7 @@ if (isset($app->page->title)) {
 
 <body>
 
-  <div id="container">
+  <div class="container">
 
 <?php if (isset($_SESSION['user'])) { ?>
 
