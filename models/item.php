@@ -3,7 +3,7 @@
 class Item {
 
 	// Create an item	
-	function add($user_id, $content, $title = NULL, $image = NULL) {
+	public static function add($user_id, $content, $title = NULL, $image = NULL) {
 
 		$user_id = sanitize_input($user_id);
 		$content = sanitize_input($content);
@@ -28,10 +28,8 @@ class Item {
 
 	}
 
-	// Get an item by id	
-	function get($id) {
-
-		global $app;
+	// get an item by id	
+	public static function get($id) {
 
 		$id = sanitize_input($id);
 
@@ -45,9 +43,9 @@ class Item {
 
 		} else {
 
-			$item['user'] = $app->user->get($item['user_id']);
-			$item['comments'] = $app->comment->list_item($id);
-			$item['likes'] = $app->like->list_item($id);
+			$item['user'] = User::get($item['user_id']);
+			$item['comments'] = Comment::list_item($id);
+			$item['likes'] = Like::list_item($id);
 
 		}
 
@@ -55,10 +53,8 @@ class Item {
 
 	}
 
-	// Get recent items
-	function list_all($limit = 20) {
-
-		global $app;
+	// get recent items
+  public static function list_all($limit = 20) {
 
 		$sql = "SELECT * FROM items ORDER BY id DESC";
 
@@ -72,9 +68,9 @@ class Item {
 
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-			$item['comments'] = $app->comment->list_item($item['id']);
-			$item['likes'] = $app->like->list_item($item['id']);
-			$item['user'] = $app->user->get($item['user_id']);
+			$item['comments'] = Comment::list_item($item['id']);
+			$item['likes'] = Like::list_item($item['id']);
+			$item['user'] = User::get($item['user_id']);
 
 			$items[] = $item;
 
@@ -85,10 +81,8 @@ class Item {
 	}
 
 	// Get a user's items
-	function list_user($user_id, $limit = 10, $offset = 0) {
-		
-		global $app;
-		
+	public static function list_user($user_id, $limit = 10, $offset = 0) {
+			
 		$user_id = sanitize_input($user_id);
 
 		$sql = "SELECT * FROM items WHERE user_id = $user_id ORDER BY id DESC";
@@ -109,9 +103,9 @@ class Item {
 
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-			$item['user'] = $app->user->get($item['user_id']);
-			$item['comments'] = $app->comment->list_item($item['id']);
-			$item['likes'] = $app->like->list_item($item['id']);
+			$item['user'] = User::get($item['user_id']);
+			$item['comments'] = Comment::list_item($item['id']);
+			$item['likes'] = Like::list_item($item['id']);
 
 			$items[] = $item;
 
@@ -122,9 +116,7 @@ class Item {
 	}
 
 	// Get items liked by a user
-	function list_user_liked($user_id, $limit = 10) {
-
-		global $app;
+	public static function list_user_liked($user_id, $limit = 10) {
 
 		$user_id = sanitize_input($user_id);
 
@@ -144,9 +136,9 @@ class Item {
 			$query2 = mysql_query("SELECT * FROM items WHERE id = {$item['item_id']} LIMIT 1");
 			$item = mysql_fetch_array($query2, MYSQL_ASSOC);
 
-			$item['user'] = $app->user->get($item['user_id']);
-			$item['comments'] = $app->comment->list_item($item['id']);
-			$item['likes'] = $app->like->list_item($item['id']);
+			$item['user'] = User::get($item['user_id']);
+			$item['comments'] = Comment::list_item($item['id']);
+			$item['likes'] = Like::list_item($item['id']);
 
 			$items[] = $item;
 
@@ -159,13 +151,11 @@ class Item {
 	// Get a feed of a friend's activity
 	function list_feed($user_id) {
 
-		global $app;
-
 		// Start by adding the viewer to the query string
 		$friends_string  = "user_id = $user_id";
 
 		// Fetch friends
-		$friends = $app->friend->get($user_id);
+		$friends = $Friend::get($user_id);
 
 		// Loop through friends adding them to the query string
 		foreach ($friends as $friend)
@@ -176,9 +166,9 @@ class Item {
 
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-			$item['comments'] = $app->comment->list_item($item['id']);
-			$item['likes'] = $app->like->list_item($item['id']);
-			$item['user'] = $app->user->get($item['user_id']);
+			$item['comments'] = Comment::list_item($item['id']);
+			$item['likes'] = Like::list_item($item['id']);
+			$item['user'] = User::get($item['user_id']);
 
 			$items[] = $item;
 
@@ -189,7 +179,7 @@ class Item {
 	}
 
 	// Remove an item
-	function remove($item_id) {
+	public static function remove($item_id) {
 
 		$item_id = sanitize_input($item_id);
 
