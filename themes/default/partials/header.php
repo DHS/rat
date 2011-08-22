@@ -24,7 +24,7 @@ if (isset($app->page->title)) {
 		// Page name found
 		
 		// Set the var that prints the page title
-		$page_title = '<a href="/">'.$app->config->name.'</a> - '.$app->page->name;
+		$page_title = '<a href="/">'.$app->config->name.'</a> <small>'.$app->page->name.'</small>';
 
 		// If no head title is found then set head title similar to page title
 		if (!isset($head_title))
@@ -69,6 +69,9 @@ if (isset($app->page->title)) {
   <!-- CSS: implied media="all" -->
   <link rel="stylesheet" href="<?php echo BASE_DIR; ?>/themes/<?php echo $app->config->theme; ?>/css/style.css">
 
+  <!-- Include Twitter Bootstrap http://twitter.github.com/bootstrap/ -->
+  <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.0.0.min.css">
+
   <!-- More ideas for your <head> here: h5bp.com/docs/#head-Tips -->
 
   <!-- All JavaScript at the bottom, except for Modernizr and Respond.
@@ -82,41 +85,48 @@ if (isset($app->page->title)) {
 
   <div id="container">
 
-    <header>
+<?php if (isset($_SESSION['user'])) { ?>
 
-	<?php
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <h3><?php echo $this->link_to($app->config->name, $this->config->default_controller); ?></h3>
+          <ul>
+            <li><?php echo $this->link_to('Home', $this->config->default_controller); ?></li>
+            <li><?php echo $this->link_to('My profile', 'users', 'show', $_SESSION['user']['id']); ?></li>
+            <li><?php echo $this->link_to('Invites', 'invites'); ?></li>
+            <li><?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?></li>
+          </ul>
+          <ul class="nav secondary-nav">
+            <li>
+              <form class="nav secondary-nav" action="/search/" method="get">
+                <input type="text" name="q" placeholder="Search" />
+              </form>
+            </li>
+            <li><?php echo $this->link_to('Logout', 'sessions', 'remove'); ?></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-			if (isset($_SESSION['user'])) {
+<?php } else { ?>
+	
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <h3><?php echo $this->link_to($app->config->name, $this->config->default_controller); ?></h3>
+          <ul class="nav secondary-nav">
+            <li><?php echo $this->link_to('Signup', 'users', 'add') ?></li>
+            <li><?php echo $this->link_to('Login', 'sessions', 'add') ?></li>
+            <li><?php echo $this->link_to('Help', 'pages', 'show', 'help') ?></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-				echo $this->link_to('Home', $this->config->default_controller).' &middot; ';
-				echo $this->link_to('My profile', 'users', 'show', $_SESSION['user']['id']).' &middot; ';
+<?php } ?>
 
-				if (isset($app->plugins->points))
-					echo 'You have <strong>'.$_SESSION['user']['points'].'</strong> '.$app->plugins->points['name'].' &middot; ';
-
-				if ($app->config->invites['enabled'] == TRUE)
-					echo $this->link_to('Invites', 'invites').' &middot; ';
-
-				echo $this->link_to('Settings', 'users', 'update', $_SESSION['user']['id']).' &middot; ';
-				echo $this->link_to('Help', 'pages', 'show', 'help').' &middot; ';
-
-				if (in_array($_SESSION['user']['id'], $app->config->admin_users) == TRUE)
-					echo $this->link_to('Admin', 'admin').' &middot; ';
-
-				echo $this->link_to('Logout', 'sessions', 'remove');
-
-			} else {
-
-				echo $this->link_to('Signup', 'users', 'add').' &middot; ';
-				echo $this->link_to('Login', 'sessions', 'add').' &middot; ';
-				echo $this->link_to('Help', 'pages', 'show', 'help');
-
-			}
-
-	?>
-
-    </header>
-
+	<p class="clear">&nbsp;</p>
 	<p class="clear">&nbsp;</p>
 
     <!-- Page title -->
