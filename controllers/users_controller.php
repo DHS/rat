@@ -29,14 +29,47 @@ class UsersController {
 	}
 	
 	// Add a user
-	function add() {
+	function add($code) {
 		
 		global $app;
 		
-		if ($app->config->beta == TRUE) {
-			$app->loadLayout('users/add_beta');
+		if ($_POST['email'] != '') {
+			
+			if ($_POST['code'] != '') {
+				
+				$this->do_signup('code');
+				
+			} else {
+				
+				if ($app->config->beta == TRUE) {
+					
+					$this->do_signup('beta');
+					
+				} else {
+					
+					$this->do_signup('full');
+					
+				}
+				
+			}
+			
 		} else {
-			$app->loadLayout('users/add');
+			
+			// Show signup form
+			
+			if ($app->config->beta == TRUE) {
+				// Show beta signup form
+				$app->loadLayout('users/add_beta');
+			} else {
+				// Show full signup form
+				
+				if (isset($code)) {
+					$app->page->code = $code;
+				}
+				
+				$app->loadLayout('users/add');
+			}
+			
 		}
 		
 	}

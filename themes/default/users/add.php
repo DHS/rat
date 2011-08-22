@@ -1,13 +1,13 @@
 
 <div class="center_container">
 
-<form action="/signup<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>" method="post">
+<form action="/users/add/<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>" method="post">
 
 	<?php
 	
 	// Invite code passsed so include it
-	if ($_GET['code'] != '')
-		echo '<input type="hidden" name="code" value="'.$_GET['code'].'" />';
+	if (isset($app->page->code))
+		echo '<input type="hidden" name="code" value="'.$app->page->code.'" />';
 	
 	?>
 	
