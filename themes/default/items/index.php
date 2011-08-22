@@ -5,6 +5,13 @@ foreach ($app->page->items as $item) {
 	$app->page->item = $item;
 	
 	// Populate some vars
+	if (isset($app->plugins->gravatar)) {
+		$image = $app->plugins->gravatar->show($item['user']['email'], array('size' => 48, 'style' => 'float: left; padding: 0px 10px 10px 0px;'));
+		$gravatar = $this->link_to($image, 'users', 'show', $item['user']['id']).' ';
+	} else {
+		$gravatar = $this->link_to($like['user']['username'], 'users', 'show', $item['user']['id']).' ';
+	}
+	
 	if ($app->config->items['titles']['enabled'] == TRUE && $item['title'] != NULL) {
 		$content = '<h4>'.$this->link_to($item['title'], 'items', 'show', $item['id']).' <small>by '.$this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']).'</small></h4>';
 		$content .= '<p>'.$item['content'].'</p>';
@@ -26,7 +33,7 @@ foreach ($app->page->items as $item) {
   <!-- Content -->
   <div class="row">
     <div class="span8 columns offset4">
-      <?php echo $app->plugins->gravatar->show($item['user']['email'], array('size' => 48, 'style' => 'float: left; padding: 0px 10px 10px 0px;')); ?>
+      <?php echo $gravatar; ?>
       <?php echo $content; ?>
     </div>
   </div>
