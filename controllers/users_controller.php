@@ -2,6 +2,23 @@
 
 class UsersController {
 	
+	function __construct() {
+		
+		global $app;
+		
+		// Check if user is logged in and trying to signup
+		if ($app->uri['action'] == 'add' && !empty($_SESSION['user'])) {
+
+			$app->page->name = 'Signup';
+			$app->page->message = 'You are already logged in!';
+			$app->loadView('partials/header');
+			$app->loadView('partials/footer');
+			exit;
+
+		}
+		
+	}
+	
 	// Show a list of users
 	function index() {
 		
@@ -16,7 +33,11 @@ class UsersController {
 		
 		global $app;
 		
-		$app->loadLayout('users/add_beta');
+		if ($app->config->beta == TRUE) {
+			$app->loadLayout('users/add_beta');
+		} else {
+			$app->loadLayout('users/add');
+		}
 		
 	}
 	

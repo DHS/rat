@@ -67,7 +67,7 @@ class Admin {
 		}
 
 		// update own invites
-		$_SESSION['user']['invites'] = $_SESSION['user']['invites'] + $_GET['count'];
+		$_SESSION['user']['invites'] = $_SESSION['user']['invites'] + $invites;
 
 	}
 

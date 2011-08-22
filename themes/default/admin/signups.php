@@ -10,18 +10,23 @@ echo '<table>';
 foreach ($app->page->users as $user) {
 	
 	if ($user['days_waiting'] == 0) {
-		$waiting = 'Today!';
+		$days_waiting = 'Today!';
 	} elseif ($user['days_waiting']) {
-		$waiting = $user['days_waiting'].' days ago';
+		$days_waiting = $user['days_waiting'].' days ago';
 	} else {
-		$waiting = '<span class="bad_news">Error</span>';
+		$days_waiting = '<span class="bad_news">Error</span>';
 	}
 	
 	if ($user['invites'] > 0) {
-		$invite = 'Invited x'.$user['invites'].' &middot;';
+		$invite_summary = 'Invited x'.$user['invites'].' &middot;';
 	}
-	
-	echo '<tr><td>'.$user['email'].'</td><td>'.$waiting.' &middot; '.$invite.' <a href="admin.php?page=invite&email='.urlencode($user['email']).'">Invite</a></td></tr>';
+
+	echo '<tr><td>'.$user['email'].'</td><td>
+	<form action="'.$this->link_to(NULL, 'admin', 'invite').'" method="post">
+	<input type="hidden" name="email" value="'.$user['email'].'">
+	'.$days_waiting.' &middot; '.$invite_summary.' <input type="submit" value="Invite" />
+	</form>
+	</td></tr>';
 
 	unset($invite);
 

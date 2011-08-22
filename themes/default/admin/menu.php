@@ -1,10 +1,9 @@
 
 <p>
-	<a href="admin.php?page=dashboard">Dashboard</a>
-	&middot; <a href="admin.php?page=signups">Beta signups</a>
-	&middot; <a href="admin.php?page=users">Users</a>
-	<?php
-	if (isset($app->plugins->log))
-		echo ' &middot; <a href="admin.php?page=history">Log</a>';
-	?>
+	<?php echo $this->link_to('Dashboard', 'admin'); ?>
+	&middot; <?php echo $this->link_to('Beta signups', 'admin', 'signups'); ?>
+	&middot; <?php echo $this->link_to('Users', 'admin', 'users'); ?>
+	<?php if (isset($app->plugins->log))
+		echo ' &middot; '.$this->link_to('Log', 'admin', 'history'); ?>
+	
 </p>
