@@ -11,8 +11,6 @@ $config = new AppConfig;
 
 require_once 'lib/application.php';
 
-var_dump($_SERVER['PHP_SELF']);
-
 // Get request from server, split into segments, store as controller, view, id and params
 $request = substr($_SERVER['REQUEST_URI'], strlen('/rat-private'));
 
