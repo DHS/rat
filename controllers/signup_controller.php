@@ -8,8 +8,8 @@ if (!empty($_SESSION['user'])) {
 	
 	$app->page->name = 'Signup';
 	$app->page->message = 'You are already logged in!';
-	$app->loadView('header');
-	$app->loadView('footer');
+	$app->loadView('partials/header');
+	$app->loadView('partials/footer');
 	exit;
 	
 }
@@ -285,7 +285,7 @@ function do_signup($mode = 'full') {
 		
 		// Show error message
 		$app->page->message = $error;
-		$app->loadView('header');
+		$app->loadView('partials/header');
 		
 		// Show relevant signup form
 		if ($mode == 'beta') {
@@ -348,14 +348,14 @@ if ($app->page->selector == 'do_signup') {
 } else {
 	// Not doing signup so show a simpler page. Also call header.
 	
-	$app->loadView('header');
+	$app->loadView('partials/header');
 	call_user_func($app->page->selector);
 	
 }
 
 // Footer
 
-$app->loadView('footer');
+$app->loadView('partials/footer');
 
 
 ?>

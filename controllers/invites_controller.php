@@ -38,8 +38,8 @@ class InvitesController {
 if ($app->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 	
 	$app->page->name = 'Page not found';
-	$app->loadView('header');
-	$app->loadView('footer');
+	$app->loadView('partials/header');
+	$app->loadView('partials/footer');
 	exit;
 	
 }
@@ -47,7 +47,7 @@ if ($app->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 // Header
 
 $app->page->name = 'Invites';
-$app->loadView('header');
+$app->loadView('partials/header');
 
 // Process new invites
 
@@ -128,7 +128,7 @@ $app->loadView('invites_list');
 
 // Footer
 
-$app->loadView('footer');
+$app->loadView('partials/footer');
 
 */
 

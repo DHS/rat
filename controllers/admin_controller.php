@@ -47,8 +47,8 @@ if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 if (in_array($_SESSION['user']['id'], $app->config->admin_users) != TRUE) {
 
 	$app->page->name = 'Page not found';
-	$app->loadView('header');
-	$app->loadView('footer');
+	$app->loadView('partials/header');
+	$app->loadView('partials/footer');
 	exit;
 
 }
@@ -172,7 +172,7 @@ if (!isset($app->page->selector))
 // Header
 
 $app->page->name = 'Admin - '.ucfirst(strtolower($app->page->selector));
-$app->loadView('header');
+$app->loadView('partials/header');
 $app->loadView('admin/menu');
 
 // Show page determined by selector
@@ -181,6 +181,6 @@ call_user_func($app->page->selector);
 
 // Footer
 
-$app->loadView('footer');
+$app->loadView('partials/footer');
 
 ?>

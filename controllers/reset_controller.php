@@ -6,9 +6,9 @@ function show_form() {
 	
 	global $app;
 	
-	$app->loadView('header');
+	$app->loadView('partials/header');
 	$app->loadView('reset_begin');
-	$app->loadView('footer');
+	$app->loadView('partials/footer');
 	
 }
 
@@ -37,10 +37,10 @@ function generate_code() {
 		
 	}
 	
-	$app->loadView('header');
+	$app->loadView('partials/header');
 	$app->page->message = 'Check your email for instructions about how to reset your password!';
 	$app->loadView('partials/message');
-	$app->loadView('footer');
+	$app->loadView('partials/footer');
 		
 }
 
@@ -48,12 +48,12 @@ function check_code() {
 	
 	global $app;
 	
-	$app->loadView('header');
+	$app->loadView('partials/header');
 	
 	if ($app->user->check_password_reset_code($_GET['code']) != FALSE)
 		$app->loadView('reset_confirm');
 
-	$app->loadView('footer');
+	$app->loadView('partials/footer');
 	
 }
 
@@ -109,10 +109,10 @@ function update_password() {
 	} else {
 		
 		$app->page->message = $error;
-		$app->loadView('header');
+		$app->loadView('partials/header');
 		if ($app->user->check_password_reset_code($_POST['code']) != FALSE)
 			$app->loadView('reset_confirm');
-		$app->loadView('footer');
+		$app->loadView('partials/footer');
 		
 	}
 	

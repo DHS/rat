@@ -100,10 +100,10 @@ class UsersController {
 					// Show error message
 					
 					$app->page->message = $error;
-					$app->loadView('header');
+					$app->loadView('partials/header');
 					if ($app->user->check_password_reset_code($code) != FALSE)
 						$app->loadView('reset');
-					$app->loadView('footer');
+					$app->loadView('partials/footer');
 					
 				}
 				

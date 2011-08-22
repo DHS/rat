@@ -5,14 +5,14 @@
 if (!isset($_GET['id']) && !isset($_POST['title']) && !isset($_POST['content']) && !isset($_GET['delete'])) {
 	
 	if ($_SESSION['user'] != NULL) {
-		$app->loadView('header');
+		$app->loadView('partials/header');
 		$app->loadView('items_add');
-		$app->loadView('footer');
+		$app->loadView('partials/footer');
 		exit;
 	} else {
 		$app->page->name = ucfirst($app->config->items['name']).' not found';
-		$app->loadView('header');
-		$app->loadView('footer');
+		$app->loadView('partials/header');
+		$app->loadView('partials/footer');
 		exit;
 	}
 	
@@ -166,9 +166,9 @@ if (isset($_POST['title']) || isset($_POST['content'])) {
 		
 		// Show error message
 		$app->page->message = $error;
-		$app->loadView('header');
+		$app->loadView('partials/header');
 		$app->loadView('items_add');
-		$app->loadView('footer');
+		$app->loadView('partials/footer');
 		exit();
 	
 	}
@@ -233,8 +233,8 @@ if (isset($_POST['title']) || isset($_POST['content'])) {
 	if ($app->page->item == NULL) {
 
 		$app->page->name = ucfirst($app->config->items['name']).' not found';
-		$app->loadView('header');
-		$app->loadView('footer');
+		$app->loadView('partials/header');
+		$app->loadView('partials/footer');
 		exit;
 		
 	}
@@ -249,7 +249,7 @@ if (isset($app->plugins->gravatar))
 $app->page->head_title = $app->page->item['title'].' by '.$app->page->item['user']['name'];
 $app->page->title = '<a href="/'.$app->page->item['user']['username'].'">'.$app->page->item['user']['name'].'</a> on <a href="/">'.$app->config->name.'</a>';
 
-$app->loadView('header');
+$app->loadView('partials/header');
 
 // Show item
 
@@ -257,6 +257,6 @@ $app->loadView('items/show');
 
 // Footer
 
-$app->loadView('footer');
+$app->loadView('partials/footer');
 
 ?>

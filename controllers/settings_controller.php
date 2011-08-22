@@ -142,7 +142,7 @@ if (!isset($app->page->selector))
 // Header
 
 $app->page->name = 'Settings';
-$app->loadView('header');
+$app->loadView('partials/header');
 
 // Show page determined by selector
 
@@ -163,7 +163,7 @@ if (isset($app->plugins->gravatar))
 
 // Footer
 
-$app->loadView('footer');
+$app->loadView('partials/footer');
 
 */
 
