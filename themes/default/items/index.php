@@ -21,7 +21,7 @@ foreach ($app->page->items as $item) {
 		?>
 		<td style="padding-bottom: 10px;">
 		
-			<?php if ($app->config->items['titles']['enabled'] == TRUE) { ?>
+			<?php if ($app->config->items['titles']['enabled'] == TRUE && $item['title'] != NULL) { ?>
 				
 				<p><?php echo $this->link_to($item['title'], 'items', 'show', $item['id']); ?> by <?php echo $this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']); ?></p>
 				<?php if ($app->config->items['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
