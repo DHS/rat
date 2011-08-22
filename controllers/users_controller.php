@@ -16,7 +16,7 @@ class UsersController {
 		
 		global $app;
 		
-		$app->loadLayout('users/add');
+		$app->loadLayout('users/add_beta');
 		
 	}
 	

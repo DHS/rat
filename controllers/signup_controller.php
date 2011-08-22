@@ -45,12 +45,12 @@ function show_form() {
 	if ($app->config->beta == TRUE) {
 		
 		// Show beta signup form
-		$app->loadView('signup_beta');
+		$app->loadView('users/add_beta');
 		
 	} else {
 		
 		// Show full signup form
-		$app->loadView('signup');
+		$app->loadView('users/add');
 		
 	}
 
@@ -64,7 +64,7 @@ function validate_code() {
 	if ($app->user->validate_invite_code($_GET['code'], $_GET['email']) == TRUE) {
 		// Valid
 
-		$app->loadView('signup');
+		$app->loadView('users/add');
 		
 	} else {
 		// Invalid
@@ -72,9 +72,9 @@ function validate_code() {
 		if ($app->config->beta == TRUE) {
 			$app->page->message = 'Your invite code is invalid.';
 			$app->loadView('partials/message');
-			$app->loadView('signup_beta');
+			$app->loadView('users/add_beta');
 		} else {
-			$app->loadView('signup');
+			$app->loadView('users/add');
 		}
 
 	}
@@ -289,9 +289,9 @@ function do_signup($mode = 'full') {
 		
 		// Show relevant signup form
 		if ($mode == 'beta') {
-			$app->loadView('signup_beta');
+			$app->loadView('users/add_beta');
 		} else {
-			$app->loadView('signup');
+			$app->loadView('users/add');
 		}
 	
 	}

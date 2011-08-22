@@ -1,15 +1,28 @@
 
 <div class="center_container">
 
-<form action="/signup" method="post">
+<form action="/signup<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>" method="post">
 
-	<input type="hidden" name="code" value="<?php echo $_GET['code']; ?>" />
-	<input type="hidden" name="email" value="<?php echo $_GET['email']; ?>" />
+	<?php
 	
-		<p>Enter your email address here and we'll let you in soon:</p>
+	// Invite code passsed so include it
+	if ($_GET['code'] != '')
+		echo '<input type="hidden" name="code" value="'.$_GET['code'].'" />';
 	
-	<input type="text" name="email" id="email" value="<?php echo $_GET['email']; ?>" /> <input type="submit" value="Win" />
+	?>
+	
+	<h2 class="center">Signup</h2>
+	
+	<table class="center">
+		<tr><td class="align_right">Email:</td><td><input type="text" name="email" value="<?php echo $_GET['email']; ?>" /></td></tr>
+		<tr><td class="align_right">Username:</td><td><input type="text" name="username" value="<?php echo $_GET['username']; ?>" /></td></tr>
+		<tr><td class="align_right">Password:</td><td><input type="password" name="password1" /></td></tr>
+		<tr><td class="align_right">Password again:</td><td><input type="password" name="password2" /></td></tr>
+		<tr><td></td><td class="align_left"><input type="submit" value="Signup" /></td></tr>
+	</table>
+	
+	<p class="small">Already got a <?php echo $app->config->name ?> account? <a href="login.php<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>">Login</a> now!</p>
 
 </form>
 
-</div>
+<div>
