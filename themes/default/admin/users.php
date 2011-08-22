@@ -1,7 +1,7 @@
 
 <p>Users: <strong><?php echo count($app->page->users); ?></strong></p>
 
-<?php $app->loadView('admin_grant_invites'); ?>
+<?php $app->loadView('admin/grant_invites'); ?>
 
 <?php if (is_array($app->page->users)) { ?>
 

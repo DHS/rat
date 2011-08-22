@@ -9,9 +9,7 @@ if (count($app->admin->list_users()) == 0 && $_GET['page'] == '') {
 	$_GET['id'] = 1;
 	
 	$app->page->message = 'Welcome to Rat! Please enter your details:';
-	$app->loadView('header');
-	$app->loadView('admin_setup');
-	$app->loadView('footer');
+	$app->loadLayout('admin/setup');
 	
 	exit();
 	
@@ -73,7 +71,7 @@ function dashboard() {
 	$app->page->users = $app->admin->list_users();
 	$app->page->users_beta = $app->admin->list_users_beta();
 	
-	$app->loadView('admin_dashboard');
+	$app->loadView('admin/index');
 	
 }
 
@@ -83,7 +81,7 @@ function signups() {
 	
 	$app->page->users = $app->admin->list_users_beta();
 	
-	$app->loadView('admin_signups');
+	$app->loadView('admin/signups');
 	
 }
 
@@ -132,7 +130,7 @@ function users() {
 	
 	$app->page->users = $app->admin->list_users();
 	
-	$app->loadView('admin_users');
+	$app->loadView('admin/users');
 
 }
 
@@ -175,7 +173,7 @@ if (!isset($app->page->selector))
 
 $app->page->name = 'Admin - '.ucfirst(strtolower($app->page->selector));
 $app->loadView('header');
-$app->loadView('admin_menu');
+$app->loadView('admin/menu');
 
 // Show page determined by selector
 
