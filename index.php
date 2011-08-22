@@ -1,21 +1,20 @@
 <?php
 
 // Start session
-session_start();
+//session_start();
 
 // Prepare config classes, ready to be loaded inside application class
 require_once 'config/server.php';
 require_once 'config/application.php';
 
-// Instantiate new application
-require_once 'lib/application.php';
-$app = new Application();
+$config = new AppConfig;
 
-// Connect to database
-require_once 'lib/mysql.php';
+require_once 'lib/application.php';
+
+var_dump($_SERVER['PHP_SELF']);
 
 // Get request from server, split into segments, store as controller, view, id and params
-$request = substr($_SERVER['REQUEST_URI'], strlen(BASE_DIR));
+$request = substr($_SERVER['REQUEST_URI'], strlen('/rat-private'));
 
 // Split at '.' and before '?' to obtain request format
 $segments = preg_split("/\./", $request);
@@ -35,9 +34,8 @@ $uri = array(	'controller'	=> $segments[1],
 
 // Set the controller to the default if not in URI
 if (empty($uri['controller']))
-	$uri['controller'] = $app->config->default_controller;
+	$uri['controller'] = $config->default_controller;
 
-// Request the URI
-$app->request($uri);
+Application::initialise($uri, $config);
 
 ?>

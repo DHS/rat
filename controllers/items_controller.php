@@ -1,6 +1,6 @@
 <?php
 
-class ItemsController {
+class ItemsController extends Application {
 	
 	function __construct() {
 		
@@ -18,13 +18,11 @@ class ItemsController {
 	
 	// Show stream of everyone's items
 	function index() {
+	
+		$this->page->name = $this->config->tagline;
+		$this->page->items = $this->item->list_all();
 		
-		global $app;
-		
-		$app->page->name = $app->config->tagline;
-		$app->page->items = $app->item->list_all();
-		
-		$app->loadLayout('items/index');
+		$this->loadLayout('items/index');
 		
 	}
 	
