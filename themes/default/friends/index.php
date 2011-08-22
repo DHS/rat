@@ -5,7 +5,7 @@
 <?php } else {
 
 	if ($app->friend->check($_SESSION['user']['id'], $app->page->user['id']) == TRUE) {
-		$app->loadView('friends_remove');
+		$app->loadView('friends/remove');
 	} else {
 		$app->loadView('friends/add');
 	}

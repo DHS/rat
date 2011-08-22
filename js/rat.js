@@ -141,7 +141,7 @@ function friend_add(user_id, friend_user_id) {
 		}
 	}
 
-	xmlhttp.open("GET", 'ajax.php?page=friend_add&user_id='+user_id+'&friend_user_id='+friend_user_id, true);
+	xmlhttp.open("GET", '/friends/add/'+friend_user_id, true);
 	xmlhttp.send();
 	
 }
@@ -167,7 +167,7 @@ function friend_remove(user_id, friend_user_id) {
 		}
 	}
 
-	xmlhttp.open("GET", 'ajax.php?page=friend_remove&user_id='+user_id+'&friend_user_id='+friend_user_id, true);
+	xmlhttp.open("GET", '/friends/remove/'+friend_user_id, true);
 	xmlhttp.send();
 	
 }
