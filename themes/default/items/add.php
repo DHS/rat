@@ -17,7 +17,7 @@ if (!empty($_SESSION['user'])) { ?>
 		if ($app->config->items['uploads']['enabled'] == TRUE)
 			echo '<tr><td class="align_right"><label for="file">'.$app->config->items['uploads']['name'].':</label></td><td class="alight_left"><input type="file" name="file" id="file" /></td></tr>';
 		?>
-		<tr><td></td><td class="align_left"><input type="submit" value="Submit" /></td></tr>
+		<tr><td></td><td class="align_left"><input type="submit" value="Submit" class="btn" /></td></tr>
 	</table>
 	
 </form>

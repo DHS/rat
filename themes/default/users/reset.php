@@ -6,6 +6,6 @@
 	<table>
 	<tr><td class="align_right">New password:</td><td><input type="password" name="password1" id="password1" size="20" /></td></tr>
 	<tr><td class="align_right">Confirm new password:</td><td><input type="password" name="password2" id="password2" size="20" /></td></tr>
-	<tr><td></td><td><input type="submit" value="Reset" /></td></tr>
+	<tr><td></td><td><input type="submit" value="Reset" class="btn" /></td></tr>
 	</table>
 </form>
