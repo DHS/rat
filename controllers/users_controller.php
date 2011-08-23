@@ -93,6 +93,7 @@ class UsersController {
 		
 		$app->page->user = $app->user->get($id);
 		
+		$app->page->name = 'Settings';
 		$app->loadLayout('users/update');
 		
 	}
