@@ -1,25 +1,23 @@
 
+<div class="row">
+  <div class="span4 columns offset12">
+
 <?php if ($app->page->user['full_name'] != NULL || $app->page->user['bio'] != NULL || $app->page->user['url'] != NULL) { // Only show profile if there is some data ?>
 
-<div class="center_container">
-<table class="center">
+<h3>Profile</h3>
 
 <?php if ($app->page->user['full_name'] != NULL) { ?>
-<tr><td class="align_right"><strong>Name</strong></td><td class="align_left" style="padding-left: 10px;"><?php echo $app->page->user['full_name']; ?></td></tr>
+      <strong>Name</strong> <?php echo $app->page->user['full_name']; ?>
 <?php } if ($app->page->user['bio'] != NULL) { ?>
-<tr><td class="align_right"><strong>Bio</strong></td><td class="align_left" style="padding-left: 10px;"><?php echo $app->page->user['bio']; ?></td></tr>
+      <strong>Bio</strong> <?php echo $app->page->user['bio']; ?>
 <?php } if ($app->page->user['url'] != NULL) { ?>
-<tr><td class="align_right"><strong>URL</strong></td><td class="align_left" style="padding-left: 10px;"><a href="<?php echo $app->page->user['url']; ?>" target="_new"><?php echo $app->page->user['url']; ?></a></td></tr>
+      <strong>URL</strong> <a href="<?php echo $app->page->user['url']; ?>" target="_new"><?php echo $app->page->user['url']; ?></a>
 <?php } ?>
-
-</table>
-</div>
 
 <p />
 
-<?php } ?>
-
 <?php
+}
 
 // Show follow button
 
@@ -33,9 +31,16 @@ if (isset($app->plugins->points))
 
 // Show new item form
 
-if ($_SESSION['user']['post_permission'] == 1)
+if ($_SESSION['user']['post_permission'] == 1) {
 	$app->loadView('items/add');
+}
 
+?>
+
+  </div>
+</div>
+
+<?php
 // List all items for this user
 
 if (count($app->page->items) > 0) {

@@ -3,7 +3,7 @@
 
 if (!empty($_SESSION['user'])) { ?>
 
-<h2>New <?php echo $app->config->items['name']; ?></h2>
+<h3>New <?php echo $app->config->items['name']; ?></h3>
 
 <form action="<?php echo $this->link_to(NULL, 'items', 'add'); ?>" method="post" enctype="multipart/form-data">
 
