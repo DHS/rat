@@ -157,8 +157,11 @@ if (isset($app->page->title)) {
 if (isset($_GET['message']))
 	$app->page->message = $_GET['message'];
 
-if (isset($app->page->message))
+if (isset($app->page->message)) {
 	echo '<!-- Message -->
-<p class="message">'.$app->page->message.'</p>';
+<div class="alert-message info">
+  <p>'.$app->page->message.'</p>
+</div>';
+}
 
 ?>
