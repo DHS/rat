@@ -45,7 +45,7 @@ class Item {
 
 		} else {
 
-			foreach($result as $k => $v) {
+			foreach ($result as $k => $v) {
 				$item->$k = $v;
 			}
 
@@ -173,7 +173,7 @@ class Item {
 	}
 	
 	// Get a feed of a friend's activity, returns array of Item objects
-	function list_feed($user_id) {
+	public static function list_feed($user_id) {
 
 		// Start by adding the viewer to the query string
 		$friends_string = "user_id = $user_id";
