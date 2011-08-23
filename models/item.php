@@ -37,7 +37,7 @@ class Item {
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 
-    $item = new Item;
+		$item = new Item;
 
 		if (!is_array($item)) {
 
@@ -45,11 +45,9 @@ class Item {
 
 		} else {
 
-      foreach($result as $k => $v) {
-      
-        $item->$k = $v;
-        
-      }
+			foreach($result as $k => $v) {
+				$item->$k = $v;
+			}
 
 			$item->user = User::get($result['user_id']);
 			$item->comments = Comment::list_item($id);
@@ -62,7 +60,7 @@ class Item {
 	}
 
 	// get recent items, returns array of Item objects
-  public static function list_all($limit = 20) {
+	public static function list_all($limit = 20) {
 
 		$sql = "SELECT * FROM items ORDER BY id DESC";
 
@@ -75,15 +73,13 @@ class Item {
 		$query = mysql_query($sql);
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-      
-      $item = new Item;
+			
+			$item = new Item;
 
-      foreach($result as $k => $v) {
-
-        $item->$k = $v;
-
-      }
-
+			foreach($result as $k => $v) {
+				$item->$k = $v;
+			}
+			
 			$item->comments = Comment::list_item($result['id']);
 			$item->likes = Like::list_item($result['id']);
 			$item->user = User::get($result['user_id']);
@@ -119,11 +115,11 @@ class Item {
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-      $item = new Item;
+			$item = new Item;
 
-      foreach($result as $k => $v) {
-        $item->$k = $v;
-      }
+			foreach($result as $k => $v) {
+				$item->$k = $v;
+			}
 
 			$item->user = User::get($result['user_id']);
 			$item->comments = Comment::list_item($result['id']);
@@ -158,11 +154,11 @@ class Item {
 			$query2 = mysql_query("SELECT * FROM items WHERE id = {$item['item_id']} LIMIT 1");
 			$result = mysql_fetch_array($query2, MYSQL_ASSOC);
 
-      $item = new Item;
+			$item = new Item;
 
-      foreach($result as $k => $v) {
-        $item->$k = $v;
-      }
+			foreach($result as $k => $v) {
+				$item->$k = $v;
+			}
 
 			$item->user = User::get($result['user_id']);
 			$item->comments = Comment::list_item($result['id']);
@@ -180,10 +176,10 @@ class Item {
 	function list_feed($user_id) {
 
 		// Start by adding the viewer to the query string
-		$friends_string  = "user_id = $user_id";
+		$friends_string = "user_id = $user_id";
 
 		// Fetch friends
-		$friends = $Friend::get($user_id);
+		$friends = Friend::get($user_id);
 
 		// Loop through friends adding them to the query string
 		foreach ($friends as $friend)
@@ -194,11 +190,11 @@ class Item {
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-      $item = new Item;
+			$item = new Item;
 
-      foreach($result as $k => $v) {
-        $item->$k = $v;
-      }
+			foreach($result as $k => $v) {
+				$item->$k = $v;
+			}
 
 			$item->user = User::get($result['user_id']);
 			$item->comments = Comment::list_item($result['id']);
