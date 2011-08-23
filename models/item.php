@@ -37,13 +37,13 @@ class Item {
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 
-		$item = new Item;
-
 		if (!is_array($result)) {
 
 			$item = NULL;
 
 		} else {
+
+			$item = new Item;
 
 			foreach ($result as $k => $v) {
 				$item->$k = $v;
