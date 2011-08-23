@@ -1,5 +1,9 @@
-<?php if (is_array($app->page->items)) {
-foreach ($app->page->items as $item) {
+<?php if (is_array($app->page->items)) { ?>
+
+<div class="row">
+  <div class="span8 columns offset3">
+
+<?php foreach ($app->page->items as $item) {
 	
 	// Prepare vars for comment and like views to be loaded in due course
 	$app->page->item = $item;
@@ -28,57 +32,39 @@ foreach ($app->page->items as $item) {
 	
 ?>
 
-  <!-- Begin item -->
-
-  <!-- Content -->
-  <div class="row">
-    <div class="span8 columns offset4">
-      <?php echo $gravatar; ?>
-      <?php echo $content; ?>
-    </div>
-  </div>
-
-  <!-- Meta -->
-  <div class="row">
-    <div class="span8 columns offset4" style="padding: 5px 0px;">
-      <?php echo $app->loadView('items/meta'); ?>
-    </div>
-  </div>
+    <!-- Begin item -->
+    
+    <!-- Content -->
+    <?php echo $gravatar; ?>
+    <?php echo $content; ?>
+    
+    <!-- Meta -->
+    <?php echo $app->loadView('items/meta'); ?>
 
 <?php if ($app->config->items['likes']['enabled'] == TRUE) { ?>
-  <!-- Likes -->
-  <div class="row">
-    <div class="span8 columns offset4" style="padding: 4px 0px;">
-      <?php $app->loadView('likes/index'); ?>
-    </div>
-  </div>
+    <!-- Likes -->
+    <?php $app->loadView('likes/index'); ?>
 <?php } ?>
 
 <?php if ($app->config->items['comments']['enabled'] == TRUE) { ?>
-  <!-- Comments -->
-  <div class="row">
-    <div class="span8 columns offset4">
+    <!-- Comments -->
     <?php echo $app->loadView('comments/index'); ?>
-    </div>
-  </div>
 <?php } ?>
 
-  <!-- Spacer -->
-  <div class="row">
-    <div class="span16 columns">
-      <p>&nbsp;</p>
-    </div>
-  </div>
+    <!-- Spacer -->
+    <p>&nbsp;</p>
 
-  <!-- End item -->
+    <!-- End item -->
 
 <?php
 unset($app->page->item);
 } // end foreach loop
 ?>
 
-<!--<div class="row">
-  <div class="span8 columns offset4">
+  </div>
+  <div class="span4 columns">
+
+<!--
     <div class="pagination">
       <ul>
         <li class="prev disabled"><a href="#">&larr; Previous</a></li>
@@ -90,8 +76,14 @@ unset($app->page->item);
         <li class="next"><a href="#">Next &rarr;</a></li>
       </ul>
     </div>
+-->
+
+
+
+<?php $app->loadView('items/add'); ?>
+
   </div>
-</div>-->
+</div>
 
 <?php
 } // end if is_array

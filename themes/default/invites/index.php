@@ -1,4 +1,7 @@
 
+<div class="row">
+  <div class="span8 columns offset4">
+
 <?php if (isset($app->page->invites_remaining) && $app->page->invites_remaining == 1) { ?>
 	
 	<p>You have one invite remaining.</p>
@@ -34,5 +37,8 @@
 	<?php } ?>
 
 <?php } ?>
+
+  </div>
+</div>
 
 <p>&nbsp;</p>

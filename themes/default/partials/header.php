@@ -167,9 +167,14 @@ if (isset($_GET['message']))
 
 if (isset($app->page->message)) {
 	echo '<!-- Message -->
-<div class="alert-message info">
-  <p>'.$app->page->message.'</p>
-</div>';
+  <div class="row">
+    <div class="span8 columns offset4">
+      <div class="alert-message info">
+        <p>'.$app->page->message.'</p>
+      </div>
+    </div>
+  </div>';
+
 }
 
 ?>

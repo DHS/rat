@@ -1,6 +1,26 @@
 
 <div class="row">
-  <div class="span4 columns offset12">
+  <div class="span8 columns offset3">
+
+	<?php
+	// List all items for this user
+
+	if (count($app->page->items) > 0) {
+
+		$app->loadView('items/user');
+
+	} else {
+
+		// If own page and no post_permission OR someone else's page show 'no articles yet'
+		if (($_SESSION['user']['id'] == $app->page->user['id'] && $_SESSION['user']['post_permission'] == 0) || $_SESSION['user']['id'] != $app->page->user['id'])
+			echo '<p>'.$app->page->user['username'].' hasn\'t published any '.$app->config->items['name_plural'].' yet.</p>';
+
+	}
+
+	?>
+
+  </div>
+  <div class="span4 columns">
 
 <?php if ($app->page->user['full_name'] != NULL || $app->page->user['bio'] != NULL || $app->page->user['url'] != NULL) { // Only show profile if there is some data ?>
 
@@ -31,28 +51,12 @@ if (isset($app->plugins->points))
 
 // Show new item form
 
-if ($_SESSION['user']['post_permission'] == 1) {
-	$app->loadView('items/add');
-}
+//if ($_SESSION['user']['post_permission'] == 1) {
+//	$app->loadView('items/add');
+//}
 
 ?>
 
   </div>
 </div>
 
-<?php
-// List all items for this user
-
-if (count($app->page->items) > 0) {
-
-	$app->loadView('items/user');
-
-} else {
-
-	// If own page and no post_permission OR someone else's page show 'no articles yet'
-	if (($_SESSION['user']['id'] == $app->page->user['id'] && $_SESSION['user']['post_permission'] == 0) || $_SESSION['user']['id'] != $app->page->user['id'])
-		echo '<p>'.$app->page->user['username'].' hasn\'t published any '.$app->config->items['name_plural'].' yet.</p>';
-
-}
-
-?>
