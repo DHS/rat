@@ -52,6 +52,7 @@ class SessionsController {
 		}
 		
 		if (empty($_SESSION['user'])) {
+			$app->page->name = 'Login';
 			$app->loadLayout('sessions/add');
 		} else {
 			$app->page->message = 'You are already logged in!<br />';

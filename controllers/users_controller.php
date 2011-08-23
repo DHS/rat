@@ -82,6 +82,7 @@ class UsersController {
 		$app->page->user = $app->user->get($id);
 		$app->page->items = $app->item->list_user($id);
 		
+		$app->page->name = $app->page->user['username'];
 		$app->loadLayout('users/show');
 		
 	}

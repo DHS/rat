@@ -18,6 +18,7 @@ class SearchController {
 		
 		global $app;
 		
+		$app->page->name = 'Search';
 		$app->loadLayout('search/add');
 		
 	}
@@ -31,6 +32,7 @@ class SearchController {
 		
 		$app->page->items = $search->do_search($q);
 		
+		$app->page->name = 'Search';
 		$app->loadView('partials/header');
 		$app->loadView('search/add');
 		$app->loadView('items/index');

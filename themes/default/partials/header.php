@@ -24,7 +24,7 @@ if (isset($app->page->title)) {
 		// Page name found
 		
 		// Set the var that prints the page title
-		$page_title = '<a href="/">'.$app->config->name.'</a> <small>'.$app->page->name.'</small>';
+		$page_title = '<a href="/">'.$app->config->name.'</a> <small>&raquo; '.$app->page->name.'</small>';
 
 		// If no head title is found then set head title similar to page title
 		if (!isset($head_title))

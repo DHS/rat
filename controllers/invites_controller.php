@@ -9,6 +9,7 @@ class InvitesController {
 		$app->page->invites_remaining = $_SESSION['user']['invites'];
 		$app->page->invites = $app->invite->list_sent($_SESSION['user']['id']);
 		
+		$app->page->name = 'Invites';
 		$app->loadLayout('invites/index');
 		
 	}

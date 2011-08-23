@@ -3,8 +3,6 @@
 
 <form action="/sessions/add<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>" method="post">
 
-	<h2>Login</h2>
-
 	<table class="center">
 		<tr><td class="align_right">Email:</td><td><input type="text" name="email" value="<?php echo $email; ?>" /></td></tr>
 		<tr><td class="align_right">Password:</td><td><input type="password" name="password" /></td></tr>
