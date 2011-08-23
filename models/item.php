@@ -39,7 +39,7 @@ class Item {
 
 		$item = new Item;
 
-		if (!is_array($item)) {
+		if (!is_array($result)) {
 
 			$item = NULL;
 
@@ -51,7 +51,7 @@ class Item {
 
 			$item->user = User::get($result['user_id']);
 			$item->comments = Comment::list_item($id);
-			$item->likess = Like::list_item($id);
+			$item->likes = Like::list_item($id);
 
 		}
 
