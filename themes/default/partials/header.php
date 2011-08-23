@@ -103,7 +103,15 @@ if (isset($app->page->title)) {
                 <input type="text" name="q" placeholder="Search" />
               </form>
             </li>
-            <li><?php echo $this->link_to('Logout', 'sessions', 'remove'); ?></li>
+            <li class="menu">
+              <a href="#" class="menu"><?php echo $_SESSION['user']['username']; ?></a>
+              <ul class="menu-dropdown">
+                <li><?php echo $this->link_to('Profile', 'users', 'show', $_SESSION['user']['id']); ?></li>
+                <li><?php echo $this->link_to('Settings', 'users', 'update', $_SESSION['user']['id']); ?></li>
+                <li class="divider"></li>
+                <li><?php echo $this->link_to('Logout', 'sessions', 'remove'); ?></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>

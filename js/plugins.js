@@ -14,3 +14,13 @@ window.log = function(){
 
 
 // place any jQuery/helper plugins in here, instead of separate, slower script files.
+
+$("body").bind("click", function (e) {
+  $('a.menu').parent("li").removeClass("open");
+});
+
+$("a.menu").click(function (e) {
+  var $li = $(this).parent("li").toggleClass('open');
+  return false;
+});
+
