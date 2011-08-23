@@ -15,6 +15,9 @@ window.log = function(){
 
 // place any jQuery/helper plugins in here, instead of separate, slower script files.
 
+
+// Nav bar dropdown
+
 $("body").bind("click", function (e) {
   $('a.menu').parent("li").removeClass("open");
 });
