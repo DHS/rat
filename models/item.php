@@ -2,7 +2,7 @@
 
 class Item {
 
-	// Create an item	
+	// Create an item, returns id
 	public static function add($user_id, $content, $title = NULL, $image = NULL) {
 
 		$user_id = sanitize_input($user_id);
@@ -28,14 +28,16 @@ class Item {
 
 	}
 
-	// get an item by id	
+	// get an item by id, returns an Item object
 	public static function get($id) {
 
 		$id = sanitize_input($id);
 
 		$sql = "SELECT * FROM items WHERE id = $id ORDER BY id DESC";
 		$query = mysql_query($sql);
-		$item = mysql_fetch_array($query, MYSQL_ASSOC);
+		$result = mysql_fetch_array($query, MYSQL_ASSOC);
+
+    $item = new Item;
 
 		if (!is_array($item)) {
 
@@ -43,9 +45,15 @@ class Item {
 
 		} else {
 
-			$item['user'] = User::get($item['user_id']);
-			$item['comments'] = Comment::list_item($id);
-			$item['likes'] = Like::list_item($id);
+      foreach($result as $k => $v) {
+      
+        $item->$k = $v;
+        
+      }
+
+			$item->user = User::get($result['user_id']);
+			$item->comments = Comment::list_item($id);
+			$item->likess = Like::list_item($id);
 
 		}
 
@@ -53,7 +61,7 @@ class Item {
 
 	}
 
-	// get recent items
+	// get recent items, returns array of Item objects
   public static function list_all($limit = 20) {
 
 		$sql = "SELECT * FROM items ORDER BY id DESC";
@@ -66,11 +74,19 @@ class Item {
 
 		$query = mysql_query($sql);
 
-		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+      
+      $item = new Item;
 
-			$item['comments'] = Comment::list_item($item['id']);
-			$item['likes'] = Like::list_item($item['id']);
-			$item['user'] = User::get($item['user_id']);
+      foreach($result as $k => $v) {
+
+        $item->$k = $v;
+
+      }
+
+			$item->comments = Comment::list_item($result['id']);
+			$item->likes = Like::list_item($result['id']);
+			$item->user = User::get($result['user_id']);
 
 			$items[] = $item;
 
@@ -80,7 +96,7 @@ class Item {
 
 	}
 
-	// Get a user's items
+	// Get a user's items, returns array of Item objects
 	public static function list_user($user_id, $limit = 10, $offset = 0) {
 			
 		$user_id = sanitize_input($user_id);
@@ -101,11 +117,17 @@ class Item {
 
 		$query = mysql_query($sql);
 
-		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-			$item['user'] = User::get($item['user_id']);
-			$item['comments'] = Comment::list_item($item['id']);
-			$item['likes'] = Like::list_item($item['id']);
+      $item = new Item;
+
+      foreach($result as $k => $v) {
+        $item->$k = $v;
+      }
+
+			$item->user = User::get($result['user_id']);
+			$item->comments = Comment::list_item($result['id']);
+			$item->likes = Like::list_item($result['id']);
 
 			$items[] = $item;
 
@@ -115,7 +137,7 @@ class Item {
 
 	}
 
-	// Get items liked by a user
+	// Get items liked by a user, returns array of Item objects
 	public static function list_user_liked($user_id, $limit = 10) {
 
 		$user_id = sanitize_input($user_id);
@@ -134,11 +156,17 @@ class Item {
 		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
 			$query2 = mysql_query("SELECT * FROM items WHERE id = {$item['item_id']} LIMIT 1");
-			$item = mysql_fetch_array($query2, MYSQL_ASSOC);
+			$result = mysql_fetch_array($query2, MYSQL_ASSOC);
 
-			$item['user'] = User::get($item['user_id']);
-			$item['comments'] = Comment::list_item($item['id']);
-			$item['likes'] = Like::list_item($item['id']);
+      $item = new Item;
+
+      foreach($result as $k => $v) {
+        $item->$k = $v;
+      }
+
+			$item->user = User::get($result['user_id']);
+			$item->comments = Comment::list_item($result['id']);
+			$item->likes = Like::list_item($result['id']);
 
 			$items[] = $item;
 
@@ -148,7 +176,7 @@ class Item {
 
 	}
 	
-	// Get a feed of a friend's activity
+	// Get a feed of a friend's activity, returns array of Item objects
 	function list_feed($user_id) {
 
 		// Start by adding the viewer to the query string
@@ -164,11 +192,17 @@ class Item {
 		$sql = "SELECT * FROM items WHERE $friends_string ORDER BY id DESC LIMIT 100";
 		$query = mysql_query($sql);
 
-		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
-			$item['comments'] = Comment::list_item($item['id']);
-			$item['likes'] = Like::list_item($item['id']);
-			$item['user'] = User::get($item['user_id']);
+      $item = new Item;
+
+      foreach($result as $k => $v) {
+        $item->$k = $v;
+      }
+
+			$item->user = User::get($result['user_id']);
+			$item->comments = Comment::list_item($result['id']);
+			$item->likes = Like::list_item($result['id']);
 
 			$items[] = $item;
 
@@ -178,7 +212,7 @@ class Item {
 
 	}
 
-	// Remove an item
+	// Remove an item, returns id
 	public static function remove($item_id) {
 
 		$item_id = sanitize_input($item_id);
