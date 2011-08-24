@@ -27,7 +27,7 @@ if (isset($this->title)) {
        More info: h5bp.com/b/378 -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title><?php echo $this->head_title; ?></title>
+  <title><?php if (isset($this->head_title)) { echo $this->head_title; } ?></title>
   <meta name="description" content="">
   <meta name="author" content="">
 
@@ -107,8 +107,7 @@ if (isset($this->title)) {
 	<p class="clear">&nbsp;</p>
 	<p class="clear">&nbsp;</p>
 
-    <!-- Page title -->
-    <?php echo '<h1>'.$this->title.'</h1>'; ?>
+    <?php if (isset($this->title)) { echo $this->title; } ?>
 
 <?php
 
