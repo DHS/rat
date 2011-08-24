@@ -6,7 +6,7 @@ class CommentsController {
 		
 		global $app;
 		
-		$comment_id = $app->comment->add($_SESSION['user']['id'], $_POST['item_id'], $_POST['content']);
+		$comment_id = Comment::add($_SESSION['user']['id'], $_POST['item_id'], $_POST['content']);
 		
 		if (isset($app->plugins->log))
 			$app->plugins->log->add($_SESSION['user']['id'], 'comment', $comment_id, 'add', $_POST['content']);
@@ -19,9 +19,9 @@ class CommentsController {
 		
 		global $app;
 		
-		$comment = $app->comment->get($comment_id);
+		$comment = Comment::get($comment_id);
 		
-		$app->comment->remove($_SESSION['user']['id'], $comment_id);
+		Comment::remove($_SESSION['user']['id'], $comment_id);
 		
 		if (isset($app->plugins->log))
 			$app->plugins->log->add($_SESSION['user']['id'], 'comment', $comment_id, 'remove');

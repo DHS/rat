@@ -68,7 +68,7 @@ class Search {
 				$row['score'] += preg_match_all("/$term_rx/i", $row['content'], $null);
 			}
 			
-			$row['comments'] = $app->comment->list_item($row['id']);
+			$row['comments'] = Comment::list_item($row['id']);
 			$row['likes'] = Like::list_item($row['id']);
 			$row['user'] = User::get($row['user_id']);
 	

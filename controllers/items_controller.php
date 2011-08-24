@@ -156,7 +156,7 @@ class ItemsController extends Application {
 			// Delete comments
 			if (is_array($item['comments'])) {
 				foreach ($item['comments'] as $key => $value) {
-					$id = $app->comment->remove($value['user_id'], $item['id'], $value['id']);
+					$id = Comment::remove($value['user_id'], $item['id'], $value['id']);
 					if (isset($app->plugins->log))
 						$app->plugins->log->add($_SESSION['user']['id'], 'comment', $id, 'remove');
 				}
