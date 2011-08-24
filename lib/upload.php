@@ -6,11 +6,11 @@ function generate_thumbnail($filename, $type, $max_width = 100, $max_height = 10
 	
 	// Create temporary source image resource
 	if ($type == 'image/jpeg' || $type == 'image/pjpeg') {
-		$src = imagecreatefromjpeg("{$app->config->items['uploads']['directory']}/originals/$filename");
+		$src = imagecreatefromjpeg("{$this->config->items['uploads']['directory']}/originals/$filename");
 	} elseif ($type == 'image/png') {
-		$src = imagecreatefrompng("{$app->config->items['uploads']['directory']}/originals/$filename");
+		$src = imagecreatefrompng("{$this->config->items['uploads']['directory']}/originals/$filename");
 	} elseif ($type == 'image/gif') {
-		$src = imagecreatefromgif("{$app->config->items['uploads']['directory']}/originals/$filename");
+		$src = imagecreatefromgif("{$this->config->items['uploads']['directory']}/originals/$filename");
 	}
 	
 	// Find existing dimensions
@@ -44,11 +44,11 @@ function generate_thumbnail($filename, $type, $max_width = 100, $max_height = 10
 	
 	// Save new image
 	if ($type == 'image/jpeg' || $type == 'image/pjpeg') {
-		imagejpeg($new, "{$app->config->items['uploads']['directory']}/$dir/$filename");
+		imagejpeg($new, "{$this->config->items['uploads']['directory']}/$dir/$filename");
 	} elseif ($type == 'image/png') {
-		imagepng($new, "{$app->config->items['uploads']['directory']}/$dir/$filename");
+		imagepng($new, "{$this->config->items['uploads']['directory']}/$dir/$filename");
 	} elseif ($type == 'image/gif') {
-		imagegif($new, "{$app->config->items['uploads']['directory']}/$dir/$filename");
+		imagegif($new, "{$this->config->items['uploads']['directory']}/$dir/$filename");
 	}
 	
 	// Delete temporary image resources

@@ -1,18 +1,18 @@
 <?php
 
-class UsersController {
+class UsersController extends Application {
 	
 	function __construct() {
 		
 		global $app;
 		
 		// Check if user is logged in and trying to signup
-		if ($app->uri['action'] == 'add' && !empty($_SESSION['user'])) {
+		if ($this->uri['action'] == 'add' && !empty($_SESSION['user'])) {
 
-			$app->page->name = 'Signup';
-			$app->page->message = 'You are already logged in!';
-			$app->loadView('partials/header');
-			$app->loadView('partials/footer');
+			$page['name'] = 'Signup';
+			$page['message'] = 'You are already logged in!';
+			$this->loadView('partials/header');
+			$this->loadView('partials/footer');
 			exit;
 
 		}
@@ -41,7 +41,7 @@ class UsersController {
 				
 			} else {
 				
-				if ($app->config->beta == TRUE) {
+				if ($this->config->beta == TRUE) {
 					
 					$this->do_signup('beta');
 					
@@ -57,17 +57,18 @@ class UsersController {
 			
 			// Show signup form
 			
-			if ($app->config->beta == TRUE) {
+			if ($this->config->beta == TRUE) {
 				// Show beta signup form
-				$app->loadLayout('users/add_beta');
+				$this->loadLayout('users/add_beta');
 			} else {
 				// Show full signup form
 				
 				if (isset($code)) {
-					$app->page->code = $code;
+					$page['code'] = $code;
 				}
 				
-				$app->loadLayout('users/add');
+				$this->loadLayout('users/add');
+				
 			}
 			
 		}
@@ -77,13 +78,10 @@ class UsersController {
 	// Show a user
 	function show($id) {
 		
-		global $app;
+		$this->user = User::get($id);
+		$this->items = Item::list_user($id);
 		
-		$app->page->user = $app->user->get($id);
-		$app->page->items = $app->item->list_user($id);
-		
-		$app->page->name = $app->page->user['username'];
-		$app->loadLayout('users/show');
+		$this->loadLayout('users/show');
 		
 	}
 	
@@ -91,10 +89,10 @@ class UsersController {
 		
 		global $app;
 		
-		$app->page->user = $app->user->get($id);
+		$page['user'] = User::get($id);
 		
-		$app->page->name = 'Settings';
-		$app->loadLayout('users/update');
+		$page['name'] = 'Settings';
+		$this->loadLayout('users/update');
 		
 	}
 	
@@ -108,7 +106,7 @@ class UsersController {
 			// If two passwords submitted then check, otherwise show form
 			if (isset($_POST['password1']) && isset($_POST['password2'])) {
 				
-				if ($app->user->check_password_reset_code($code) == FALSE)
+				if (User::check_password_reset_code($code) == FALSE)
 					exit();
 				
 				if ($_POST['password1'] == '' || $_POST['password2'] == '')
@@ -120,12 +118,12 @@ class UsersController {
 				// Error processing
 				if ($error == '') {
 					
-					$user_id = $app->user->check_password_reset_code($code);
+					$user_id = User::check_password_reset_code($code);
 					
 					// Do update
-					$app->user->update_password($user_id, $_POST['password1']);
+					User::update_password($user_id, $_POST['password1']);
 					
-					$user = $app->user->get($user_id);
+					$user = User::get($user_id);
 					
 					// Start session
 					$_SESSION['user'] = $user;
@@ -141,13 +139,13 @@ class UsersController {
 					}
 					
 					// Set welcome message
-					$app->page->message = urlencode('Password updated.<br />Welcome back to '.$app->config->name.'!');
+					$page['message'] = urlencode('Password updated.<br />Welcome back to '.$this->config->name.'!');
 					
 					// Go forth!
 					if (SITE_IDENTIFIER == 'live') {
-						header('Location: '.$app->config->url.'?message='.$app->page->message);
+						header('Location: '.$this->config->url.'?message='.$page['message']);
 					} else {
-						header('Location: '.$app->config->dev_url.'?message='.$app->page->message);
+						header('Location: '.$this->config->dev_url.'?message='.$page['message']);
 					}
 					
 					exit();
@@ -155,25 +153,25 @@ class UsersController {
 				} else {
 					// Show error message
 					
-					$app->page->message = $error;
-					$app->loadView('partials/header');
-					if ($app->user->check_password_reset_code($code) != FALSE)
-						$app->loadView('reset');
-					$app->loadView('partials/footer');
+					$page['message'] = $error;
+					$this->loadView('partials/header');
+					if (User::check_password_reset_code($code) != FALSE)
+						$this->loadView('reset');
+					$this->loadView('partials/footer');
 					
 				}
 				
 			} else {
 				// Code present so show password reset form
 				
-				$app->loadLayout('users/reset');
+				$this->loadLayout('users/reset');
 				
 			}
 			
 		} else {
 			// No code in URL so show new reset form
 			
-			$app->loadLayout('users/reset_new');
+			$this->loadLayout('users/reset_new');
 			
 		}
 		
@@ -191,10 +189,10 @@ class UsersController {
 		
 		global $app;
 		
-		$user['user'] = $app->user->get_by_username($username);
-		$user['items'] = $app->item->list_user($user['user']['id']);
-		$app->page->json = $user;
-		$app->loadView('pages/json');
+		$user['user'] = User::get_by_username($username);
+		$user['items'] = Item::list_user($user['user']['id']);
+		$page['json'] = $user;
+		$this->loadView('pages/json');
 		
 	}
 	

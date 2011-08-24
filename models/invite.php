@@ -3,7 +3,7 @@
 class Invite {
 	
 	// Add an invite
-	function add($user_id, $email) {
+	public static function add($user_id, $email) {
 
 		$user_id = sanitize_input($user_id);
 		$email = sanitize_input($email);
@@ -21,7 +21,7 @@ class Invite {
 	}
 
 	// Get all invites sent by a user
-	function list_sent($user_id) {
+	public static function list_sent($user_id) {
 
 		$user_id = sanitize_input($user_id);
 
@@ -37,7 +37,7 @@ class Invite {
 	}
 	
 	// Get all invites with a given code
-	function list_by_code($code) {
+	public static function list_by_code($code) {
 
 		$code = sanitize_input($code);
 
@@ -63,7 +63,7 @@ class Invite {
 	}
 	
 	// Update an invite	
-	function update($id) {
+	public static function update($id) {
 
 		$id = sanitize_input($id);
 
@@ -80,7 +80,7 @@ class Invite {
 	}
 	
 	// Checks to see if a user is already invited
-	function check_invited($user_id, $email) {
+	public static function check_invited($user_id, $email) {
 
 		$user_id = sanitize_input($user_id);
 		$email = sanitize_input($email);
@@ -102,7 +102,7 @@ class Invite {
 	}
 	
 	// Validates an invite code
-	function check_code_valid($code, $email) {
+	public static function check_code_valid($code, $email) {
 
 		if ($code == '')
 			return FALSE;

@@ -1,9 +1,9 @@
 <?php
 
-$app->loadPartial('header');
+$this->loadPartial('header');
 
 include "themes/{$this->config->theme}/$view.php";
 
-$app->loadPartial('footer');
+$this->loadPartial('footer');
 
 ?>

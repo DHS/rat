@@ -1,6 +1,6 @@
 <?php
 
-class PagesController {
+class PagesController extends Application {
 	
 	function index() {
 		
@@ -14,9 +14,9 @@ class PagesController {
 		
 		global $app;
 		
-		$app->page->name = ucfirst($name);
+		$page['name'] = ucfirst($name);
 		
-		$app->loadLayout('pages/'.$name);
+		$this->loadLayout('pages/'.$name);
 		
 	}
 	

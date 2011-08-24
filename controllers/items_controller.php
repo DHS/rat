@@ -1,16 +1,16 @@
 <?php
 
-class ItemsController {
+class ItemsController extends Application {
 	
 	function __construct() {
 		
 		global $app;
 		
 		// To add an item you must be logged in
-		if (($app->uri['action'] == 'add' || $app->uri['action'] == 'remove') && $_SESSION['user'] == NULL) {
-			$app->page->name = 'Page not found';
-			$app->loadView('partials/header');
-			$app->loadView('partials/footer');
+		if (($this->uri['action'] == 'add' || $this->uri['action'] == 'remove') && $_SESSION['user'] == NULL) {
+			$page['name'] = 'Page not found';
+			$this->loadView('partials/header');
+			$this->loadView('partials/footer');
 			exit;
 		}
 		
@@ -18,13 +18,11 @@ class ItemsController {
 	
 	// Show stream of everyone's items
 	function index() {
+	
+		$this->page->name = $this->config->tagline;
+		$this->page->items = $this->item->list_all();
 		
-		global $app;
-		
-		$app->page->name = $app->config->tagline;
-		$app->page->items = $app->item->list_all();
-		
-		$app->loadLayout('items/index');
+		$this->loadLayout('items/index');
 		
 	}
 	
@@ -33,22 +31,22 @@ class ItemsController {
 		
 		global $app;
 		
-		if (isset($_POST['content']) || (isset($_POST['title']) && $app->config->items['titles']['enabled'] == TRUE)) {
+		if (isset($_POST['content']) || (isset($_POST['title']) && $this->config->items['titles']['enabled'] == TRUE)) {
 			
 			// Form validation
 			
-			if ($app->config->items['titles']['enabled'] == FALSE && $_POST['content'] == '')
-				$error .= ucfirst($app->config->items['name']).' must include '.strtolower($app->config->items['content']['name']).'.<br />';
+			if ($this->config->items['titles']['enabled'] == FALSE && $_POST['content'] == '')
+				$error .= ucfirst($this->config->items['name']).' must include '.strtolower($this->config->items['content']['name']).'.<br />';
 			
-			if ($app->config->items['uploads']['enabled'] == TRUE) {
+			if ($this->config->items['uploads']['enabled'] == TRUE) {
 				
 				if ($_FILES['file']['error'] > 0)
 					$error .= 'Error code: '.$_FILES['file']['error'].'<br />';
 				
-				if (!in_array($_FILES['file']['type'], $app->config->items['uploads']['mime-types']))
+				if (!in_array($_FILES['file']['type'], $this->config->items['uploads']['mime-types']))
 					$error .= 'Invalid file type: '.$_FILES['file']['type'].'<br />';
 				
-				if ($_FILES['file']['size'] > $app->config->items['uploads']['max-size'])
+				if ($_FILES['file']['size'] > $this->config->items['uploads']['max-size'])
 					$error .= 'File too large.<br />';
 				
 			}
@@ -58,10 +56,10 @@ class ItemsController {
 			if ($error == '') {
 				// No error so proceed...
 				
-				if ($app->config->items['uploads']['enabled'] == TRUE) {
+				if ($this->config->items['uploads']['enabled'] == TRUE) {
 					
 					// Check for file with same name and rename if neccessary
-					if (file_exists("{$app->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}")) {
+					if (file_exists("{$this->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}")) {
 						
 						// Find filename and extension, works for filenames that include dots and any length extension!
 						$filename = substr($_FILES['file']['name'], 0, strrpos($_FILES['file']['name'], '.'));
@@ -72,12 +70,12 @@ class ItemsController {
 						do {
 							$_FILES['file']['name'] = "$filename-$i.$extension";
 							$i++;
-						} while (file_exists("{$app->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}"));
+						} while (file_exists("{$this->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}"));
 						
 					}
 					
 					// Grab the file
-					move_uploaded_file($_FILES['file']['tmp_name'], "{$app->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}");
+					move_uploaded_file($_FILES['file']['tmp_name'], "{$this->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}");
 					
 					include 'lib/upload.php';
 					
@@ -87,11 +85,11 @@ class ItemsController {
 					// Generate stream image
 					generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 350, 500, 'stream');
 					
-					$item_id = $app->item->add($_SESSION['user']['id'], $_POST['content'], $_POST['title'], $_FILES['file']['name']);
+					$item_id = Item::add($_SESSION['user']['id'], $_POST['content'], $_POST['title'], $_FILES['file']['name']);
 					
 				} else {
 					
-					$item_id = $app->item->add($_SESSION['user']['id'], $_POST['content'], $_POST['title']);
+					$item_id = Item::add($_SESSION['user']['id'], $_POST['content'], $_POST['title']);
 					
 				}
 				
@@ -103,15 +101,15 @@ class ItemsController {
 				if (isset($app->plugins->log))
 					$app->plugins->log->add($_SESSION['user']['id'], 'item', $item_id, 'add', "title = {$_POST['title']}\ncontent = {$_POST['content']}");
 				
-				$app->page->message = ucfirst($app->config->items['name']).' added!';
+				$page['message'] = ucfirst($this->config->items['name']).' added!';
 				
 				$page = $app->link_to(NULL, 'users', 'show', $_SESSION['user']['id']);
 				
 				// Go forth!
 				if (SITE_IDENTIFIER == 'live') {
-					header('Location: '.$app->config->url.$page.'?message='.urlencode($app->page->message));
+					header('Location: '.$this->config->url.$page.'?message='.urlencode($page['message']));
 				} else {
-					header('Location: '.$app->config->dev_url.$page.'user.php?message='.urlencode($app->page->message));
+					header('Location: '.$this->config->dev_url.$page.'user.php?message='.urlencode($page['message']));
 				}
 				
 				exit();
@@ -128,15 +126,15 @@ class ItemsController {
 				//$app = $GLOBALS['app'];
 				
 				// Show error message
-				$app->page->message = $error;
-				$app->loadLayout('items/add');
+				$page['message'] = $error;
+				$this->loadLayout('items/add');
 				exit();
 				
 			}
 			
 		} else {
 			
-			$app->loadLayout('items/add');
+			$this->loadLayout('items/add');
 			
 		}
 		
@@ -146,19 +144,19 @@ class ItemsController {
 		
 		global $app;
 		
-		$item = $app->item->get($item_id);
+		$item = Item::get($item_id);
 		
 		if ($_SESSION['user']['id'] == $item['user']['id'] && $item != NULL) {
 			
 			// Delete item
-			$app->item->remove($item_id);
+			Item::remove($item_id);
 			if (isset($app->plugins->log))
 				$app->plugins->log->add($_SESSION['user']['id'], 'item', $item_id, 'remove');
 			
 			// Delete comments
 			if (is_array($item['comments'])) {
 				foreach ($item['comments'] as $key => $value) {
-					$id = $app->comment->remove($value['user_id'], $item['id'], $value['id']);
+					$id = Comment::remove($value['user_id'], $item['id'], $value['id']);
 					if (isset($app->plugins->log))
 						$app->plugins->log->add($_SESSION['user']['id'], 'comment', $id, 'remove');
 				}
@@ -174,7 +172,7 @@ class ItemsController {
 			}
 			
 			// Set message
-			$app->page->message = ucfirst($app->config->items['name']).' removed!';
+			$page['message'] = ucfirst($this->config->items['name']).' removed!';
 			
 			// Return from whence you came
 			header('Location: '.$_SERVER['HTTP_REFERER']);
@@ -185,9 +183,9 @@ class ItemsController {
 			
 			// Go forth
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url);
+				header('Location: '.$this->config->url);
 			} else {
-				header('Location: '.$app->config->dev_url);
+				header('Location: '.$this->config->dev_url);
 			}
 			
 			exit();
@@ -201,9 +199,9 @@ class ItemsController {
 		
 		global $app;
 		
-		$app->page->item = $app->item->get($id);
+		$page['item'] = Item::get($id);
 		
-		$app->loadLayout('items/show');
+		$this->loadLayout('items/show');
 		
 	}
 	
@@ -212,13 +210,13 @@ class ItemsController {
 		
 		global $app;
 		
-		if ($app->config->friends['enabled'] == TRUE) {
+		if ($this->config->friends['enabled'] == TRUE) {
 			
 			// If friends enabled then show feed of friends' activity
 			
-			$app->page->name = $app->config->tagline;
-			$app->page->items = $app->item->list_feed($_SESSION['user']['id']);
-			$app->loadLayout('items/index');
+			$page['name'] = $this->config->tagline;
+			$page['items'] = Item::list_feed($_SESSION['user']['id']);
+			$this->loadLayout('items/index');
 			
 		} else {
 			

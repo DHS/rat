@@ -6,10 +6,10 @@ require_once 'config/init.php';
 
 if (!empty($_SESSION['user'])) {
 	
-	$app->page->name = 'Signup';
-	$app->page->message = 'You are already logged in!';
-	$app->loadView('partials/header');
-	$app->loadView('partials/footer');
+	$page['name'] = 'Signup';
+	$page['message'] = 'You are already logged in!';
+	$this->loadView('partials/header');
+	$this->loadView('partials/footer');
 	exit;
 	
 }
@@ -42,15 +42,15 @@ function show_form() {
 	
 	global $app;
 	
-	if ($app->config->beta == TRUE) {
+	if ($this->config->beta == TRUE) {
 		
 		// Show beta signup form
-		$app->loadView('users/add_beta');
+		$this->loadView('users/add_beta');
 		
 	} else {
 		
 		// Show full signup form
-		$app->loadView('users/add');
+		$this->loadView('users/add');
 		
 	}
 
@@ -61,20 +61,20 @@ function validate_code() {
 
 	global $app;
 
-	if ($app->user->validate_invite_code($_GET['code'], $_GET['email']) == TRUE) {
+	if (User::validate_invite_code($_GET['code'], $_GET['email']) == TRUE) {
 		// Valid
 
-		$app->loadView('users/add');
+		$this->loadView('users/add');
 		
 	} else {
 		// Invalid
 		
-		if ($app->config->beta == TRUE) {
-			$app->page->message = 'Your invite code is invalid.';
-			$app->loadView('partials/message');
-			$app->loadView('users/add_beta');
+		if ($this->config->beta == TRUE) {
+			$page['message'] = 'Your invite code is invalid.';
+			$this->loadView('partials/message');
+			$this->loadView('users/add_beta');
 		} else {
-			$app->loadView('users/add');
+			$this->loadView('users/add');
 		}
 
 	}
@@ -96,9 +96,9 @@ function do_signup($mode = 'full') {
 	
 	// Check invite code (only really matters if app is in beta)
 
-	if ($mode == 'code' && $app->config->beta == TRUE) {
+	if ($mode == 'code' && $this->config->beta == TRUE) {
 
-		if ($app->user->validate_invite_code($_POST['code'], $_POST['email']) != TRUE)
+		if (User::validate_invite_code($_POST['code'], $_POST['email']) != TRUE)
 			$error .= 'Invalid invite code.<br />';
 
 	}
@@ -110,13 +110,13 @@ function do_signup($mode = 'full') {
 	if ($_POST['email'] == '')
 		$error .= 'Email cannot be left blank.<br />';
 	
-	if ($app->user->check_contains_spaces($_POST['email']) == TRUE)
+	if (User::check_contains_spaces($_POST['email']) == TRUE)
 		$error .= 'Email cannot contain spaces.<br />';
 	
-	if ($app->user->check_contains_at($_POST['email']) != TRUE)
+	if (User::check_contains_at($_POST['email']) != TRUE)
 		$error .= 'Email must contain an @ symbol.<br />';
 	
-	if ($app->user->check_email_available($_POST['email']) != TRUE)
+	if (User::check_email_available($_POST['email']) != TRUE)
 		$error .= 'Email already in the system!<br />';
 	
 	// Check username
@@ -126,10 +126,10 @@ function do_signup($mode = 'full') {
 		if ($_POST['username'] == '')
 			$error .= 'Username cannot be left blank.<br />';
 		
-		if ($app->user->check_alphanumeric($_POST['username']) != TRUE)
+		if (User::check_alphanumeric($_POST['username']) != TRUE)
 			$error .= 'Username must only contain letters and numbers.<br />';
 		
-		if ($app->user->check_username_available($_POST['username']) != TRUE)
+		if (User::check_username_available($_POST['username']) != TRUE)
 			$error .= 'Username not available.<br />';
 		
 	}
@@ -152,13 +152,13 @@ function do_signup($mode = 'full') {
 		// No error so proceed...
 		
 		// First check if user added
-		$user = $app->user->get_by_email($_POST['email']);
+		$user = User::get_by_email($_POST['email']);
 
 		// If not then add
 		if ($user == NULL) {
 			
-			$user_id = $app->user->add($_POST['email']);
-			$user = $app->user->get($user_id);
+			$user_id = User::add($_POST['email']);
+			$user = User::get($user_id);
 			
 		}
 		
@@ -166,16 +166,16 @@ function do_signup($mode = 'full') {
 		if ($mode == 'code' || $mode == 'full') {
 		
 			// Do signup
-			$app->user->signup($user['id'], $_POST['username'], $_POST['password1']);
+			User::signup($user['id'], $_POST['username'], $_POST['password1']);
 			
-			if ($app->config->send_emails == TRUE) {
+			if ($this->config->send_emails == TRUE) {
 				// Send 'thank you for signing up' email
 
 				$to = "{$_POST['username']} <{$_POST['email']}>";
 				$headers = "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 				// Load subject and body from template
-				$app->loadView('email/signup');
+				$this->loadView('email/signup');
 
 				// Email user
 				mail($to, $subject, $body, $headers);
@@ -190,7 +190,7 @@ function do_signup($mode = 'full') {
 			$_SESSION['user'] = $user;
 			
 			// Check invites are enabled and the code is valid
-			if ($app->config->invites['enabled'] == TRUE && validate_invite_code($_POST['code'], $_POST['email']) == TRUE) {
+			if ($this->config->invites['enabled'] == TRUE && validate_invite_code($_POST['code'], $_POST['email']) == TRUE) {
 				
 				// Get invites
 				$invites = invites_get_by_code($_POST['code']);
@@ -199,14 +199,14 @@ function do_signup($mode = 'full') {
 					foreach ($invites as $invite) {
 						
 						// Update invites
-						$app->invite->update($invite['id']);
+						Invite::update($invite['id']);
 						
 						// Log invite update
 						if (isset($app->plugins->log))
 							$app->plugins->log->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
 						
 						// Update points (but only if inviting user is not an admin)
-						if (isset($app->plugins->points) && in_array($invite['user_id'], $app->config->admin_users) != TRUE) {
+						if (isset($app->plugins->points) && in_array($invite['user_id'], $this->config->admin_users) != TRUE) {
 							
 							// Update points
 							$app->plugins->points->update($invite['user_id'], $app->plugins->points['per_invite_accepted']);
@@ -235,13 +235,13 @@ function do_signup($mode = 'full') {
 			}
 			
 			// Set welcome message
-			$app->page->message = urlencode('Welcome to '.$GLOBALS['app']->name.'!');
+			$page['message'] = urlencode('Welcome to '.$GLOBALS['app']->name.'!');
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url.'?message='.$app->page->message);
+				header('Location: '.$this->config->url.'?message='.$page['message']);
 			} else {
-				header('Location: '.$app->config->dev_url.'?message='.$app->page->message);
+				header('Location: '.$this->config->dev_url.'?message='.$page['message']);
 			}
 	
 			exit();
@@ -256,16 +256,16 @@ function do_signup($mode = 'full') {
 				$app->plugins->log->add($user_id, 'user', NULL, 'beta_signup', $_POST['email']);
 			
 			// Set thank you & tweet this message
-			$app->page->message = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
-			$app->page->message .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
+			$page['message'] = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
+			$page['message'] .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
 	
-			//$app->loadView('partials/message');
+			//$this->loadView('partials/message');
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url.'?message='.$app->page->message);
+				header('Location: '.$this->config->url.'?message='.$page['message']);
 			} else {
-				header('Location: '.$app->config->dev_url.'?message='.$app->page->message);
+				header('Location: '.$this->config->dev_url.'?message='.$page['message']);
 			}
 	
 			exit();
@@ -284,14 +284,14 @@ function do_signup($mode = 'full') {
 		//$app = $GLOBALS['app'];
 		
 		// Show error message
-		$app->page->message = $error;
-		$app->loadView('partials/header');
+		$page['message'] = $error;
+		$this->loadView('partials/header');
 		
 		// Show relevant signup form
 		if ($mode == 'beta') {
-			$app->loadView('users/add_beta');
+			$this->loadView('users/add_beta');
 		} else {
-			$app->loadView('users/add');
+			$this->loadView('users/add');
 		}
 	
 	}
@@ -304,25 +304,25 @@ $mode = NULL;
 
 if ($_GET['code'] != '') {
 	
-	$app->page->selector = 'validate_code';
+	$page['selector'] = 'validate_code';
 	
 } elseif ($_POST['email'] != '') {
 	
 	if ($_POST['code'] != '') {
 		
-		$app->page->selector = 'do_signup';
+		$page['selector'] = 'do_signup';
 		$mode = 'code';
 		
 	} else {
 		
-		if ($app->config->beta == TRUE) {
+		if ($this->config->beta == TRUE) {
 			
-			$app->page->selector = 'do_signup';
+			$page['selector'] = 'do_signup';
 			$mode = 'beta';
 			
 		} else {
 			
-			$app->page->selector = 'do_signup';
+			$page['selector'] = 'do_signup';
 			$mode = 'full';
 			
 		}
@@ -331,16 +331,16 @@ if ($_GET['code'] != '') {
 	
 } else {
 	
-	$app->page->selector = 'show_form';
+	$page['selector'] = 'show_form';
 	
 }
 
-//var_dump($app->page->selector);
+//var_dump($page['selector']);
 //var_dump($mode);
 
 // Show page determined by selector
 
-if ($app->page->selector == 'do_signup') {
+if ($page['selector'] == 'do_signup') {
 	// Do signup. No headers to allow redirects. Error pages load their own page header.
 	
 	do_signup($mode);
@@ -348,14 +348,14 @@ if ($app->page->selector == 'do_signup') {
 } else {
 	// Not doing signup so show a simpler page. Also call header.
 	
-	$app->loadView('partials/header');
-	call_user_func($app->page->selector);
+	$this->loadView('partials/header');
+	call_user_func($page['selector']);
 	
 }
 
 // Footer
 
-$app->loadView('partials/footer');
+$this->loadView('partials/footer');
 
 
 ?>

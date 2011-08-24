@@ -1,9 +1,10 @@
-<?php if (is_array($app->page->items)) { ?>
+
+<?php if (is_array($this->items)) { ?>
 
 <div class="row">
   <div class="span8 columns offset3">
 
-<?php foreach ($app->page->items as $item) {
+<?php foreach ($this->items as $item) {
 	
 	// Prepare vars for comment and like views to be loaded in due course
 	$app->page->item = $item;
@@ -16,7 +17,7 @@
 		$gravatar = $this->link_to($like['user']['username'], 'users', 'show', $item['user']['id']).' ';
 	}
 	
-	if ($app->config->items['titles']['enabled'] == TRUE && $item['title'] != NULL) {
+	if ($this->config->items['titles']['enabled'] == TRUE && $item['title'] != NULL) {
 		$content = '<h4>'.$this->link_to($item['title'], 'items', 'show', $item['id']).' <small>by '.$this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']).'</small></h4>';
 		$content .= '<p>'.$item['content'].'</p>';
 	} else {
@@ -39,16 +40,16 @@
     <?php echo $content; ?>
     
     <!-- Meta -->
-    <?php echo $app->loadView('items/meta'); ?>
+    <?php echo $this->loadView('items/meta'); ?>
 
-<?php if ($app->config->items['likes']['enabled'] == TRUE) { ?>
+<?php if ($this->config->items['likes']['enabled'] == TRUE) { ?>
     <!-- Likes -->
-    <?php $app->loadView('likes/index'); ?>
+    <?php $this->loadView('likes/index'); ?>
 <?php } ?>
 
-<?php if ($app->config->items['comments']['enabled'] == TRUE) { ?>
+<?php if ($this->config->items['comments']['enabled'] == TRUE) { ?>
     <!-- Comments -->
-    <?php echo $app->loadView('comments/index'); ?>
+    <?php echo $this->loadView('comments/index'); ?>
 <?php } ?>
 
     <!-- Spacer -->
@@ -78,9 +79,7 @@ unset($app->page->item);
     </div>
 -->
 
-
-
-<?php $app->loadView('items/add'); ?>
+<?php $this->loadView('items/add'); ?>
 
   </div>
 </div>

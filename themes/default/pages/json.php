@@ -1,1 +1,1 @@
-<?php echo json_encode($app->page->json); ?>
+<?php echo json_encode($page['json']); ?>

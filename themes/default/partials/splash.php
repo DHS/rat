@@ -1,7 +1,7 @@
 
 <div class="center_container">
 
-<p><?php echo $app->config->name; ?> is an application to demonstrate the basic functionality of <a href="http://github.com/DHS/rat">Rat</a>.</p>
+<p><?php echo $this->config->name; ?> is an application to demonstrate the basic functionality of <a href="http://github.com/DHS/rat">Rat</a>.</p>
 
 <p>We are currently in beta testing.</p>
 
@@ -9,8 +9,8 @@
 
 <?php
 
-if ($app->config->beta == TRUE)
-	$app->loadView('signup_beta');
+if ($this->config->beta == TRUE)
+	$this->loadView('signup_beta');
 
 ?>
 

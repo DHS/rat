@@ -1,6 +1,6 @@
 <?php
 
-class SearchController {
+class SearchController extends Application {
 	
 	function index() {
 		
@@ -18,8 +18,7 @@ class SearchController {
 		
 		global $app;
 		
-		$app->page->name = 'Search';
-		$app->loadLayout('search/add');
+		$this->loadLayout('search/add');
 		
 	}
 	
@@ -30,13 +29,20 @@ class SearchController {
 		include 'lib/search.php';
 		$search = new Search;
 		
-		$app->page->items = $search->do_search($q);
+		$page['items'] = $search->do_search($q);
 		
+<<<<<<< HEAD
 		$app->page->name = 'Search';
 		$app->loadView('partials/header');
 		$app->loadView('search/add');
 		$app->loadView('items/index');
 		$app->loadView('partials/footer');
+=======
+		$this->loadView('partials/header');
+		$this->loadView('search/add');
+		$this->loadView('items/index');
+		$this->loadView('partials/footer');
+>>>>>>> new-models
 		
 	}
 	
@@ -48,8 +54,8 @@ class SearchController {
 		$search = new Search;
 		
 		$items['items'] = $search->do_search($q);
-		$app->page->json = $items;
-		$app->loadView('pages/json');
+		$page['json'] = $items;
+		$this->loadView('pages/json');
 		
 	}
 

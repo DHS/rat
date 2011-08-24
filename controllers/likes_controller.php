@@ -1,12 +1,12 @@
 <?php
 
-class LikesController {
+class LikesController extends Application {
 	
 	function add($item_id) {
 		
 		global $app;
 		
-		$like_id = $app->like->add($_SESSION['user']['id'], $item_id);
+		$like_id = Like::add($_SESSION['user']['id'], $item_id);
 
 		if (isset($app->plugins->log))
 			$app->plugins->log->add($_SESSION['user']['id'], 'like', $like_id, 'add');
@@ -19,7 +19,7 @@ class LikesController {
 		
 		global $app;
 		
-		$like_id = $app->like->remove($_SESSION['user']['id'], $item_id);
+		$like_id = Like::remove($_SESSION['user']['id'], $item_id);
 
 		if (isset($app->plugins->log))
 			$app->plugins->log->add($_SESSION['user']['id'], 'like', $like_id, 'remove');
@@ -32,8 +32,8 @@ class LikesController {
 		
 		global $app;
 		
-		$app->page->item = $app->item->get($item_id);
-		$app->loadView('likes/index');
+		$page['item'] = Item::get($item_id);
+		$this->loadView('likes/index');
 		
 	}
 	
@@ -41,9 +41,9 @@ class LikesController {
 		
 		global $app;
 		
-		$item = $app->item->get($item_id);
-		$app->page->json = $item['likes'];
-		$app->loadView('pages/json');
+		$item = Item::get($item_id);
+		$page['json'] = $item['likes'];
+		$this->loadView('pages/json');
 		
 	}
 	

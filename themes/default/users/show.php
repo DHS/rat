@@ -22,16 +22,16 @@
   </div>
   <div class="span4 columns">
 
-<?php if ($app->page->user['full_name'] != NULL || $app->page->user['bio'] != NULL || $app->page->user['url'] != NULL) { // Only show profile if there is some data ?>
+<?php if ($this->user['full_name'] != NULL || $this->user['bio'] != NULL || $this->user['url'] != NULL) { // Only show profile if there is some data ?>
 
 <h3>Profile</h3>
 
-<?php if ($app->page->user['full_name'] != NULL) { ?>
-      <strong>Name</strong> <?php echo $app->page->user['full_name']; ?>
-<?php } if ($app->page->user['bio'] != NULL) { ?>
-      <strong>Bio</strong> <?php echo $app->page->user['bio']; ?>
-<?php } if ($app->page->user['url'] != NULL) { ?>
-      <strong>URL</strong> <a href="<?php echo $app->page->user['url']; ?>" target="_new"><?php echo $app->page->user['url']; ?></a>
+<?php if ($this->user['full_name'] != NULL) { ?>
+      <strong>Name</strong> <?php echo $this->user['full_name']; ?>
+<?php } if ($this->user['bio'] != NULL) { ?>
+      <strong>Bio</strong> <?php echo $this->user['bio']; ?>
+<?php } if ($this->user['url'] != NULL) { ?>
+      <strong>URL</strong> <a href="<?php echo $this->user['url']; ?>" target="_new"><?php echo $this->user['url']; ?></a>
 <?php } ?>
 
 <p />
@@ -41,8 +41,8 @@
 
 // Show follow button
 
-if ($app->config->friends['enabled'] == TRUE)
-	$app->loadView('friends/index');
+if ($this->config->friends['enabled'] == TRUE)
+	$this->loadView('friends/index');
 
 // Show number of points
 
@@ -59,4 +59,3 @@ if (isset($app->plugins->points))
 
   </div>
 </div>
-

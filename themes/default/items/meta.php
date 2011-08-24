@@ -1,6 +1,6 @@
 
 <?php if (!isset($item))
-	$item = $app->page->item; ?>
+	$item = $page['item']; ?>
 
 <span class="item_meta">
 
@@ -8,10 +8,10 @@
 
 <?php
 
-if ($app->config->items['comments']['enabled'] == TRUE)
-	echo ' &middot <a href="#" onclick="document.getElementById(\'comment_form_'.$item['id'].'\').style.visibility = \'visible\'; document.getElementById(\'comment_form_'.$item['id'].'\').style.height = \'auto\'; document.getElementById(\'comment_form_'.$item['id'].'\').content.focus(); return false;">'.$app->config->items['comments']['name'].'</a>';
+if ($this->config->items['comments']['enabled'] == TRUE)
+	echo ' &middot <a href="#" onclick="document.getElementById(\'comment_form_'.$item['id'].'\').style.visibility = \'visible\'; document.getElementById(\'comment_form_'.$item['id'].'\').style.height = \'auto\'; document.getElementById(\'comment_form_'.$item['id'].'\').content.focus(); return false;">'.$this->config->items['comments']['name'].'</a>';
 
-if ($app->config->items['likes']['enabled'] == TRUE) {
+if ($this->config->items['likes']['enabled'] == TRUE) {
 	
 	$i_like = FALSE;
 	
@@ -24,10 +24,10 @@ if ($app->config->items['likes']['enabled'] == TRUE) {
 	}
 	if ($i_like == TRUE) {
 		$url = $this->link_to(NULL, 'likes', 'remove', $item['id']);
-		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_remove('.$item['id'].', \''.$url.'\'); return false;">'.$app->config->items['likes']['opposite_name'].'</a></a></span>';
+		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_remove('.$item['id'].', \''.$url.'\'); return false;">'.$this->config->items['likes']['opposite_name'].'</a></a></span>';
 	} else {
 		$url = $this->link_to(NULL, 'likes', 'add', $item['id']);
-		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_add('.$item['id'].', \''.$url.'\'); return false;">'.$app->config->items['likes']['name'].'</a></a></span>';
+		echo ' &middot <span id="like_link_'.$item['id'].'"><a href="#" onclick="like_add('.$item['id'].', \''.$url.'\'); return false;">'.$this->config->items['likes']['name'].'</a></a></span>';
 	}
 	unset ($i_like);
 

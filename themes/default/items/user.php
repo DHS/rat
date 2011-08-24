@@ -1,11 +1,19 @@
-<?php if (is_array($app->page->items)) {
-foreach ($app->page->items as $item) {
+<?php
+
+if ($this->user->id == $_SESSION['user']['id']) {
+	$this->loadView('items/add');
+}
+
+if (is_array($this->items)) {
 	
-	// Prepare vars for comment and like views to be loaded in due course
-	$app->page->item = $item;
+echo '<table style="width: 100%;">';
+
+foreach ($this->items as $item) {
+
+	$page['item'] = $item;
 	
 	// Populate some vars
-	if ($app->config->items['titles']['enabled'] == TRUE && $item['title'] != NULL) {
+	if ($this->config->items['titles']['enabled'] == TRUE && $item['title'] != NULL) {
 		$content = '<h4>'.$this->link_to($item['title'], 'items', 'show', $item['id']).' <small>by '.$this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']).'</small></h4>';
 		$content .= '<p>'.$item['content'].'</p>';
 	} else {
@@ -14,9 +22,9 @@ foreach ($app->page->items as $item) {
 	
 	// Comment form toggle
 	if (count($item['comments']) > 0) {
-		$app->page->show_comment_form = TRUE;
+		$this->page->show_comment_form = TRUE;
 	} else {
-		$app->page->show_comment_form = FALSE;
+		$this->page->show_comment_form = FALSE;
 	}
 	
 ?>
@@ -27,16 +35,16 @@ foreach ($app->page->items as $item) {
   <?php echo $content; ?>
 
   <!-- Meta -->
-  <?php echo $app->loadView('items/meta'); ?>
+  <?php echo $this->loadView('items/meta'); ?>
 
-<?php if ($app->config->items['likes']['enabled'] == TRUE) { ?>
+<?php if ($this->config->items['likes']['enabled'] == TRUE) { ?>
   <!-- Likes -->
-  <?php $app->loadView('likes/index'); ?>
+  <?php $this->loadView('likes/index'); ?>
 <?php } ?>
 
-<?php if ($app->config->items['comments']['enabled'] == TRUE) { ?>
+<?php if ($this->config->items['comments']['enabled'] == TRUE) { ?>
   <!-- Comments -->
-  <?php echo $app->loadView('comments/index'); ?>
+  <?php echo $this->loadView('comments/index'); ?>
 <?php } ?>
 
   <!-- Spacer -->
@@ -45,7 +53,7 @@ foreach ($app->page->items as $item) {
   <!-- End item -->
 
 <?php
-unset($app->page->item);
+unset($this->page->item);
 } // end foreach loop
 ?>
 

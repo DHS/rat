@@ -1,6 +1,6 @@
 <?php
 
-class SessionsController {
+class SessionsController extends Application {
 	
 	function index() {
 		
@@ -16,8 +16,8 @@ class SessionsController {
 		
 		if ($_POST['email'] && $_POST['password']) {
 			
-			$user = $app->user->get_by_email($_POST['email']);
-			$encrypted_password = md5($_POST['password'].$app->config->encryption_salt);
+			$user = User::get_by_email($_POST['email']);
+			$encrypted_password = md5($_POST['password'].$this->config->encryption_salt);
 			
 			if ($user['password'] == $encrypted_password) {
 				
@@ -35,16 +35,16 @@ class SessionsController {
 				
 				// Go forth
 				if (SITE_IDENTIFIER == 'live') {
-					header('Location: '.$app->config->url);
+					header('Location: '.$this->config->url);
 				} else {
-					header('Location: '.$app->config->dev_url);
+					header('Location: '.$this->config->dev_url);
 				}
 				
 				exit();
 				
 			} else {
 				
-				$app->page->message .= 'Something isn\'t quite right.<br />Please try again...';
+				$page['message'] .= 'Something isn\'t quite right.<br />Please try again...';
 				$email = $_POST['email'];
 				
 			}
@@ -52,12 +52,14 @@ class SessionsController {
 		}
 		
 		if (empty($_SESSION['user'])) {
-			$app->page->name = 'Login';
-			$app->loadLayout('sessions/add');
+
+			$page['name'] = 'Login';
+			$this->loadLayout('sessions/add');
+
 		} else {
-			$app->page->message = 'You are already logged in!<br />';
-			$app->page->message .= $this->link_to('Click here', 'sessions', 'remove').' to logout.';
-			$app->loadLayout('partials/message');
+			$page['message'] = 'You are already logged in!<br />';
+			$page['message'] .= $this->link_to('Click here', 'sessions', 'remove').' to logout.';
+			$this->loadLayout('partials/message');
 		}
 		
 	}
@@ -84,17 +86,17 @@ class SessionsController {
 
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url.$app->config->default_controller.'/?message='.urlencode($message));
+				header('Location: '.$this->config->url.$this->config->default_controller.'/?message='.urlencode($message));
 			} else {
-				header('Location: '.$app->config->dev_url.$app->config->default_controller.'/?message='.urlencode($message));
+				header('Location: '.$this->config->dev_url.$this->config->default_controller.'/?message='.urlencode($message));
 			}
 			
 			exit();
 			
 		}
 		
-		$app->page->message = 'Nothing to see here';
-		$app->loadLayout();
+		$page['message'] = 'Nothing to see here';
+		$this->loadLayout();
 		
 	}
 	

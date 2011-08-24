@@ -1,31 +1,33 @@
 <?php
 
 class Application {
-
-	public $uri, $config;
-
-	function __construct() {
-		
-		$this->loadConfig();
-		$this->loadModels();
-		$this->loadPlugins();
-		
-	}
-
-	function request($uri) {
-		
-		$this->uri = $uri;
-		
-		$this->loadController($uri['controller']);
-
-	}
-
-	function loadConfig() {
-		
-		$this->config = new AppConfig;
 	
+	public $uri, $config;
+	
+	private function __construct() {}
+	
+	public static function initialise($uri, $config) {
+		
+ 		$controller = ucfirst($uri['controller']).'Controller';
+		require_once "controllers/{$uri['controller']}_controller.php";
+		$app = new $controller;
+		
+		$app->loadConfig($config);
+		$app->loadModels();
+		$app->loadPlugins();
+		
+		$app->uri = $uri;
+		
+		$app->route();
+		
+	}
+	
+	private function loadConfig($config) {
+		
+		$this->config = $config;
+		
 		$domain = substr(substr($this->config->url, 0, -1), 7);
-
+		
 		if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.'.$domain) {
 			define('SITE_IDENTIFIER', 'live');
 			$base_dir = $this->config->base_dir;
@@ -34,28 +36,31 @@ class Application {
 			$base_dir = $this->config->dev_base_dir;
 		}
 
-		if (is_null($base_dir))
+		if (is_null($base_dir)) {
 			$base_dir = '/';
+		}
 		
 		define('BASE_DIR', $base_dir);
 		
 	}
-
-	function loadModels() {
 	
+	private function loadModels() {
+		
+    	require_once 'lib/mysql.php';
+		
 		$handle = opendir('models');	
 		while (false != ($file = readdir($handle))) {
 			$model = substr($file, 0, -4);
 			if ($file[0] != '.') {
 				require_once "models/$model.php";
 				$modelLower = strtolower($model);
-        $this->$modelLower = new $model;
+				$this->$modelLower = new $model;
 			}
 		}
 		
 	}
-
-	function loadPlugins() {
+	
+	private function loadPlugins() {
 		
 		foreach ($this->config->plugins as $key => $value) {
 			if ($value == TRUE) {
@@ -63,59 +68,48 @@ class Application {
 				$this->plugins->$key = new $key;
 			}
 		}
-
-	}
-
-	function loadController($c) {
- 
-		global $app;
-
-		$classname = ucfirst($c).'Controller';
-		require_once "controllers/{$c}_controller.php";
-		$controller = new $classname;
 		
-		if (method_exists($controller, $this->uri['action'])) {
-			$controller->{$this->uri['action']}($this->uri['id']);
+	}
+	
+	private function route() {
+		
+		if (method_exists($this, $this->uri['action'])) {
+			$this->{$this->uri['action']}($this->uri['id']);
 		} else {
-			$controller->index();
+			$this->index();
 		}
 		
 	}
-
-	function loadView($view) {
-		
-		global $app;
+	
+	protected function loadView($view) {
 		
 		include "themes/{$this->config->theme}/{$view}.php";
 		
 	}
 	
-	function loadLayout($view, $layout = NULL) {
+	protected function loadLayout($view, $layout = NULL) {
 		
-		global $app;
-		
-		if (is_null($layout))
+		if (is_null($layout)) {
 			$layout = 'default';
+		}
 		
 		include "themes/{$this->config->theme}/layouts/{$layout}.php";
 		
 	}
 	
-	function loadPartial($partial) {
-		
-		global $app;	
+	protected function loadPartial($partial) {
 		
 		include "themes/{$this->config->theme}/partials/{$partial}.php";
 		
 	}
-
-	function link_to($link_text, $controller, $action = "", $id = "") {
+	
+	public function link_to($link_text, $controller, $action = "", $id = "") {
 		
 		$url = BASE_DIR . "/{$controller}";
 		
 		if (!empty($action))
 			$url .= "/$action";
-			
+		
 		if (!empty($id))
 			$url .= "/$id";
 		
@@ -133,8 +127,8 @@ class Application {
 		
 		return $link;
 		
-  }
-
+	}
+	
 }
 
 ?>

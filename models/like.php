@@ -3,7 +3,7 @@
 class Like {
 
 	// Add a like for an item
-	function add($user_id, $item_id) {
+	public static function add($user_id, $item_id) {
 		
 		$user_id = sanitize_input($user_id);
 		$item_id = sanitize_input($item_id);
@@ -23,7 +23,7 @@ class Like {
 	}
 
 	// Get likes for an item
-	function list_item($item_id) {
+	public static function list_item($item_id) {
 
 		global $app;
 
@@ -32,19 +32,26 @@ class Like {
 		$sql = "SELECT id, user_id, date FROM likes WHERE item_id = $item_id";
 		$query = mysql_query($sql);
 
-		$return = array();
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			$like = new Like;
 
-		while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$row['user'] = $app->user->get($row['user_id']);
-			$return[$row['id']] = $row;
+			foreach($result as $k => $v) {
+				$like->$k = $v;
+			}
+			
+			$like->user = User::get($result['user_id']);
+			
+			$likes[$result['id']] = $like;
+			
 		}
 
-		return $return;
+		return $likes;
 
 	}
 
 	// Get all liked items
-	function list_all($limit = 10) {
+	public static function list_all($limit = 10) {
 		
 		global $app;
 		
@@ -60,29 +67,30 @@ class Like {
 		$query = mysql_query($sql);
 
 		// Loop through likes
-		while ($like = mysql_fetch_array($query, MYSQL_ASSOC)) {
-
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			$like = new Like;
+			
+			foreach($result as $k => $v) {
+				$like->$k = $v;
+			}
+			
 			// Get info about the liker
-			$item['user'] = $app->user->get($like['user_id']);
-
+			$like->user = User::get($like['user_id']);
+			
 			// Get item info
-			$sql2 = "SELECT * FROM items WHERE id = {$like['item_id']} LIMIT 1";
-			$query2 = mysql_query($sql2);
-			$item['item'] = mysql_fetch_array($query2, MYSQL_ASSOC);
-
-			// Get info on user who created the item
-			$item['item']['user'] = $app->user->get($item['item']['user_id']);
-
-			$items[] = $item;
-
+			$like->item = Item::get($like['user_id']);
+			
+			$likes[] = $like;
+			
 		}
-
-		return $items;
+		
+		return $likes;
 
 	}
 
 	// Unlike an item
-	function remove($user_id, $item_id) {
+	public static function remove($user_id, $item_id) {
 
 		$user_id = sanitize_input($user_id);
 		$item_id = sanitize_input($item_id);

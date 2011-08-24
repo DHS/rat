@@ -1,10 +1,10 @@
 <?php
 
-$app->loadPartial('header');
-$app->loadView('admin/menu');
+$this->loadPartial('header');
+$this->loadView('admin/menu');
 
 include "themes/{$this->config->theme}/$view.php";
 
-$app->loadPartial('footer');
+$this->loadPartial('footer');
 
 ?>

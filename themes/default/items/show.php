@@ -1,15 +1,16 @@
 
-<?php $item = $app->page->item; ?>
+<?php $item = $page['item']; ?>
 
 <div class="row">
   <div class="span8 columns offset4">
 
-<?php if ($app->config->items['titles']['enabled'] == TRUE) { ?>
+<?php if ($this->config->items['titles']['enabled'] == TRUE) { ?>
 
 <h2><?php echo $item['title']; ?></h2>
 
-<?php if ($app->config->items['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
-	<a href="<?php echo $app->config->items['uploads']['directory']; ?>/originals/<?php echo $item['image']; ?>"><img src="<?php echo $app->config->items['uploads']['directory']; ?>/stream/<?php echo $item['image']; ?>" /></a>
+<?php if ($this->config->items['uploads']['enabled'] == TRUE && $item['image'] != NULL) { ?>
+	<a href="<?php echo $this->config->items['uploads']['directory']; ?>/originals/<?php echo $item['image']; ?>"><img src="<?php echo $this->config->items['uploads']['directory']; ?>/stream/<?php echo $item['image']; ?>" /></a>
+
 <?php } ?>
 
 <p><?php echo $item['content'] ?></p>
@@ -37,20 +38,18 @@ if (isset($app->plugins->gravatar)) {
 
 <?php
 // Untested
-if ($app->config->private != TRUE) {
-	$app->loadView('items/share');
-}
+if ($this->config->private != TRUE)
+	$this->loadView('items/share');
 ?>
 
 <?php
 
-if ($app->config->items['likes']['enabled'] == TRUE) {
-	$app->loadView('likes/index');
-}
+if ($this->config->items['likes']['enabled'] == TRUE)
+	$this->loadView('likes/index');
 
-if ($app->config->items['comments']['enabled'] == TRUE) {
-	$app->page->show_comment_form = TRUE;
-	$app->loadView('comments/index');
+if ($this->config->items['comments']['enabled'] == TRUE) {
+	$page['show_comment_form'] = TRUE;
+	$this->loadView('comments/index');
 }
 
 ?>

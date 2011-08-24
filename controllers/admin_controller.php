@@ -1,6 +1,6 @@
 <?php
 
-class AdminController {
+class AdminController extends Application {
 	
 	function __construct() {
 		
@@ -8,26 +8,26 @@ class AdminController {
 		
 		// If user is admin or first user then let them pass otherwise exit
 		
-		if ($app->uri['action'] == 'setup') {
+		if ($this->uri['action'] == 'setup') {
 			// Setup page called so make sure user count = 0
 			
-			if (count($app->admin->list_users()) != 0) {
+			if (count(Admin::list_users()) != 0) {
 				
-				$app->page->name = 'Page not found';
-				$app->loadView('partials/header');
-				$app->loadView('partials/footer');
+				$page['name'] = 'Page not found';
+				$this->loadView('partials/header');
+				$this->loadView('partials/footer');
 				exit;
 				
 			}
 			
 		}
 		
-		if (in_array($_SESSION['user']['id'], $app->config->admin_users) != TRUE) {
+		if (in_array($_SESSION['user']['id'], $this->config->admin_users) != TRUE) {
 			// User not an admin
 			
-			$app->page->name = 'Page not found';
-			$app->loadView('partials/header');
-			$app->loadView('partials/footer');
+			$page['name'] = 'Page not found';
+			$this->loadView('partials/header');
+			$this->loadView('partials/footer');
 			exit;
 			
 		}
@@ -39,9 +39,9 @@ class AdminController {
 		
 		global $app;
 		
-		$app->page->users = $app->admin->list_users();
-		$app->page->users_beta = $app->admin->list_users_beta();
-		$app->loadLayout('admin/index', 'admin');
+		$page['users'] = Admin::list_users();
+		$page['users_beta'] = Admin::list_users_beta();
+		$this->loadLayout('admin/index', 'admin');
 		
 	}
 	
@@ -50,28 +50,28 @@ class AdminController {
 		
 		global $app;
 		
-		$app->page->name = 'Setup';
+		$page['name'] = 'Setup';
 		
 		if (isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
 			// Do setup
 			
-			$user_id = $app->user->add($_POST['email']);
-			$app->user->signup($user_id, $_POST['username'], $_POST['password']);
+			$user_id = User::add($_POST['email']);
+			User::signup($user_id, $_POST['username'], $_POST['password']);
 			
-			$user = $app->user->get_by_email($_POST['email']);
+			$user = User::get_by_email($_POST['email']);
 			$_SESSION['user'] = $user;
 			
 			// Log login
 			if (isset($app->plugins->log))
 				$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'signup');
 			
-			$app->page->message = 'Rat is now setup and you are logged in!';
+			$page['message'] = 'Rat is now setup and you are logged in!';
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url.'?message='.urlencode($app->page->message));
+				header('Location: '.$this->config->url.'?message='.urlencode($page['message']));
 			} else {
-				header('Location: '.$app->config->dev_url.'?message='.urlencode($app->page->message));
+				header('Location: '.$this->config->dev_url.'?message='.urlencode($page['message']));
 			}
 			
 			exit();
@@ -79,8 +79,8 @@ class AdminController {
 		} else {
 			// Show setup form
 			
-			$app->page->message = 'Welcome to Rat! Please enter your details:';
-			$app->loadLayout('admin/setup');
+			$page['message'] = 'Welcome to Rat! Please enter your details:';
+			$this->loadLayout('admin/setup');
 
 		}
 		
@@ -91,8 +91,8 @@ class AdminController {
 		
 		global $app;
 		
-		$app->page->users = $app->admin->list_users_beta();
-		$app->loadLayout('admin/signups', 'admin');
+		$page['users'] = Admin::list_users_beta();
+		$this->loadLayout('admin/signups', 'admin');
 		
 	}
 	
@@ -101,8 +101,8 @@ class AdminController {
 		
 		global $app;
 		
-		$app->page->users = $app->admin->list_users();
-		$app->loadLayout('admin/users', 'admin');
+		$page['users'] = Admin::list_users();
+		$this->loadLayout('admin/users', 'admin');
 		
 	}
 	
@@ -113,10 +113,10 @@ class AdminController {
 		
 		if (isset($app->plugins->log)) {
 			
-			$app->loadView('partials/header');
-			$app->loadView('admin/menu');
+			$this->loadView('partials/header');
+			$this->loadView('admin/menu');
 			$app->plugins->log->view();
-			$app->loadView('partials/footer');
+			$this->loadView('partials/footer');
 			
 		}
 		
@@ -132,7 +132,7 @@ class AdminController {
 		if ($email != '') {
 			
 			// Add invite to database
-			$id = $app->invite->add($_SESSION['user']['id'], $email);
+			$id = Invite::add($_SESSION['user']['id'], $email);
 			
 			// Log invite
 			if (isset($app->plugins->log))
@@ -144,18 +144,18 @@ class AdminController {
 				$to		= "{$_POST['username']} <davehs@gmail.com>";
 			}
 			
-			$link		= $app->config->url.'signup.php?code='.$id.'&email='.urlencode($email);
+			$link		= $this->config->url.'signup.php?code='.$id.'&email='.urlencode($email);
 			$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 			
 			// Load template into $body variable
-			$app->loadView('email/invite_admin');
+			$this->loadView('email/invite_admin');
 			
-			if ($app->config->send_emails == TRUE) {
+			if ($this->config->send_emails == TRUE) {
 				// Email user
 				mail($to, $subject, $body, $headers);
 			}
 			
-			$app->page->message = 'User invited!';
+			$page['message'] = 'User invited!';
 			
 		}
 
@@ -169,9 +169,9 @@ class AdminController {
 		
 		if ($_GET['count'] > 0) {
 			
-			$app->admin->update_invites($_GET['count']);
+			Admin::update_invites($_GET['count']);
 			
-			$app->page->message = 'Invites updated!';
+			$page['message'] = 'Invites updated!';
 			
 		}
 		

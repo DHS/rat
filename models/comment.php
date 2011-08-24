@@ -3,7 +3,7 @@
 class Comment {
 	
 	// Add a comment to an item
-	function add($user_id, $item_id, $content) {
+	public static function add($user_id, $item_id, $content) {
 		
 		$user_id = sanitize_input($user_id);
 		$item_id = sanitize_input($item_id);
@@ -19,7 +19,7 @@ class Comment {
 	}
 	
 	// Get a single comment
-	function get($id) {
+	public static function get($id) {
 		
 		global $app;
 			
@@ -27,15 +27,21 @@ class Comment {
         
 		$sql = "SELECT * FROM comments WHERE id = $id";
 		$query = mysql_query($sql);
-		$comment = mysql_fetch_array($query, MYSQL_ASSOC);
+		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 
-		if (!is_array($comment)) {
+		if (!is_array($result)) {
 
 			$comment = NULL;
 
 		} else {
 		
-			$comment['user'] = $app->user->get($row['user_id']);
+			$comment = new Comment;
+			
+			foreach ($result as $k => $v) {
+				$comment->$k = $v;
+			}
+			
+			$comment->user = User::get($result['user_id']);
 			
 		}
         
@@ -44,7 +50,7 @@ class Comment {
 	}
 	
 	// Get comments for an item
-	function list_item($id) {
+	public static function list_item($id) {
 		
 		global $app;
 		
@@ -53,19 +59,26 @@ class Comment {
 		$sql = "SELECT id, content, user_id, date FROM comments WHERE item_id = $id ORDER BY id ASC";
 		$query = mysql_query($sql);
 
-		$return = array();
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			$comment = new Comment;
+			
+			foreach($result as $k => $v) {
+				$comment->$k = $v;
+			}
+			
+			$comment->user = User::get($result['user_id']);
 
-		while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$row['user'] = $app->user->get($row['user_id']);
-			$return[] = $row;
+			$comments[] = $comment;
+			
 		}
 
-		return $return;
+		return $comments;
 
 	}
 	
 	// Remove a comment from an item
-	function remove($user_id, $comment_id) {
+	public static function remove($user_id, $comment_id) {
 
 		$user_id = sanitize_input($user_id);
 		$comment_id = sanitize_input($comment_id);

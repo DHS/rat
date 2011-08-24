@@ -1,12 +1,12 @@
 <?php
 
-class CommentsController {
+class CommentsController extends Application {
 	
 	function add() {
 		
 		global $app;
 		
-		$comment_id = $app->comment->add($_SESSION['user']['id'], $_POST['item_id'], $_POST['content']);
+		$comment_id = Comment::add($_SESSION['user']['id'], $_POST['item_id'], $_POST['content']);
 		
 		if (isset($app->plugins->log))
 			$app->plugins->log->add($_SESSION['user']['id'], 'comment', $comment_id, 'add', $_POST['content']);
@@ -19,9 +19,9 @@ class CommentsController {
 		
 		global $app;
 		
-		$comment = $app->comment->get($comment_id);
+		$comment = Comment::get($comment_id);
 		
-		$app->comment->remove($_SESSION['user']['id'], $comment_id);
+		Comment::remove($_SESSION['user']['id'], $comment_id);
 		
 		if (isset($app->plugins->log))
 			$app->plugins->log->add($_SESSION['user']['id'], 'comment', $comment_id, 'remove');
@@ -34,8 +34,8 @@ class CommentsController {
 		
 		global $app;
 		
-		$app->page->item = $app->item->get($item_id);
-		$app->loadView('comments/index');
+		$page['item'] = Item::get($item_id);
+		$this->loadView('comments/index');
 		
 	}
 	
@@ -43,9 +43,9 @@ class CommentsController {
 		
 		global $app;
 		
-		$item = $app->item->get($item_id);
-		$app->page->json = $item['comments'];		
-		$app->loadView('pages/json');
+		$item = Item::get($item_id);
+		$page['json'] = $item['comments'];		
+		$this->loadView('pages/json');
 		
 	}
 	
