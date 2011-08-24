@@ -1,6 +1,6 @@
 <?php
 
-$subject = "[$this->config->name] {$user['username']} is now following you on $this->config->name!";
+$subject = "[{$this->config->name}] {$user->username} is now following you on {$this->config->name}!";
 
 $body = '<p>Hi '.$friend['username'].',</p>
 <p>Just to let you know that you have a new follower on '.$this->config->name.':</p>

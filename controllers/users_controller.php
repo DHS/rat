@@ -176,7 +176,7 @@ class UsersController extends Application {
 	function json($username) {
 		
 		$user['user'] = User::get_by_username($username);
-		$user['items'] = Item::list_user($user['user']['id']);
+		$user['items'] = Item::list_user($user['user']->id);
 		$this->json = $user;
 		$this->loadView('pages/json');
 		

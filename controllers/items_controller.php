@@ -140,7 +140,7 @@ class ItemsController extends Application {
 		
 		$item = Item::get($item_id);
 		
-		if ($_SESSION['user']['id'] == $item['user']['id'] && $item != NULL) {
+		if ($_SESSION['user']['id'] == $item->user->id && $item != NULL) {
 			
 			// Delete item
 			Item::remove($item_id);
@@ -148,18 +148,18 @@ class ItemsController extends Application {
 				$this->plugins->log->add($_SESSION['user']['id'], 'item', $item_id, 'remove');
 			
 			// Delete comments
-			if (is_array($item['comments'])) {
-				foreach ($item['comments'] as $key => $value) {
-					$id = Comment::remove($value['user_id'], $item['id'], $value['id']);
+			if (is_array($item->comments)) {
+				foreach ($item->comments as $key => $value) {
+					$id = Comment::remove($value['user_id'], $item->id, $value->id);
 					if (isset($this->plugins->log))
 						$this->plugins->log->add($_SESSION['user']['id'], 'comment', $id, 'remove');
 				}
 			}
 			
 			// Delete likes
-			if (is_array($item['comments'])) {
-				foreach ($item['likes'] as $key => $value) {
-					$id = Like::remove($value['user_id'], $item['id']);
+			if (is_array($item->comments)) {
+				foreach ($item->likes as $key => $value) {
+					$id = Like::remove($value->user_id, $item->id);
 					if (isset($this->plugins->log))
 						$this->plugins->log->add($_SESSION['user']['id'], 'like', $id, 'remove');
 				}

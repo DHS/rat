@@ -15,7 +15,7 @@ class SessionsController extends Application {
 			$user = User::get_by_email($_POST['email']);
 			$encrypted_password = md5($_POST['password'].$this->config->encryption_salt);
 			
-			if ($user['password'] == $encrypted_password) {
+			if ($user->password == $encrypted_password) {
 				
 				$_SESSION['user'] = $user;
 				

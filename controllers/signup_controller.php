@@ -160,7 +160,7 @@ function do_signup($mode = 'full') {
 		if ($mode == 'code' || $mode == 'full') {
 		
 			// Do signup
-			User::signup($user['id'], $_POST['username'], $_POST['password1']);
+			User::signup($user->id, $_POST['username'], $_POST['password1']);
 			
 			if ($this->config->send_emails == TRUE) {
 				// Send 'thank you for signing up' email
@@ -178,7 +178,7 @@ function do_signup($mode = 'full') {
 			
 			// Log signup
 			if (isset($this->plugins->log))
-				$this->plugins->log->add($user['id'], 'user', NULL, 'signup');
+				$this->plugins->log->add($user->id, 'user', NULL, 'signup');
 			
 			// Start session
 			$_SESSION['user'] = $user;

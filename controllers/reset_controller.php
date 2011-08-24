@@ -18,14 +18,14 @@ function generate_code() {
 	if ($user != NULL) {
 		
 		// Generate code
-		$code = User::generate_password_reset_code($user['id']);
+		$code = User::generate_password_reset_code($user->id);
 		
 		$to = $_POST['email'];
 		$link = $this->config->url.'forgot.php?code='.$code;
-		$headers = "From: $this->config->name <robot@blah.com>\r\nContent-type: text/html\r\n";
+		$headers = "From: {$this->config->name} <robot@blah.com>\r\nContent-type: text/html\r\n";
 		
 		// Load subject and body from template
-		$this->loadView('email/password_reset');
+		$this->loadView('emails/password_reset');
 		
 		// Email user
 		if ($this->config->send_emails == TRUE)

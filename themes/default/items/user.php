@@ -13,15 +13,15 @@ foreach ($this->items as $item) {
 	$this->item = $item;
 	
 	// Populate some vars
-	if ($this->config->items['titles']['enabled'] == TRUE && $item['title'] != NULL) {
-		$content = '<h4>'.$this->link_to($item['title'], 'items', 'show', $item['id']).' <small>by '.$this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']).'</small></h4>';
-		$content .= '<p>'.$item['content'].'</p>';
+	if ($this->config->items['titles']['enabled'] == TRUE && $item->title != NULL) {
+		$content = '<h4>'.$this->link_to($item->title, 'items', 'show', $item->id).' <small>by '.$this->link_to($item->user->username, 'users', 'show', $item->user->id).'</small></h4>';
+		$content .= '<p>'.$item->content.'</p>';
 	} else {
-		$content = '<p>'.$this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']).' '.$item['content'].'</p>';
+		$content = '<p>'.$this->link_to($item->user->username, 'users', 'show', $item->user->id).' '.$item->content.'</p>';
 	}
 	
 	// Comment form toggle
-	if (count($item['comments']) > 0) {
+	if (count($item->comments) > 0) {
 		$this->show_comment_form = TRUE;
 	} else {
 		$this->show_comment_form = FALSE;

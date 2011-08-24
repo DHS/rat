@@ -34,7 +34,7 @@ class LikesController extends Application {
 	function json($item_id) {
 		
 		$item = Item::get($item_id);
-		$this->json = $item['likes'];
+		$this->json = $item->likes;
 		$this->loadView('pages/json');
 		
 	}
