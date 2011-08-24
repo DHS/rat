@@ -4,8 +4,8 @@ class InvitesController extends Application {
 	
 	function index() {
 		
-		$this->page['invites_remaining'] = $_SESSION['user']['invites'];
-		$this->page['invites'] = Invite::list_sent($_SESSION['user']['id']);
+		$this->invites_remaining = $_SESSION['user']['invites'];
+		$this->invites = Invite::list_sent($_SESSION['user']['id']);
 		
 		$this->title = 'Invites';
 		$this->loadLayout('invites/index');

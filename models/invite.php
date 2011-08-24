@@ -2,7 +2,7 @@
 
 class Invite {
 	
-	// Add an invite
+	// Add an invite, returns invite id
 	public static function add($user_id, $email) {
 
 		$user_id = sanitize_input($user_id);
@@ -20,7 +20,7 @@ class Invite {
 
 	}
 
-	// Get all invites sent by a user
+	// Get all invites sent by a user, returns an array of Invite objects
 	public static function list_sent($user_id) {
 
 		$user_id = sanitize_input($user_id);
@@ -29,37 +29,43 @@ class Invite {
 		$query = mysql_query($sql);
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$invites_sent[] = $result;
-		}
-
-		return $invites_sent;
-
-	}
-	
-	// Get all invites with a given code
-	public static function list_by_code($code) {
-
-		$code = sanitize_input($code);
-
-		$invites = NULL;
-
-		$sql_count = "SELECT COUNT(id) FROM invites WHERE code = $code";
-		$count_query = mysql_query($sql_count);
-		$count = mysql_result($count_query, 0);
-
-		if ($count >= 1) {
-
-			$sql_get = "SELECT * FROM invites WHERE code = $code";
-			$query = mysql_query($sql_get);
-
-			while ($invite = mysql_fetch_array($query, MYSQL_ASSOC)) {
-				$invites[] = $invite;
+			
+			$invite = new Invite;
+			
+			foreach($result as $k => $v) {
+				$invite->$k = $v;
 			}
-
+			
+			$invites[] = $invite;
+			
 		}
 
 		return $invites;
 
+	}
+	
+	// Get all invites with a given code, returns an array of Invite objects
+	public static function list_by_code($code) {
+		
+		$code = sanitize_input($code);
+		
+		$sql = "SELECT * FROM invites WHERE code = $code";
+		$query = mysql_query($sql);
+		
+		while($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			$invite = new Invite;
+			
+			foreach ($result as $k => $v) {
+				$invite->$k = $v;
+			}
+			
+			$invites[] = $invite;
+			
+		}
+		
+		return $invites;
+		
 	}
 	
 	// Update an invite	
@@ -79,7 +85,7 @@ class Invite {
 
 	}
 	
-	// Checks to see if a user is already invited
+	// Checks to see if a user is already invited, returns TRUE or FALSE
 	public static function check_invited($user_id, $email) {
 
 		$user_id = sanitize_input($user_id);
@@ -101,7 +107,7 @@ class Invite {
 
 	}
 	
-	// Validates an invite code
+	// Validates an invite code, returns TRUE or FALSE
 	public static function check_code_valid($code, $email) {
 
 		if ($code == '')
