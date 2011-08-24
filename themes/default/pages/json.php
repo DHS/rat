@@ -1,1 +1,1 @@
-<?php echo json_encode($this->page['json']); ?>
+<?php echo json_encode($this->json); ?>

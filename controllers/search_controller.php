@@ -38,7 +38,7 @@ class SearchController extends Application {
 		$search = new Search;
 		
 		$items['items'] = $search->do_search($q);
-		$this->page['json'] = $items;
+		$this->json = $items;
 		$this->loadView('pages/json');
 		
 	}
