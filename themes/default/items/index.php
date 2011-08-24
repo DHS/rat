@@ -23,9 +23,9 @@
 	
 	// Comment form toggle
 	if (count($item->comments) > 0) {
-		$this->page->show_comment_form = TRUE;
+		$this->show_comment_form = TRUE;
 	} else {
-		$this->page->show_comment_form = FALSE;
+		$this->show_comment_form = FALSE;
 	}
 	
 ?>

@@ -48,7 +48,7 @@ if ($this->config->items['likes']['enabled'] == TRUE)
 	$this->loadView('likes/index');
 
 if ($this->config->items['comments']['enabled'] == TRUE) {
-	$this->page['show_comment_form'] = TRUE;
+	$this->show_comment_form = TRUE;
 	$this->loadView('comments/index');
 }
 
