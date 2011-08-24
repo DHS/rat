@@ -1,6 +1,6 @@
 <?php
 
-class FriendsController {
+class FriendsController extends Application {
 	
 	function index() {
 		

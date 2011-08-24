@@ -1,6 +1,6 @@
 <?php
 
-class AdminController {
+class AdminController extends Application {
 	
 	function __construct() {
 		

@@ -1,6 +1,6 @@
 <?php
 
-class LikesController {
+class LikesController extends Application {
 	
 	function add($item_id) {
 		

@@ -1,6 +1,6 @@
 <?php
 
-class UsersController {
+class UsersController extends Application {
 	
 	function __construct() {
 		

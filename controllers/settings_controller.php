@@ -1,6 +1,6 @@
 <?php
 
-class SettingsController {
+class SettingsController extends Application {
 	
 	function index() {
 

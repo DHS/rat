@@ -1,6 +1,6 @@
 <?php
 
-class SessionsController {
+class SessionsController extends Application {
 	
 	function index() {
 		

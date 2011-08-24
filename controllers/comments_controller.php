@@ -1,6 +1,6 @@
 <?php
 
-class CommentsController {
+class CommentsController extends Application {
 	
 	function add() {
 		

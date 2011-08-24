@@ -1,6 +1,6 @@
 <?php
 
-class InvitesController {
+class InvitesController extends Application {
 	
 	function index() {
 		
