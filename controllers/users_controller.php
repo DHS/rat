@@ -8,7 +8,7 @@ class UsersController extends Application {
 		if ($this->uri['action'] == 'add' && !empty($_SESSION['user'])) {
 
 			$this->page['name'] = 'Signup';
-			$this->page['message'] = 'You are already logged in!';
+			$this->message = 'You are already logged in!';
 			$this->loadView('partials/header');
 			$this->loadView('partials/footer');
 			exit;
@@ -129,13 +129,13 @@ class UsersController extends Application {
 					}
 					
 					// Set welcome message
-					$this->page['message'] = urlencode('Password updated.<br />Welcome back to '.$this->config->name.'!');
+					$this->message = urlencode('Password updated.<br />Welcome back to '.$this->config->name.'!');
 					
 					// Go forth!
 					if (SITE_IDENTIFIER == 'live') {
-						header('Location: '.$this->config->url.'?message='.$this->page['message']);
+						header('Location: '.$this->config->url.'?message='.$this->message);
 					} else {
-						header('Location: '.$this->config->dev_url.'?message='.$this->page['message']);
+						header('Location: '.$this->config->dev_url.'?message='.$this->message);
 					}
 					
 					exit();
@@ -143,7 +143,7 @@ class UsersController extends Application {
 				} else {
 					// Show error message
 					
-					$this->page['message'] = $error;
+					$this->message = $error;
 					$this->loadView('partials/header');
 					if (User::check_password_reset_code($code) != FALSE)
 						$this->loadView('reset');

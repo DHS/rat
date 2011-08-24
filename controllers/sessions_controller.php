@@ -40,7 +40,7 @@ class SessionsController extends Application {
 				
 			} else {
 				
-				$this->page['message'] .= 'Something isn\'t quite right.<br />Please try again...';
+				$this->message .= 'Something isn\'t quite right.<br />Please try again...';
 				$email = $_POST['email'];
 				
 			}
@@ -53,8 +53,8 @@ class SessionsController extends Application {
 			$this->loadLayout('sessions/add');
 
 		} else {
-			$this->page['message'] = 'You are already logged in!<br />';
-			$this->page['message'] .= $this->link_to('Click here', 'sessions', 'remove').' to logout.';
+			$this->message = 'You are already logged in!<br />';
+			$this->message .= $this->link_to('Click here', 'sessions', 'remove').' to logout.';
 			$this->loadLayout('partials/message');
 		}
 		
@@ -89,7 +89,7 @@ class SessionsController extends Application {
 			
 		}
 		
-		$this->page['message'] = 'Nothing to see here';
+		$this->message = 'Nothing to see here';
 		$this->loadLayout();
 		
 	}

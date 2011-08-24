@@ -97,14 +97,14 @@ if (isset($_POST['email'])) {
 			mail($to, $subject, $body, $headers);
 		}
 
-		$this->page['message'] = 'Invite sent!';
+		$this->message = 'Invite sent!';
 		$this->loadView('partials/message');
 
 	} else {
 		
 		$_GET['email'] = $_POST['email'];
 		
-		$this->page['message'] = $error;
+		$this->message = $error;
 		$this->loadView('partials/message');
 		
 	}

@@ -46,21 +46,21 @@ function password() {
 				if (isset($this->plugins->log))
 					$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'change_password');
 
-				$this->page['message'] = 'Password udpated!';
+				$this->message = 'Password udpated!';
 				
 			} else {
 				// New passwords don't match
-				$this->page['message'] = 'There was a problem, please try again.';
+				$this->message = 'There was a problem, please try again.';
 			}
 			
 		} else {
 			// Old passwords don't match
-			$this->page['message'] = 'There was a problem, please try again.';
+			$this->message = 'There was a problem, please try again.';
 		}
 		
 	} else {
 		// Variables missing
-		$this->page['message'] = 'There was a problem, please try again.';
+		$this->message = 'There was a problem, please try again.';
 	}
 	
 	$this->loadView('partials/message');
@@ -109,11 +109,11 @@ function profile() {
 			User::update_profile($_SESSION['user']['id'], $_POST['name'], $_POST['bio'], $_POST['url']);
 		
 			// Set success message
-			$this->page['message'] = 'Profile information updated!';
+			$this->message = 'Profile information updated!';
 			
 		} else {
 			
-			$this->page['message'] = $error;
+			$this->message = $error;
 			
 		}
 

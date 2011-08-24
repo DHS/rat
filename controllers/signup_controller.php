@@ -7,7 +7,7 @@ require_once 'config/init.php';
 if (!empty($_SESSION['user'])) {
 	
 	$this->page['name'] = 'Signup';
-	$this->page['message'] = 'You are already logged in!';
+	$this->message = 'You are already logged in!';
 	$this->loadView('partials/header');
 	$this->loadView('partials/footer');
 	exit;
@@ -66,7 +66,7 @@ function validate_code() {
 		// Invalid
 		
 		if ($this->config->beta == TRUE) {
-			$this->page['message'] = 'Your invite code is invalid.';
+			$this->message = 'Your invite code is invalid.';
 			$this->loadView('partials/message');
 			$this->loadView('users/add_beta');
 		} else {
@@ -229,13 +229,13 @@ function do_signup($mode = 'full') {
 			}
 			
 			// Set welcome message
-			$this->page['message'] = urlencode('Welcome to '.$GLOBALS['app']->name.'!');
+			$this->message = urlencode('Welcome to '.$GLOBALS['app']->name.'!');
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$this->config->url.'?message='.$this->page['message']);
+				header('Location: '.$this->config->url.'?message='.$this->message);
 			} else {
-				header('Location: '.$this->config->dev_url.'?message='.$this->page['message']);
+				header('Location: '.$this->config->dev_url.'?message='.$this->message);
 			}
 	
 			exit();
@@ -250,16 +250,16 @@ function do_signup($mode = 'full') {
 				$this->plugins->log->add($user_id, 'user', NULL, 'beta_signup', $_POST['email']);
 			
 			// Set thank you & tweet this message
-			$this->page['message'] = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
-			$this->page['message'] .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
+			$this->message = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
+			$this->message .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
 	
 			//$this->loadView('partials/message');
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$this->config->url.'?message='.$this->page['message']);
+				header('Location: '.$this->config->url.'?message='.$this->message);
 			} else {
-				header('Location: '.$this->config->dev_url.'?message='.$this->page['message']);
+				header('Location: '.$this->config->dev_url.'?message='.$this->message);
 			}
 	
 			exit();
@@ -278,7 +278,7 @@ function do_signup($mode = 'full') {
 		//$app = $GLOBALS['app'];
 		
 		// Show error message
-		$this->page['message'] = $error;
+		$this->message = $error;
 		$this->loadView('partials/header');
 		
 		// Show relevant signup form

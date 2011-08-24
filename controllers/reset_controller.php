@@ -34,7 +34,7 @@ function generate_code() {
 	}
 	
 	$this->loadView('partials/header');
-	$this->page['message'] = 'Check your email for instructions about how to reset your password!';
+	$this->message = 'Check your email for instructions about how to reset your password!';
 	$this->loadView('partials/message');
 	$this->loadView('partials/footer');
 		
@@ -87,20 +87,20 @@ function update_password() {
 		}
 		
 		// Set welcome message
-		$this->page['message'] = urlencode('Password updated.<br />Welcome back to '.$this->config->name.'!');
+		$this->message = urlencode('Password updated.<br />Welcome back to '.$this->config->name.'!');
 		
 		// Go forth!
 		if (SITE_IDENTIFIER == 'live') {
-			header('Location: '.$this->config->url.'?message='.$this->page['message']);
+			header('Location: '.$this->config->url.'?message='.$this->message);
 		} else {
-			header('Location: '.$this->config->dev_url.'?message='.$this->page['message']);
+			header('Location: '.$this->config->dev_url.'?message='.$this->message);
 		}
 
 		exit();
 		
 	} else {
 		
-		$this->page['message'] = $error;
+		$this->message = $error;
 		$this->loadView('partials/header');
 		if (User::check_password_reset_code($_POST['code']) != FALSE)
 			$this->loadView('reset_confirm');
