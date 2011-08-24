@@ -2,7 +2,7 @@
 
 class Comment {
 	
-	// Add a comment to an item
+	// Add a comment to an item, returns comment id
 	public static function add($user_id, $item_id, $content) {
 		
 		$user_id = sanitize_input($user_id);
@@ -18,7 +18,7 @@ class Comment {
 
 	}
 	
-	// Get a single comment
+	// Get a single comment, returns a Comment object
 	public static function get($id) {
 		
 		$id = sanitize_input($id);
@@ -47,7 +47,7 @@ class Comment {
 		
 	}
 	
-	// Get comments for an item
+	// Get comments for an item, returns an array of Comment objects
 	public static function list_item($id) {
 		
 		$id = sanitize_input($id);
@@ -73,7 +73,7 @@ class Comment {
 
 	}
 	
-	// Remove a comment from an item
+	// Remove a comment from an item, returns comment id
 	public static function remove($user_id, $comment_id) {
 
 		$user_id = sanitize_input($user_id);

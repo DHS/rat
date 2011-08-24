@@ -2,7 +2,7 @@
 
 class Like {
 
-	// Add a like for an item
+	// Add a like for an item, returns id
 	public static function add($user_id, $item_id) {
 		
 		$user_id = sanitize_input($user_id);
@@ -22,7 +22,7 @@ class Like {
 
 	}
 
-	// Get likes for an item
+	// Get likes for an item, returns an array of Like objects
 	public static function list_item($item_id) {
 
 		$item_id = sanitize_input($item_id);
@@ -48,7 +48,7 @@ class Like {
 
 	}
 
-	// Get all liked items
+	// Get all liked items, returns an array of Like objects
 	public static function list_all($limit = 10) {
 		
 		$sql = "SELECT * FROM likes ORDER BY date DESC";
@@ -85,7 +85,7 @@ class Like {
 
 	}
 
-	// Unlike an item
+	// Unlike an item, returns like id
 	public static function remove($user_id, $item_id) {
 
 		$user_id = sanitize_input($user_id);

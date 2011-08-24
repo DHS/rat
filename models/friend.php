@@ -2,7 +2,7 @@
 
 class Friend {
 
-	// Add a friend	
+	// Add a friend, returns friendship id
 	public static function add($user_id, $friend_user_id) {
 
 		$user_id = sanitize_input($user_id);
@@ -22,7 +22,7 @@ class Friend {
 
 	}
 	
-	// Get a users's friends
+	// Get a users's friends, returns a list of Friend items
 	public static function get($user_id) {
 
 		$user_id = sanitize_input($user_id);
@@ -48,7 +48,7 @@ class Friend {
 
 	}
 	
-	// Get a users's followers
+	// Get a users's followers, returns a list of Friend items
 	public static function list_followers($user_id) {
 
 		$user_id = sanitize_input($user_id);
@@ -87,7 +87,7 @@ class Friend {
 
 	}
 
-	// Unfriend!
+	// Unfriend! Returns friendship id
 	public static function remove($user_id, $friend_user_id) {
 
 		$user_id = sanitize_input($user_id);
@@ -107,7 +107,7 @@ class Friend {
 
 	}
 	
-	// Check whether two users are friends
+	// Check whether two users are friends, returns TRUE or FALSE
 	public static function check($user_id, $friend_user_id) {
 
 		$user_id = sanitize_input($user_id);

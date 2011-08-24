@@ -2,7 +2,7 @@
 
 class Item {
 
-	// Create an item, returns id
+	// Create an item, returns item id
 	public static function add($user_id, $content, $title = NULL, $image = NULL) {
 
 		$user_id = sanitize_input($user_id);
@@ -28,7 +28,7 @@ class Item {
 
 	}
 
-	// get an item by id, returns an Item object
+	// Get an item by id, returns an Item object
 	public static function get($id) {
 
 		$id = sanitize_input($id);
@@ -59,7 +59,7 @@ class Item {
 
 	}
 
-	// get recent items, returns array of Item objects
+	// Get recent items, returns array of Item objects
 	public static function list_all($limit = 20) {
 
 		$sql = "SELECT * FROM items ORDER BY id DESC";
@@ -208,7 +208,7 @@ class Item {
 
 	}
 
-	// Remove an item, returns id
+	// Remove an item, returns item id
 	public static function remove($item_id) {
 
 		$item_id = sanitize_input($item_id);
