@@ -6,7 +6,7 @@ require_once 'config/init.php';
 
 if (!empty($_SESSION['user'])) {
 	
-	$this->page['name'] = 'Signup';
+	$this->title = 'Signup';
 	$this->message = 'You are already logged in!';
 	$this->loadView('partials/header');
 	$this->loadView('partials/footer');

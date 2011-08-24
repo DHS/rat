@@ -49,7 +49,7 @@ class SessionsController extends Application {
 		
 		if (empty($_SESSION['user'])) {
 
-			$this->page['name'] = 'Login';
+			$this->title = 'Login';
 			$this->loadLayout('sessions/add');
 
 		} else {

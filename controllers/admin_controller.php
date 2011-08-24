@@ -11,7 +11,7 @@ class AdminController extends Application {
 			
 			if (count(Admin::list_users()) != 0) {
 				
-				$this->page['name'] = 'Page not found';
+				$this->title = 'Page not found';
 				$this->loadView('partials/header');
 				$this->loadView('partials/footer');
 				exit;
@@ -23,7 +23,7 @@ class AdminController extends Application {
 		if (in_array($_SESSION['user']['id'], $this->config->admin_users) != TRUE) {
 			// User not an admin
 			
-			$this->page['name'] = 'Page not found';
+			$this->title = 'Page not found';
 			$this->loadView('partials/header');
 			$this->loadView('partials/footer');
 			exit;
@@ -44,7 +44,7 @@ class AdminController extends Application {
 	// Setup your rat installation
 	function setup() {
 		
-		$this->page['name'] = 'Setup';
+		$this->title = 'Setup';
 		
 		if (isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
 			// Do setup

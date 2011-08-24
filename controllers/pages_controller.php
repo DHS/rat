@@ -10,7 +10,7 @@ class PagesController extends Application {
 	
 	function show($name) {
 		
-		$this->page['name'] = ucfirst($name);
+		$this->title = ucfirst($name);
 		
 		$this->loadLayout('pages/'.$name);
 		

@@ -7,7 +7,7 @@ class InvitesController extends Application {
 		$this->page['invites_remaining'] = $_SESSION['user']['invites'];
 		$this->page['invites'] = Invite::list_sent($_SESSION['user']['id']);
 		
-		$this->page['name'] = 'Invites';
+		$this->title = 'Invites';
 		$this->loadLayout('invites/index');
 		
 	}
@@ -32,7 +32,7 @@ class InvitesController extends Application {
 
 if ($this->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 	
-	$this->page['name'] = 'Page not found';
+	$this->title = 'Page not found';
 	$this->loadView('partials/header');
 	$this->loadView('partials/footer');
 	exit;
@@ -41,7 +41,7 @@ if ($this->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 
 // Header
 
-$this->page['name'] = 'Invites';
+$this->title = 'Invites';
 $this->loadView('partials/header');
 
 // Process new invites

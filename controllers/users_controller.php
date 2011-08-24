@@ -7,7 +7,7 @@ class UsersController extends Application {
 		// Check if user is logged in and trying to signup
 		if ($this->uri['action'] == 'add' && !empty($_SESSION['user'])) {
 
-			$this->page['name'] = 'Signup';
+			$this->title = 'Signup';
 			$this->message = 'You are already logged in!';
 			$this->loadView('partials/header');
 			$this->loadView('partials/footer');
@@ -83,7 +83,7 @@ class UsersController extends Application {
 		
 		$this->user = User::get($id);
 		
-		$this->page['name'] = 'Settings';
+		$this->title = 'Settings';
 		$this->loadLayout('users/update');
 		
 	}
