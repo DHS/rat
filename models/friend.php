@@ -3,7 +3,7 @@
 class Friend {
 
 	// Add a friend	
-	function add($user_id, $friend_user_id) {
+	public static function add($user_id, $friend_user_id) {
 
 		$user_id = sanitize_input($user_id);
 		$friend_user_id = sanitize_input($friend_user_id);
@@ -23,7 +23,7 @@ class Friend {
 	}
 	
 	// Get a users's friends
-	function get($user_id) {
+	public static function get($user_id) {
 
 		global $app;
 
@@ -32,17 +32,26 @@ class Friend {
 		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $user_id";
 		$query = mysql_query($sql);
 
-		while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$row['user'] = $app->user->get($row['friend_user_id']);
-			$return[$row['id']] = $row;
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			$friend = new Friend;
+			
+			foreach($result as $k => $v) {
+				$friend->$k = $v;
+			}
+			
+			$friend->user = User::get($result['friend_user_id']);
+			
+			$friends[$result['id']] = $friend;
+			
 		}
 
-		return $return;
+		return $friends;
 
 	}
 	
 	// Get a users's followers
-	function list_followers($user_id) {
+	public static function list_followers($user_id) {
 
 		global $app;
 
@@ -52,18 +61,27 @@ class Friend {
 
 		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE friend_user_id = $user_id";
 		$query = mysql_query($sql);
-
-		while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$row['user'] = $app->user->get($row['user_id']);
-			$return[$row['id']] = $row;
+		
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			$friend = new Friend;
+			
+			foreach($result as $k => $v) {
+				$friend->$k = $v;
+			}
+			
+			$friend->user = User::get($result['user_id']);
+			
+			$friends[$result['id']] = $friend;
+			
 		}
-
-		return $return;
+		
+		return $friends;
 
 	}
 	
 	// Update a friendship status
-	function update($id, $status) {
+	public static function update($id, $status) {
 
 		$id = sanitize_input($id);
 		$status = sanitize_input($status);
@@ -74,7 +92,7 @@ class Friend {
 	}
 
 	// Unfriend!
-	function remove($user_id, $friend_user_id) {
+	public static function remove($user_id, $friend_user_id) {
 
 		$user_id = sanitize_input($user_id);
 		$friend_user_id = sanitize_input($friend_user_id);
@@ -94,7 +112,7 @@ class Friend {
 	}
 	
 	// Check whether two users are friends
-	function check($user_id, $friend_user_id) {
+	public static function check($user_id, $friend_user_id) {
 
 		$user_id = sanitize_input($user_id);
 		$friend_user_id = sanitize_input($friend_user_id);
