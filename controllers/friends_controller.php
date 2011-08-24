@@ -14,7 +14,7 @@ class FriendsController {
 		
 		global $app;
 		
-		$friendship_id = $app->friend->add($_SESSION['user']['id'], $friend_id);
+		$friendship_id = Friend::add($_SESSION['user']['id'], $friend_id);
 		
 		if (isset($app->plugins->log))
 			$app->plugins->log->add($_SESSION['user']['id'], 'friend', $friendship_id, 'add');
@@ -47,7 +47,7 @@ class FriendsController {
 		
 		global $app;
 		
-		$friend_id = $app->friend->remove($_SESSION['user']['id'], $friend_id);
+		$friend_id = Friend::remove($_SESSION['user']['id'], $friend_id);
 		
 		if (isset($app->plugins->log))
 			$app->plugins->log->add($_SESSION['user']['id'], 'friend', $friend_id, 'remove');

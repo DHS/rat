@@ -4,7 +4,7 @@
 <a href="login.php?redirect_to=/<?php echo $app->page->user['username']; ?>" class="friend"><?php if ($app->config->friends['asymmetric'] == TRUE) { echo 'Follow'; } else { echo 'Add friend'; } ?></a>
 <?php } else {
 
-	if ($app->friend->check($_SESSION['user']['id'], $app->page->user['id']) == TRUE) {
+	if (Friend::check($_SESSION['user']['id'], $app->page->user['id']) == TRUE) {
 		$app->loadView('friends/remove');
 	} else {
 		$app->loadView('friends/add');
