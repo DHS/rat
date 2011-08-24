@@ -6,7 +6,7 @@ class ItemsController extends Application {
 		
 		// To add an item you must be logged in
 		if (($this->uri['action'] == 'add' || $this->uri['action'] == 'remove') && $_SESSION['user'] == NULL) {
-			$this->page['name'] = 'Page not found';
+			$this->title = 'Page not found';
 			$this->loadView('partials/header');
 			$this->loadView('partials/footer');
 			exit;
@@ -17,7 +17,7 @@ class ItemsController extends Application {
 	// Show stream of everyone's items
 	function index() {
 	
-		$this->page->name = $this->config->tagline;
+		$this->title = $this->config->tagline;
 		$this->items = $this->item->list_all();
 		
 		$this->loadLayout('items/index');
@@ -204,7 +204,7 @@ class ItemsController extends Application {
 			
 			// If friends enabled then show feed of friends' activity
 			
-			$this->page['name'] = $this->config->tagline;
+			$this->title = $this->config->tagline;
 			$this->items = Item::list_feed($_SESSION['user']['id']);
 			$this->loadLayout('items/index');
 			

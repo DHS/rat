@@ -1,46 +1,16 @@
 <?php
-// Set page_name for this format: <h1>App name - $this->page['name']</h1>
-// Overwrite with $this->page['title'] (and $this->page['head_title'] if necessary)
-// The next few lines process these and output $head_title (for <title></title>) and $page_title (for <h1></h1>)
 
-// Set the var that is printed in head title
-if (isset($this->page['head_title']))
-	$head_title = $this->page['head_title'];
-
-if (isset($this->page['title'])) {
-	// Page title is set = override!
-
-	// Set the var that prints the page title
-	$page_title = $this->page['title'];
-
-	// If no head title is found then set head title equal to page title
-	if (!isset($head_title))
-		$head_title = $this->page['title'];
-
-} else {
-	// No page title set
-
-	if (isset($this->page['name'])) {
-		// Page name found
-		
-		// Set the var that prints the page title
-		$page_title = '<a href="/">'.$this->config->name.'</a> <small>'.$this->page['name'].'</small>';
-
-		// If no head title is found then set head title similar to page title
-		if (!isset($head_title))
-			$head_title = $this->config->name.' - '.$this->page['name'];
-
+if (!isset($this->head_title) {
+	if (isset($this->title)) {
+		$this->head_title = $this->config->name.' - '.$this->title;
 	} else {
-		// No page name found
-
-		// Set page title to app name
-		$page_title = '<a href="/">'.$this->config->name.'</a>';
-
-		// Set head title to app name
-		if (!isset($head_title))
-			$head_title = $this->config->name;
-
+		$this->head_title = $this->config->name;
 	}
+}
+
+if (isset($this->title)) {
+	$this->title = '<!-- Page title -->
+  <h1><a href="/">'.$this->config->name.'</a> <small>'.$this->title.'</small></h1>';
 }
 
 ?>
@@ -57,7 +27,7 @@ if (isset($this->page['title'])) {
        More info: h5bp.com/b/378 -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title><?php echo $head_title; ?></title>
+  <title><?php echo $this->head_title; ?></title>
   <meta name="description" content="">
   <meta name="author" content="">
 
@@ -138,39 +108,19 @@ if (isset($this->page['title'])) {
 	<p class="clear">&nbsp;</p>
 
     <!-- Page title -->
-    <?php
-
-	if (isset($this->plugins->gravatar) && !empty($this->page['title_gravatar'])) {
-		// Show gravatar
-
-	echo '<table class="center">
-	<tr>
-	<td>';
-	echo $this->plugins->gravatar->show($this->page['title_gravatar'], array('style' => "margin-right: 10px;"));
-	echo '</td>
-	<td><h1>'.$page_title.'</h1></td>
-	</tr>
-	</table>';
-
-	} else {
-
-		echo '<h1>'.$page_title.'</h1>';
-
-	}
-
-	?>
+    <?php echo '<h1>'.$this->title.'</h1>'; ?>
 
 <?php
 
 if (isset($_GET['message']))
-	$this->page['message'] = $_GET['message'];
+	$this->message = $_GET['message'];
 
-if (isset($this->page->message)) {
+if (isset($this->message)) {
 	echo '<!-- Message -->
   <div class="row">
     <div class="span8 columns offset4">
       <div class="alert-message info">
-        <p>'.$this->page->message.'</p>
+        <p>'.$this->message.'</p>
       </div>
     </div>
   </div>';
