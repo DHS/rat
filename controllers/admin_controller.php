@@ -55,10 +55,10 @@ class AdminController {
 		if (isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
 			// Do setup
 			
-			$user_id = $app->user->add($_POST['email']);
-			$app->user->signup($user_id, $_POST['username'], $_POST['password']);
+			$user_id = User::add($_POST['email']);
+			User::signup($user_id, $_POST['username'], $_POST['password']);
 			
-			$user = $app->user->get_by_email($_POST['email']);
+			$user = User::get_by_email($_POST['email']);
 			$_SESSION['user'] = $user;
 			
 			// Log login

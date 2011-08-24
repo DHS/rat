@@ -40,7 +40,7 @@ class log {
 		$query = mysql_query($sql);
 
 		while ($entry = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$entry['user'] = $app->user->get($entry['user_id']);
+			$entry['user'] = User::get($entry['user_id']);
 			$entries[] = $entry;
 		}
 		

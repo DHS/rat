@@ -1,7 +1,7 @@
 <?php
 
 foreach ($app->config->admin_users as $value) {
-	$author = $app->user->get($value);
+	$author = User::get($value);
 	if ($app->config->private != TRUE || $_SESSION['user'] != NULL) {
 		$authors .= '<a href="/'.$author['username'].'">'.$author['username'].'</a>, ';
 	} else {

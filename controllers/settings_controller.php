@@ -6,7 +6,7 @@ class SettingsController {
 
 		global $app;
 		
-		$app->page->name = 'Settings';
+		$itemSettings';
 		$app->loadPartial('header');
 		
 		// Show profile info form
@@ -42,7 +42,7 @@ function password() {
 				// New passwords match
 				
 				// Call user_password_update in user model
-				$app->user->update_password($_SESSION['user']['id'], $_POST['new_password1']);
+				User::update_password($_SESSION['user']['id'], $_POST['new_password1']);
 				
 				// Update session
 				$_SESSION['user']['password'] = md5($_POST['new_password1'].$app->config->encryption_salt);
@@ -95,7 +95,7 @@ function profile() {
 		}
 		
 		// Check for spaces
-		if ($app->user->check_contains_spaces($_POST['url']) == TRUE)
+		if (User::check_contains_spaces($_POST['url']) == TRUE)
 			$error = 'URL cannot contain spaces.';
 		
 		// End URL validation
@@ -113,7 +113,7 @@ function profile() {
 				$_SESSION['user']['url'] = $_POST['url'];
 	    	
 			// Call user_update_profile in user model
-			$app->user->update_profile($_SESSION['user']['id'], $_POST['name'], $_POST['bio'], $_POST['url']);
+			User::update_profile($_SESSION['user']['id'], $_POST['name'], $_POST['bio'], $_POST['url']);
 		
 			// Set success message
 			$app->page->message = 'Profile information updated!';
@@ -141,7 +141,7 @@ if (!isset($app->page->selector))
 
 // Header
 
-$app->page->name = 'Settings';
+$itemSettings';
 $app->loadView('partials/header');
 
 // Show page determined by selector

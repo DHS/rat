@@ -79,9 +79,10 @@ class UsersController {
 		
 		global $app;
 		
-		$app->page->user = $app->user->get($id);
+		$app->page->user = User::get($id);
 		$app->page->items = $app->item->list_user($id);
 		
+		$app->page->name = $app->page->user['username'];
 		$app->loadLayout('users/show');
 		
 	}
@@ -90,8 +91,9 @@ class UsersController {
 		
 		global $app;
 		
-		$app->page->user = $app->user->get($id);
+		$app->page->user = User::get($id);
 		
+		$app->page->name = 'Settings';
 		$app->loadLayout('users/update');
 		
 	}
@@ -106,7 +108,7 @@ class UsersController {
 			// If two passwords submitted then check, otherwise show form
 			if (isset($_POST['password1']) && isset($_POST['password2'])) {
 				
-				if ($app->user->check_password_reset_code($code) == FALSE)
+				if (User::check_password_reset_code($code) == FALSE)
 					exit();
 				
 				if ($_POST['password1'] == '' || $_POST['password2'] == '')
@@ -118,12 +120,12 @@ class UsersController {
 				// Error processing
 				if ($error == '') {
 					
-					$user_id = $app->user->check_password_reset_code($code);
+					$user_id = User::check_password_reset_code($code);
 					
 					// Do update
-					$app->user->update_password($user_id, $_POST['password1']);
+					User::update_password($user_id, $_POST['password1']);
 					
-					$user = $app->user->get($user_id);
+					$user = User::get($user_id);
 					
 					// Start session
 					$_SESSION['user'] = $user;
@@ -155,7 +157,7 @@ class UsersController {
 					
 					$app->page->message = $error;
 					$app->loadView('partials/header');
-					if ($app->user->check_password_reset_code($code) != FALSE)
+					if (User::check_password_reset_code($code) != FALSE)
 						$app->loadView('reset');
 					$app->loadView('partials/footer');
 					
@@ -189,7 +191,7 @@ class UsersController {
 		
 		global $app;
 		
-		$user['user'] = $app->user->get_by_username($username);
+		$user['user'] = User::get_by_username($username);
 		$user['items'] = $app->item->list_user($user['user']['id']);
 		$app->page->json = $user;
 		$app->loadView('pages/json');

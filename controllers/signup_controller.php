@@ -61,7 +61,7 @@ function validate_code() {
 
 	global $app;
 
-	if ($app->user->validate_invite_code($_GET['code'], $_GET['email']) == TRUE) {
+	if (User::validate_invite_code($_GET['code'], $_GET['email']) == TRUE) {
 		// Valid
 
 		$app->loadView('users/add');
@@ -98,7 +98,7 @@ function do_signup($mode = 'full') {
 
 	if ($mode == 'code' && $app->config->beta == TRUE) {
 
-		if ($app->user->validate_invite_code($_POST['code'], $_POST['email']) != TRUE)
+		if (User::validate_invite_code($_POST['code'], $_POST['email']) != TRUE)
 			$error .= 'Invalid invite code.<br />';
 
 	}
@@ -110,13 +110,13 @@ function do_signup($mode = 'full') {
 	if ($_POST['email'] == '')
 		$error .= 'Email cannot be left blank.<br />';
 	
-	if ($app->user->check_contains_spaces($_POST['email']) == TRUE)
+	if (User::check_contains_spaces($_POST['email']) == TRUE)
 		$error .= 'Email cannot contain spaces.<br />';
 	
-	if ($app->user->check_contains_at($_POST['email']) != TRUE)
+	if (User::check_contains_at($_POST['email']) != TRUE)
 		$error .= 'Email must contain an @ symbol.<br />';
 	
-	if ($app->user->check_email_available($_POST['email']) != TRUE)
+	if (User::check_email_available($_POST['email']) != TRUE)
 		$error .= 'Email already in the system!<br />';
 	
 	// Check username
@@ -126,10 +126,10 @@ function do_signup($mode = 'full') {
 		if ($_POST['username'] == '')
 			$error .= 'Username cannot be left blank.<br />';
 		
-		if ($app->user->check_alphanumeric($_POST['username']) != TRUE)
+		if (User::check_alphanumeric($_POST['username']) != TRUE)
 			$error .= 'Username must only contain letters and numbers.<br />';
 		
-		if ($app->user->check_username_available($_POST['username']) != TRUE)
+		if (User::check_username_available($_POST['username']) != TRUE)
 			$error .= 'Username not available.<br />';
 		
 	}
@@ -152,13 +152,13 @@ function do_signup($mode = 'full') {
 		// No error so proceed...
 		
 		// First check if user added
-		$user = $app->user->get_by_email($_POST['email']);
+		$user = User::get_by_email($_POST['email']);
 
 		// If not then add
 		if ($user == NULL) {
 			
-			$user_id = $app->user->add($_POST['email']);
-			$user = $app->user->get($user_id);
+			$user_id = User::add($_POST['email']);
+			$user = User::get($user_id);
 			
 		}
 		
@@ -166,7 +166,7 @@ function do_signup($mode = 'full') {
 		if ($mode == 'code' || $mode == 'full') {
 		
 			// Do signup
-			$app->user->signup($user['id'], $_POST['username'], $_POST['password1']);
+			User::signup($user['id'], $_POST['username'], $_POST['password1']);
 			
 			if ($app->config->send_emails == TRUE) {
 				// Send 'thank you for signing up' email

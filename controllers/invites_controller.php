@@ -9,6 +9,7 @@ class InvitesController {
 		$app->page->invites_remaining = $_SESSION['user']['invites'];
 		$app->page->invites = $app->invite->list_sent($_SESSION['user']['id']);
 		
+		$app->page->name = 'Invites';
 		$app->loadLayout('invites/index');
 		
 	}
@@ -57,7 +58,7 @@ if (isset($_POST['email'])) {
 		$error .= 'You don\'t have any invites remaining.<br />';
 
 	// Check if email contains spaces
-	if ($app->user->check_contains_spaces($_POST['email']) == TRUE)
+	if (User::check_contains_spaces($_POST['email']) == TRUE)
 		$error .= 'Email address cannot contain spaces.<br />';
 
 	// Check if already invited
@@ -65,7 +66,7 @@ if (isset($_POST['email'])) {
 		$error .= 'You have already invited this person.<br />';
 	
 	// Check if already a user
-	if ($app->user->get_by_email($_POST['email']) == TRUE)
+	if (User::get_by_email($_POST['email']) == TRUE)
 		$error .= 'This person is already using '.$app->config->name.'!<br />';
 
 	if ($error == '') {
@@ -75,7 +76,7 @@ if (isset($_POST['email'])) {
 		$id = $app->invite->add($_SESSION['user']['id'], $_POST['email']);
 
 		// decrement invites in users table
-		$app->user->update_invites($_SESSION['user']['id'], -1);
+		User::update_invites($_SESSION['user']['id'], -1);
 
 		// award points
 		if (isset($app->plugins->points))

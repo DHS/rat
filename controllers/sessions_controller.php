@@ -16,7 +16,7 @@ class SessionsController {
 		
 		if ($_POST['email'] && $_POST['password']) {
 			
-			$user = $app->user->get_by_email($_POST['email']);
+			$user = User::get_by_email($_POST['email']);
 			$encrypted_password = md5($_POST['password'].$app->config->encryption_salt);
 			
 			if ($user['password'] == $encrypted_password) {
@@ -52,6 +52,7 @@ class SessionsController {
 		}
 		
 		if (empty($_SESSION['user'])) {
+			$app->page->name = 'Login';
 			$app->loadLayout('sessions/add');
 		} else {
 			$app->page->message = 'You are already logged in!<br />';

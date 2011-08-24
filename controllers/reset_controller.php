@@ -16,13 +16,13 @@ function generate_code() {
 	
 	global $app;
 	
-	$user = $app->user->get_by_email($_POST['email']);
+	$user = User::get_by_email($_POST['email']);
 	
 	// Check is a user
 	if ($user != NULL) {
 		
 		// Generate code
-		$code = $app->user->generate_password_reset_code($user['id']);
+		$code = User::generate_password_reset_code($user['id']);
 		
 		$to = $_POST['email'];
 		$link = $app->config->url.'forgot.php?code='.$code;
@@ -50,7 +50,7 @@ function check_code() {
 	
 	$app->loadView('partials/header');
 	
-	if ($app->user->check_password_reset_code($_GET['code']) != FALSE)
+	if (User::check_password_reset_code($_GET['code']) != FALSE)
 		$app->loadView('reset_confirm');
 
 	$app->loadView('partials/footer');
@@ -62,7 +62,7 @@ function update_password() {
 	global $app;
 	
 	// Sneaky
-	if ($app->user->check_password_reset_code($_POST['code']) == FALSE)
+	if (User::check_password_reset_code($_POST['code']) == FALSE)
 		exit();
 	
 	if ($_POST['password1'] == '' || $_POST['password2'] == '')
@@ -74,12 +74,12 @@ function update_password() {
 	// Error processing
 	if ($error == '') {
 		
-		$user_id = $app->user->check_password_reset_code($_POST['code']);
+		$user_id = User::check_password_reset_code($_POST['code']);
 		
 		// Do update
-		$app->user->update_password($user_id, $_POST['password1']);
+		User::update_password($user_id, $_POST['password1']);
 		
-		$user = $app->user->get($user_id);
+		$user = User::get($user_id);
 		
 		// Start session
 		$_SESSION['user'] = $user;
@@ -110,7 +110,7 @@ function update_password() {
 		
 		$app->page->message = $error;
 		$app->loadView('partials/header');
-		if ($app->user->check_password_reset_code($_POST['code']) != FALSE)
+		if (User::check_password_reset_code($_POST['code']) != FALSE)
 			$app->loadView('reset_confirm');
 		$app->loadView('partials/footer');
 		
