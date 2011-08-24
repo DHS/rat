@@ -2,9 +2,9 @@
 
 if (count($this->item->comments) > 0) {
 
-	echo '<span id="comments_'.$item->id.'">';
+	echo '<span id="comments_'.$this->item->id.'">';
 
-	foreach ($item->comments as $comment) {
+	foreach ($this->item->comments as $comment) {
 		
 		echo '<p class="meta">
 		"'.$comment->content.'" - '.$this->link_to($comment->user->username, 'users', 'show', $comment->user->id);
@@ -21,19 +21,15 @@ if (count($this->item->comments) > 0) {
 } else {
 	// no comments yet but show empty div fo das ajax
 
-	echo '<span id="comments_'.$item->id.'"></span>';
+	echo '<span id="comments_'.$this->item->id.'"></span>';
 
 }
-
-if (!isset($item))
-
-	$item = $this->item;
 
 if ($this->config->items['comments']['enabled'] == TRUE && ($this->config->private == TRUE || $_SESSION['user'] != NULL)) {
 
 	?>
 
-	<form action="javascript:comment_add(<?php echo $item->id; ?>, '<?php echo $this->link_to(NULL, 'comments', 'add'); ?>');" id="comment_form_<?php echo $item->id; ?>" class="meta" style="margin: 0px; <?php if ($this->show_comment_form != TRUE) { echo 'visibility: hidden; height: 0px;'; }?>" method="post">
+	<form action="javascript:comment_add(<?php echo $this->item->id; ?>, '<?php echo $this->link_to(NULL, 'comments', 'add'); ?>');" id="comment_form_<?php echo $this->item->id; ?>" class="meta" style="margin: 0px; <?php if ($this->show_comment_form != TRUE) { echo 'visibility: hidden; height: 0px;'; }?>" method="post">
 		<input type="text" name="content" size="30" value="" /> <input type="submit" value="<?php echo $this->config->items['comments']['name']; ?>" class="btn" />
 	</form>
 

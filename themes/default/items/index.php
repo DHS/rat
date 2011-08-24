@@ -37,7 +37,7 @@
     <?php echo $content; ?>
     
     <!-- Meta -->
-    <?php echo $this->loadView('items/meta'); ?>
+    <?php $this->loadView('items/meta'); ?>
 
 <?php if ($this->config->items['likes']['enabled'] == TRUE) { ?>
     <!-- Likes -->
@@ -46,7 +46,7 @@
 
 <?php if ($this->config->items['comments']['enabled'] == TRUE) { ?>
     <!-- Comments -->
-    <?php echo $this->loadView('comments/index'); ?>
+    <?php $this->loadView('comments/index'); ?>
 <?php } ?>
 
     <!-- Spacer -->

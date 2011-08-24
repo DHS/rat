@@ -1,11 +1,11 @@
 <?php
 
-if (count($item->likes) > 0) {
+if (count($this->item->likes) > 0) {
 
-	echo '<span id="likes_'.$item->id.'">
+	echo '<span id="likes_'.$this->item->id.'">
 	<p class="meta">'.$this->config->items['likes']['past_tense'].' ';
 	
-	foreach ($item->likes as $like) {
+	foreach ($this->item->likes as $like) {
 
 		if (isset($this->plugins->gravatar)) {
 			$gravatar = $this->plugins->gravatar->show($like->user->email, array('size' => 20, 'style' => ""));
@@ -21,7 +21,7 @@ if (count($item->likes) > 0) {
 } else {
 	// no likes yet but print empty div fo das ajax
 	
-	echo '<span id="likes_'.$item->id.'"></span>';
+	echo '<span id="likes_'.$this->item->id.'"></span>';
 	
 }
 
