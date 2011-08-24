@@ -18,7 +18,7 @@ class ItemsController extends Application {
 	function index() {
 	
 		$this->title = $this->config->tagline;
-		$this->items = $this->item->list_all();
+		$this->items = Item::list_all();
 		
 		$this->loadLayout('items/index');
 		
