@@ -16,7 +16,7 @@ class PagesController {
 		
 		$app->page->name = ucfirst($name);
 		
-		$app->loadLayout('pages/'.$name);
+		$this->loadLayout('pages/'.$name);
 		
 	}
 	

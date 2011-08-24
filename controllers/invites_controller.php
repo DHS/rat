@@ -10,7 +10,7 @@ class InvitesController {
 		$app->page->invites = Invite::list_sent($_SESSION['user']['id']);
 		
 		$app->page->name = 'Invites';
-		$app->loadLayout('invites/index');
+		$this->loadLayout('invites/index');
 		
 	}
 	
@@ -39,8 +39,8 @@ class InvitesController {
 if ($app->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 	
 	$app->page->name = 'Page not found';
-	$app->loadView('partials/header');
-	$app->loadView('partials/footer');
+	$this->loadView('partials/header');
+	$this->loadView('partials/footer');
 	exit;
 	
 }
@@ -48,7 +48,7 @@ if ($app->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 // Header
 
 $app->page->name = 'Invites';
-$app->loadView('partials/header');
+$this->loadView('partials/header');
 
 // Process new invites
 
@@ -96,7 +96,7 @@ if (isset($_POST['email'])) {
 		$headers = "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 		// Load subject and body from template
-		$app->loadView('email/invite_friend');
+		$this->loadView('email/invite_friend');
 
 		if ($app->config->send_emails == TRUE) {
 			// Email user
@@ -104,14 +104,14 @@ if (isset($_POST['email'])) {
 		}
 
 		$app->page->message = 'Invite sent!';
-		$app->loadView('partials/message');
+		$this->loadView('partials/message');
 
 	} else {
 		
 		$_GET['email'] = $_POST['email'];
 		
 		$app->page->message = $error;
-		$app->loadView('partials/message');
+		$this->loadView('partials/message');
 		
 	}
 	
@@ -120,16 +120,16 @@ if (isset($_POST['email'])) {
 // Show invite form
 
 $invites_remaining = $_SESSION['user']['invites'];
-$app->loadView('invites/index');
+$this->loadView('invites/index');
 
 // Show sent invites
 
 $app->page->invites = Invite::list_sent($_SESSION['user']['id']);
-$app->loadView('invites_list');
+$this->loadView('invites_list');
 
 // Footer
 
-$app->loadView('partials/footer');
+$this->loadView('partials/footer');
 
 */
 

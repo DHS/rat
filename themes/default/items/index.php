@@ -19,13 +19,13 @@
   </div>
   <div class="row">
     <div class="span8 columns offset4">
-      <?php $app->loadView('items/meta'); ?>
+      <?php $this->loadView('items/meta'); ?>
     </div>
   </div>
   <?php if ($app->config->items['likes']['enabled'] == TRUE) ?>
   <div class="row">
     <div class="span8 columns offset4">
-      <?php $app->loadView('likes/index'); ?>
+      <?php $this->loadView('likes/index'); ?>
     </div>
   </div>
   <?php } ?>
@@ -37,7 +37,7 @@
 			} else {
 				$app->page->show_comment_form = FALSE;
 			}
-			$app->loadView('comments/index');
+			$this->loadView('comments/index');
 		} ?>
     </div>
   </div>

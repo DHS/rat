@@ -7,15 +7,15 @@ class SettingsController {
 		global $app;
 		
 		$itemSettings';
-		$app->loadPartial('header');
+		$this->loadPartial('header');
 		
 		// Show profile info form
-		$app->loadView('settings_profile');
+		$this->loadView('settings_profile');
 		
 		// Show password change form
-		$app->loadView('settings_password');
+		$this->loadView('settings_password');
 		
-		$app->loadPartial('footer');
+		$this->loadPartial('footer');
 		
 	}
 	
@@ -68,7 +68,7 @@ function password() {
 		$app->page->message = 'There was a problem, please try again.';
 	}
 	
-	$app->loadView('partials/message');
+	$this->loadView('partials/message');
 	
 }
 
@@ -125,7 +125,7 @@ function profile() {
 		}
 
 		// Show message
-		$app->loadView('partials/message');
+		$this->loadView('partials/message');
 		
 	}
 	
@@ -142,7 +142,7 @@ if (!isset($app->page->selector))
 // Header
 
 $itemSettings';
-$app->loadView('partials/header');
+$this->loadView('partials/header');
 
 // Show page determined by selector
 
@@ -150,11 +150,11 @@ call_user_func($app->page->selector);
 
 // Show profile info form
 
-$app->loadView('settings_profile');
+$this->loadView('settings_profile');
 
 // Show password change form
 
-$app->loadView('settings_password');
+$this->loadView('settings_password');
 
 // Gravatar settings
 
@@ -163,7 +163,7 @@ if (isset($app->plugins->gravatar))
 
 // Footer
 
-$app->loadView('partials/footer');
+$this->loadView('partials/footer');
 
 */
 

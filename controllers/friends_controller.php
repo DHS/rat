@@ -30,7 +30,7 @@ class FriendsController {
 			$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 			
 			// Load subject and body from template
-			$app->loadView('email/follower_new');
+			$this->loadView('email/follower_new');
 			
 			// Email user
 			mail($to, $subject, $body, $headers);
@@ -39,7 +39,7 @@ class FriendsController {
 		
 		$app->page->user['id'] = $friend_id;
 		
-		$app->loadView('friends/remove');
+		$this->loadView('friends/remove');
 		
 	}
 	
@@ -54,7 +54,7 @@ class FriendsController {
 		
 		$app->page->user['id'] = $friend_id;
 		
-		$app->loadView('friends/add');
+		$this->loadView('friends/add');
 		
 	}
 	

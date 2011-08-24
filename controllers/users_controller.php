@@ -11,8 +11,8 @@ class UsersController {
 
 			$app->page->name = 'Signup';
 			$app->page->message = 'You are already logged in!';
-			$app->loadView('partials/header');
-			$app->loadView('partials/footer');
+			$this->loadView('partials/header');
+			$this->loadView('partials/footer');
 			exit;
 
 		}
@@ -59,7 +59,7 @@ class UsersController {
 			
 			if ($app->config->beta == TRUE) {
 				// Show beta signup form
-				$app->loadLayout('users/add_beta');
+				$this->loadLayout('users/add_beta');
 			} else {
 				// Show full signup form
 				
@@ -67,7 +67,7 @@ class UsersController {
 					$app->page->code = $code;
 				}
 				
-				$app->loadLayout('users/add');
+				$this->loadLayout('users/add');
 			}
 			
 		}
@@ -83,7 +83,7 @@ class UsersController {
 		$app->page->items = Item::list_user($id);
 		
 		$app->page->name = $app->page->user['username'];
-		$app->loadLayout('users/show');
+		$this->loadLayout('users/show');
 		
 	}
 	
@@ -94,7 +94,7 @@ class UsersController {
 		$app->page->user = User::get($id);
 		
 		$app->page->name = 'Settings';
-		$app->loadLayout('users/update');
+		$this->loadLayout('users/update');
 		
 	}
 	
@@ -156,24 +156,24 @@ class UsersController {
 					// Show error message
 					
 					$app->page->message = $error;
-					$app->loadView('partials/header');
+					$this->loadView('partials/header');
 					if (User::check_password_reset_code($code) != FALSE)
-						$app->loadView('reset');
-					$app->loadView('partials/footer');
+						$this->loadView('reset');
+					$this->loadView('partials/footer');
 					
 				}
 				
 			} else {
 				// Code present so show password reset form
 				
-				$app->loadLayout('users/reset');
+				$this->loadLayout('users/reset');
 				
 			}
 			
 		} else {
 			// No code in URL so show new reset form
 			
-			$app->loadLayout('users/reset_new');
+			$this->loadLayout('users/reset_new');
 			
 		}
 		
@@ -194,7 +194,7 @@ class UsersController {
 		$user['user'] = User::get_by_username($username);
 		$user['items'] = Item::list_user($user['user']['id']);
 		$app->page->json = $user;
-		$app->loadView('pages/json');
+		$this->loadView('pages/json');
 		
 	}
 	

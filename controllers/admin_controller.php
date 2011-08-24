@@ -14,8 +14,8 @@ class AdminController {
 			if (count(Admin::list_users()) != 0) {
 				
 				$app->page->name = 'Page not found';
-				$app->loadView('partials/header');
-				$app->loadView('partials/footer');
+				$this->loadView('partials/header');
+				$this->loadView('partials/footer');
 				exit;
 				
 			}
@@ -26,8 +26,8 @@ class AdminController {
 			// User not an admin
 			
 			$app->page->name = 'Page not found';
-			$app->loadView('partials/header');
-			$app->loadView('partials/footer');
+			$this->loadView('partials/header');
+			$this->loadView('partials/footer');
 			exit;
 			
 		}
@@ -41,7 +41,7 @@ class AdminController {
 		
 		$app->page->users = Admin::list_users();
 		$app->page->users_beta = Admin::list_users_beta();
-		$app->loadLayout('admin/index', 'admin');
+		$this->loadLayout('admin/index', 'admin');
 		
 	}
 	
@@ -80,7 +80,7 @@ class AdminController {
 			// Show setup form
 			
 			$app->page->message = 'Welcome to Rat! Please enter your details:';
-			$app->loadLayout('admin/setup');
+			$this->loadLayout('admin/setup');
 
 		}
 		
@@ -92,7 +92,7 @@ class AdminController {
 		global $app;
 		
 		$app->page->users = Admin::list_users_beta();
-		$app->loadLayout('admin/signups', 'admin');
+		$this->loadLayout('admin/signups', 'admin');
 		
 	}
 	
@@ -102,7 +102,7 @@ class AdminController {
 		global $app;
 		
 		$app->page->users = Admin::list_users();
-		$app->loadLayout('admin/users', 'admin');
+		$this->loadLayout('admin/users', 'admin');
 		
 	}
 	
@@ -113,10 +113,10 @@ class AdminController {
 		
 		if (isset($app->plugins->log)) {
 			
-			$app->loadView('partials/header');
-			$app->loadView('admin/menu');
+			$this->loadView('partials/header');
+			$this->loadView('admin/menu');
 			$app->plugins->log->view();
-			$app->loadView('partials/footer');
+			$this->loadView('partials/footer');
 			
 		}
 		
@@ -148,7 +148,7 @@ class AdminController {
 			$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 			
 			// Load template into $body variable
-			$app->loadView('email/invite_admin');
+			$this->loadView('email/invite_admin');
 			
 			if ($app->config->send_emails == TRUE) {
 				// Email user

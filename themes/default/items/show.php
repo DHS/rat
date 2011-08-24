@@ -25,24 +25,24 @@
 	?>
 	<?php echo $this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']); ?>
 
-	&middot; <?php $app->loadView('items/meta'); ?>
+	&middot; <?php $this->loadView('items/meta'); ?>
 	
 </p>
 
 <?php
 // Untested
 if ($app->config->private != TRUE)
-	$app->loadView('items/share');
+	$this->loadView('items/share');
 ?>
 
 <?php
 
 if ($app->config->items['likes']['enabled'] == TRUE)
-	$app->loadView('likes/index');
+	$this->loadView('likes/index');
 
 if ($app->config->items['comments']['enabled'] == TRUE) {
 	$app->page->show_comment_form = TRUE;
-	$app->loadView('comments/index');
+	$this->loadView('comments/index');
 }
 
 ?>

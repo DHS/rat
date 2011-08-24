@@ -8,8 +8,8 @@ if (!empty($_SESSION['user'])) {
 	
 	$app->page->name = 'Signup';
 	$app->page->message = 'You are already logged in!';
-	$app->loadView('partials/header');
-	$app->loadView('partials/footer');
+	$this->loadView('partials/header');
+	$this->loadView('partials/footer');
 	exit;
 	
 }
@@ -45,12 +45,12 @@ function show_form() {
 	if ($app->config->beta == TRUE) {
 		
 		// Show beta signup form
-		$app->loadView('users/add_beta');
+		$this->loadView('users/add_beta');
 		
 	} else {
 		
 		// Show full signup form
-		$app->loadView('users/add');
+		$this->loadView('users/add');
 		
 	}
 
@@ -64,17 +64,17 @@ function validate_code() {
 	if (User::validate_invite_code($_GET['code'], $_GET['email']) == TRUE) {
 		// Valid
 
-		$app->loadView('users/add');
+		$this->loadView('users/add');
 		
 	} else {
 		// Invalid
 		
 		if ($app->config->beta == TRUE) {
 			$app->page->message = 'Your invite code is invalid.';
-			$app->loadView('partials/message');
-			$app->loadView('users/add_beta');
+			$this->loadView('partials/message');
+			$this->loadView('users/add_beta');
 		} else {
-			$app->loadView('users/add');
+			$this->loadView('users/add');
 		}
 
 	}
@@ -175,7 +175,7 @@ function do_signup($mode = 'full') {
 				$headers = "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 				// Load subject and body from template
-				$app->loadView('email/signup');
+				$this->loadView('email/signup');
 
 				// Email user
 				mail($to, $subject, $body, $headers);
@@ -259,7 +259,7 @@ function do_signup($mode = 'full') {
 			$app->page->message = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
 			$app->page->message .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
 	
-			//$app->loadView('partials/message');
+			//$this->loadView('partials/message');
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
@@ -285,13 +285,13 @@ function do_signup($mode = 'full') {
 		
 		// Show error message
 		$app->page->message = $error;
-		$app->loadView('partials/header');
+		$this->loadView('partials/header');
 		
 		// Show relevant signup form
 		if ($mode == 'beta') {
-			$app->loadView('users/add_beta');
+			$this->loadView('users/add_beta');
 		} else {
-			$app->loadView('users/add');
+			$this->loadView('users/add');
 		}
 	
 	}
@@ -348,14 +348,14 @@ if ($app->page->selector == 'do_signup') {
 } else {
 	// Not doing signup so show a simpler page. Also call header.
 	
-	$app->loadView('partials/header');
+	$this->loadView('partials/header');
 	call_user_func($app->page->selector);
 	
 }
 
 // Footer
 
-$app->loadView('partials/footer');
+$this->loadView('partials/footer');
 
 
 ?>

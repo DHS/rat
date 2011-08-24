@@ -10,7 +10,7 @@
 <?php
 
 if ($app->config->beta == TRUE)
-	$app->loadView('signup_beta');
+	$this->loadView('signup_beta');
 
 ?>
 

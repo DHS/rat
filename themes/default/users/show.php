@@ -24,7 +24,7 @@
 // Show follow button
 
 if ($app->config->friends['enabled'] == TRUE)
-	$app->loadView('friends/index');
+	$this->loadView('friends/index');
 
 // Show number of points
 
@@ -34,13 +34,13 @@ if (isset($app->plugins->points))
 // Show new item form
 
 //if ($_SESSION['user']['post_permission'] == 1)
-//	$app->loadView('items/add');
+//	$this->loadView('items/add');
 
 // List all items for this user
 
 if (count($app->page->items) > 0) {
 
-	$app->loadView('items/user');
+	$this->loadView('items/user');
 
 } else {
 

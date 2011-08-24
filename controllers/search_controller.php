@@ -18,7 +18,7 @@ class SearchController {
 		
 		global $app;
 		
-		$app->loadLayout('search/add');
+		$this->loadLayout('search/add');
 		
 	}
 	
@@ -31,10 +31,10 @@ class SearchController {
 		
 		$app->page->items = $search->do_search($q);
 		
-		$app->loadView('partials/header');
-		$app->loadView('search/add');
-		$app->loadView('items/index');
-		$app->loadView('partials/footer');
+		$this->loadView('partials/header');
+		$this->loadView('search/add');
+		$this->loadView('items/index');
+		$this->loadView('partials/footer');
 		
 	}
 	
@@ -47,7 +47,7 @@ class SearchController {
 		
 		$items['items'] = $search->do_search($q);
 		$app->page->json = $items;
-		$app->loadView('pages/json');
+		$this->loadView('pages/json');
 		
 	}
 

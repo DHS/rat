@@ -3,13 +3,13 @@
 	
 	<p>You have one invite remaining.</p>
 	
-	<?php $app->loadView('invites/add'); ?>
+	<?php $this->loadView('invites/add'); ?>
 	
 <?php } elseif (isset($app->page->invites_remaining) && $app->page->invites_remaining > 1) { ?>
 
 	<p>You have <?php echo $app->page->invites_remaining; ?> invites remaining.</p>
 	
-	<?php $app->loadView('invites/add'); ?>
+	<?php $this->loadView('invites/add'); ?>
 	
 <?php } else { ?>
 	

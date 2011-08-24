@@ -1,7 +1,7 @@
 <?php
 
 if ($app->page->user['id'] == $_SESSION['user']['id']) {
-	$app->loadView('items/add');
+	$this->loadView('items/add');
 }
 
 if (is_array($app->page->items)) {
@@ -23,12 +23,12 @@ foreach ($app->page->items as $item) {
 			
 			<p><?php echo $item['content']; ?></p>
 
-			<?php $app->loadView('items/meta'); ?>
+			<?php $this->loadView('items/meta'); ?>
 
 			<?php
 
 			if ($app->config->items['likes']['enabled'] == TRUE)
-				$app->loadView('likes/index');
+				$this->loadView('likes/index');
 			
 			if ($app->config->items['comments']['enabled'] == TRUE) {
 
@@ -37,7 +37,7 @@ foreach ($app->page->items as $item) {
 				} else {
 					$app->page->show_comment_form = FALSE;
 				}
-				$app->loadView('comments/index');
+				$this->loadView('comments/index');
 				
 			}
 

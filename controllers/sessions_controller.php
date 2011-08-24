@@ -53,11 +53,11 @@ class SessionsController {
 		
 		if (empty($_SESSION['user'])) {
 			$app->page->name = 'Login';
-			$app->loadLayout('sessions/add');
+			$this->loadLayout('sessions/add');
 		} else {
 			$app->page->message = 'You are already logged in!<br />';
 			$app->page->message .= $this->link_to('Click here', 'sessions', 'remove').' to logout.';
-			$app->loadLayout('partials/message');
+			$this->loadLayout('partials/message');
 		}
 		
 	}
@@ -94,7 +94,7 @@ class SessionsController {
 		}
 		
 		$app->page->message = 'Nothing to see here';
-		$app->loadLayout();
+		$this->loadLayout();
 		
 	}
 	

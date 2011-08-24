@@ -6,9 +6,9 @@ function show_form() {
 	
 	global $app;
 	
-	$app->loadView('partials/header');
-	$app->loadView('reset_begin');
-	$app->loadView('partials/footer');
+	$this->loadView('partials/header');
+	$this->loadView('reset_begin');
+	$this->loadView('partials/footer');
 	
 }
 
@@ -29,7 +29,7 @@ function generate_code() {
 		$headers = "From: $app->config->name <robot@blah.com>\r\nContent-type: text/html\r\n";
 		
 		// Load subject and body from template
-		$app->loadView('email/password_reset');
+		$this->loadView('email/password_reset');
 		
 		// Email user
 		if ($app->config->send_emails == TRUE)
@@ -37,10 +37,10 @@ function generate_code() {
 		
 	}
 	
-	$app->loadView('partials/header');
+	$this->loadView('partials/header');
 	$app->page->message = 'Check your email for instructions about how to reset your password!';
-	$app->loadView('partials/message');
-	$app->loadView('partials/footer');
+	$this->loadView('partials/message');
+	$this->loadView('partials/footer');
 		
 }
 
@@ -48,12 +48,12 @@ function check_code() {
 	
 	global $app;
 	
-	$app->loadView('partials/header');
+	$this->loadView('partials/header');
 	
 	if (User::check_password_reset_code($_GET['code']) != FALSE)
-		$app->loadView('reset_confirm');
+		$this->loadView('reset_confirm');
 
-	$app->loadView('partials/footer');
+	$this->loadView('partials/footer');
 	
 }
 
@@ -109,10 +109,10 @@ function update_password() {
 	} else {
 		
 		$app->page->message = $error;
-		$app->loadView('partials/header');
+		$this->loadView('partials/header');
 		if (User::check_password_reset_code($_POST['code']) != FALSE)
-			$app->loadView('reset_confirm');
-		$app->loadView('partials/footer');
+			$this->loadView('reset_confirm');
+		$this->loadView('partials/footer');
 		
 	}
 	

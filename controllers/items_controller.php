@@ -9,8 +9,8 @@ class ItemsController extends Application {
 		// To add an item you must be logged in
 		if (($app->uri['action'] == 'add' || $app->uri['action'] == 'remove') && $_SESSION['user'] == NULL) {
 			$app->page->name = 'Page not found';
-			$app->loadView('partials/header');
-			$app->loadView('partials/footer');
+			$this->loadView('partials/header');
+			$this->loadView('partials/footer');
 			exit;
 		}
 		
@@ -127,14 +127,14 @@ class ItemsController extends Application {
 				
 				// Show error message
 				$app->page->message = $error;
-				$app->loadLayout('items/add');
+				$this->loadLayout('items/add');
 				exit();
 				
 			}
 			
 		} else {
 			
-			$app->loadLayout('items/add');
+			$this->loadLayout('items/add');
 			
 		}
 		
@@ -201,7 +201,7 @@ class ItemsController extends Application {
 		
 		$app->page->item = Item::get($id);
 		
-		$app->loadLayout('items/show');
+		$this->loadLayout('items/show');
 		
 	}
 	
@@ -216,7 +216,7 @@ class ItemsController extends Application {
 			
 			$app->page->name = $app->config->tagline;
 			$app->page->items = Item::list_feed($_SESSION['user']['id']);
-			$app->loadLayout('items/index');
+			$this->loadLayout('items/index');
 			
 		} else {
 			

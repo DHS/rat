@@ -35,7 +35,7 @@ class CommentsController {
 		global $app;
 		
 		$app->page->item = Item::get($item_id);
-		$app->loadView('comments/index');
+		$this->loadView('comments/index');
 		
 	}
 	
@@ -45,7 +45,7 @@ class CommentsController {
 		
 		$item = Item::get($item_id);
 		$app->page->json = $item['comments'];		
-		$app->loadView('pages/json');
+		$this->loadView('pages/json');
 		
 	}
 	
