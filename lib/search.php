@@ -69,7 +69,7 @@ class Search {
 			}
 			
 			$row['comments'] = $app->comment->list_item($row['id']);
-			$row['likes'] = $app->like->list_item($row['id']);
+			$row['likes'] = Like::list_item($row['id']);
 			$row['user'] = User::get($row['user_id']);
 	
 			$rows[] = $row;
