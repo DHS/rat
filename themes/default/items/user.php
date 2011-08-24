@@ -1,13 +1,4 @@
-<?php
-
-if ($this->user->id == $_SESSION['user']['id']) {
-	$this->loadView('items/add');
-}
-
-if (is_array($this->items)) {
-	
-echo '<table style="width: 100%;">';
-
+<?php if (is_array($this->items)) {
 foreach ($this->items as $item) {
 
 	$this->item = $item;

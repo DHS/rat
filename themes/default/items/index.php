@@ -6,6 +6,8 @@
 
 <?php foreach ($this->items as $item) {
 	
+	$this->item = $item;
+	
 	// Populate some vars
 	if (isset($this->plugins->gravatar)) {
 		$image = $this->plugins->gravatar->show($item->user->email, array('size' => 48, 'style' => 'float: left; padding: 0px 10px 10px 0px;'));

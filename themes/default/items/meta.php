@@ -1,7 +1,7 @@
 
 <span class="item_meta">
 
-<?php echo $this->link_to($item->date, 'items', 'show', $item->id); ?>
+<?php echo $this->link_to($this->item->date, 'items', 'show', $item->id); ?>
 
 <?php
 
