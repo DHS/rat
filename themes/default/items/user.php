@@ -1,14 +1,14 @@
 <?php
 
-if ($page['user']['id'] == $_SESSION['user']['id']) {
+if ($this->user->id == $_SESSION['user']['id']) {
 	$this->loadView('items/add');
 }
 
-if (is_array($items)) {
+if (is_array($this->items)) {
 	
 echo '<table style="width: 100%;">';
 
-foreach ($items as $item) {
+foreach ($this->items as $item) {
 
 	$page['item'] = $item;
 	
@@ -18,10 +18,10 @@ foreach ($items as $item) {
 		<td>
 		
 			<?php if ($this->config->items['titles']['enabled'] == TRUE) { ?>
-			<h2><?php echo $item['title']; ?></h2>
+			<h2><?php echo $item->title; ?></h2>
 			<?php } ?>
 			
-			<p><?php echo $item['content']; ?></p>
+			<p><?php echo $item->content; ?></p>
 
 			<?php $this->loadView('items/meta'); ?>
 
@@ -32,7 +32,7 @@ foreach ($items as $item) {
 			
 			if ($this->config->items['comments']['enabled'] == TRUE) {
 
-				if (count($item['comments']) > 0) {
+				if (count($item->comments) > 0) {
 					$page['show_comment_form'] = TRUE;
 				} else {
 					$page['show_comment_form'] = FALSE;

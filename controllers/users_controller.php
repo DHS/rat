@@ -77,10 +77,9 @@ class UsersController extends Application {
 	// Show a user
 	function show($id) {
 		
-		$user = User::get($id);
-		$items = Item::list_user($id);
+		$this->user = User::get($id);
+		$this->items = Item::list_user($id);
 		
-		$page['name'] = $user->username;
 		$this->loadLayout('users/show');
 		
 	}
