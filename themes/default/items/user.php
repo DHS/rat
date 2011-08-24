@@ -4,11 +4,11 @@ if ($page['user']['id'] == $_SESSION['user']['id']) {
 	$this->loadView('items/add');
 }
 
-if (is_array($page['items'])) {
+if (is_array($items)) {
 	
 echo '<table style="width: 100%;">';
 
-foreach ($page['items'] as $item) {
+foreach ($items as $item) {
 
 	$page['item'] = $item;
 	
