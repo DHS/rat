@@ -7,7 +7,7 @@
 <?php foreach ($this->items as $item) {
 	
 	// Prepare vars for comment and like views to be loaded in due course
-	$app->page->item = $item;
+	$this->page->item = $item;
 	
 	// Populate some vars
 	if (isset($this->plugins->gravatar)) {
@@ -26,9 +26,9 @@
 	
 	// Comment form toggle
 	if (count($item['comments']) > 0) {
-		$app->page->show_comment_form = TRUE;
+		$this->page->show_comment_form = TRUE;
 	} else {
-		$app->page->show_comment_form = FALSE;
+		$this->page->show_comment_form = FALSE;
 	}
 	
 ?>
@@ -58,7 +58,7 @@
     <!-- End item -->
 
 <?php
-unset($app->page->item);
+unset($this->page->item);
 } // end foreach loop
 ?>
 

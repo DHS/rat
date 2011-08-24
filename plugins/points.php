@@ -71,7 +71,7 @@ class points {
 
 		$i = 1;
 
-		foreach ($page['leaderboard'] as $row) {
+		foreach ($this->page['leaderboard'] as $row) {
 
 			echo '<tr>
 				<td>'.$i.'.</td>

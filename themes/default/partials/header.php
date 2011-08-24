@@ -1,34 +1,34 @@
 <?php
-// Set page_name for this format: <h1>App name - $page['name']</h1>
-// Overwrite with $page['title'] (and $page['head_title'] if necessary)
+// Set page_name for this format: <h1>App name - $this->page['name']</h1>
+// Overwrite with $this->page['title'] (and $this->page['head_title'] if necessary)
 // The next few lines process these and output $head_title (for <title></title>) and $page_title (for <h1></h1>)
 
 // Set the var that is printed in head title
-if (isset($page['head_title']))
-	$head_title = $page['head_title'];
+if (isset($this->page['head_title']))
+	$head_title = $this->page['head_title'];
 
-if (isset($page['title'])) {
+if (isset($this->page['title'])) {
 	// Page title is set = override!
 
 	// Set the var that prints the page title
-	$page_title = $page['title'];
+	$page_title = $this->page['title'];
 
 	// If no head title is found then set head title equal to page title
 	if (!isset($head_title))
-		$head_title = $page['title'];
+		$head_title = $this->page['title'];
 
 } else {
 	// No page title set
 
-	if (isset($page['name'])) {
+	if (isset($this->page['name'])) {
 		// Page name found
 		
 		// Set the var that prints the page title
-		$page_title = '<a href="/">'.$this->config->name.'</a> <small>'.$page['name'].'</small>';
+		$page_title = '<a href="/">'.$this->config->name.'</a> <small>'.$this->page['name'].'</small>';
 
 		// If no head title is found then set head title similar to page title
 		if (!isset($head_title))
-			$head_title = $this->config->name.' - '.$page['name'];
+			$head_title = $this->config->name.' - '.$this->page['name'];
 
 	} else {
 		// No page name found
@@ -140,13 +140,13 @@ if (isset($page['title'])) {
     <!-- Page title -->
     <?php
 
-	if (isset($this->plugins->gravatar) && !empty($page['title_gravatar'])) {
+	if (isset($this->plugins->gravatar) && !empty($this->page['title_gravatar'])) {
 		// Show gravatar
 
 	echo '<table class="center">
 	<tr>
 	<td>';
-	echo $this->plugins->gravatar->show($page['title_gravatar'], array('style' => "margin-right: 10px;"));
+	echo $this->plugins->gravatar->show($this->page['title_gravatar'], array('style' => "margin-right: 10px;"));
 	echo '</td>
 	<td><h1>'.$page_title.'</h1></td>
 	</tr>
@@ -163,14 +163,14 @@ if (isset($page['title'])) {
 <?php
 
 if (isset($_GET['message']))
-	$page['message'] = $_GET['message'];
+	$this->page['message'] = $_GET['message'];
 
-if (isset($app->page->message)) {
+if (isset($this->page->message)) {
 	echo '<!-- Message -->
   <div class="row">
     <div class="span8 columns offset4">
       <div class="alert-message info">
-        <p>'.$app->page->message.'</p>
+        <p>'.$this->page->message.'</p>
       </div>
     </div>
   </div>';

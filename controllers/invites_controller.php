@@ -4,10 +4,10 @@ class InvitesController extends Application {
 	
 	function index() {
 		
-		$page['invites_remaining'] = $_SESSION['user']['invites'];
-		$page['invites'] = Invite::list_sent($_SESSION['user']['id']);
+		$this->page['invites_remaining'] = $_SESSION['user']['invites'];
+		$this->page['invites'] = Invite::list_sent($_SESSION['user']['id']);
 		
-		$page['name'] = 'Invites';
+		$this->page['name'] = 'Invites';
 		$this->loadLayout('invites/index');
 		
 	}
@@ -32,7 +32,7 @@ class InvitesController extends Application {
 
 if ($this->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 	
-	$page['name'] = 'Page not found';
+	$this->page['name'] = 'Page not found';
 	$this->loadView('partials/header');
 	$this->loadView('partials/footer');
 	exit;
@@ -41,7 +41,7 @@ if ($this->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 
 // Header
 
-$page['name'] = 'Invites';
+$this->page['name'] = 'Invites';
 $this->loadView('partials/header');
 
 // Process new invites
@@ -97,14 +97,14 @@ if (isset($_POST['email'])) {
 			mail($to, $subject, $body, $headers);
 		}
 
-		$page['message'] = 'Invite sent!';
+		$this->page['message'] = 'Invite sent!';
 		$this->loadView('partials/message');
 
 	} else {
 		
 		$_GET['email'] = $_POST['email'];
 		
-		$page['message'] = $error;
+		$this->page['message'] = $error;
 		$this->loadView('partials/message');
 		
 	}
@@ -118,7 +118,7 @@ $this->loadView('invites/index');
 
 // Show sent invites
 
-$page['invites'] = Invite::list_sent($_SESSION['user']['id']);
+$this->page['invites'] = Invite::list_sent($_SESSION['user']['id']);
 $this->loadView('invites_list');
 
 // Footer

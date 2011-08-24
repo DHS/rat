@@ -1,6 +1,6 @@
 
 <?php if (!isset($item))
-	$item = $page['item']; ?>
+	$item = $this->page['item']; ?>
 
 <span class="item_meta">
 

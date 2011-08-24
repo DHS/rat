@@ -28,7 +28,7 @@ class CommentsController extends Application {
 	
 	function show($item_id) {
 		
-		$page['item'] = Item::get($item_id);
+		$this->page['item'] = Item::get($item_id);
 		$this->loadView('comments/index');
 		
 	}
@@ -36,7 +36,7 @@ class CommentsController extends Application {
 	function json($item_id) {
 		
 		$item = Item::get($item_id);
-		$page['json'] = $item['comments'];		
+		$this->page['json'] = $item['comments'];		
 		$this->loadView('pages/json');
 		
 	}

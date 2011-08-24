@@ -1,5 +1,5 @@
 
-<?php $item = $page['item']; ?>
+<?php $item = $this->page['item']; ?>
 
 <div class="row">
   <div class="span8 columns offset4">
@@ -48,7 +48,7 @@ if ($this->config->items['likes']['enabled'] == TRUE)
 	$this->loadView('likes/index');
 
 if ($this->config->items['comments']['enabled'] == TRUE) {
-	$page['show_comment_form'] = TRUE;
+	$this->page['show_comment_form'] = TRUE;
 	$this->loadView('comments/index');
 }
 

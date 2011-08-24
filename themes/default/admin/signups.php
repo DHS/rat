@@ -1,13 +1,13 @@
 
-<p>Beta signups: <strong><?php echo count($page['users']); ?></strong></p>
+<p>Beta signups: <strong><?php echo count($this->page['users']); ?></strong></p>
 
 <?php
 
-if (is_array($page['users'])) {
+if (is_array($this->page['users'])) {
 
 echo '<table>';
 
-foreach ($page['users'] as $user) {
+foreach ($this->page['users'] as $user) {
 	
 	if ($user['days_waiting'] == 0) {
 		$days_waiting = 'Today!';

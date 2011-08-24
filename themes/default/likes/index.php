@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($item))
-	$item = $page['item'];
+	$item = $this->page['item'];
 
 if (count($item['likes']) > 0) {
 

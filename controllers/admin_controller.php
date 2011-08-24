@@ -11,7 +11,7 @@ class AdminController extends Application {
 			
 			if (count(Admin::list_users()) != 0) {
 				
-				$page['name'] = 'Page not found';
+				$this->page['name'] = 'Page not found';
 				$this->loadView('partials/header');
 				$this->loadView('partials/footer');
 				exit;
@@ -23,7 +23,7 @@ class AdminController extends Application {
 		if (in_array($_SESSION['user']['id'], $this->config->admin_users) != TRUE) {
 			// User not an admin
 			
-			$page['name'] = 'Page not found';
+			$this->page['name'] = 'Page not found';
 			$this->loadView('partials/header');
 			$this->loadView('partials/footer');
 			exit;
@@ -35,8 +35,8 @@ class AdminController extends Application {
 	// Show admin dashboard
 	function index() {
 		
-		$page['users'] = Admin::list_users();
-		$page['users_beta'] = Admin::list_users_beta();
+		$this->page['users'] = Admin::list_users();
+		$this->page['users_beta'] = Admin::list_users_beta();
 		$this->loadLayout('admin/index', 'admin');
 		
 	}
@@ -44,7 +44,7 @@ class AdminController extends Application {
 	// Setup your rat installation
 	function setup() {
 		
-		$page['name'] = 'Setup';
+		$this->page['name'] = 'Setup';
 		
 		if (isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
 			// Do setup
@@ -59,13 +59,13 @@ class AdminController extends Application {
 			if (isset($this->plugins->log))
 				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'signup');
 			
-			$page['message'] = 'Rat is now setup and you are logged in!';
+			$this->page['message'] = 'Rat is now setup and you are logged in!';
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$this->config->url.'?message='.urlencode($page['message']));
+				header('Location: '.$this->config->url.'?message='.urlencode($this->page['message']));
 			} else {
-				header('Location: '.$this->config->dev_url.'?message='.urlencode($page['message']));
+				header('Location: '.$this->config->dev_url.'?message='.urlencode($this->page['message']));
 			}
 			
 			exit();
@@ -73,7 +73,7 @@ class AdminController extends Application {
 		} else {
 			// Show setup form
 			
-			$page['message'] = 'Welcome to Rat! Please enter your details:';
+			$this->page['message'] = 'Welcome to Rat! Please enter your details:';
 			$this->loadLayout('admin/setup');
 
 		}
@@ -83,7 +83,7 @@ class AdminController extends Application {
 	// Show list of beta signups
 	function signups() {
 				
-		$page['users'] = Admin::list_users_beta();
+		$this->page['users'] = Admin::list_users_beta();
 		$this->loadLayout('admin/signups', 'admin');
 		
 	}
@@ -91,7 +91,7 @@ class AdminController extends Application {
 	// Show list of users
 	function users() {
 		
-		$page['users'] = Admin::list_users();
+		$this->page['users'] = Admin::list_users();
 		$this->loadLayout('admin/users', 'admin');
 		
 	}
@@ -141,7 +141,7 @@ class AdminController extends Application {
 				mail($to, $subject, $body, $headers);
 			}
 			
-			$page['message'] = 'User invited!';
+			$this->page['message'] = 'User invited!';
 			
 		}
 
@@ -155,7 +155,7 @@ class AdminController extends Application {
 			
 			Admin::update_invites($_GET['count']);
 			
-			$page['message'] = 'Invites updated!';
+			$this->page['message'] = 'Invites updated!';
 			
 		}
 		

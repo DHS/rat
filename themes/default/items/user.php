@@ -10,7 +10,7 @@ echo '<table style="width: 100%;">';
 
 foreach ($this->items as $item) {
 
-	$page['item'] = $item;
+	$this->page['item'] = $item;
 	
 	// Populate some vars
 	if ($this->config->items['titles']['enabled'] == TRUE && $item['title'] != NULL) {

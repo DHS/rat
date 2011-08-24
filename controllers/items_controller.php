@@ -6,7 +6,7 @@ class ItemsController extends Application {
 		
 		// To add an item you must be logged in
 		if (($this->uri['action'] == 'add' || $this->uri['action'] == 'remove') && $_SESSION['user'] == NULL) {
-			$page['name'] = 'Page not found';
+			$this->page['name'] = 'Page not found';
 			$this->loadView('partials/header');
 			$this->loadView('partials/footer');
 			exit;
@@ -97,15 +97,15 @@ class ItemsController extends Application {
 				if (isset($this->plugins->log))
 					$this->plugins->log->add($_SESSION['user']['id'], 'item', $item_id, 'add', "title = {$_POST['title']}\ncontent = {$_POST['content']}");
 				
-				$page['message'] = ucfirst($this->config->items['name']).' added!';
+				$this->page['message'] = ucfirst($this->config->items['name']).' added!';
 				
-				$page = $this->link_to(NULL, 'users', 'show', $_SESSION['user']['id']);
+				$this->page = $this->link_to(NULL, 'users', 'show', $_SESSION['user']['id']);
 				
 				// Go forth!
 				if (SITE_IDENTIFIER == 'live') {
-					header('Location: '.$this->config->url.$page.'?message='.urlencode($page['message']));
+					header('Location: '.$this->config->url.$this->page.'?message='.urlencode($this->page['message']));
 				} else {
-					header('Location: '.$this->config->dev_url.$page.'user.php?message='.urlencode($page['message']));
+					header('Location: '.$this->config->dev_url.$this->page.'user.php?message='.urlencode($this->page['message']));
 				}
 				
 				exit();
@@ -122,7 +122,7 @@ class ItemsController extends Application {
 				//$app = $GLOBALS['app'];
 				
 				// Show error message
-				$page['message'] = $error;
+				$this->page['message'] = $error;
 				$this->loadLayout('items/add');
 				exit();
 				
@@ -166,7 +166,7 @@ class ItemsController extends Application {
 			}
 			
 			// Set message
-			$page['message'] = ucfirst($this->config->items['name']).' removed!';
+			$this->page['message'] = ucfirst($this->config->items['name']).' removed!';
 			
 			// Return from whence you came
 			header('Location: '.$_SERVER['HTTP_REFERER']);
@@ -191,7 +191,7 @@ class ItemsController extends Application {
 	// Show a single item
 	function show($id) {
 		
-		$page['item'] = Item::get($id);
+		$this->page['item'] = Item::get($id);
 		
 		$this->loadLayout('items/show');
 		
@@ -204,8 +204,8 @@ class ItemsController extends Application {
 			
 			// If friends enabled then show feed of friends' activity
 			
-			$page['name'] = $this->config->tagline;
-			$page['items'] = Item::list_feed($_SESSION['user']['id']);
+			$this->page['name'] = $this->config->tagline;
+			$this->page['items'] = Item::list_feed($_SESSION['user']['id']);
 			$this->loadLayout('items/index');
 			
 		} else {
