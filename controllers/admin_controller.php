@@ -35,7 +35,7 @@ class AdminController extends Application {
 	// Show admin dashboard
 	function index() {
 		
-		$this->page['users'] = Admin::list_users();
+		$this->users = Admin::list_users();
 		$this->page['users_beta'] = Admin::list_users_beta();
 		$this->loadLayout('admin/index', 'admin');
 		
@@ -83,7 +83,7 @@ class AdminController extends Application {
 	// Show list of beta signups
 	function signups() {
 				
-		$this->page['users'] = Admin::list_users_beta();
+		$this->users = Admin::list_users_beta();
 		$this->loadLayout('admin/signups', 'admin');
 		
 	}
@@ -91,7 +91,7 @@ class AdminController extends Application {
 	// Show list of users
 	function users() {
 		
-		$this->page['users'] = Admin::list_users();
+		$this->users = Admin::list_users();
 		$this->loadLayout('admin/users', 'admin');
 		
 	}
