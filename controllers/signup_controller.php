@@ -199,7 +199,7 @@ function do_signup($mode = 'full') {
 					foreach ($invites as $invite) {
 						
 						// Update invites
-						$app->invite->update($invite['id']);
+						Invite::update($invite['id']);
 						
 						// Log invite update
 						if (isset($app->plugins->log))

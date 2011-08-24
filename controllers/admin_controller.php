@@ -132,7 +132,7 @@ class AdminController {
 		if ($email != '') {
 			
 			// Add invite to database
-			$id = $app->invite->add($_SESSION['user']['id'], $email);
+			$id = Invite::add($_SESSION['user']['id'], $email);
 			
 			// Log invite
 			if (isset($app->plugins->log))

@@ -7,7 +7,7 @@ class InvitesController {
 		global $app;
 		
 		$app->page->invites_remaining = $_SESSION['user']['invites'];
-		$app->page->invites = $app->invite->list_sent($_SESSION['user']['id']);
+		$app->page->invites = Invite::list_sent($_SESSION['user']['id']);
 		
 		$app->page->name = 'Invites';
 		$app->loadLayout('invites/index');
@@ -62,7 +62,7 @@ if (isset($_POST['email'])) {
 		$error .= 'Email address cannot contain spaces.<br />';
 
 	// Check if already invited
-	if ($app->invite->check_invited($_SESSION['user']['id'], $_POST['email']) == TRUE)
+	if (Invite::check_invited($_SESSION['user']['id'], $_POST['email']) == TRUE)
 		$error .= 'You have already invited this person.<br />';
 	
 	// Check if already a user
@@ -73,7 +73,7 @@ if (isset($_POST['email'])) {
 		// no problems so do signup + login
 
 		// add invite to database
-		$id = $app->invite->add($_SESSION['user']['id'], $_POST['email']);
+		$id = Invite::add($_SESSION['user']['id'], $_POST['email']);
 
 		// decrement invites in users table
 		User::update_invites($_SESSION['user']['id'], -1);
@@ -124,7 +124,7 @@ $app->loadView('invites/index');
 
 // Show sent invites
 
-$app->page->invites = $app->invite->list_sent($_SESSION['user']['id']);
+$app->page->invites = Invite::list_sent($_SESSION['user']['id']);
 $app->loadView('invites_list');
 
 // Footer
