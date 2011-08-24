@@ -12,7 +12,7 @@ $config = new AppConfig;
 require_once 'lib/application.php';
 
 // Get request from server, split into segments, store as controller, view, id and params
-$request = $_SERVER['REQUEST_URI'];
+$request = substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10));
 
 // Split at '.' and before '?' to obtain request format
 $segments = preg_split("/\./", $request);
