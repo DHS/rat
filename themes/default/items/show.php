@@ -24,15 +24,15 @@
 <p>
 
 <?php
-if (isset($app->plugins->gravatar)) {
-	$gravatar = $app->plugins->gravatar->show($item['user']['email'], array('size' => 20, 'style' => "margin-top: -5px;"));
+if (isset($this->plugins->gravatar)) {
+	$gravatar = $this->plugins->gravatar->show($item['user']['email'], array('size' => 20, 'style' => "margin-top: -5px;"));
 	echo $this->link_to($gravatar, 'users', 'show', $item['user']['id']).' ';
 }
 ?>
 
 <?php echo $this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']); ?>
 
-&middot; <?php $app->loadView('items/meta'); ?>
+&middot; <?php $this->loadView('items/meta'); ?>
 
 </p>
 

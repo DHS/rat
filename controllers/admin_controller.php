@@ -4,8 +4,6 @@ class AdminController extends Application {
 	
 	function __construct() {
 		
-		global $app;
-		
 		// If user is admin or first user then let them pass otherwise exit
 		
 		if ($this->uri['action'] == 'setup') {
@@ -37,8 +35,6 @@ class AdminController extends Application {
 	// Show admin dashboard
 	function index() {
 		
-		global $app;
-		
 		$page['users'] = Admin::list_users();
 		$page['users_beta'] = Admin::list_users_beta();
 		$this->loadLayout('admin/index', 'admin');
@@ -47,8 +43,6 @@ class AdminController extends Application {
 	
 	// Setup your rat installation
 	function setup() {
-		
-		global $app;
 		
 		$page['name'] = 'Setup';
 		
@@ -62,8 +56,8 @@ class AdminController extends Application {
 			$_SESSION['user'] = $user;
 			
 			// Log login
-			if (isset($app->plugins->log))
-				$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'signup');
+			if (isset($this->plugins->log))
+				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'signup');
 			
 			$page['message'] = 'Rat is now setup and you are logged in!';
 			
@@ -88,9 +82,7 @@ class AdminController extends Application {
 	
 	// Show list of beta signups
 	function signups() {
-		
-		global $app;
-		
+				
 		$page['users'] = Admin::list_users_beta();
 		$this->loadLayout('admin/signups', 'admin');
 		
@@ -98,8 +90,6 @@ class AdminController extends Application {
 	
 	// Show list of users
 	function users() {
-		
-		global $app;
 		
 		$page['users'] = Admin::list_users();
 		$this->loadLayout('admin/users', 'admin');
@@ -109,13 +99,11 @@ class AdminController extends Application {
 	// Show most recent entries in the log (not named log to avoid conflict with native PHP function)
 	function history() {
 		
-		global $app;
-		
-		if (isset($app->plugins->log)) {
+		if (isset($this->plugins->log)) {
 			
 			$this->loadView('partials/header');
 			$this->loadView('admin/menu');
-			$app->plugins->log->view();
+			$this->plugins->log->view();
 			$this->loadView('partials/footer');
 			
 		}
@@ -125,8 +113,6 @@ class AdminController extends Application {
 	// Grant access to a beta signup
 	function invite() {
 		
-		global $app;
-		
 		$email = $_POST['email'];
 		
 		if ($email != '') {
@@ -135,8 +121,8 @@ class AdminController extends Application {
 			$id = Invite::add($_SESSION['user']['id'], $email);
 			
 			// Log invite
-			if (isset($app->plugins->log))
-				$app->plugins->log->add($_SESSION['user']['id'], 'invite', $id, 'admin_add', $email);
+			if (isset($this->plugins->log))
+				$this->plugins->log->add($_SESSION['user']['id'], 'invite', $id, 'admin_add', $email);
 			
 			if (SITE_IDENTIFIER == 'live') {
 				$to		= "{$_POST['username']} <{$email}>";
@@ -164,8 +150,6 @@ class AdminController extends Application {
 	}
 	
 	function grant_invites() {
-		
-		global $app;
 		
 		if ($_GET['count'] > 0) {
 			

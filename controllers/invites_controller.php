@@ -4,8 +4,6 @@ class InvitesController extends Application {
 	
 	function index() {
 		
-		global $app;
-		
 		$page['invites_remaining'] = $_SESSION['user']['invites'];
 		$page['invites'] = Invite::list_sent($_SESSION['user']['id']);
 		
@@ -16,15 +14,11 @@ class InvitesController extends Application {
 	
 	function add() {
 		
-		global $app;
-		
 		
 		
 	}
 	
 	function remove() {
-		
-		global $app;
 		
 		
 		
@@ -79,12 +73,12 @@ if (isset($_POST['email'])) {
 		User::update_invites($_SESSION['user']['id'], -1);
 
 		// award points
-		if (isset($app->plugins->points))
-			$app->plugins->points->update($_SESSION['user']['id'], $app->plugins->points['per_invite_sent']);
+		if (isset($this->plugins->points))
+			$this->plugins->points->update($_SESSION['user']['id'], $this->plugins->points['per_invite_sent']);
 
 		// log invite
-		if (isset($app->plugins->log))
-			$app->plugins->log->add($_SESSION['user']['id'], 'invite', $id, 'add', $_POST['email']);
+		if (isset($this->plugins->log))
+			$this->plugins->log->add($_SESSION['user']['id'], 'invite', $id, 'add', $_POST['email']);
 
 		if (SITE_IDENTIFIER == 'live') {
 			$to		= "{$_POST['username']} <{$_POST['email']}>";

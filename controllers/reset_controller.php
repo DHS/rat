@@ -4,8 +4,6 @@ require_once 'config/init.php';
 
 function show_form() {
 	
-	global $app;
-	
 	$this->loadView('partials/header');
 	$this->loadView('reset_begin');
 	$this->loadView('partials/footer');
@@ -13,8 +11,6 @@ function show_form() {
 }
 
 function generate_code() {
-	
-	global $app;
 	
 	$user = User::get_by_email($_POST['email']);
 	
@@ -46,8 +42,6 @@ function generate_code() {
 
 function check_code() {
 	
-	global $app;
-	
 	$this->loadView('partials/header');
 	
 	if (User::check_password_reset_code($_GET['code']) != FALSE)
@@ -59,8 +53,6 @@ function check_code() {
 
 function update_password() {
 
-	global $app;
-	
 	// Sneaky
 	if (User::check_password_reset_code($_POST['code']) == FALSE)
 		exit();
@@ -85,8 +77,8 @@ function update_password() {
 		$_SESSION['user'] = $user;
 		
 		// Log login
-		if (isset($app->plugins->log))
-			$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+		if (isset($this->plugins->log))
+			$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
 		
 		// If redirect_to is set then redirect
 		if ($_GET['redirect_to']) {

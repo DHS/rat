@@ -100,8 +100,6 @@ class User {
 	// Signup a new user!	
 	public static function signup($user_id, $username, $password) {
 		
-		global $app;
-
 		$user_id = sanitize_input($user_id);
 		$username = sanitize_input($username);
 
@@ -114,8 +112,6 @@ class User {
 	
 	// Change password
 	public static function update_password($user_id, $new_password) {
-
-		global $app;
 
 		$user_id = sanitize_input($user_id);
 

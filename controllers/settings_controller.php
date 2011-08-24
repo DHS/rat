@@ -4,9 +4,6 @@ class SettingsController extends Application {
 	
 	function index() {
 
-		global $app;
-		
-		$itemSettings';
 		$this->loadPartial('header');
 		
 		// Show profile info form
@@ -30,8 +27,6 @@ function index() {
 function password() {
 	// Change password
 	
-	global $app;
-
 	if ($_POST['old_password'] != '' && $_POST['new_password1'] != '' && $_POST['new_password2'] != '') {
 		// Check variables are present
 		
@@ -48,8 +43,8 @@ function password() {
 				$_SESSION['user']['password'] = md5($_POST['new_password1'].$this->config->encryption_salt);
 				
 				// Log password update
-				if (isset($app->plugins->log))
-					$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'change_password');
+				if (isset($this->plugins->log))
+					$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'change_password');
 
 				$page['message'] = 'Password udpated!';
 				
@@ -74,8 +69,6 @@ function password() {
 
 function profile() {
 	// Update profile
-	
-	global $app;
 	
 	if ($_POST['name'] != '' || $_POST['bio'] != '' || $_POST['url'] != '') {
 		// Even if only one field set, do update
@@ -158,8 +151,8 @@ $this->loadView('settings_password');
 
 // Gravatar settings
 
-if (isset($app->plugins->gravatar))
-	$app->plugins->gravatar->show_settings($_SESSION['user']['email']);
+if (isset($this->plugins->gravatar))
+	$this->plugins->gravatar->show_settings($_SESSION['user']['email']);
 
 // Footer
 

@@ -4,20 +4,16 @@ class FriendsController extends Application {
 	
 	function index() {
 		
-		global $app;
-		
 		// Not needed?
 		
 	}
 	
 	function add($friend_id) {
 		
-		global $app;
-		
 		$friendship_id = Friend::add($_SESSION['user']['id'], $friend_id);
 		
-		if (isset($app->plugins->log))
-			$app->plugins->log->add($_SESSION['user']['id'], 'friend', $friendship_id, 'add');
+		if (isset($this->plugins->log))
+			$this->plugins->log->add($_SESSION['user']['id'], 'friend', $friendship_id, 'add');
 		
 		if ($this->config->send_emails == TRUE) {
 			// Send 'new follower' email to writer
@@ -45,12 +41,10 @@ class FriendsController extends Application {
 	
 	function remove($friend_id) {
 		
-		global $app;
-		
 		$friend_id = Friend::remove($_SESSION['user']['id'], $friend_id);
 		
-		if (isset($app->plugins->log))
-			$app->plugins->log->add($_SESSION['user']['id'], 'friend', $friend_id, 'remove');
+		if (isset($this->plugins->log))
+			$this->plugins->log->add($_SESSION['user']['id'], 'friend', $friend_id, 'remove');
 		
 		$page['user']['id'] = $friend_id;
 		

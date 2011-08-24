@@ -25,8 +25,6 @@ class Like {
 	// Get likes for an item
 	public static function list_item($item_id) {
 
-		global $app;
-
 		$item_id = sanitize_input($item_id);
 
 		$sql = "SELECT id, user_id, date FROM likes WHERE item_id = $item_id";
@@ -52,8 +50,6 @@ class Like {
 
 	// Get all liked items
 	public static function list_all($limit = 10) {
-		
-		global $app;
 		
 		$sql = "SELECT * FROM likes ORDER BY date DESC";
 

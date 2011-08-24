@@ -40,8 +40,6 @@ if (!empty($_SESSION['user'])) {
 // Show signup form
 function show_form() {
 	
-	global $app;
-	
 	if ($this->config->beta == TRUE) {
 		
 		// Show beta signup form
@@ -58,8 +56,6 @@ function show_form() {
 
 // Validate a code
 function validate_code() {
-
-	global $app;
 
 	if (User::validate_invite_code($_GET['code'], $_GET['email']) == TRUE) {
 		// Valid
@@ -83,8 +79,6 @@ function validate_code() {
 
 // Glorious new signup function
 function do_signup($mode = 'full') {
-
-	global $app;
 
 	/*
 	*	Three modes			Code	Email	Username	Password	user->add	user->signup	invites	points
@@ -183,8 +177,8 @@ function do_signup($mode = 'full') {
 			}
 			
 			// Log signup
-			if (isset($app->plugins->log))
-				$app->plugins->log->add($user['id'], 'user', NULL, 'signup');
+			if (isset($this->plugins->log))
+				$this->plugins->log->add($user['id'], 'user', NULL, 'signup');
 			
 			// Start session
 			$_SESSION['user'] = $user;
@@ -202,18 +196,18 @@ function do_signup($mode = 'full') {
 						Invite::update($invite['id']);
 						
 						// Log invite update
-						if (isset($app->plugins->log))
-							$app->plugins->log->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
+						if (isset($this->plugins->log))
+							$this->plugins->log->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
 						
 						// Update points (but only if inviting user is not an admin)
-						if (isset($app->plugins->points) && in_array($invite['user_id'], $this->config->admin_users) != TRUE) {
+						if (isset($this->plugins->points) && in_array($invite['user_id'], $this->config->admin_users) != TRUE) {
 							
 							// Update points
-							$app->plugins->points->update($invite['user_id'], $app->plugins->points['per_invite_accepted']);
+							$this->plugins->points->update($invite['user_id'], $this->plugins->points['per_invite_accepted']);
 							
 							// Log points update
-							if (isset($app->plugins->log))
-								$app->plugins->log->add($invite['user_id'], 'points', NULL, $app->plugins->points['per_invite_accepted'], 'invite_accepted = '.$invite['id']);
+							if (isset($this->plugins->log))
+								$this->plugins->log->add($invite['user_id'], 'points', NULL, $this->plugins->points['per_invite_accepted'], 'invite_accepted = '.$invite['id']);
 							
 						}
 						
@@ -225,8 +219,8 @@ function do_signup($mode = 'full') {
 			}
 			
 			// Log login
-			if (isset($app->plugins->log))
-				$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+			if (isset($this->plugins->log))
+				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
 			
 			// If redirect_to is set then redirect
 			if ($_GET['redirect_to']) {
@@ -252,8 +246,8 @@ function do_signup($mode = 'full') {
 		if ($mode == 'beta') {
 			
 			// Log beta signup
-			if (isset($app->plugins->log))
-				$app->plugins->log->add($user_id, 'user', NULL, 'beta_signup', $_POST['email']);
+			if (isset($this->plugins->log))
+				$this->plugins->log->add($user_id, 'user', NULL, 'beta_signup', $_POST['email']);
 			
 			// Set thank you & tweet this message
 			$page['message'] = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';

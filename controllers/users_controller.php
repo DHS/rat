@@ -4,8 +4,6 @@ class UsersController extends Application {
 	
 	function __construct() {
 		
-		global $app;
-		
 		// Check if user is logged in and trying to signup
 		if ($this->uri['action'] == 'add' && !empty($_SESSION['user'])) {
 
@@ -22,16 +20,12 @@ class UsersController extends Application {
 	// Show a list of users
 	function index() {
 		
-		global $app;
-		
 		// Not needed?
 		
 	}
 	
 	// Add a user
 	function add($code) {
-		
-		global $app;
 		
 		if ($_POST['email'] != '') {
 			
@@ -87,8 +81,6 @@ class UsersController extends Application {
 	
 	function update($id) {
 		
-		global $app;
-		
 		$page['user'] = User::get($id);
 		
 		$page['name'] = 'Settings';
@@ -97,8 +89,6 @@ class UsersController extends Application {
 	}
 	
 	function reset($code) {
-		
-		global $app;
 		
 		if (!empty($code)) {
 			// Process reset
@@ -129,8 +119,8 @@ class UsersController extends Application {
 					$_SESSION['user'] = $user;
 					
 					// Log login
-					if (isset($app->plugins->log))
-						$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+					if (isset($this->plugins->log))
+						$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
 					
 					// If redirect_to is set then redirect
 					if ($_GET['redirect_to']) {
@@ -179,15 +169,11 @@ class UsersController extends Application {
 	
 	function confirm($email) {
 		
-		global $app;
-		
 		
 		
 	}
 	
 	function json($username) {
-		
-		global $app;
 		
 		$user['user'] = User::get_by_username($username);
 		$user['items'] = Item::list_user($user['user']['id']);

@@ -25,8 +25,6 @@ class Friend {
 	// Get a users's friends
 	public static function get($user_id) {
 
-		global $app;
-
 		$user_id = sanitize_input($user_id);
 
 		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $user_id";
@@ -52,8 +50,6 @@ class Friend {
 	
 	// Get a users's followers
 	public static function list_followers($user_id) {
-
-		global $app;
 
 		$user_id = sanitize_input($user_id);
 

@@ -11,8 +11,8 @@
 *	
 *		To log an event:
 *		
-*			if (isset($app->plugins->log))
-*				$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'signup');
+*			if (isset($this->plugins->log))
+*				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'signup');
 *
 */
 
@@ -34,8 +34,6 @@ class log {
 	function view() {
 		// View the log
 		
-		global $app;
-		
 		$sql = "SELECT * FROM log ORDER BY id DESC LIMIT 10";
 		$query = mysql_query($sql);
 
@@ -50,7 +48,7 @@ class log {
 			echo '<tr><th>Action</th><th>Object</th><th>Params</th><th>Timestamp</th></tr>';
 			foreach ($entries as $entry) {
 				echo '<tr><td>';
-				echo $app->link_to($entry['user']['name'], 'users', 'show', $entry['user']['id']).' ';
+				echo $this->link_to($entry['user']['name'], 'users', 'show', $entry['user']['id']).' ';
 				echo $entry['object_type'].' '.$entry['action'].'</td><td>';
 				if ($entry['object_id'] != NULL)
 					echo $entry['object_id'];

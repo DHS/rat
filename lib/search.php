@@ -43,8 +43,6 @@ class Search {
 	
 	function do_search($terms){
 		
-		global $app;
-	
 		$terms = $this->search_split_terms($terms);
 		$terms_db = $this->search_db_escape_terms($terms);
 		$terms_rx = $this->search_rx_escape_terms($terms);

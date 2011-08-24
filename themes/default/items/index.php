@@ -10,8 +10,8 @@
 	$app->page->item = $item;
 	
 	// Populate some vars
-	if (isset($app->plugins->gravatar)) {
-		$image = $app->plugins->gravatar->show($item['user']['email'], array('size' => 48, 'style' => 'float: left; padding: 0px 10px 10px 0px;'));
+	if (isset($this->plugins->gravatar)) {
+		$image = $this->plugins->gravatar->show($item['user']['email'], array('size' => 48, 'style' => 'float: left; padding: 0px 10px 10px 0px;'));
 		$gravatar = $this->link_to($image, 'users', 'show', $item['user']['id']).' ';
 	} else {
 		$gravatar = $this->link_to($like['user']['username'], 'users', 'show', $item['user']['id']).' ';

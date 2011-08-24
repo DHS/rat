@@ -21,8 +21,6 @@ class Comment {
 	// Get a single comment
 	public static function get($id) {
 		
-		global $app;
-			
 		$id = sanitize_input($id);
         
 		$sql = "SELECT * FROM comments WHERE id = $id";
@@ -51,8 +49,6 @@ class Comment {
 	
 	// Get comments for an item
 	public static function list_item($id) {
-		
-		global $app;
 		
 		$id = sanitize_input($id);
 

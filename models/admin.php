@@ -49,8 +49,6 @@ class Admin {
 	// Grants a given number of invites to all users
 	public static function update_invites($invites) {
 
-		global $app;
-
 		$invites = sanitize_input($invites);
 
 		$users = Admin::list_users();

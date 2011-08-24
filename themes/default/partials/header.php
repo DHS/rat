@@ -70,7 +70,7 @@ if (isset($page['title'])) {
   <link rel="stylesheet" href="<?php echo BASE_DIR; ?>/themes/<?php echo $this->config->theme; ?>/css/style.css">
 
   <!-- Include Twitter Bootstrap http://twitter.github.com/bootstrap/ -->
-  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>/themes/<?php echo $app->config->theme; ?>/css/bootstrap-1.0.0.min.css">
+  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>/themes/<?php echo $this->config->theme; ?>/css/bootstrap-1.0.0.min.css">
 
   <!-- More ideas for your <head> here: h5bp.com/docs/#head-Tips -->
 
@@ -140,13 +140,13 @@ if (isset($page['title'])) {
     <!-- Page title -->
     <?php
 
-	if (isset($app->plugins->gravatar) && !empty($page['title_gravatar'])) {
+	if (isset($this->plugins->gravatar) && !empty($page['title_gravatar'])) {
 		// Show gravatar
 
 	echo '<table class="center">
 	<tr>
 	<td>';
-	echo $app->plugins->gravatar->show($page['title_gravatar'], array('style' => "margin-right: 10px;"));
+	echo $this->plugins->gravatar->show($page['title_gravatar'], array('style' => "margin-right: 10px;"));
 	echo '</td>
 	<td><h1>'.$page_title.'</h1></td>
 	</tr>

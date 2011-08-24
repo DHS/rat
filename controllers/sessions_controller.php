@@ -4,15 +4,11 @@ class SessionsController extends Application {
 	
 	function index() {
 		
-		global $app;
-		
 		// Not needed?
 		
 	}
 	
 	function add() {
-		
-		global $app;
 		
 		if ($_POST['email'] && $_POST['password']) {
 			
@@ -24,8 +20,8 @@ class SessionsController extends Application {
 				$_SESSION['user'] = $user;
 				
 				// Log login
-				if (isset($app->plugins->log))
-					$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+				if (isset($this->plugins->log))
+					$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
 				
 				// Get redirected
 				if ($_GET['redirect_to']) {
@@ -66,8 +62,6 @@ class SessionsController extends Application {
 	
 	function remove() {
 		
-		global $app;
-		
 		if (!empty($_SESSION['user'])) {
 			// do logout
 
@@ -77,8 +71,8 @@ class SessionsController extends Application {
 			session_destroy();
 
 			// log logout
-			if (isset($app->plugins->log))
-				$app->plugins->log->add($user_id, 'user', NULL, 'logout');
+			if (isset($this->plugins->log))
+				$this->plugins->log->add($user_id, 'user', NULL, 'logout');
 
 			$_SESSION['user'] = array();
 
