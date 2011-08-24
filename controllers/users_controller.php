@@ -80,7 +80,7 @@ class UsersController {
 		global $app;
 		
 		$app->page->user = User::get($id);
-		$app->page->items = $app->item->list_user($id);
+		$app->page->items = Item::list_user($id);
 		
 		$app->page->name = $app->page->user['username'];
 		$app->loadLayout('users/show');
@@ -192,7 +192,7 @@ class UsersController {
 		global $app;
 		
 		$user['user'] = User::get_by_username($username);
-		$user['items'] = $app->item->list_user($user['user']['id']);
+		$user['items'] = Item::list_user($user['user']['id']);
 		$app->page->json = $user;
 		$app->loadView('pages/json');
 		

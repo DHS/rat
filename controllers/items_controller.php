@@ -85,11 +85,11 @@ class ItemsController extends Application {
 					// Generate stream image
 					generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 350, 500, 'stream');
 					
-					$item_id = $app->item->add($_SESSION['user']['id'], $_POST['content'], $_POST['title'], $_FILES['file']['name']);
+					$item_id = Item::add($_SESSION['user']['id'], $_POST['content'], $_POST['title'], $_FILES['file']['name']);
 					
 				} else {
 					
-					$item_id = $app->item->add($_SESSION['user']['id'], $_POST['content'], $_POST['title']);
+					$item_id = Item::add($_SESSION['user']['id'], $_POST['content'], $_POST['title']);
 					
 				}
 				
@@ -144,12 +144,12 @@ class ItemsController extends Application {
 		
 		global $app;
 		
-		$item = $app->item->get($item_id);
+		$item = Item::get($item_id);
 		
 		if ($_SESSION['user']['id'] == $item['user']['id'] && $item != NULL) {
 			
 			// Delete item
-			$app->item->remove($item_id);
+			Item::remove($item_id);
 			if (isset($app->plugins->log))
 				$app->plugins->log->add($_SESSION['user']['id'], 'item', $item_id, 'remove');
 			
@@ -199,7 +199,7 @@ class ItemsController extends Application {
 		
 		global $app;
 		
-		$app->page->item = $app->item->get($id);
+		$app->page->item = Item::get($id);
 		
 		$app->loadLayout('items/show');
 		
@@ -215,7 +215,7 @@ class ItemsController extends Application {
 			// If friends enabled then show feed of friends' activity
 			
 			$app->page->name = $app->config->tagline;
-			$app->page->items = $app->item->list_feed($_SESSION['user']['id']);
+			$app->page->items = Item::list_feed($_SESSION['user']['id']);
 			$app->loadLayout('items/index');
 			
 		} else {

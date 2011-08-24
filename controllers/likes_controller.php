@@ -32,7 +32,7 @@ class LikesController {
 		
 		global $app;
 		
-		$app->page->item = $app->item->get($item_id);
+		$app->page->item = Item::get($item_id);
 		$app->loadView('likes/index');
 		
 	}
@@ -41,7 +41,7 @@ class LikesController {
 		
 		global $app;
 		
-		$item = $app->item->get($item_id);
+		$item = Item::get($item_id);
 		$app->page->json = $item['likes'];
 		$app->loadView('pages/json');
 		
