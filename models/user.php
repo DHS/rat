@@ -3,7 +3,7 @@
 class User {
 
 	// Add a user (beta signup)	
-	function add($email) {
+	public static function add($email) {
 
 		$email = sanitize_input($email);
 
@@ -17,91 +17,88 @@ class User {
 	}
 
 	// Fetch a user's info given a user_id
-	function get($id) {
+	public static function get($id) {
 
 		$id = sanitize_input($id);
 
 		$sql = "SELECT * FROM users WHERE id = $id";
 		$query = mysql_query($sql);
-
-		$num_rows = mysql_num_rows($query);
-
-		if ($num_rows > 0) {
-
-			$user = mysql_fetch_array($query, MYSQL_ASSOC);
-
-			if ($user['full_name'] != NULL) {
-				$user['name'] = $user['full_name'];
-			} else {
-				$user['name'] = $user['username'];
-			}
-
-		} else {
-
+		$result = mysql_fetch_array($query, MYSQL_ASSOC);
+		
+		if (!is_array($result)) {
+			
 			$user = NULL;
-
+			
+		} else {
+			
+			$user = new User;
+			
+			foreach ($result as $k => $v) {
+				$user->$k = $v;
+			}
+			
 		}
-
+		
 		return $user;
-
+		
 	}
 
 	// Fetch a user's info given an email
-	function get_by_username($username) {
+	public static function get_by_username($username) {
 
 		$username = sanitize_input($username);
 
-		$query = mysql_query("SELECT * FROM users WHERE username = $username");
-
-		if (mysql_num_rows($query) > 0) {
-
-			$user = mysql_fetch_array($query, MYSQL_ASSOC);
-
-			if ($user['full_name'] != NULL) {
-				$user['name'] = $user['full_name'];
-			} else {
-				$user['name'] = $user['username'];
-			}
-
-		} else {
-
+		$sql = "SELECT * FROM users WHERE username = $username";
+		$query = mysql_query($sql);
+		$result = mysql_fetch_array($query, MYSQL_ASSOC);
+		
+		if (!is_array($result)) {
+			
 			$user = NULL;
-
+			
+		} else {
+			
+			$user = new User;
+			
+			foreach ($result as $k => $v) {
+				$user->$k = $v;
+			}
+			
 		}
-
+		
 		return $user;
 
 	}
 
 	// Fetch a user's info given an email
-	function get_by_email($email) {
+	public static function get_by_email($email) {
 
 		$email = sanitize_input($email);
 
-		$query = mysql_query("SELECT * FROM users WHERE email = $email");
-
-		if (mysql_num_rows($query) > 0) {
-
-			$user = mysql_fetch_array($query, MYSQL_ASSOC);
-
-			if ($user['full_name'] != NULL) {
-				$user['name'] = $user['full_name'];
-			} else {
-				$user['name'] = $user['username'];
-			}
-
-		} else {
-
+		$sql = "SELECT * FROM users WHERE email = $email";
+		$query = mysql_query($sql);
+		$result = mysql_fetch_array($query, MYSQL_ASSOC);
+		
+		if (!is_array($result)) {
+			
 			$user = NULL;
-
+			
+		} else {
+			
+			$user = new User;
+			
+			foreach ($result as $k => $v) {
+				$user->$k = $v;
+			}
+			
 		}
-
+		
 		return $user;
-
+		
 	}
-
+	
 	// Signup a new user!	
-	function signup($user_id, $username, $password) {
+	public static function signup($user_id, $username, $password) {
 		
 		global $app;
 
@@ -116,7 +113,7 @@ class User {
 	}
 	
 	// Change password
-	function update_password($user_id, $new_password) {
+	public static function update_password($user_id, $new_password) {
 
 		global $app;
 
@@ -130,7 +127,7 @@ class User {
 	}
 
 	// Update profile info
-	function update_profile($user_id, $name = NULL, $bio = NULL, $url = NULL) {
+	public static function update_profile($user_id, $name = NULL, $bio = NULL, $url = NULL) {
 
 		$user_id = sanitize_input($user_id);
 
@@ -166,7 +163,7 @@ class User {
 	}
 
 	// Update a user's number of invites
-	function update_invites($user_id, $invites) {
+	public static function update_invites($user_id, $invites) {
 
 		$user_id = sanitize_input($user_id);
 		$invites = sanitize_input($invites);
@@ -191,7 +188,7 @@ class User {
 	}
 	
 	// Check if a username is available
-	function check_username_available($username) {
+	public static function check_username_available($username) {
 
 		$username = sanitize_input($username);
 
@@ -211,7 +208,7 @@ class User {
 	}
 
 	// Check if a given email already exists in the system
-	function check_email_available($email) {
+	public static function check_email_available($email) {
 
 		$email = sanitize_input($email);
 
@@ -231,7 +228,7 @@ class User {
 	}
 
 	// Check if a string (usually username) contains spaces
-	function check_contains_spaces($string) {
+	public static function check_contains_spaces($string) {
 
 		$array = explode(" ", $string);
 
@@ -244,7 +241,7 @@ class User {
 	}
 
 	// Check if a string (usually email) contains an @ symbol
-	function check_contains_at($string) {
+	public static function check_contains_at($string) {
 
 		$array = explode("@", $string);
 
@@ -257,7 +254,7 @@ class User {
 	}
 
 	// Check if a string (usually username) only contains only alphanumeric characters
-	function check_alphanumeric($string) {
+	public static function check_alphanumeric($string) {
 
 		if (ctype_alnum($string)) {
 
@@ -272,7 +269,7 @@ class User {
 	}
 	
 	// Check if a password reset token is valid ie. <24hrs old
-	function check_password_reset_code($code) {
+	public static function check_password_reset_code($code) {
 		
 		$code = sanitize_input($code);
         
@@ -293,7 +290,7 @@ class User {
 	}
 	
 	// Generate a random password reset code
-	function generate_password_reset_code($user_id) {
+	public static function generate_password_reset_code($user_id) {
 		
 		// Generate code
 		$code = '';
