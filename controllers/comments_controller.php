@@ -22,7 +22,7 @@ class CommentsController extends Application {
 		if (isset($this->plugins->log))
 			$this->plugins->log->add($_SESSION['user']['id'], 'comment', $comment_id, 'remove');
 		
-		$this->show($comment['item_id']);
+		$this->show($comment->item_id);
 		
 	}
 	

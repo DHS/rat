@@ -1,20 +1,17 @@
 <?php
 
-if (!isset($item))
-	$item = $this->item;
+if (count($item->likes) > 0) {
 
-if (count($item['likes']) > 0) {
-
-	echo '<span id="likes_'.$item['id'].'">
+	echo '<span id="likes_'.$item->id.'">
 	<p class="meta">'.$this->config->items['likes']['past_tense'].' ';
 	
-	foreach ($item['likes'] as $like) {
+	foreach ($item->likes as $like) {
 
 		if (isset($this->plugins->gravatar)) {
-			$gravatar = $this->plugins->gravatar->show($like['user']['email'], array('size' => 20, 'style' => ""));
-			echo $this->link_to($gravatar, 'users', 'show', $like['user']['id']).' ';
+			$gravatar = $this->plugins->gravatar->show($like->user->email, array('size' => 20, 'style' => ""));
+			echo $this->link_to($gravatar, 'users', 'show', $like->user->id).' ';
 		} else {
-			echo $this->link_to($like['user']['username'], 'users', 'show', $like['user']['id']).' ';
+			echo $this->link_to($like->user->username, 'users', 'show', $like->user->id).' ';
 		}
 
 	}
@@ -24,7 +21,7 @@ if (count($item['likes']) > 0) {
 } else {
 	// no likes yet but print empty div fo das ajax
 	
-	echo '<span id="likes_'.$item['id'].'"></span>';
+	echo '<span id="likes_'.$item->id.'"></span>';
 	
 }
 

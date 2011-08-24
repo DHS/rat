@@ -6,26 +6,23 @@
 
 <?php foreach ($this->items as $item) {
 	
-	// Prepare vars for comment and like views to be loaded in due course
-	$this->item = $item;
-	
 	// Populate some vars
 	if (isset($this->plugins->gravatar)) {
-		$image = $this->plugins->gravatar->show($item['user']['email'], array('size' => 48, 'style' => 'float: left; padding: 0px 10px 10px 0px;'));
-		$gravatar = $this->link_to($image, 'users', 'show', $item['user']['id']).' ';
+		$image = $this->plugins->gravatar->show($item->user->email, array('size' => 48, 'style' => 'float: left; padding: 0px 10px 10px 0px;'));
+		$gravatar = $this->link_to($image, 'users', 'show', $item->user->id).' ';
 	} else {
-		$gravatar = $this->link_to($like['user']['username'], 'users', 'show', $item['user']['id']).' ';
+		$gravatar = $this->link_to($like->user->username, 'users', 'show', $item->user->id).' ';
 	}
 	
-	if ($this->config->items['titles']['enabled'] == TRUE && $item['title'] != NULL) {
-		$content = '<h4>'.$this->link_to($item['title'], 'items', 'show', $item['id']).' <small>by '.$this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']).'</small></h4>';
-		$content .= '<p>'.$item['content'].'</p>';
+	if ($this->config->items['titles']['enabled'] == TRUE && $item->title != NULL) {
+		$content = '<h4>'.$this->link_to($item->title, 'items', 'show', $item->id).' <small>by '.$this->link_to($item->user->username, 'users', 'show', $item->user->id).'</small></h4>';
+		$content .= '<p>'.$item->content.'</p>';
 	} else {
-		$content = '<p>'.$this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']).' '.$item['content'].'</p>';
+		$content = '<p>'.$this->link_to($item->user->username, 'users', 'show', $item->user->id).' '.$item->content.'</p>';
 	}
 	
 	// Comment form toggle
-	if (count($item['comments']) > 0) {
+	if (count($item->comments) > 0) {
 		$this->page->show_comment_form = TRUE;
 	} else {
 		$this->page->show_comment_form = FALSE;
