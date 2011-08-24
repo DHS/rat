@@ -7,7 +7,7 @@ class UsersController extends Application {
 		global $app;
 		
 		// Check if user is logged in and trying to signup
-		if ($app->uri['action'] == 'add' && !empty($_SESSION['user'])) {
+		if ($this->uri['action'] == 'add' && !empty($_SESSION['user'])) {
 
 			$page['name'] = 'Signup';
 			$page['message'] = 'You are already logged in!';

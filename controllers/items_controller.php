@@ -7,7 +7,7 @@ class ItemsController extends Application {
 		global $app;
 		
 		// To add an item you must be logged in
-		if (($app->uri['action'] == 'add' || $app->uri['action'] == 'remove') && $_SESSION['user'] == NULL) {
+		if (($this->uri['action'] == 'add' || $this->uri['action'] == 'remove') && $_SESSION['user'] == NULL) {
 			$page['name'] = 'Page not found';
 			$this->loadView('partials/header');
 			$this->loadView('partials/footer');

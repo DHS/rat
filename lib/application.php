@@ -16,7 +16,7 @@ class Application {
 		$app->loadModels();
 		$app->loadPlugins();
 		
-		$app->uri = $uri;
+		$this->uri = $uri;
 		
 		$app->route();
 		

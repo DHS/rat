@@ -8,7 +8,7 @@ class AdminController extends Application {
 		
 		// If user is admin or first user then let them pass otherwise exit
 		
-		if ($app->uri['action'] == 'setup') {
+		if ($this->uri['action'] == 'setup') {
 			// Setup page called so make sure user count = 0
 			
 			if (count(Admin::list_users()) != 0) {
