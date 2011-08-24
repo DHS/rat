@@ -1,6 +1,6 @@
 <?php
 
-if (!isset($this->head_title) {
+if (!isset($this->head_title)) {
 	if (isset($this->title)) {
 		$this->head_title = $this->config->name.' - '.$this->title;
 	} else {
