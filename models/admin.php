@@ -3,7 +3,7 @@
 class Admin {
 
 	// Get all users	
-	function list_users() {
+	public static function list_users() {
 
 		$sql = "SELECT * FROM users WHERE date_joined IS NOT NULL ORDER BY date_joined DESC";
 		$users_query = mysql_query($sql);
@@ -33,7 +33,7 @@ class Admin {
 	}
 
 	// Get beta signups who are still waiting for an invite
-	function list_users_beta() {
+	public static function list_users_beta() {
 
 		$sql = "SELECT id, email, TIMESTAMPDIFF(DAY, date_added, NOW()) AS days_waiting, (SELECT COUNT(*) FROM invites WHERE email = users.email) AS invites FROM users WHERE date_joined IS NULL ORDER BY date_added ASC";
 		$waiting_users_query = mysql_query($sql);
@@ -47,13 +47,13 @@ class Admin {
 	}
 
 	// Grants a given number of invites to all users
-	function update_invites($invites) {
+	public static function update_invites($invites) {
 
 		global $app;
 
 		$invites = sanitize_input($invites);
 
-		$users = $app->admin->list_users();
+		$users = Admin::list_users();
 
 		foreach ($users as $user) {
 
@@ -72,7 +72,7 @@ class Admin {
 	}
 
 	// Updates an item
-	function update_item($id, $title = NULL, $byline = NULL, $content = NULL, $status = 1) {
+	public static function update_item($id, $title = NULL, $byline = NULL, $content = NULL, $status = 1) {
 
 		$id = sanitize_input($id);
 
