@@ -46,15 +46,13 @@ class Application {
 	
 	private function loadModels() {
 		
-    	require_once 'lib/mysql.php';
+    require_once 'lib/mysql.php';
 		
 		$handle = opendir('models');	
 		while (false != ($file = readdir($handle))) {
 			$model = substr($file, 0, -4);
 			if ($file[0] != '.') {
 				require_once "models/$model.php";
-				$modelLower = strtolower($model);
-				$this->$modelLower = new $model;
 			}
 		}
 		
