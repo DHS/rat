@@ -41,7 +41,7 @@ class UsersController extends Application {
 				
 			} else {
 				
-				if ($app->config->beta == TRUE) {
+				if ($this->config->beta == TRUE) {
 					
 					$this->do_signup('beta');
 					
@@ -57,7 +57,7 @@ class UsersController extends Application {
 			
 			// Show signup form
 			
-			if ($app->config->beta == TRUE) {
+			if ($this->config->beta == TRUE) {
 				// Show beta signup form
 				$this->loadLayout('users/add_beta');
 			} else {
@@ -141,13 +141,13 @@ class UsersController extends Application {
 					}
 					
 					// Set welcome message
-					$page['message'] = urlencode('Password updated.<br />Welcome back to '.$app->config->name.'!');
+					$page['message'] = urlencode('Password updated.<br />Welcome back to '.$this->config->name.'!');
 					
 					// Go forth!
 					if (SITE_IDENTIFIER == 'live') {
-						header('Location: '.$app->config->url.'?message='.$page['message']);
+						header('Location: '.$this->config->url.'?message='.$page['message']);
 					} else {
-						header('Location: '.$app->config->dev_url.'?message='.$page['message']);
+						header('Location: '.$this->config->dev_url.'?message='.$page['message']);
 					}
 					
 					exit();

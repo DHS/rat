@@ -6,7 +6,7 @@ if (!isset($item))
 if (count($item['likes']) > 0) {
 
 	echo '<span id="likes_'.$item['id'].'">
-	<p class="meta">'.$app->config->items['likes']['past_tense'].' ';
+	<p class="meta">'.$this->config->items['likes']['past_tense'].' ';
 	
 	foreach ($item['likes'] as $like) {
 

@@ -1,9 +1,9 @@
 
     <footer>
 
-        <p class="float_right"><?php echo $app->config->name; ?> was created using <a href="http://github.com/DHS/rat">Rat</a></p>
+        <p class="float_right"><?php echo $this->config->name; ?> was created using <a href="http://github.com/DHS/rat">Rat</a></p>
         <p>
-			<?php echo $app->config->name; ?> &copy; <?php echo date('Y'); ?> &middot;
+			<?php echo $this->config->name; ?> &copy; <?php echo date('Y'); ?> &middot;
 			<?php echo $this->link_to('About', 'pages', 'show', 'about'); ?> &middot;
 			<?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?> &middot;
 			<?php echo $this->link_to('Search', 'search'); ?>

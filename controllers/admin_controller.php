@@ -22,7 +22,7 @@ class AdminController extends Application {
 			
 		}
 		
-		if (in_array($_SESSION['user']['id'], $app->config->admin_users) != TRUE) {
+		if (in_array($_SESSION['user']['id'], $this->config->admin_users) != TRUE) {
 			// User not an admin
 			
 			$page['name'] = 'Page not found';
@@ -69,9 +69,9 @@ class AdminController extends Application {
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url.'?message='.urlencode($page['message']));
+				header('Location: '.$this->config->url.'?message='.urlencode($page['message']));
 			} else {
-				header('Location: '.$app->config->dev_url.'?message='.urlencode($page['message']));
+				header('Location: '.$this->config->dev_url.'?message='.urlencode($page['message']));
 			}
 			
 			exit();
@@ -144,13 +144,13 @@ class AdminController extends Application {
 				$to		= "{$_POST['username']} <davehs@gmail.com>";
 			}
 			
-			$link		= $app->config->url.'signup.php?code='.$id.'&email='.urlencode($email);
+			$link		= $this->config->url.'signup.php?code='.$id.'&email='.urlencode($email);
 			$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 			
 			// Load template into $body variable
 			$this->loadView('email/invite_admin');
 			
-			if ($app->config->send_emails == TRUE) {
+			if ($this->config->send_emails == TRUE) {
 				// Email user
 				mail($to, $subject, $body, $headers);
 			}

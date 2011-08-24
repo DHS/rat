@@ -17,7 +17,7 @@ class SessionsController extends Application {
 		if ($_POST['email'] && $_POST['password']) {
 			
 			$user = User::get_by_email($_POST['email']);
-			$encrypted_password = md5($_POST['password'].$app->config->encryption_salt);
+			$encrypted_password = md5($_POST['password'].$this->config->encryption_salt);
 			
 			if ($user['password'] == $encrypted_password) {
 				
@@ -35,9 +35,9 @@ class SessionsController extends Application {
 				
 				// Go forth
 				if (SITE_IDENTIFIER == 'live') {
-					header('Location: '.$app->config->url);
+					header('Location: '.$this->config->url);
 				} else {
-					header('Location: '.$app->config->dev_url);
+					header('Location: '.$this->config->dev_url);
 				}
 				
 				exit();
@@ -84,9 +84,9 @@ class SessionsController extends Application {
 
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url.$app->config->default_controller.'/?message='.urlencode($message));
+				header('Location: '.$this->config->url.$this->config->default_controller.'/?message='.urlencode($message));
 			} else {
-				header('Location: '.$app->config->dev_url.$app->config->default_controller.'/?message='.urlencode($message));
+				header('Location: '.$this->config->dev_url.$this->config->default_controller.'/?message='.urlencode($message));
 			}
 			
 			exit();

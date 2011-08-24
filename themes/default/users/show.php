@@ -23,7 +23,7 @@
 
 // Show follow button
 
-if ($app->config->friends['enabled'] == TRUE)
+if ($this->config->friends['enabled'] == TRUE)
 	$this->loadView('friends/index');
 
 // Show number of points
@@ -46,7 +46,7 @@ if (count($page['items']) > 0) {
 
 	// If own page and no post_permission OR someone else's page show 'no articles yet'
 	if (($_SESSION['user']['id'] == $page['user']['id'] && $_SESSION['user']['post_permission'] == 0) || $_SESSION['user']['id'] != $page['user']['id'])
-		echo '<p>'.$page['user']['username'].' hasn\'t published any '.$app->config->items['name_plural'].' yet.</p>';
+		echo '<p>'.$page['user']['username'].' hasn\'t published any '.$this->config->items['name_plural'].' yet.</p>';
 
 }
 

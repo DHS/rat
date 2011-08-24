@@ -17,7 +17,7 @@ foreach ($page['items'] as $item) {
 	<tr>
 		<td>
 		
-			<?php if ($app->config->items['titles']['enabled'] == TRUE) { ?>
+			<?php if ($this->config->items['titles']['enabled'] == TRUE) { ?>
 			<h2><?php echo $item['title']; ?></h2>
 			<?php } ?>
 			
@@ -27,10 +27,10 @@ foreach ($page['items'] as $item) {
 
 			<?php
 
-			if ($app->config->items['likes']['enabled'] == TRUE)
+			if ($this->config->items['likes']['enabled'] == TRUE)
 				$this->loadView('likes/index');
 			
-			if ($app->config->items['comments']['enabled'] == TRUE) {
+			if ($this->config->items['comments']['enabled'] == TRUE) {
 
 				if (count($item['comments']) > 0) {
 					$page['show_comment_form'] = TRUE;

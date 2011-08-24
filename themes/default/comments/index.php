@@ -31,12 +31,12 @@ if (count($item['comments']) > 0) {
 if (!isset($item))
 	$item = $page['item'];
 
-if ($app->config->items['comments']['enabled'] == TRUE && ($app->config->private == TRUE || $_SESSION['user'] != NULL)) {
+if ($this->config->items['comments']['enabled'] == TRUE && ($this->config->private == TRUE || $_SESSION['user'] != NULL)) {
 
 	?>
 
 	<form action="javascript:comment_add(<?php echo $item['id']; ?>, '<?php echo $this->link_to(NULL, 'comments', 'add'); ?>');" id="comment_form_<?php echo $item['id']; ?>" class="meta" style="margin: 0px; <?php if ($page['show_comment_form'] != TRUE) { echo 'visibility: hidden; height: 0px;'; }?>" method="post">
-		<input type="text" name="content" size="30" value="" /> <input type="submit" value="<?php echo $app->config->items['comments']['name']; ?>" class="btn" />
+		<input type="text" name="content" size="30" value="" /> <input type="submit" value="<?php echo $this->config->items['comments']['name']; ?>" class="btn" />
 	</form>
 
 <?php

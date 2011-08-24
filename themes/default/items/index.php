@@ -9,7 +9,7 @@
       <?php echo $app->plugins->gravatar->show($item['user']['email'], array('size' => 48)); ?>
     </div>
     <div class="span6 columns">
-      <?php if ($app->config->items['titles']['enabled'] == TRUE && $item['title'] != NULL) { ?>
+      <?php if ($this->config->items['titles']['enabled'] == TRUE && $item['title'] != NULL) { ?>
       <p><?php echo $this->link_to($item['title'], 'items', 'show', $item['id']); ?> by <?php echo $this->link_to($item['user']['username'], 'users', 'show', $item['user']['id']); ?></p>
       <p><?php echo $item['content']; ?></p>
       <?php } else { ?>
@@ -22,7 +22,7 @@
       <?php $this->loadView('items/meta'); ?>
     </div>
   </div>
-  <?php if ($app->config->items['likes']['enabled'] == TRUE) ?>
+  <?php if ($this->config->items['likes']['enabled'] == TRUE) ?>
   <div class="row">
     <div class="span8 columns offset4">
       <?php $this->loadView('likes/index'); ?>
@@ -31,7 +31,7 @@
   <?php } ?>
   <div class="row">
     <div class="span8 columns offset4">
-		<?php if ($app->config->items['comments']['enabled'] == TRUE) {
+		<?php if ($this->config->items['comments']['enabled'] == TRUE) {
 			if (count($item['comments']) > 0) {
 				$page['show_comment_form'] = TRUE;
 			} else {

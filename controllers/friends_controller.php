@@ -19,12 +19,12 @@ class FriendsController extends Application {
 		if (isset($app->plugins->log))
 			$app->plugins->log->add($_SESSION['user']['id'], 'friend', $friendship_id, 'add');
 		
-		if ($app->config->send_emails == TRUE) {
+		if ($this->config->send_emails == TRUE) {
 			// Send 'new follower' email to writer
 			
 			$user = User::get($_SESSION['user']['id']);
 			$friend = User::get($friend_id);
-			$link = $app->config->url.'users/show/'.$_SESSION['user']['id'];
+			$link = $this->config->url.'users/show/'.$_SESSION['user']['id'];
 			
 			$to			= "{$friend['username']} <{$friend['email']}>";
 			$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";

@@ -25,14 +25,14 @@ function generate_code() {
 		$code = User::generate_password_reset_code($user['id']);
 		
 		$to = $_POST['email'];
-		$link = $app->config->url.'forgot.php?code='.$code;
-		$headers = "From: $app->config->name <robot@blah.com>\r\nContent-type: text/html\r\n";
+		$link = $this->config->url.'forgot.php?code='.$code;
+		$headers = "From: $this->config->name <robot@blah.com>\r\nContent-type: text/html\r\n";
 		
 		// Load subject and body from template
 		$this->loadView('email/password_reset');
 		
 		// Email user
-		if ($app->config->send_emails == TRUE)
+		if ($this->config->send_emails == TRUE)
 			mail($to, $subject, $body, $headers);
 		
 	}
@@ -95,13 +95,13 @@ function update_password() {
 		}
 		
 		// Set welcome message
-		$page['message'] = urlencode('Password updated.<br />Welcome back to '.$app->config->name.'!');
+		$page['message'] = urlencode('Password updated.<br />Welcome back to '.$this->config->name.'!');
 		
 		// Go forth!
 		if (SITE_IDENTIFIER == 'live') {
-			header('Location: '.$app->config->url.'?message='.$page['message']);
+			header('Location: '.$this->config->url.'?message='.$page['message']);
 		} else {
-			header('Location: '.$app->config->dev_url.'?message='.$page['message']);
+			header('Location: '.$this->config->dev_url.'?message='.$page['message']);
 		}
 
 		exit();

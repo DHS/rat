@@ -31,22 +31,22 @@ class ItemsController extends Application {
 		
 		global $app;
 		
-		if (isset($_POST['content']) || (isset($_POST['title']) && $app->config->items['titles']['enabled'] == TRUE)) {
+		if (isset($_POST['content']) || (isset($_POST['title']) && $this->config->items['titles']['enabled'] == TRUE)) {
 			
 			// Form validation
 			
-			if ($app->config->items['titles']['enabled'] == FALSE && $_POST['content'] == '')
-				$error .= ucfirst($app->config->items['name']).' must include '.strtolower($app->config->items['content']['name']).'.<br />';
+			if ($this->config->items['titles']['enabled'] == FALSE && $_POST['content'] == '')
+				$error .= ucfirst($this->config->items['name']).' must include '.strtolower($this->config->items['content']['name']).'.<br />';
 			
-			if ($app->config->items['uploads']['enabled'] == TRUE) {
+			if ($this->config->items['uploads']['enabled'] == TRUE) {
 				
 				if ($_FILES['file']['error'] > 0)
 					$error .= 'Error code: '.$_FILES['file']['error'].'<br />';
 				
-				if (!in_array($_FILES['file']['type'], $app->config->items['uploads']['mime-types']))
+				if (!in_array($_FILES['file']['type'], $this->config->items['uploads']['mime-types']))
 					$error .= 'Invalid file type: '.$_FILES['file']['type'].'<br />';
 				
-				if ($_FILES['file']['size'] > $app->config->items['uploads']['max-size'])
+				if ($_FILES['file']['size'] > $this->config->items['uploads']['max-size'])
 					$error .= 'File too large.<br />';
 				
 			}
@@ -56,10 +56,10 @@ class ItemsController extends Application {
 			if ($error == '') {
 				// No error so proceed...
 				
-				if ($app->config->items['uploads']['enabled'] == TRUE) {
+				if ($this->config->items['uploads']['enabled'] == TRUE) {
 					
 					// Check for file with same name and rename if neccessary
-					if (file_exists("{$app->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}")) {
+					if (file_exists("{$this->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}")) {
 						
 						// Find filename and extension, works for filenames that include dots and any length extension!
 						$filename = substr($_FILES['file']['name'], 0, strrpos($_FILES['file']['name'], '.'));
@@ -70,12 +70,12 @@ class ItemsController extends Application {
 						do {
 							$_FILES['file']['name'] = "$filename-$i.$extension";
 							$i++;
-						} while (file_exists("{$app->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}"));
+						} while (file_exists("{$this->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}"));
 						
 					}
 					
 					// Grab the file
-					move_uploaded_file($_FILES['file']['tmp_name'], "{$app->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}");
+					move_uploaded_file($_FILES['file']['tmp_name'], "{$this->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}");
 					
 					include 'lib/upload.php';
 					
@@ -101,15 +101,15 @@ class ItemsController extends Application {
 				if (isset($app->plugins->log))
 					$app->plugins->log->add($_SESSION['user']['id'], 'item', $item_id, 'add', "title = {$_POST['title']}\ncontent = {$_POST['content']}");
 				
-				$page['message'] = ucfirst($app->config->items['name']).' added!';
+				$page['message'] = ucfirst($this->config->items['name']).' added!';
 				
 				$page = $app->link_to(NULL, 'users', 'show', $_SESSION['user']['id']);
 				
 				// Go forth!
 				if (SITE_IDENTIFIER == 'live') {
-					header('Location: '.$app->config->url.$page.'?message='.urlencode($page['message']));
+					header('Location: '.$this->config->url.$page.'?message='.urlencode($page['message']));
 				} else {
-					header('Location: '.$app->config->dev_url.$page.'user.php?message='.urlencode($page['message']));
+					header('Location: '.$this->config->dev_url.$page.'user.php?message='.urlencode($page['message']));
 				}
 				
 				exit();
@@ -172,7 +172,7 @@ class ItemsController extends Application {
 			}
 			
 			// Set message
-			$page['message'] = ucfirst($app->config->items['name']).' removed!';
+			$page['message'] = ucfirst($this->config->items['name']).' removed!';
 			
 			// Return from whence you came
 			header('Location: '.$_SERVER['HTTP_REFERER']);
@@ -183,9 +183,9 @@ class ItemsController extends Application {
 			
 			// Go forth
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url);
+				header('Location: '.$this->config->url);
 			} else {
-				header('Location: '.$app->config->dev_url);
+				header('Location: '.$this->config->dev_url);
 			}
 			
 			exit();
@@ -210,11 +210,11 @@ class ItemsController extends Application {
 		
 		global $app;
 		
-		if ($app->config->friends['enabled'] == TRUE) {
+		if ($this->config->friends['enabled'] == TRUE) {
 			
 			// If friends enabled then show feed of friends' activity
 			
-			$page['name'] = $app->config->tagline;
+			$page['name'] = $this->config->tagline;
 			$page['items'] = Item::list_feed($_SESSION['user']['id']);
 			$this->loadLayout('items/index');
 			

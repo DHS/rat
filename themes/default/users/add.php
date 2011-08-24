@@ -21,7 +21,7 @@
 		<tr><td></td><td class="align_left"><input type="submit" value="Signup" class="btn" /></td></tr>
 	</table>
 	
-	<p class="small">Already got a <?php echo $app->config->name ?> account? <a href="login.php<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>">Login</a> now!</p>
+	<p class="small">Already got a <?php echo $this->config->name ?> account? <a href="login.php<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>">Login</a> now!</p>
 
 </form>
 

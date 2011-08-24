@@ -36,7 +36,7 @@ class InvitesController extends Application {
 
 //	Critical: Feature must be enabled and user must be logged in
 
-if ($app->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
+if ($this->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
 	
 	$page['name'] = 'Page not found';
 	$this->loadView('partials/header');
@@ -67,7 +67,7 @@ if (isset($_POST['email'])) {
 	
 	// Check if already a user
 	if (User::get_by_email($_POST['email']) == TRUE)
-		$error .= 'This person is already using '.$app->config->name.'!<br />';
+		$error .= 'This person is already using '.$this->config->name.'!<br />';
 
 	if ($error == '') {
 		// no problems so do signup + login
@@ -92,13 +92,13 @@ if (isset($_POST['email'])) {
 			$to		= "{$_POST['username']} <davehs@gmail.com>";
 		}
 
-		$link = $app->config->url.'signup.php?code='.$id.'&email='.urlencode($_POST['email']);
+		$link = $this->config->url.'signup.php?code='.$id.'&email='.urlencode($_POST['email']);
 		$headers = "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 
 		// Load subject and body from template
 		$this->loadView('email/invite_friend');
 
-		if ($app->config->send_emails == TRUE) {
+		if ($this->config->send_emails == TRUE) {
 			// Email user
 			mail($to, $subject, $body, $headers);
 		}

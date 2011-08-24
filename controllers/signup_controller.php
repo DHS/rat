@@ -42,7 +42,7 @@ function show_form() {
 	
 	global $app;
 	
-	if ($app->config->beta == TRUE) {
+	if ($this->config->beta == TRUE) {
 		
 		// Show beta signup form
 		$this->loadView('users/add_beta');
@@ -69,7 +69,7 @@ function validate_code() {
 	} else {
 		// Invalid
 		
-		if ($app->config->beta == TRUE) {
+		if ($this->config->beta == TRUE) {
 			$page['message'] = 'Your invite code is invalid.';
 			$this->loadView('partials/message');
 			$this->loadView('users/add_beta');
@@ -96,7 +96,7 @@ function do_signup($mode = 'full') {
 	
 	// Check invite code (only really matters if app is in beta)
 
-	if ($mode == 'code' && $app->config->beta == TRUE) {
+	if ($mode == 'code' && $this->config->beta == TRUE) {
 
 		if (User::validate_invite_code($_POST['code'], $_POST['email']) != TRUE)
 			$error .= 'Invalid invite code.<br />';
@@ -168,7 +168,7 @@ function do_signup($mode = 'full') {
 			// Do signup
 			User::signup($user['id'], $_POST['username'], $_POST['password1']);
 			
-			if ($app->config->send_emails == TRUE) {
+			if ($this->config->send_emails == TRUE) {
 				// Send 'thank you for signing up' email
 
 				$to = "{$_POST['username']} <{$_POST['email']}>";
@@ -190,7 +190,7 @@ function do_signup($mode = 'full') {
 			$_SESSION['user'] = $user;
 			
 			// Check invites are enabled and the code is valid
-			if ($app->config->invites['enabled'] == TRUE && validate_invite_code($_POST['code'], $_POST['email']) == TRUE) {
+			if ($this->config->invites['enabled'] == TRUE && validate_invite_code($_POST['code'], $_POST['email']) == TRUE) {
 				
 				// Get invites
 				$invites = invites_get_by_code($_POST['code']);
@@ -206,7 +206,7 @@ function do_signup($mode = 'full') {
 							$app->plugins->log->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
 						
 						// Update points (but only if inviting user is not an admin)
-						if (isset($app->plugins->points) && in_array($invite['user_id'], $app->config->admin_users) != TRUE) {
+						if (isset($app->plugins->points) && in_array($invite['user_id'], $this->config->admin_users) != TRUE) {
 							
 							// Update points
 							$app->plugins->points->update($invite['user_id'], $app->plugins->points['per_invite_accepted']);
@@ -239,9 +239,9 @@ function do_signup($mode = 'full') {
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url.'?message='.$page['message']);
+				header('Location: '.$this->config->url.'?message='.$page['message']);
 			} else {
-				header('Location: '.$app->config->dev_url.'?message='.$page['message']);
+				header('Location: '.$this->config->dev_url.'?message='.$page['message']);
 			}
 	
 			exit();
@@ -263,9 +263,9 @@ function do_signup($mode = 'full') {
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url.'?message='.$page['message']);
+				header('Location: '.$this->config->url.'?message='.$page['message']);
 			} else {
-				header('Location: '.$app->config->dev_url.'?message='.$page['message']);
+				header('Location: '.$this->config->dev_url.'?message='.$page['message']);
 			}
 	
 			exit();
@@ -315,7 +315,7 @@ if ($_GET['code'] != '') {
 		
 	} else {
 		
-		if ($app->config->beta == TRUE) {
+		if ($this->config->beta == TRUE) {
 			
 			$page['selector'] = 'do_signup';
 			$mode = 'beta';

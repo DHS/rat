@@ -35,7 +35,7 @@ function password() {
 	if ($_POST['old_password'] != '' && $_POST['new_password1'] != '' && $_POST['new_password2'] != '') {
 		// Check variables are present
 		
-		if (md5($_POST['old_password'].$app->config->encryption_salt) == $_SESSION['user']['password']) {
+		if (md5($_POST['old_password'].$this->config->encryption_salt) == $_SESSION['user']['password']) {
 			// Check old passwords match
 			
 			if ($_POST['new_password1'] == $_POST['new_password2']) {
@@ -45,7 +45,7 @@ function password() {
 				User::update_password($_SESSION['user']['id'], $_POST['new_password1']);
 				
 				// Update session
-				$_SESSION['user']['password'] = md5($_POST['new_password1'].$app->config->encryption_salt);
+				$_SESSION['user']['password'] = md5($_POST['new_password1'].$this->config->encryption_salt);
 				
 				// Log password update
 				if (isset($app->plugins->log))

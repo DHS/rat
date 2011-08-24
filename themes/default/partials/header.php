@@ -24,21 +24,21 @@ if (isset($page['title'])) {
 		// Page name found
 		
 		// Set the var that prints the page title
-		$page_title = '<a href="/">'.$app->config->name.'</a> <small>'.$page['name'].'</small>';
+		$page_title = '<a href="/">'.$this->config->name.'</a> <small>'.$page['name'].'</small>';
 
 		// If no head title is found then set head title similar to page title
 		if (!isset($head_title))
-			$head_title = $app->config->name.' - '.$page['name'];
+			$head_title = $this->config->name.' - '.$page['name'];
 
 	} else {
 		// No page name found
 
 		// Set page title to app name
-		$page_title = '<a href="/">'.$app->config->name.'</a>';
+		$page_title = '<a href="/">'.$this->config->name.'</a>';
 
 		// Set head title to app name
 		if (!isset($head_title))
-			$head_title = $app->config->name;
+			$head_title = $this->config->name;
 
 	}
 }
@@ -67,7 +67,7 @@ if (isset($page['title'])) {
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
   <!-- CSS: implied media="all" -->
-  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>/themes/<?php echo $app->config->theme; ?>/css/style.css">
+  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>/themes/<?php echo $this->config->theme; ?>/css/style.css">
 
   <!-- Include Twitter Bootstrap http://twitter.github.com/bootstrap/ -->
   <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.0.0.min.css">
@@ -90,7 +90,7 @@ if (isset($page['title'])) {
     <div class="topbar">
       <div class="fill">
         <div class="container">
-          <h3><?php echo $this->link_to($app->config->name, $this->config->default_controller); ?></h3>
+          <h3><?php echo $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
           <ul>
             <li><?php echo $this->link_to('Home', $this->config->default_controller); ?></li>
             <li><?php echo $this->link_to('My profile', 'users', 'show', $_SESSION['user']['id']); ?></li>
@@ -114,7 +114,7 @@ if (isset($page['title'])) {
     <div class="topbar">
       <div class="fill">
         <div class="container">
-          <h3><?php echo $this->link_to($app->config->name, $this->config->default_controller); ?></h3>
+          <h3><?php echo $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
           <ul class="nav secondary-nav">
             <li><?php echo $this->link_to('Signup', 'users', 'add') ?></li>
             <li><?php echo $this->link_to('Login', 'sessions', 'add') ?></li>
