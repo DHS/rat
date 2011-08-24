@@ -81,7 +81,7 @@ class UsersController extends Application {
 	
 	function update($id) {
 		
-		$this->page['user'] = User::get($id);
+		$this->user = User::get($id);
 		
 		$this->page['name'] = 'Settings';
 		$this->loadLayout('users/update');

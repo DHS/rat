@@ -7,7 +7,7 @@
 <?php foreach ($this->items as $item) {
 	
 	// Prepare vars for comment and like views to be loaded in due course
-	$this->page->item = $item;
+	$this->item = $item;
 	
 	// Populate some vars
 	if (isset($this->plugins->gravatar)) {
@@ -58,7 +58,7 @@
     <!-- End item -->
 
 <?php
-unset($this->page->item);
+unset($this->item);
 } // end foreach loop
 ?>
 

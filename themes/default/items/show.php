@@ -1,5 +1,5 @@
 
-<?php $item = $this->page['item']; ?>
+<?php $item = $this->item; ?>
 
 <div class="row">
   <div class="span8 columns offset4">

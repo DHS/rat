@@ -5,15 +5,15 @@
 	<?php
 	// List all items for this user
 
-	if (count($this->page->items) > 0) {
+	if (count($this->items) > 0) {
 
 		$this->loadView('items/user');
 
 	} else {
 
 		// If own page and no post_permission OR someone else's page show 'no articles yet'
-		if (($_SESSION['user']['id'] == $this->page->user['id'] && $_SESSION['user']['post_permission'] == 0) || $_SESSION['user']['id'] != $this->page->user['id'])
-			echo '<p>'.$this->page->user['username'].' hasn\'t published any '.$this->config->items['name_plural'].' yet.</p>';
+		if (($_SESSION['user']['id'] == $this->user['id'] && $_SESSION['user']['post_permission'] == 0) || $_SESSION['user']['id'] != $this->user['id'])
+			echo '<p>'.$this->user['username'].' hasn\'t published any '.$this->config->items['name_plural'].' yet.</p>';
 
 	}
 

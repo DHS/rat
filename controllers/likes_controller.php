@@ -26,7 +26,7 @@ class LikesController extends Application {
 	
 	function show($item_id) {
 		
-		$this->page['item'] = Item::get($item_id);
+		$this->item = Item::get($item_id);
 		$this->loadView('likes/index');
 		
 	}

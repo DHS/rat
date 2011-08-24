@@ -23,7 +23,7 @@ class SearchController extends Application {
 		include 'lib/search.php';
 		$search = new Search;
 		
-		$this->page['items'] = $search->do_search($q);
+		$this->items = $search->do_search($q);
 
 		$this->loadView('partials/header');
 		$this->loadView('search/add');

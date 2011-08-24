@@ -18,7 +18,7 @@ class ItemsController extends Application {
 	function index() {
 	
 		$this->page->name = $this->config->tagline;
-		$this->page->items = $this->item->list_all();
+		$this->items = $this->item->list_all();
 		
 		$this->loadLayout('items/index');
 		
@@ -99,13 +99,13 @@ class ItemsController extends Application {
 				
 				$this->page['message'] = ucfirst($this->config->items['name']).' added!';
 				
-				$this->page = $this->link_to(NULL, 'users', 'show', $_SESSION['user']['id']);
+				$page = $this->link_to(NULL, 'users', 'show', $_SESSION['user']['id']);
 				
 				// Go forth!
 				if (SITE_IDENTIFIER == 'live') {
-					header('Location: '.$this->config->url.$this->page.'?message='.urlencode($this->page['message']));
+					header('Location: '.$this->config->url.$page.'?message='.urlencode($this->page['message']));
 				} else {
-					header('Location: '.$this->config->dev_url.$this->page.'user.php?message='.urlencode($this->page['message']));
+					header('Location: '.$this->config->dev_url.$page.'user.php?message='.urlencode($this->page['message']));
 				}
 				
 				exit();
@@ -191,7 +191,7 @@ class ItemsController extends Application {
 	// Show a single item
 	function show($id) {
 		
-		$this->page['item'] = Item::get($id);
+		$this->item = Item::get($id);
 		
 		$this->loadLayout('items/show');
 		
@@ -205,7 +205,7 @@ class ItemsController extends Application {
 			// If friends enabled then show feed of friends' activity
 			
 			$this->page['name'] = $this->config->tagline;
-			$this->page['items'] = Item::list_feed($_SESSION['user']['id']);
+			$this->items = Item::list_feed($_SESSION['user']['id']);
 			$this->loadLayout('items/index');
 			
 		} else {

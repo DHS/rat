@@ -1,4 +1,4 @@
-<a href="#" class="friend" onclick="friend_add(<?php echo $_SESSION['user']['id']; ?>, <?php echo $this->page['user']['id']; ?>); return false;">
+<a href="#" class="friend" onclick="friend_add(<?php echo $_SESSION['user']['id']; ?>, <?php echo $this->user->id; ?>); return false;">
 <?php if ($this->config->friends['asymmetric'] == TRUE) {
 	echo 'Follow';
 } else {

@@ -10,7 +10,7 @@ echo '<table style="width: 100%;">';
 
 foreach ($this->items as $item) {
 
-	$this->page['item'] = $item;
+	$this->item = $item;
 	
 	// Populate some vars
 	if ($this->config->items['titles']['enabled'] == TRUE && $item['title'] != NULL) {
@@ -53,7 +53,7 @@ foreach ($this->items as $item) {
   <!-- End item -->
 
 <?php
-unset($this->page->item);
+unset($this->item);
 } // end foreach loop
 ?>
 

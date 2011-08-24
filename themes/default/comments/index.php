@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($item))
-	$item = $this->page['item'];
+	$item = $this->item;
 
 if (count($item['comments']) > 0) {
 
@@ -30,7 +30,7 @@ if (count($item['comments']) > 0) {
 
 if (!isset($item))
 
-	$item = $this->page['item'];
+	$item = $this->item;
 
 if ($this->config->items['comments']['enabled'] == TRUE && ($this->config->private == TRUE || $_SESSION['user'] != NULL)) {
 
