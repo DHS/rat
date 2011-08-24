@@ -1,8 +1,8 @@
 
-<?php if (is_array($app->page->items)) { ?>
+<?php if (is_array($page['items'])) { ?>
 
-<?php foreach ($app->page->items as $item) {
-	$app->page->item = $item; ?>
+<?php foreach ($page['items'] as $item) {
+	$page['item'] = $item; ?>
 
   <div class="row">
     <div class="span2 columns offset4">
@@ -33,9 +33,9 @@
     <div class="span8 columns offset4">
 		<?php if ($app->config->items['comments']['enabled'] == TRUE) {
 			if (count($item['comments']) > 0) {
-				$app->page->show_comment_form = TRUE;
+				$page['show_comment_form'] = TRUE;
 			} else {
-				$app->page->show_comment_form = FALSE;
+				$page['show_comment_form'] = FALSE;
 			}
 			$this->loadView('comments/index');
 		} ?>
@@ -52,7 +52,7 @@
     </div>
   </div>
 
-<?php unset($app->page->item);
+<?php unset($page['item']);
 } // end foreach loop ?>
 
 <?php } // end if is_array ?>

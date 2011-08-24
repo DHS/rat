@@ -6,8 +6,8 @@ require_once 'config/init.php';
 
 if (!empty($_SESSION['user'])) {
 	
-	$app->page->name = 'Signup';
-	$app->page->message = 'You are already logged in!';
+	$page['name'] = 'Signup';
+	$page['message'] = 'You are already logged in!';
 	$this->loadView('partials/header');
 	$this->loadView('partials/footer');
 	exit;
@@ -70,7 +70,7 @@ function validate_code() {
 		// Invalid
 		
 		if ($app->config->beta == TRUE) {
-			$app->page->message = 'Your invite code is invalid.';
+			$page['message'] = 'Your invite code is invalid.';
 			$this->loadView('partials/message');
 			$this->loadView('users/add_beta');
 		} else {
@@ -235,13 +235,13 @@ function do_signup($mode = 'full') {
 			}
 			
 			// Set welcome message
-			$app->page->message = urlencode('Welcome to '.$GLOBALS['app']->name.'!');
+			$page['message'] = urlencode('Welcome to '.$GLOBALS['app']->name.'!');
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url.'?message='.$app->page->message);
+				header('Location: '.$app->config->url.'?message='.$page['message']);
 			} else {
-				header('Location: '.$app->config->dev_url.'?message='.$app->page->message);
+				header('Location: '.$app->config->dev_url.'?message='.$page['message']);
 			}
 	
 			exit();
@@ -256,16 +256,16 @@ function do_signup($mode = 'full') {
 				$app->plugins->log->add($user_id, 'user', NULL, 'beta_signup', $_POST['email']);
 			
 			// Set thank you & tweet this message
-			$app->page->message = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
-			$app->page->message .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
+			$page['message'] = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
+			$page['message'] .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
 	
 			//$this->loadView('partials/message');
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$app->config->url.'?message='.$app->page->message);
+				header('Location: '.$app->config->url.'?message='.$page['message']);
 			} else {
-				header('Location: '.$app->config->dev_url.'?message='.$app->page->message);
+				header('Location: '.$app->config->dev_url.'?message='.$page['message']);
 			}
 	
 			exit();
@@ -284,7 +284,7 @@ function do_signup($mode = 'full') {
 		//$app = $GLOBALS['app'];
 		
 		// Show error message
-		$app->page->message = $error;
+		$page['message'] = $error;
 		$this->loadView('partials/header');
 		
 		// Show relevant signup form
@@ -304,25 +304,25 @@ $mode = NULL;
 
 if ($_GET['code'] != '') {
 	
-	$app->page->selector = 'validate_code';
+	$page['selector'] = 'validate_code';
 	
 } elseif ($_POST['email'] != '') {
 	
 	if ($_POST['code'] != '') {
 		
-		$app->page->selector = 'do_signup';
+		$page['selector'] = 'do_signup';
 		$mode = 'code';
 		
 	} else {
 		
 		if ($app->config->beta == TRUE) {
 			
-			$app->page->selector = 'do_signup';
+			$page['selector'] = 'do_signup';
 			$mode = 'beta';
 			
 		} else {
 			
-			$app->page->selector = 'do_signup';
+			$page['selector'] = 'do_signup';
 			$mode = 'full';
 			
 		}
@@ -331,16 +331,16 @@ if ($_GET['code'] != '') {
 	
 } else {
 	
-	$app->page->selector = 'show_form';
+	$page['selector'] = 'show_form';
 	
 }
 
-//var_dump($app->page->selector);
+//var_dump($page['selector']);
 //var_dump($mode);
 
 // Show page determined by selector
 
-if ($app->page->selector == 'do_signup') {
+if ($page['selector'] == 'do_signup') {
 	// Do signup. No headers to allow redirects. Error pages load their own page header.
 	
 	do_signup($mode);
@@ -349,7 +349,7 @@ if ($app->page->selector == 'do_signup') {
 	// Not doing signup so show a simpler page. Also call header.
 	
 	$this->loadView('partials/header');
-	call_user_func($app->page->selector);
+	call_user_func($page['selector']);
 	
 }
 

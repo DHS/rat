@@ -1,13 +1,13 @@
 
-<p>Beta signups: <strong><?php echo count($app->page->users); ?></strong></p>
+<p>Beta signups: <strong><?php echo count($page['users']); ?></strong></p>
 
 <?php
 
-if (is_array($app->page->users)) {
+if (is_array($page['users'])) {
 
 echo '<table>';
 
-foreach ($app->page->users as $user) {
+foreach ($page['users'] as $user) {
 	
 	if ($user['days_waiting'] == 0) {
 		$days_waiting = 'Today!';
@@ -24,7 +24,7 @@ foreach ($app->page->users as $user) {
 	echo '<tr><td>'.$user['email'].'</td><td>
 	<form action="'.$this->link_to(NULL, 'admin', 'invite').'" method="post">
 	<input type="hidden" name="email" value="'.$user['email'].'">
-	'.$days_waiting.' &middot; '.$invite_summary.' <input type="submit" value="Invite" />
+	'.$days_waiting.' &middot; '.$invite_summary.' <input type="submit" value="Invite" class="btn" />
 	</form>
 	</td></tr>';
 

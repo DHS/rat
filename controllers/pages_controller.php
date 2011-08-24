@@ -14,7 +14,7 @@ class PagesController extends Application {
 		
 		global $app;
 		
-		$app->page->name = ucfirst($name);
+		$page['name'] = ucfirst($name);
 		
 		$this->loadLayout('pages/'.$name);
 		

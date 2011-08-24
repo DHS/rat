@@ -8,7 +8,7 @@ class ItemsController extends Application {
 		
 		// To add an item you must be logged in
 		if (($app->uri['action'] == 'add' || $app->uri['action'] == 'remove') && $_SESSION['user'] == NULL) {
-			$app->page->name = 'Page not found';
+			$page['name'] = 'Page not found';
 			$this->loadView('partials/header');
 			$this->loadView('partials/footer');
 			exit;
@@ -101,15 +101,15 @@ class ItemsController extends Application {
 				if (isset($app->plugins->log))
 					$app->plugins->log->add($_SESSION['user']['id'], 'item', $item_id, 'add', "title = {$_POST['title']}\ncontent = {$_POST['content']}");
 				
-				$app->page->message = ucfirst($app->config->items['name']).' added!';
+				$page['message'] = ucfirst($app->config->items['name']).' added!';
 				
 				$page = $app->link_to(NULL, 'users', 'show', $_SESSION['user']['id']);
 				
 				// Go forth!
 				if (SITE_IDENTIFIER == 'live') {
-					header('Location: '.$app->config->url.$page.'?message='.urlencode($app->page->message));
+					header('Location: '.$app->config->url.$page.'?message='.urlencode($page['message']));
 				} else {
-					header('Location: '.$app->config->dev_url.$page.'user.php?message='.urlencode($app->page->message));
+					header('Location: '.$app->config->dev_url.$page.'user.php?message='.urlencode($page['message']));
 				}
 				
 				exit();
@@ -126,7 +126,7 @@ class ItemsController extends Application {
 				//$app = $GLOBALS['app'];
 				
 				// Show error message
-				$app->page->message = $error;
+				$page['message'] = $error;
 				$this->loadLayout('items/add');
 				exit();
 				
@@ -172,7 +172,7 @@ class ItemsController extends Application {
 			}
 			
 			// Set message
-			$app->page->message = ucfirst($app->config->items['name']).' removed!';
+			$page['message'] = ucfirst($app->config->items['name']).' removed!';
 			
 			// Return from whence you came
 			header('Location: '.$_SERVER['HTTP_REFERER']);
@@ -199,7 +199,7 @@ class ItemsController extends Application {
 		
 		global $app;
 		
-		$app->page->item = Item::get($id);
+		$page['item'] = Item::get($id);
 		
 		$this->loadLayout('items/show');
 		
@@ -214,8 +214,8 @@ class ItemsController extends Application {
 			
 			// If friends enabled then show feed of friends' activity
 			
-			$app->page->name = $app->config->tagline;
-			$app->page->items = Item::list_feed($_SESSION['user']['id']);
+			$page['name'] = $app->config->tagline;
+			$page['items'] = Item::list_feed($_SESSION['user']['id']);
 			$this->loadLayout('items/index');
 			
 		} else {

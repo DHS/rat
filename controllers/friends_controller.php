@@ -37,7 +37,7 @@ class FriendsController extends Application {
 			
 		}
 		
-		$app->page->user['id'] = $friend_id;
+		$page['user']['id'] = $friend_id;
 		
 		$this->loadView('friends/remove');
 		
@@ -52,7 +52,7 @@ class FriendsController extends Application {
 		if (isset($app->plugins->log))
 			$app->plugins->log->add($_SESSION['user']['id'], 'friend', $friend_id, 'remove');
 		
-		$app->page->user['id'] = $friend_id;
+		$page['user']['id'] = $friend_id;
 		
 		$this->loadView('friends/add');
 		

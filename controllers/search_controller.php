@@ -29,7 +29,7 @@ class SearchController extends Application {
 		include 'lib/search.php';
 		$search = new Search;
 		
-		$app->page->items = $search->do_search($q);
+		$page['items'] = $search->do_search($q);
 		
 		$this->loadView('partials/header');
 		$this->loadView('search/add');
@@ -46,7 +46,7 @@ class SearchController extends Application {
 		$search = new Search;
 		
 		$items['items'] = $search->do_search($q);
-		$app->page->json = $items;
+		$page['json'] = $items;
 		$this->loadView('pages/json');
 		
 	}

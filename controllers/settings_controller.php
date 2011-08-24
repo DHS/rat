@@ -51,21 +51,21 @@ function password() {
 				if (isset($app->plugins->log))
 					$app->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'change_password');
 
-				$app->page->message = 'Password udpated!';
+				$page['message'] = 'Password udpated!';
 				
 			} else {
 				// New passwords don't match
-				$app->page->message = 'There was a problem, please try again.';
+				$page['message'] = 'There was a problem, please try again.';
 			}
 			
 		} else {
 			// Old passwords don't match
-			$app->page->message = 'There was a problem, please try again.';
+			$page['message'] = 'There was a problem, please try again.';
 		}
 		
 	} else {
 		// Variables missing
-		$app->page->message = 'There was a problem, please try again.';
+		$page['message'] = 'There was a problem, please try again.';
 	}
 	
 	$this->loadView('partials/message');
@@ -116,11 +116,11 @@ function profile() {
 			User::update_profile($_SESSION['user']['id'], $_POST['name'], $_POST['bio'], $_POST['url']);
 		
 			// Set success message
-			$app->page->message = 'Profile information updated!';
+			$page['message'] = 'Profile information updated!';
 			
 		} else {
 			
-			$app->page->message = $error;
+			$page['message'] = $error;
 			
 		}
 
@@ -135,9 +135,9 @@ function profile() {
 // Selector
 
 if (isset($_GET['page']))
-	$app->page->selector = $_GET['page'];
-if (!isset($app->page->selector))
-	$app->page->selector = 'index';
+	$page['selector'] = $_GET['page'];
+if (!isset($page['selector']))
+	$page['selector'] = 'index';
 
 // Header
 
@@ -146,7 +146,7 @@ $this->loadView('partials/header');
 
 // Show page determined by selector
 
-call_user_func($app->page->selector);
+call_user_func($page['selector']);
 
 // Show profile info form
 

@@ -1,16 +1,16 @@
 <?php
 
-if ($app->page->user['id'] == $_SESSION['user']['id']) {
+if ($page['user']['id'] == $_SESSION['user']['id']) {
 	$this->loadView('items/add');
 }
 
-if (is_array($app->page->items)) {
+if (is_array($page['items'])) {
 	
 echo '<table style="width: 100%;">';
 
-foreach ($app->page->items as $item) {
+foreach ($page['items'] as $item) {
 
-	$app->page->item = $item;
+	$page['item'] = $item;
 	
 ?>
 
@@ -33,9 +33,9 @@ foreach ($app->page->items as $item) {
 			if ($app->config->items['comments']['enabled'] == TRUE) {
 
 				if (count($item['comments']) > 0) {
-					$app->page->show_comment_form = TRUE;
+					$page['show_comment_form'] = TRUE;
 				} else {
-					$app->page->show_comment_form = FALSE;
+					$page['show_comment_form'] = FALSE;
 				}
 				$this->loadView('comments/index');
 				
@@ -52,7 +52,7 @@ foreach ($app->page->items as $item) {
 	
 <?php
 
-	unset($app->page->item);
+	unset($page['item']);
 
 }
 // end foreach loop

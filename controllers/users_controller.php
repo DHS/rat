@@ -9,8 +9,8 @@ class UsersController extends Application {
 		// Check if user is logged in and trying to signup
 		if ($app->uri['action'] == 'add' && !empty($_SESSION['user'])) {
 
-			$app->page->name = 'Signup';
-			$app->page->message = 'You are already logged in!';
+			$page['name'] = 'Signup';
+			$page['message'] = 'You are already logged in!';
 			$this->loadView('partials/header');
 			$this->loadView('partials/footer');
 			exit;
@@ -64,7 +64,7 @@ class UsersController extends Application {
 				// Show full signup form
 				
 				if (isset($code)) {
-					$app->page->code = $code;
+					$page['code'] = $code;
 				}
 				
 				$this->loadLayout('users/add');
@@ -79,10 +79,10 @@ class UsersController extends Application {
 		
 		global $app;
 		
-		$app->page->user = User::get($id);
-		$app->page->items = Item::list_user($id);
+		$page['user'] = User::get($id);
+		$page['items'] = Item::list_user($id);
 		
-		$app->page->name = $app->page->user['username'];
+		$page['name'] = $page['user']['username'];
 		$this->loadLayout('users/show');
 		
 	}
@@ -91,9 +91,9 @@ class UsersController extends Application {
 		
 		global $app;
 		
-		$app->page->user = User::get($id);
+		$page['user'] = User::get($id);
 		
-		$app->page->name = 'Settings';
+		$page['name'] = 'Settings';
 		$this->loadLayout('users/update');
 		
 	}
@@ -141,13 +141,13 @@ class UsersController extends Application {
 					}
 					
 					// Set welcome message
-					$app->page->message = urlencode('Password updated.<br />Welcome back to '.$app->config->name.'!');
+					$page['message'] = urlencode('Password updated.<br />Welcome back to '.$app->config->name.'!');
 					
 					// Go forth!
 					if (SITE_IDENTIFIER == 'live') {
-						header('Location: '.$app->config->url.'?message='.$app->page->message);
+						header('Location: '.$app->config->url.'?message='.$page['message']);
 					} else {
-						header('Location: '.$app->config->dev_url.'?message='.$app->page->message);
+						header('Location: '.$app->config->dev_url.'?message='.$page['message']);
 					}
 					
 					exit();
@@ -155,7 +155,7 @@ class UsersController extends Application {
 				} else {
 					// Show error message
 					
-					$app->page->message = $error;
+					$page['message'] = $error;
 					$this->loadView('partials/header');
 					if (User::check_password_reset_code($code) != FALSE)
 						$this->loadView('reset');
@@ -193,7 +193,7 @@ class UsersController extends Application {
 		
 		$user['user'] = User::get_by_username($username);
 		$user['items'] = Item::list_user($user['user']['id']);
-		$app->page->json = $user;
+		$page['json'] = $user;
 		$this->loadView('pages/json');
 		
 	}

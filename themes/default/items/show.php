@@ -1,5 +1,5 @@
 
-<?php $item = $app->page->item; ?>
+<?php $item = $page['item']; ?>
 
 <?php if ($app->config->items['titles']['enabled'] == TRUE) { ?>
 
@@ -41,7 +41,7 @@ if ($app->config->items['likes']['enabled'] == TRUE)
 	$this->loadView('likes/index');
 
 if ($app->config->items['comments']['enabled'] == TRUE) {
-	$app->page->show_comment_form = TRUE;
+	$page['show_comment_form'] = TRUE;
 	$this->loadView('comments/index');
 }
 
