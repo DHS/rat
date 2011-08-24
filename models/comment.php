@@ -73,7 +73,7 @@ class Comment {
 			
 		}
 
-		return $return;
+		return $comments;
 
 	}
 	
