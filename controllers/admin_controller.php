@@ -11,7 +11,7 @@ class AdminController {
 		if ($app->uri['action'] == 'setup') {
 			// Setup page called so make sure user count = 0
 			
-			if (count($app->admin->list_users()) != 0) {
+			if (count(Admin::list_users()) != 0) {
 				
 				$app->page->name = 'Page not found';
 				$app->loadView('partials/header');
@@ -39,8 +39,8 @@ class AdminController {
 		
 		global $app;
 		
-		$app->page->users = $app->admin->list_users();
-		$app->page->users_beta = $app->admin->list_users_beta();
+		$app->page->users = Admin::list_users();
+		$app->page->users_beta = Admin::list_users_beta();
 		$app->loadLayout('admin/index', 'admin');
 		
 	}
@@ -91,7 +91,7 @@ class AdminController {
 		
 		global $app;
 		
-		$app->page->users = $app->admin->list_users_beta();
+		$app->page->users = Admin::list_users_beta();
 		$app->loadLayout('admin/signups', 'admin');
 		
 	}
@@ -101,7 +101,7 @@ class AdminController {
 		
 		global $app;
 		
-		$app->page->users = $app->admin->list_users();
+		$app->page->users = Admin::list_users();
 		$app->loadLayout('admin/users', 'admin');
 		
 	}
@@ -169,7 +169,7 @@ class AdminController {
 		
 		if ($_GET['count'] > 0) {
 			
-			$app->admin->update_invites($_GET['count']);
+			Admin::update_invites($_GET['count']);
 			
 			$app->page->message = 'Invites updated!';
 			
