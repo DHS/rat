@@ -47,32 +47,6 @@ class Comment {
 		
 	}
 	
-	// Get comments for an item, returns an array of Comment objects
-	public static function list_item($id) {
-		
-		$id = sanitize_input($id);
-
-		$sql = "SELECT id, content, user_id, date FROM comments WHERE item_id = $id ORDER BY id ASC";
-		$query = mysql_query($sql);
-
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
-			$comment = new Comment;
-			
-			foreach($result as $k => $v) {
-				$comment->$k = $v;
-			}
-			
-			$comment->user = User::get($result['user_id']);
-
-			$comments[] = $comment;
-			
-		}
-
-		return $comments;
-
-	}
-	
 	// Remove a comment from an item, returns comment id
 	public static function remove($user_id, $comment_id) {
 

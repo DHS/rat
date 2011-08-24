@@ -50,7 +50,7 @@ class Item {
 			}
 
 			$item->user = User::get($result['user_id']);
-			$item->comments = Comment::list_item($id);
+			$item->comments = Item::comments($id);
 			$item->likes = Like::list_item($id);
 
 		}
@@ -80,7 +80,7 @@ class Item {
 				$item->$k = $v;
 			}
 			
-			$item->comments = Comment::list_item($result['id']);
+			$item->comments = Item::comments($result['id']);
 			$item->likes = Like::list_item($result['id']);
 			$item->user = User::get($result['user_id']);
 
@@ -122,7 +122,7 @@ class Item {
 			}
 
 			$item->user = User::get($result['user_id']);
-			$item->comments = Comment::list_item($result['id']);
+			$item->comments = Item::comments($result['id']);
 			$item->likes = Like::list_item($result['id']);
 
 			$items[] = $item;
@@ -161,7 +161,7 @@ class Item {
 			}
 
 			$item->user = User::get($result['user_id']);
-			$item->comments = Comment::list_item($result['id']);
+			$item->comments = Item::comments($result['id']);
 			$item->likes = Like::list_item($result['id']);
 
 			$items[] = $item;
@@ -197,7 +197,7 @@ class Item {
 			}
 
 			$item->user = User::get($result['user_id']);
-			$item->comments = Comment::list_item($result['id']);
+			$item->comments = Item::comments($result['id']);
 			$item->likes = Like::list_item($result['id']);
 
 			$items[] = $item;
@@ -205,6 +205,32 @@ class Item {
 		}
 
 		return $items;
+
+	}
+
+	// Get comments for an item, returns an array of Comment objects
+	public static function comments($item_id) {
+		
+		$item_id = sanitize_input($item_id);
+
+		$sql = "SELECT id, content, user_id, date FROM comments WHERE item_id = $item_id ORDER BY id ASC";
+		$query = mysql_query($sql);
+
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			$comment = new Comment;
+			
+			foreach($result as $k => $v) {
+				$comment->$k = $v;
+			}
+			
+			$comment->user = User::get($result['user_id']);
+
+			$comments[] = $comment;
+			
+		}
+
+		return $comments;
 
 	}
 
