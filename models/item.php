@@ -235,7 +235,7 @@ class Item {
 	}
 
 	// Get likes for an item, returns an array of Like objects
-	public static function list_item($item_id) {
+	public static function likes($item_id) {
 
 		$item_id = sanitize_input($item_id);
 
@@ -259,7 +259,6 @@ class Item {
 		return $likes;
 
 	}
-
 
 	// Remove an item, returns item id
 	public static function remove($item_id) {
