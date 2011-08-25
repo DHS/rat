@@ -49,7 +49,7 @@ class Item {
 				$item->$k = $v;
 			}
 
-			$item->user = User::get($result['user_id']);
+			$item->user = User::get_by_id($result['user_id']);
 			$item->comments = Item::comments($id);
 			$item->likes = Item::likes($id);
 
@@ -82,7 +82,7 @@ class Item {
 			
 			$item->comments = Item::comments($result['id']);
 			$item->likes = Item::likes($result['id']);
-			$item->user = User::get($result['user_id']);
+			$item->user = User::get_by_id($result['user_id']);
 
 			$items[] = $item;
 
@@ -119,7 +119,7 @@ class Item {
 				$item->$k = $v;
 			}
 
-			$item->user = User::get($result['user_id']);
+			$item->user = User::get_by_id($result['user_id']);
 			$item->comments = Item::comments($result['id']);
 			$item->likes = Item::likes($result['id']);
 
@@ -155,7 +155,7 @@ class Item {
 				$item->$k = $v;
 			}
 
-			$item->user = User::get($result['user_id']);
+			$item->user = User::get_by_id($result['user_id']);
 			$item->comments = Item::comments($result['id']);
 			$item->likes = Item::likes($result['id']);
 
@@ -183,7 +183,7 @@ class Item {
 				$comment->$k = $v;
 			}
 			
-			$comment->user = User::get($result['user_id']);
+			$comment->user = User::get_by_id($result['user_id']);
 
 			$comments[] = $comment;
 			
@@ -209,7 +209,7 @@ class Item {
 				$like->$k = $v;
 			}
 			
-			$like->user = User::get($result['user_id']);
+			$like->user = User::get_by_id($result['user_id']);
 			
 			$likes[$result['id']] = $like;
 			

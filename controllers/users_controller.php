@@ -72,7 +72,7 @@ class UsersController extends Application {
 	// Show a user
 	function show($id) {
 		
-		$this->user = User::get($id);
+		$this->user = User::get_by_id($id);
 		$this->items = User::items($id);
 
 		$this->title = $this->user->username;		
@@ -82,7 +82,7 @@ class UsersController extends Application {
 	
 	function update($id) {
 		
-		$this->user = User::get($id);
+		$this->user = User::get_by_id($id);
 		
 		$this->title = 'Settings';
 		$this->loadLayout('users/update');
@@ -117,7 +117,7 @@ class UsersController extends Application {
 					// Do update
 					User::update_password($user_id, $_POST['password1']);
 					
-					$user = User::get($user_id);
+					$user = User::get_by_id($user_id);
 					
 					// Start session
 					$_SESSION['user'] = $user;

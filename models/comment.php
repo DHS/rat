@@ -39,7 +39,7 @@ class Comment {
 				$comment->$k = $v;
 			}
 			
-			$comment->user = User::get($result['user_id']);
+			$comment->user = User::get_by_id($result['user_id']);
 			
 		}
         

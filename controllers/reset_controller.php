@@ -76,7 +76,7 @@ function update_password() {
 		// Do update
 		User::update_password($user_id, $_POST['password1']);
 		
-		$user = User::get($user_id);
+		$user = User::get_by_id($user_id);
 		
 		// Start session
 		$_SESSION['user'] = $user;

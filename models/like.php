@@ -46,7 +46,7 @@ class Like {
 			}
 			
 			// Get info about the liker
-			$like->user = User::get($like->user_id);
+			$like->user = User::get_by_id($like->user_id);
 			
 			// Get item info
 			$like->item = Item::get($like->user_id);

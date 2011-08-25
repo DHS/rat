@@ -162,7 +162,7 @@ function do_signup($mode = 'full') {
 		if ($user == NULL) {
 			
 			$user_id = User::add($_POST['email']);
-			$user = User::get($user_id);
+			$user = User::get_by_id($user_id);
 			
 		}
 		

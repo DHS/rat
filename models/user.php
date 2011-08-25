@@ -17,7 +17,7 @@ class User {
 	}
 
 	// Fetch a user's info given a user_id
-	public static function get($id) {
+	public static function get_by_id($id) {
 
 		$id = sanitize_input($id);
 
@@ -139,7 +139,7 @@ class User {
 				$item->$k = $v;
 			}
 
-			$item->user = User::get($result['user_id']);
+			$item->user = User::get_by_id($result['user_id']);
 			$item->comments = Item::comments($result['id']);
 			$item->likes = Item::likes($result['id']);
 
@@ -191,7 +191,7 @@ class User {
 				$friend->$k = $v;
 			}
 			
-			$friend->user = User::get($result['friend_user_id']);
+			$friend->user = User::get_by_id($result['friend_user_id']);
 			
 			$friends[$result['id']] = $friend;
 			
@@ -219,7 +219,7 @@ class User {
 				$friend->$k = $v;
 			}
 			
-			$friend->user = User::get($result['user_id']);
+			$friend->user = User::get_by_id($result['user_id']);
 			
 			$friends[$result['id']] = $friend;
 			

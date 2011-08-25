@@ -68,7 +68,7 @@ class Search {
 			
 			$row['comments'] = Item::comments($row['id']);
 			$row['likes'] = Item::likes($row['id']);
-			$row['user'] = User::get($row['user_id']);
+			$row['user'] = User::get_by_id($row['user_id']);
 	
 			$rows[] = $row;
 		}

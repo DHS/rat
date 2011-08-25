@@ -19,8 +19,8 @@ class FriendsController extends Application {
 		if ($this->config->send_emails == TRUE) {
 			// Send 'new follower' email to writer
 			
-			$user = User::get($_SESSION['user']['id']);
-			$friend = User::get($friend_id);
+			$user = User::get_by_id($_SESSION['user']['id']);
+			$friend = User::get_by_id($friend_id);
 			$link = $this->config->url.'users/show/'.$_SESSION['user']['id'];
 			
 			$to			= "{$friend['username']} <{$friend['email']}>";
