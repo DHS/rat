@@ -20,8 +20,9 @@ class SessionsController extends Application {
 				$_SESSION['user'] = $user;
 				
 				// Log login
-				if (isset($this->plugins->log))
+				if (isset($this->plugins->log)) {
 					$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+				}
 				
 				// Get redirected
 				if ($_GET['redirect_to']) {
@@ -71,8 +72,9 @@ class SessionsController extends Application {
 			session_destroy();
 
 			// log logout
-			if (isset($this->plugins->log))
+			if (isset($this->plugins->log)) {
 				$this->plugins->log->add($user_id, 'user', NULL, 'logout');
+			}
 
 			$_SESSION['user'] = array();
 

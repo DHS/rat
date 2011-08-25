@@ -56,8 +56,9 @@ class AdminController extends Application {
 			$_SESSION['user'] = $user;
 			
 			// Log login
-			if (isset($this->plugins->log))
+			if (isset($this->plugins->log)) {
 				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'signup');
+			}
 			
 			$this->message = 'Rat is now setup and you are logged in!';
 			
@@ -121,8 +122,9 @@ class AdminController extends Application {
 			$id = Invite::add($_SESSION['user']['id'], $email);
 			
 			// Log invite
-			if (isset($this->plugins->log))
+			if (isset($this->plugins->log)) {
 				$this->plugins->log->add($_SESSION['user']['id'], 'invite', $id, 'admin_add', $email);
+			}
 			
 			if (SITE_IDENTIFIER == 'live') {
 				$to		= "{$_POST['username']} <{$email}>";

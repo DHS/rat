@@ -15,11 +15,13 @@ function like_add(item_id, url) {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			if (xmlhttp.responseText != '') {
 				
-				if (like_link = document.getElementById('like_link_'+item_id))
+				if (like_link = document.getElementById('like_link_'+item_id)) {
 					like_link.innerHTML = '<a href="#" onclick="like_remove('+item_id+', \''+new_url+'\'); return false;">Unlike</a>';
+				}
 				
-				if (likes = document.getElementById('likes_'+item_id))
+				if (likes = document.getElementById('likes_'+item_id)) {
 					likes.innerHTML = xmlhttp.responseText;
+				}
 				
 			}
 		}
@@ -46,11 +48,13 @@ function like_remove(item_id, url) {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			if (xmlhttp.responseText != '') {
 				
-				if (like_link = document.getElementById('like_link_'+item_id))
+				if (like_link = document.getElementById('like_link_'+item_id)) {
 					like_link.innerHTML = '<a href="#" onclick="like_add('+item_id+', \''+new_url+'\'); return false;">Like</a>';
+				}
 				
-				if (likes = document.getElementById('likes_'+item_id))
+				if (likes = document.getElementById('likes_'+item_id)) {
 					likes.innerHTML = xmlhttp.responseText;
+				}
 
 			}
 		}
@@ -77,11 +81,13 @@ function comment_add(item_id, url) {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			if (xmlhttp.responseText != '') {
 				
-				if (comments = document.getElementById('comments_'+item_id))
+				if (comments = document.getElementById('comments_'+item_id)) {
 					comments.innerHTML = xmlhttp.responseText;
+				}
 				
-				if (comment_form = document.forms('comment_form_'+item_id))
+				if (comment_form = document.forms('comment_form_'+item_id)) {
 					comment_form.content.value = '';
+				}
 				
 			}
 		}
@@ -107,8 +113,9 @@ function comment_remove(item_id, url) {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			if (xmlhttp.responseText != '') {
 				
-				if (comments = document.getElementById('comments_'+item_id))
+				if (comments = document.getElementById('comments_'+item_id)) {
 					comments.innerHTML = xmlhttp.responseText;
+				}
 				
 			}
 		}
@@ -134,8 +141,9 @@ function friend_add(user_id, friend_user_id) {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			if (xmlhttp.responseText != '') {
 				
-				if (friends_button = document.getElementById('friends_'+friend_user_id))
+				if (friends_button = document.getElementById('friends_'+friend_user_id)) {
 					friends_button.innerHTML = xmlhttp.responseText;
+				}
 				
 			}
 		}
@@ -160,8 +168,9 @@ function friend_remove(user_id, friend_user_id) {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			if (xmlhttp.responseText != '') {
 				
-				if (friends_button = document.getElementById('friends_'+friend_user_id))
+				if (friends_button = document.getElementById('friends_'+friend_user_id)) {
 					friends_button.innerHTML = xmlhttp.responseText;
+				}
 				
 			}
 		}

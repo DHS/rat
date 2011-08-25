@@ -36,14 +36,16 @@ if (isset($this->plugins->gravatar)) {
 
 <?php
 // Untested
-if ($this->config->private != TRUE)
+if ($this->config->private != TRUE) {
 	$this->loadView('items/share');
+}
 ?>
 
 <?php
 
-if ($this->config->items['likes']['enabled'] == TRUE)
+if ($this->config->items['likes']['enabled'] == TRUE) {
 	$this->loadView('likes/index');
+}
 
 if ($this->config->items['comments']['enabled'] == TRUE) {
 	$this->show_comment_form = TRUE;

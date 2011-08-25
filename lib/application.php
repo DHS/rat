@@ -105,11 +105,13 @@ class Application {
 		
 		$url = BASE_DIR . "/{$controller}";
 		
-		if (!empty($action))
+		if (!empty($action)) {
 			$url .= "/$action";
+		}
 		
-		if (!empty($id))
+		if (!empty($id)) {
 			$url .= "/$id";
+		}
 		
 		if ($link_text == NULL) {
 			// No link text so just return url

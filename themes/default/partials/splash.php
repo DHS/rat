@@ -9,8 +9,9 @@
 
 <?php
 
-if ($this->config->beta == TRUE)
+if ($this->config->beta == TRUE) {
 	$this->loadView('signup_beta');
+}
 
 ?>
 

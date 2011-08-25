@@ -12,8 +12,9 @@
 	} else {
 
 		// If own page and no post_permission OR someone else's page show 'no articles yet'
-		if (($_SESSION['user']['id'] == $this->user->id && $_SESSION['user']['post_permission'] == 0) || $_SESSION['user']['id'] != $this->user->id)
+		if (($_SESSION['user']['id'] == $this->user->id && $_SESSION['user']['post_permission'] == 0) || $_SESSION['user']['id'] != $this->user->id) {
 			echo '<p>'.$this->user->username.' hasn\'t published any '.$this->config->items['name_plural'].' yet.</p>';
+		}
 
 	}
 
@@ -41,13 +42,15 @@
 
 // Show follow button
 
-if ($this->config->friends['enabled'] == TRUE)
+if ($this->config->friends['enabled'] == TRUE) {
 	$this->loadView('friends/index');
+}
 
 // Show number of points
 
-if (isset($this->plugins->points))
+if (isset($this->plugins->points)) {
 	$this->plugins->points->view();
+}
 
 // Show new item form
 

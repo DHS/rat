@@ -11,8 +11,9 @@
 *	
 *		To include Google Analytics tracking code:
 *		
-*			if (isset($this->plugins->analytics))
+*			if (isset($this->plugins->analytics)) {
 *				echo $this->plugins->analytics->show();
+*			}
 *
 */
 

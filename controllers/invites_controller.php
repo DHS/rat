@@ -40,8 +40,9 @@ class InvitesController extends Application {
 		
 		$_POST['email'] = trim($_POST['email']);
 
-		if ($_POST['email'] == '')
+		if ($_POST['email'] == '') {
 			$error .= 'Please enter an email address.<br />';
+		}
 
 		if ($_SESSION['user']['invites'] < 1) {
 			$error .= 'You don\'t have any invites remaining.<br />';

@@ -111,8 +111,9 @@ if (isset($this->title)) {
 
 <?php
 
-if (isset($_GET['message']))
+if (isset($_GET['message'])) {
 	$this->message = $_GET['message'];
+}
 
 if (isset($this->message)) {
 	echo '<!-- Message -->

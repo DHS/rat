@@ -28,8 +28,9 @@ function generate_code() {
 		$this->loadView('emails/password_reset');
 		
 		// Email user
-		if ($this->config->send_emails == TRUE)
+		if ($this->config->send_emails == TRUE) {
 			mail($to, $subject, $body, $headers);
+		}
 		
 	}
 	
@@ -44,8 +45,9 @@ function check_code() {
 	
 	$this->loadView('partials/header');
 	
-	if (User::check_password_reset_code($_GET['code']) != FALSE)
+	if (User::check_password_reset_code($_GET['code']) != FALSE) {
 		$this->loadView('reset_confirm');
+	}
 
 	$this->loadView('partials/footer');
 	
@@ -54,14 +56,17 @@ function check_code() {
 function update_password() {
 
 	// Sneaky
-	if (User::check_password_reset_code($_POST['code']) == FALSE)
+	if (User::check_password_reset_code($_POST['code']) == FALSE) {
 		exit();
+	}
 	
-	if ($_POST['password1'] == '' || $_POST['password2'] == '')
+	if ($_POST['password1'] == '' || $_POST['password2'] == '') {
 		$error .= 'Please enter your password twice.<br />';
+	}
 		
-	if ($_POST['password1'] != $_POST['password2'])
+	if ($_POST['password1'] != $_POST['password2']) {
 		$error .= 'Passwords do not match.<br />';
+	}
 		
 	// Error processing
 	if ($error == '') {
@@ -77,8 +82,9 @@ function update_password() {
 		$_SESSION['user'] = $user;
 		
 		// Log login
-		if (isset($this->plugins->log))
+		if (isset($this->plugins->log)) {
 			$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+		}
 		
 		// If redirect_to is set then redirect
 		if ($_GET['redirect_to']) {
@@ -102,8 +108,9 @@ function update_password() {
 		
 		$this->message = $error;
 		$this->loadView('partials/header');
-		if (User::check_password_reset_code($_POST['code']) != FALSE)
+		if (User::check_password_reset_code($_POST['code']) != FALSE) {
 			$this->loadView('reset_confirm');
+		}
 		$this->loadView('partials/footer');
 		
 	}

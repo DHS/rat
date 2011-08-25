@@ -12,12 +12,14 @@ $db = mysql_select_db($this->config->database[SITE_IDENTIFIER]['database'], $con
 
 function sanitize_input($input) {
 	
-	if (get_magic_quotes_gpc())
+	if (get_magic_quotes_gpc()) {
 		$input = stripslashes($input);
+	}
     
 	// If not a number, then add quotes
-	if (!is_numeric($input))
+	if (!is_numeric($input)) {
 		$input = "'".mysql_real_escape_string($input)."'";
+	}
 	
 	return $input;
 

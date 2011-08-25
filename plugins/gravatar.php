@@ -11,8 +11,9 @@
 *	
 *		To display a users's gravatar:
 *		
-*			if (isset($this->plugins->gravatar))
+*			if (isset($this->plugins->gravatar)) {
 *				echo $this->plugins->gravatar->show($_SESSION['user']['email'], array('user_id' => $_SESSION['user']['id'], 'size' => 20, 'style' => "margin: 10px;"));
+*			}
 *
 */
 
@@ -32,20 +33,23 @@ class gravatar {
 		$return = '<img src="http://www.gravatar.com/avatar/'.$email;
 
 		// if size is set, add it in
-		if (isset($params['size']))
+		if (isset($params['size'])) {
 			$return .= '?s='.$params['size'];
+		}
 		
 		$return .= '"';
 		
 		// if style is set, add it in
-		if (isset($params['style']))
+		if (isset($params['style'])) {
 			$return .= ' style="'.$params['style'].'"';
+		}
 
 		$return .= ' />';
 		
 		// if user_id is set, make it a link
-		if (isset($params['link']))
+		if (isset($params['link'])) {
 			$return = '<a href="'.$params['link'].'">'.$return.'</a>';
+		}
 		
 		return $return;
 		

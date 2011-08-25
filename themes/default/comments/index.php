@@ -29,7 +29,7 @@ if ($this->config->items['comments']['enabled'] == TRUE && ($this->config->priva
 
 	?>
 
-	<form action="javascript:comment_add(<?php echo $this->item->id; ?>, '<?php echo $this->link_to(NULL, 'comments', 'add'); ?>');" id="comment_form_<?php echo $this->item->id; ?>" class="meta" style="margin: 0px; <?php if ($this->show_comment_form != TRUE) { echo 'visibility: hidden; height: 0px;'; }?>" method="post">
+	<form action="javascript:comment_add(<?php echo $this->item->id; ?>, '<?php echo $this->link_to(NULL, 'comments', 'add'); ?>');" id="comment_form_<?php echo $this->item->id; ?>" class="meta" style="margin: 0px; <?php if ($this->show_comment_form != TRUE) { echo 'visibility: hidden; height: 0px;'; } ?>" method="post">
 		<input type="text" name="content" size="30" value="" /> <input type="submit" value="<?php echo $this->config->items['comments']['name']; ?>" class="btn" />
 	</form>
 

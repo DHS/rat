@@ -43,8 +43,9 @@ function password() {
 				$_SESSION['user']['password'] = md5($_POST['new_password1'].$this->config->encryption_salt);
 				
 				// Log password update
-				if (isset($this->plugins->log))
+				if (isset($this->plugins->log)) {
 					$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'change_password');
+				}
 
 				$this->message = 'Password udpated!';
 				
@@ -88,22 +89,26 @@ function profile() {
 		}
 		
 		// Check for spaces
-		if (User::check_contains_spaces($_POST['url']) == TRUE)
+		if (User::check_contains_spaces($_POST['url']) == TRUE) {
 			$error = 'URL cannot contain spaces.';
+		}
 		
 		// End URL validation
 		
 		if ($error == '') {
 		
 			// Update session vars
-			if ($_POST['name'] != '')
+			if ($_POST['name'] != '') {
 				$_SESSION['user']['name'] = $_POST['name'];
+			}
         	
-			if ($_POST['bio'] != '')
+			if ($_POST['bio'] != '') {
 				$_SESSION['user']['bio'] = $_POST['bio'];
+			}
 				
-			if ($_POST['url'] != '')
+			if ($_POST['url'] != '') {
 				$_SESSION['user']['url'] = $_POST['url'];
+			}
 	    	
 			// Call user_update_profile in user model
 			User::update_profile($_SESSION['user']['id'], $_POST['name'], $_POST['bio'], $_POST['url']);
@@ -127,10 +132,12 @@ function profile() {
 
 // Selector
 
-if (isset($_GET['page']))
+if (isset($_GET['page'])) {
 	$this->page['selector'] = $_GET['page'];
-if (!isset($this->page['selector']))
+}
+if (!isset($this->page['selector'])) {
 	$this->page['selector'] = 'index';
+}
 
 // Header
 
@@ -151,8 +158,9 @@ $this->loadView('settings_password');
 
 // Gravatar settings
 
-if (isset($this->plugins->gravatar))
+if (isset($this->plugins->gravatar)) {
 	$this->plugins->gravatar->show_settings($_SESSION['user']['email']);
+}
 
 // Footer
 

@@ -5,8 +5,9 @@
 
 <?php
 
-if ($this->config->items['comments']['enabled'] == TRUE)
+if ($this->config->items['comments']['enabled'] == TRUE) {
 	echo ' &middot <a href="#" onclick="document.getElementById(\'comment_form_'.$this->item->id.'\').style.visibility = \'visible\'; document.getElementById(\'comment_form_'.$this->item->id.'\').style.height = \'auto\'; document.getElementById(\'comment_form_'.$this->item->id.'\').content.focus(); return false;">'.$this->config->items['comments']['name'].'</a>';
+}
 
 if ($this->config->items['likes']['enabled'] == TRUE) {
 	

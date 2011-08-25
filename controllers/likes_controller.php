@@ -6,8 +6,9 @@ class LikesController extends Application {
 		
 		$like_id = Like::add($_SESSION['user']['id'], $item_id);
 
-		if (isset($this->plugins->log))
+		if (isset($this->plugins->log)) {
 			$this->plugins->log->add($_SESSION['user']['id'], 'like', $like_id, 'add');
+		}
 
 		$this->show($item_id);
 		
@@ -17,8 +18,9 @@ class LikesController extends Application {
 		
 		$like_id = Like::remove($_SESSION['user']['id'], $item_id);
 
-		if (isset($this->plugins->log))
+		if (isset($this->plugins->log)) {
 			$this->plugins->log->add($_SESSION['user']['id'], 'like', $like_id, 'remove');
+		}
 
 		$this->show($item_id);
 		

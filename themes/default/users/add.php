@@ -6,8 +6,9 @@
 	<?php
 	
 	// Invite code passsed so include it
-	if (isset($this->page['code']))
+	if (isset($this->page['code'])) {
 		echo '<input type="hidden" name="code" value="'.$this->page['code'].'" />';
+	}
 	
 	?>
 	

@@ -31,19 +31,23 @@ class ItemsController extends Application {
 			
 			// Form validation
 			
-			if ($this->config->items['titles']['enabled'] == FALSE && $_POST['content'] == '')
+			if ($this->config->items['titles']['enabled'] == FALSE && $_POST['content'] == '') {
 				$error .= ucfirst($this->config->items['name']).' must include '.strtolower($this->config->items['content']['name']).'.<br />';
+			}
 			
 			if ($this->config->items['uploads']['enabled'] == TRUE) {
 				
-				if ($_FILES['file']['error'] > 0)
+				if ($_FILES['file']['error'] > 0) {
 					$error .= 'Error code: '.$_FILES['file']['error'].'<br />';
+				}
 				
-				if (!in_array($_FILES['file']['type'], $this->config->items['uploads']['mime-types']))
+				if (!in_array($_FILES['file']['type'], $this->config->items['uploads']['mime-types'])) {
 					$error .= 'Invalid file type: '.$_FILES['file']['type'].'<br />';
+				}
 				
-				if ($_FILES['file']['size'] > $this->config->items['uploads']['max-size'])
+				if ($_FILES['file']['size'] > $this->config->items['uploads']['max-size']) {
 					$error .= 'File too large.<br />';
+				}
 				
 			}
 			
@@ -90,12 +94,14 @@ class ItemsController extends Application {
 				}
 				
 				// Give points
-				if (isset($this->plugins->points))
+				if (isset($this->plugins->points)) {
 					$this->plugins->points->update($_SESSION['user']['id'], $this->plugins->points['per_item']);
+				}
 				
 				// Log item add
-				if (isset($this->plugins->log))
+				if (isset($this->plugins->log)) {
 					$this->plugins->log->add($_SESSION['user']['id'], 'item', $item_id, 'add', "title = {$_POST['title']}\ncontent = {$_POST['content']}");
+				}
 				
 				$this->message = ucfirst($this->config->items['name']).' added!';
 				
@@ -144,8 +150,9 @@ class ItemsController extends Application {
 			
 			// Delete item
 			Item::remove($item_id);
-			if (isset($this->plugins->log))
+			if (isset($this->plugins->log)) {
 				$this->plugins->log->add($_SESSION['user']['id'], 'item', $item_id, 'remove');
+			}
 			
 			// Delete comments
 			if (is_array($item->comments)) {

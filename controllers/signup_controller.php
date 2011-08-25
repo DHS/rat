@@ -92,8 +92,9 @@ function do_signup($mode = 'full') {
 
 	if ($mode == 'code' && $this->config->beta == TRUE) {
 
-		if (User::validate_invite_code($_POST['code'], $_POST['email']) != TRUE)
+		if (User::validate_invite_code($_POST['code'], $_POST['email']) != TRUE) {
 			$error .= 'Invalid invite code.<br />';
+		}
 
 	}
 	
@@ -101,30 +102,37 @@ function do_signup($mode = 'full') {
 	
 	$_POST['email'] = trim($_POST['email']);
 	
-	if ($_POST['email'] == '')
+	if ($_POST['email'] == '') {
 		$error .= 'Email cannot be left blank.<br />';
+	}
 	
-	if (User::check_contains_spaces($_POST['email']) == TRUE)
+	if (User::check_contains_spaces($_POST['email']) == TRUE) {
 		$error .= 'Email cannot contain spaces.<br />';
+	}
 	
-	if (User::check_contains_at($_POST['email']) != TRUE)
+	if (User::check_contains_at($_POST['email']) != TRUE) {
 		$error .= 'Email must contain an @ symbol.<br />';
+	}
 	
-	if (User::check_email_available($_POST['email']) != TRUE)
+	if (User::check_email_available($_POST['email']) != TRUE) {
 		$error .= 'Email already in the system!<br />';
+	}
 	
 	// Check username
 	
 	if ($mode == 'code' || $mode == 'full') {
 		
-		if ($_POST['username'] == '')
+		if ($_POST['username'] == '') {
 			$error .= 'Username cannot be left blank.<br />';
+		}
 		
-		if (User::check_alphanumeric($_POST['username']) != TRUE)
+		if (User::check_alphanumeric($_POST['username']) != TRUE) {
 			$error .= 'Username must only contain letters and numbers.<br />';
+		}
 		
-		if (User::check_username_available($_POST['username']) != TRUE)
+		if (User::check_username_available($_POST['username']) != TRUE) {
 			$error .= 'Username not available.<br />';
+		}
 		
 	}
 	
@@ -132,11 +140,13 @@ function do_signup($mode = 'full') {
 	
 	if ($mode == 'code' || $mode == 'full') {
 	
-		if ($_POST['password1'] == '' || $_POST['password2'] == '')
+		if ($_POST['password1'] == '' || $_POST['password2'] == '') {
 			$error .= 'Please enter your password twice.<br />';
+		}
 		
-		if ($_POST['password1'] != $_POST['password2'])
+		if ($_POST['password1'] != $_POST['password2']) {
 			$error .= 'Passwords do not match.<br />';
+		}
 		
 	}
 	
@@ -177,8 +187,9 @@ function do_signup($mode = 'full') {
 			}
 			
 			// Log signup
-			if (isset($this->plugins->log))
+			if (isset($this->plugins->log)) {
 				$this->plugins->log->add($user->id, 'user', NULL, 'signup');
+			}
 			
 			// Start session
 			$_SESSION['user'] = $user;
@@ -196,8 +207,9 @@ function do_signup($mode = 'full') {
 						Invite::update($invite['id']);
 						
 						// Log invite update
-						if (isset($this->plugins->log))
+						if (isset($this->plugins->log)) {
 							$this->plugins->log->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
+						}
 						
 						// Update points (but only if inviting user is not an admin)
 						if (isset($this->plugins->points) && in_array($invite['user_id'], $this->config->admin_users) != TRUE) {
@@ -206,8 +218,9 @@ function do_signup($mode = 'full') {
 							$this->plugins->points->update($invite['user_id'], $this->plugins->points['per_invite_accepted']);
 							
 							// Log points update
-							if (isset($this->plugins->log))
+							if (isset($this->plugins->log)) {
 								$this->plugins->log->add($invite['user_id'], 'points', NULL, $this->plugins->points['per_invite_accepted'], 'invite_accepted = '.$invite['id']);
+							}
 							
 						}
 						
@@ -219,8 +232,9 @@ function do_signup($mode = 'full') {
 			}
 			
 			// Log login
-			if (isset($this->plugins->log))
+			if (isset($this->plugins->log)) {
 				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+			}
 			
 			// If redirect_to is set then redirect
 			if ($_GET['redirect_to']) {
@@ -246,8 +260,9 @@ function do_signup($mode = 'full') {
 		if ($mode == 'beta') {
 			
 			// Log beta signup
-			if (isset($this->plugins->log))
+			if (isset($this->plugins->log)) {
 				$this->plugins->log->add($user_id, 'user', NULL, 'beta_signup', $_POST['email']);
+			}
 			
 			// Set thank you & tweet this message
 			$this->message = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';

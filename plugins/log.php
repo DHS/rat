@@ -11,8 +11,9 @@
 *	
 *		To log an event:
 *		
-*			if (isset($this->plugins->log))
+*			if (isset($this->plugins->log)) {
 *				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'signup');
+*			}
 *
 */
 
@@ -50,11 +51,13 @@ class log {
 				echo '<tr><td>';
 				echo $this->link_to($entry['user']['name'], 'users', 'show', $entry['user']['id']).' ';
 				echo $entry['object_type'].' '.$entry['action'].'</td><td>';
-				if ($entry['object_id'] != NULL)
+				if ($entry['object_id'] != NULL) {
 					echo $entry['object_id'];
+				}
 				echo '</td><td>';
-				if ($entry['params'] != NULL)
+				if ($entry['params'] != NULL) {
 					echo $entry['params'];
+				}
 				echo '</td><td>'.$entry['date'].'</td></tr>';
 			}
 			echo '</table>';

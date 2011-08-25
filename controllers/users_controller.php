@@ -97,14 +97,17 @@ class UsersController extends Application {
 			// If two passwords submitted then check, otherwise show form
 			if (isset($_POST['password1']) && isset($_POST['password2'])) {
 				
-				if (User::check_password_reset_code($code) == FALSE)
+				if (User::check_password_reset_code($code) == FALSE) {
 					exit();
+				}
 				
-				if ($_POST['password1'] == '' || $_POST['password2'] == '')
+				if ($_POST['password1'] == '' || $_POST['password2'] == '') {
 					$error .= 'Please enter your password twice.<br />';
+				}
 				
-				if ($_POST['password1'] != $_POST['password2'])
+				if ($_POST['password1'] != $_POST['password2']) {
 					$error .= 'Passwords do not match.<br />';
+				}
 				
 				// Error processing
 				if ($error == '') {
@@ -120,8 +123,9 @@ class UsersController extends Application {
 					$_SESSION['user'] = $user;
 					
 					// Log login
-					if (isset($this->plugins->log))
+					if (isset($this->plugins->log)) {
 						$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+					}
 					
 					// If redirect_to is set then redirect
 					if ($_GET['redirect_to']) {
@@ -146,8 +150,9 @@ class UsersController extends Application {
 					
 					$this->message = $error;
 					$this->loadView('partials/header');
-					if (User::check_password_reset_code($code) != FALSE)
+					if (User::check_password_reset_code($code) != FALSE) {
 						$this->loadView('reset');
+					}
 					$this->loadView('partials/footer');
 					
 				}

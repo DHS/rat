@@ -27,8 +27,9 @@
 
 
   <?php
-  if (isset($this->plugins->analytics))
+  if (isset($this->plugins->analytics)) {
     $this->plugins->analytics->view();
+  }
   ?>
 
 

@@ -293,7 +293,7 @@ class User {
 
 		$array = explode(" ", $string);
 
-		if (count($array) > 1){
+		if (count($array) > 1) {
 			return TRUE;
 		} else {
 			return FALSE;
@@ -306,7 +306,7 @@ class User {
 
 		$array = explode("@", $string);
 
-		if (count($array) > 1){
+		if (count($array) > 1) {
 			return TRUE;
 		} else {
 			return FALSE;

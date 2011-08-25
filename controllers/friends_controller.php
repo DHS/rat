@@ -12,8 +12,9 @@ class FriendsController extends Application {
 		
 		$friendship_id = Friend::add($_SESSION['user']['id'], $friend_id);
 		
-		if (isset($this->plugins->log))
+		if (isset($this->plugins->log)) {
 			$this->plugins->log->add($_SESSION['user']['id'], 'friend', $friendship_id, 'add');
+		}
 		
 		if ($this->config->send_emails == TRUE) {
 			// Send 'new follower' email to writer
@@ -43,8 +44,9 @@ class FriendsController extends Application {
 		
 		$friend_id = Friend::remove($_SESSION['user']['id'], $friend_id);
 		
-		if (isset($this->plugins->log))
+		if (isset($this->plugins->log)) {
 			$this->plugins->log->add($_SESSION['user']['id'], 'friend', $friend_id, 'remove');
+		}
 		
 		$this->user->id = $friend_id;
 		

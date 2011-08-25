@@ -15,8 +15,9 @@
 *		
 *		To display users's points:
 *		
-*			if (isset($this->plugins->points))
+*			if (isset($this->plugins->points)) {
 *				echo 'You have '.$_SESSION['user']['points'].' '.$this->plugins->points['name'];
+*			}
 *
 */
 
