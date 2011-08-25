@@ -175,6 +175,60 @@ class User {
 
 	}
 	
+	// Get a users's friends, returns a list of Friend items
+	public function friends($user_id) {
+
+		$user_id = sanitize_input($user_id);
+
+		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $user_id";
+		$query = mysql_query($sql);
+
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			$friend = new Friend;
+			
+			foreach($result as $k => $v) {
+				$friend->$k = $v;
+			}
+			
+			$friend->user = User::get($result['friend_user_id']);
+			
+			$friends[$result['id']] = $friend;
+			
+		}
+
+		return $friends;
+
+	}
+	
+	// Get a users's followers, returns a list of Friend items
+	public function followers($user_id) {
+
+		$user_id = sanitize_input($user_id);
+
+		$return = NULL;
+
+		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE friend_user_id = $user_id";
+		$query = mysql_query($sql);
+		
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			$friend = new Friend;
+			
+			foreach($result as $k => $v) {
+				$friend->$k = $v;
+			}
+			
+			$friend->user = User::get($result['user_id']);
+			
+			$friends[$result['id']] = $friend;
+			
+		}
+		
+		return $friends;
+
+	}
+	
 	// Change password
 	public static function update_password($user_id, $new_password) {
 

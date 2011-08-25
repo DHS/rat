@@ -138,7 +138,7 @@ class Item {
 		$friends_string = "user_id = $user_id";
 
 		// Fetch friends
-		$friends = Friend::get($user_id);
+		$friends = User::friends($user_id);
 
 		// Loop through friends adding them to the query string
 		foreach ($friends as $friend)
