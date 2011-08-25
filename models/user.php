@@ -110,6 +110,47 @@ class User {
 
 	}
 	
+	// Get a user's items, returns array of Item objects
+	public static function items($user_id, $limit = 10, $offset = 0) {
+			
+		$user_id = sanitize_input($user_id);
+
+		$sql = "SELECT * FROM items WHERE user_id = $user_id ORDER BY id DESC";
+
+		// Limit not null so create limit string
+		if ($limit != NULL) {
+			$limit = sanitize_input($limit);
+			$sql .= " LIMIT $limit";
+		}
+
+		// Offset not zero so create offset string
+		if ($offset != NULL) {
+			$offset = sanitize_input($offset);
+			$sql .= " OFFSET $offset";
+		}
+
+		$query = mysql_query($sql);
+
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+
+			$item = new Item;
+
+			foreach($result as $k => $v) {
+				$item->$k = $v;
+			}
+
+			$item->user = User::get($result['user_id']);
+			$item->comments = Item::comments($result['id']);
+			$item->likes = Item::likes($result['id']);
+
+			$items[] = $item;
+
+		}
+
+		return $items;
+
+	}
+	
 	// Change password
 	public static function update_password($user_id, $new_password) {
 

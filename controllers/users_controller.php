@@ -73,7 +73,7 @@ class UsersController extends Application {
 	function show($id) {
 		
 		$this->user = User::get($id);
-		$this->items = Item::list_user($id);
+		$this->items = User::items($id);
 
 		$this->title = $this->user->username;		
 		$this->loadLayout('users/show');
@@ -177,7 +177,7 @@ class UsersController extends Application {
 	function json($username) {
 		
 		$user['user'] = User::get_by_username($username);
-		$user['items'] = Item::list_user($user['user']->id);
+		$user['items'] = User::items($user['user']->id);
 		$this->json = $user;
 		$this->loadView('pages/json');
 		
