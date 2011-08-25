@@ -46,40 +46,39 @@ class Search {
 		$terms = $this->search_split_terms($terms);
 		$terms_db = $this->search_db_escape_terms($terms);
 		$terms_rx = $this->search_rx_escape_terms($terms);
-	
+		
 		$parts = array();
 		foreach($terms_db as $term_db){
 			$parts[] = "content RLIKE '$term_db'";
 		}
 		$parts = implode(' AND ', $parts);
-	
+		
 		$sql = "SELECT * FROM items WHERE $parts";
-	
-		$rows = array();
-	
-		$result = mysql_query($sql);
-		while($result = mysql_fetch_array($result, MYSQL_ASSOC)){
-	
-			//$row['score'] = 0;
-	        //
-			//foreach($terms_rx as $term_rx){
-			//	$row['score'] += preg_match_all("/$term_rx/i", $row['content'], $null);
-			//}
+		$query = mysql_query($sql);
+		
+		while($result = mysql_fetch_array($query, MYSQL_ASSOC)){
 			
-			$row = Item::get_by_id($result['id']);
+			$item = Item::get_by_id($result['id']);
 			
-			$row->comments = Item::comments($result['id']);
-			$row->likes = Item::likes($result['id']);
-			$row->user = User::get_by_id($result['user_id']);
-	
-			$rows[] = $row;
+			$item->comments = Item::comments($result['id']);
+			$item->likes = Item::likes($result['id']);
+			$item->user = User::get_by_id($result['user_id']);
+
+			$item->score = 0;
+			foreach($terms_rx as $term_rx){
+				$item->score += preg_match_all("/$term_rx/i", $item->content, $null);
+			}
+			
+			$items[] = $item;
+			
+		}
+        
+		if (count($items) > 1) {
+			uasort($items, 'search_sort_results');
 		}
 		
-		if (count($rows) > 1) {
-			uasort($rows, 'search_sort_results');
-		}
-	
-		return $rows;
+		return $items;
+		
 	}
 	
 	function search_rx_escape_terms($terms){
@@ -91,12 +90,13 @@ class Search {
 	}
 	
 	function search_sort_results($a, $b){
-	
-		$ax = $a['score'];
-		$bx = $b['score'];
-	
+		
+		$ax = $a->score;
+		$bx = $b->score;
+		
 		if ($ax == $bx){ return 0; }
 		return ($ax > $bx) ? -1 : 1;
+		
 	}
 	
 	function search_html_escape_terms($terms){
