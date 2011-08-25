@@ -51,7 +51,7 @@ class Item {
 
 			$item->user = User::get_by_id($result['user_id']);
 			$item->comments = $item->comments($id);
-			$item->likes = $item->comments($id);
+			$item->likes = $item->likes($id);
 
 		}
 
@@ -81,7 +81,7 @@ class Item {
 			}
 			
 			$item->comments = $item->comments($result['id']);
-			$item->likes = $item->comments($result['id']);
+			$item->likes = $item->likes($result['id']);
 			$item->user = User::get_by_id($result['user_id']);
 
 			$items[] = $item;
@@ -119,7 +119,7 @@ class Item {
 			
 			$item->user = User::get_by_id($result['user_id']);
 			$item->comments = $item->comments($result['id']);
-			$item->likes = $item->comments($result['id']);
+			$item->likes = $item->likes($result['id']);
 			
 			$items[] = $item;
 			
