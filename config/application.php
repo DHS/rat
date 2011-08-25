@@ -23,7 +23,7 @@ class AppConfig extends ServerConfig {
 	public $default_controller				= 'items';
 
 	// Beta - users can't signup, can only enter their email addresses
-	public $beta							= FALSE;
+	public $beta							= TRUE;
 
 	// Private app - requires login to view pages (except public_pages), no share buttons
 	public $private							= TRUE;

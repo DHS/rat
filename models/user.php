@@ -442,7 +442,7 @@ class User {
 	}
 	
 	// Generate a random password reset code
-	public static function generate_password_reset_code() {
+	public function generate_password_reset_code() {
 		
 		// Generate code
 		$code = '';

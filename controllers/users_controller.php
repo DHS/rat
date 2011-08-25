@@ -9,8 +9,8 @@ class UsersController extends Application {
 
 			$this->title = 'Signup';
 			$this->message = 'You are already logged in!';
-			$this->loadView('partials/header');
-			$this->loadView('partials/footer');
+			$this->loadPartial('header');
+			$this->loadPartial('footer');
 			exit;
 
 		}
@@ -56,29 +56,9 @@ class UsersController extends Application {
 			
 			// No email submitted so show signup form
 			
-			if (isset($code) && $code != '') {
-				
-				$this->code = $code;
-				$this->title = 'Signup';
-				$this->loadLayout('users/add');
-				
-			} else {
-				
-				if ($this->config->beta == TRUE) {
-					// Show beta signup form
-
-					$this->title = 'Beta signup';
-					$this->loadLayout('users/add_beta');
-
-				} else {
-					// Show full signup form
-
-					$this->title = 'Signup';
-					$this->loadLayout('users/add');
-
-				}
-				
-			}
+			$this->title = 'Signup';
+			$this->code = $code;
+			$this->loadView('users/add');
 			
 		}
 		
@@ -89,7 +69,7 @@ class UsersController extends Application {
 		
 		$this->user = User::get_by_id($id);
 		$this->items = $this->user->items();
-
+		
 		$this->title = $this->user->username;		
 		$this->loadView('users/show');
 		
@@ -116,10 +96,11 @@ class UsersController extends Application {
 			
 		}
 		
-		$this->user = User::get_by_id($_SESSION['user']['id']);
-
 		$this->title = 'Settings';
-		$this->loadLayout('users/update_'.$page);
+		$this->page = $page;
+		$this->user = User::get_by_id($_SESSION['user']['id']);
+		
+		$this->loadView('users/update');
 		
 	}
 	
@@ -129,7 +110,7 @@ class UsersController extends Application {
 		if (isset($_SESSION['user'])) {
 			
 			$this->title = 'Page not found';
-			$this->loadLayout();
+			$this->loadView();
 			exit;
 			
 		}
@@ -195,11 +176,12 @@ class UsersController extends Application {
 					// Show error message
 					
 					$this->message = $error;
-					$this->loadView('partials/header');
+
 					if (User::check_password_reset_code($code) != FALSE) {
-						$this->loadView('reset');
+						$this->loadView('users/reset');
+					} else {
+						$this->loadView();
 					}
-					$this->loadView('partials/footer');
 					
 				}
 				
@@ -210,12 +192,12 @@ class UsersController extends Application {
 					// Invite code valid
 					
 					$this->code = $code;
-					$this->loadLayout('users/reset');
+					$this->loadView('users/reset');
 
 				} else {
 					
 					$this->title = 'Page not found';
-					$this->loadLayout();
+					$this->loadView();
 					exit;
 					
 				}
@@ -234,14 +216,14 @@ class UsersController extends Application {
 				if ($user != NULL) {
 					
 					// Generate code
-					$code = User::generate_password_reset_code($user->id);
+					$code = $user->generate_password_reset_code();
 					
 					$to = $_POST['email'];
 					$link = substr($this->config->url, 0, -1).$this->link_to(NULL, 'users', 'reset', $code);
 					$headers = "From: {$this->config->name} <robot@blah.com>\r\nContent-type: text/html\r\n";
 					
 					// Load subject and body from template
-					$this->loadView('emails/password_reset');
+					include "themes/{$this->config->theme}/emails/password_reset.php";
 					
 					// Email user
 					if ($this->config->send_emails == TRUE) {
@@ -251,13 +233,10 @@ class UsersController extends Application {
 				}
 				
 				$this->message = 'Check your email for instructions about how to reset your password!';
-				$this->loadLayout();
-				
-			} else {
-				
-				$this->loadLayout('users/reset_new');
 				
 			}
+				
+			$this->loadView('users/reset');
 			
 		} else {
 			
@@ -514,14 +493,14 @@ class UsersController extends Application {
 			// Propagate get vars to be picked up by the form
 			$_GET['email']		= $_POST['email'];
 			$_GET['username']	= $_POST['username'];
-			$_GET['code']		= $_POST['code'];
+			$this->code			= $_POST['code'];
 			
 			// Show error message
 			$this->message = $error;
 			$this->title = 'Signup';
 			
 			// Show signup form
-			$this->loadLayout('users/add');
+			$this->loadView('users/add');
 			
 		}
 		
@@ -574,14 +553,14 @@ class UsersController extends Application {
 			// Propagate get vars to be picked up by the form
 			$_GET['email']		= $_POST['email'];
 			$_GET['username']	= $_POST['username'];
-			$_GET['code']		= $_POST['code'];
+			$this->code			= $_POST['code'];
 			
 			// Show error message
 			$this->message = $error;
 			$this->title = 'Beta signup';
 			
 			// Show signup form
-			$this->loadLayout('users/add_beta');
+			$this->loadView('users/add');
 			
 		}
 		
@@ -718,14 +697,14 @@ class UsersController extends Application {
 			// Propagate get vars to be picked up by the form
 			$_GET['email']		= $_POST['email'];
 			$_GET['username']	= $_POST['username'];
-			$_GET['code']		= $_POST['code'];
+			$this->code			= $_POST['code'];
 			
 			// Show error message
 			$this->message = $error;
 			$this->title = 'Signup';
 			
 			// Show signup form
-			$this->loadLayout('users/add');
+			$this->loadView('users/add');
 			
 		}
 		
