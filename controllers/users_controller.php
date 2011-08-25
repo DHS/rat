@@ -17,14 +17,14 @@ class UsersController extends Application {
 		
 	}
 	
-	// Show a list of users
+	// Show a list of users / not used
 	function index() {
 		
 		// Not needed?
 		
 	}
 	
-	// Add a user
+	// Add a user / signup
 	function add($code) {
 		
 		if ($_POST['email'] != '') {
@@ -71,7 +71,7 @@ class UsersController extends Application {
 		
 	}
 	
-	// Show a user
+	// Show a user / user page
 	function show($id) {
 		
 		$this->user = User::get_by_id($id);
@@ -82,6 +82,7 @@ class UsersController extends Application {
 		
 	}
 	
+	// Update user: change passsword, update profile
 	function update($page) {
 		
 		if (!isset($page)) {
@@ -109,6 +110,7 @@ class UsersController extends Application {
 		
 	}
 	
+	// Password reset
 	function reset($code) {
 		
 		if (!empty($code)) {
@@ -193,12 +195,14 @@ class UsersController extends Application {
 		
 	}
 	
+	// Confirm email address
 	function confirm($email) {
 		
 		
 		
 	}
 	
+	// Show user profile in json format
 	function json($username) {
 		
 		$user['user'] = User::get_by_username($username);
@@ -208,6 +212,7 @@ class UsersController extends Application {
 		
 	}
 	
+	// Helper function: update password
 	private function update_password($salt) {
 		
 		if (md5($_POST['old_password'].$salt) == $_SESSION['user']['password']) {
@@ -245,6 +250,7 @@ class UsersController extends Application {
 		
 	}
 	
+	//  Helper function: update profile
 	private function update_profile() {
 
 		$error = '';
