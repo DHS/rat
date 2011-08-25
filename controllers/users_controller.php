@@ -53,6 +53,7 @@ class UsersController extends Application {
 			
 			if ($this->config->beta == TRUE) {
 				// Show beta signup form
+				$this->title = 'Beta signup';
 				$this->loadLayout('users/add_beta');
 			} else {
 				// Show full signup form
@@ -61,6 +62,7 @@ class UsersController extends Application {
 					$this->page['code'] = $code;
 				}
 				
+				$this->title = 'Signup';
 				$this->loadLayout('users/add');
 				
 			}
