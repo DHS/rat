@@ -20,6 +20,7 @@ class AdminController extends Application {
 			
 		}
 		
+		// Comment out the following if statment to see admin sectin, $this->config->admin_users not available in constructor
 		if (in_array($_SESSION['user']['id'], $this->config->admin_users) != TRUE) {
 			// User not an admin
 			
@@ -35,6 +36,7 @@ class AdminController extends Application {
 	// Show admin dashboard
 	function index() {
 		
+		$this->title = 'Admin &raquo; Dashboard';
 		$this->users = Admin::list_users();
 		$this->page['users_beta'] = Admin::list_users_beta();
 		$this->loadLayout('admin/index', 'admin');
@@ -87,7 +89,8 @@ class AdminController extends Application {
 	
 	// Show list of beta signups
 	function signups() {
-				
+		
+		$this->title = 'Admin &raquo; Beta signups';	
 		$this->users = Admin::list_users_beta();
 		$this->loadLayout('admin/signups', 'admin');
 		
@@ -96,6 +99,7 @@ class AdminController extends Application {
 	// Show list of users
 	function users() {
 		
+		$this->title = 'Admin &raquo; Users';
 		$this->users = Admin::list_users();
 		$this->loadLayout('admin/users', 'admin');
 		
@@ -106,10 +110,11 @@ class AdminController extends Application {
 		
 		if (isset($this->plugins->log)) {
 			
-			$this->loadView('partials/header');
+			$this->title = 'Admin &raquo; Dashboard';
+			$this->loadPartial('header');
 			$this->loadView('admin/menu');
 			$this->plugins->log->view();
-			$this->loadView('partials/footer');
+			$this->loadPartial('footer');
 			
 		}
 		

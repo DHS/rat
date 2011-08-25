@@ -17,7 +17,7 @@
 *
 */
 
-class log {
+class log extends Application {
 
 	function add($user_id, $object_type = NULL, $object_id = NULL, $action, $params = NULL) {
 		// Add a new entry to the log
@@ -44,23 +44,36 @@ class log {
 		}
 		
 		if (is_array($entries)) {
-			
-			echo '<table>';
-			echo '<tr><th>Action</th><th>Object</th><th>Params</th><th>Timestamp</th></tr>';
+			//echo '<pre>';
+			//var_dump($entries);
+			//echo '</pre>';
+echo '<table class="common-table zebra-striped">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Object</th>
+      <th>Action</th>
+      <th>Params</th>
+      <th>Timestamp</th>
+    </tr>
+  </thead>
+  <tbody>';
 			foreach ($entries as $entry) {
 				echo '<tr><td>';
-				echo $this->link_to($entry['user']['name'], 'users', 'show', $entry['user']['id']).' ';
-				echo $entry['object_type'].' '.$entry['action'].'</td><td>';
-				if ($entry['object_id'] != NULL) {
-					echo $entry['object_id'];
+				if ($entry['user']->username != NULL) {
+					echo $this->link_to($entry['user']->username, 'users', 'show', $entry['user']->id);
 				}
+				echo '</td><td>';
+				echo $entry['object_type'];
+				echo '</td><td>';
+				echo $entry['action'];
 				echo '</td><td>';
 				if ($entry['params'] != NULL) {
 					echo $entry['params'];
 				}
 				echo '</td><td>'.$entry['date'].'</td></tr>';
 			}
-			echo '</table>';
+echo '</tbody></table>';
 		
 		}
 	

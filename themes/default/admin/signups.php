@@ -5,7 +5,7 @@
 
 if (is_array($this->users)) {
 
-echo '<table>';
+echo '<table class="common-table zebra-striped">';
 
 foreach ($this->users as $user) {
 	
@@ -28,7 +28,8 @@ foreach ($this->users as $user) {
 	</form>
 	</td></tr>';
 
-	unset($invite);
+	unset($days_waiting);
+	unset($invite_summary);
 
 }
 

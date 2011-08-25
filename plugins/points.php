@@ -68,7 +68,7 @@ class points {
 			$leaderboard[] = $result;
 		}
 		
-		echo '<table>';
+		echo '<table class="common-table zebra-striped">';
 
 		$i = 1;
 
