@@ -229,6 +229,38 @@ class User {
 
 	}
 	
+	// Get items liked by a user, returns array of Item objects
+	public function likes($user_id, $limit = 10) {
+		
+		$user_id = sanitize_input($user_id);
+		
+		$sql = "SELECT item_id FROM likes WHERE user_id = $user_id AND status = 1 ORDER BY date DESC";
+		
+		// Limit not null so create limit string
+		if ($limit != NULL) {
+			$limit = sanitize_input($limit);
+			$sql .= " LIMIT $limit";
+		}
+		
+		$query = mysql_query($sql);
+		
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			// Instantiate new object? Or will this suffice:
+			
+			$item = Item::get_by_id($result['item_id']);
+			$item->user = User::get_by_id($item->user_id);
+			$item->comments = Item::comments($result['item_id']);
+			$item->likes = Item::likes($result['item_id']);
+			
+			$items[] = $item;
+			
+		}
+		
+		return $items;
+		
+	}
+	
 	// Change password
 	public static function update_password($user_id, $new_password) {
 

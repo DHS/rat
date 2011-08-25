@@ -92,45 +92,6 @@ class Item {
 
 	}
 
-	// Get items liked by a user, returns array of Item objects
-	public static function list_user_liked($user_id, $limit = 10) {
-
-		$user_id = sanitize_input($user_id);
-
-		$sql = "SELECT item_id FROM likes WHERE user_id = $user_id AND status = 1 ORDER BY date DESC";
-
-		// Limit not null so create limit string
-		if ($limit != NULL) {
-			$limit = sanitize_input($limit);
-			$sql .= " LIMIT $limit";
-		}
-
-		$query = mysql_query($sql);
-		$count = mysql_num_rows($query);
-
-		while ($item = mysql_fetch_array($query, MYSQL_ASSOC)) {
-
-			$query2 = mysql_query("SELECT * FROM items WHERE id = {$item['item_id']} LIMIT 1");
-			$result = mysql_fetch_array($query2, MYSQL_ASSOC);
-
-			$item = new Item;
-
-			foreach($result as $k => $v) {
-				$item->$k = $v;
-			}
-
-			$item->user = User::get_by_id($result['user_id']);
-			$item->comments = Item::comments($result['id']);
-			$item->likes = Item::likes($result['id']);
-
-			$items[] = $item;
-
-		}
-
-		return $items;
-
-	}
-	
 	// Get a feed of a friend's activity, returns array of Item objects
 	public static function list_feed($user_id) {
 
