@@ -98,24 +98,23 @@ class User {
 	}
 	
 	// Signup a new user!	
-	public static function signup($user_id, $username, $password, $salt) {
+	public static function signup($this->user_id, $username, $password, $salt) {
 		
-		$user_id = sanitize_input($user_id);
+		$this->user_id = sanitize_input($this->user_id);
 		$username = sanitize_input($username);
 		
 		$encrypted_password = md5($password.$salt);
 		
-		$sql = "UPDATE users SET username = $username, password = '$encrypted_password', date_joined = NOW() WHERE id = $user_id";
+		$sql = "UPDATE users SET username = $username, password = '$encrypted_password', date_joined = NOW() WHERE id = $this->user_id";
 		$query = mysql_query($sql);
 		
 	}
 	
 	// Get a user's items, returns array of Item objects
-	public function items($user_id, $limit = 10, $offset = 0) {
+	public function items($limit = 10, $offset = 0) {
 			
-		$user_id = sanitize_input($user_id);
 
-		$sql = "SELECT * FROM items WHERE user_id = $user_id ORDER BY id DESC";
+		$sql = "SELECT * FROM items WHERE user_id = $this->user_id ORDER BY id DESC";
 
 		// Limit not null so create limit string
 		if ($limit != NULL) {
@@ -152,11 +151,9 @@ class User {
 	}
 	
 	// Get all invites sent by a user, returns an array of Invite objects
-	public function invites($user_id) {
+	public function invites() {
 
-		$user_id = sanitize_input($user_id);
-
-		$sql = "SELECT id, email, result FROM invites WHERE user_id = $user_id ORDER BY id DESC";
+		$sql = "SELECT id, email, result FROM invites WHERE user_id = $this->user_id ORDER BY id DESC";
 		$query = mysql_query($sql);
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
@@ -176,11 +173,9 @@ class User {
 	}
 	
 	// Get a users's friends, returns a list of Friend items
-	public function friends($user_id) {
+	public function friends($this->user_id) {
 
-		$user_id = sanitize_input($user_id);
-
-		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $user_id";
+	  $sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $this->user_id";
 		$query = mysql_query($sql);
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
@@ -202,13 +197,11 @@ class User {
 	}
 	
 	// Get a users's followers, returns a list of Friend items
-	public function followers($user_id) {
-
-		$user_id = sanitize_input($user_id);
+	public function followers($this->user_id) {
 
 		$return = NULL;
 
-		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE friend_user_id = $user_id";
+		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE friend_user_id = $this->user_id";
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
@@ -230,11 +223,9 @@ class User {
 	}
 	
 	// Get items liked by a user, returns array of Item objects
-	public function likes($user_id, $limit = 10) {
-		
-		$user_id = sanitize_input($user_id);
-		
-		$sql = "SELECT item_id FROM likes WHERE user_id = $user_id AND status = 1 ORDER BY date DESC";
+	public function likes($limit = 10) {
+			
+		$sql = "SELECT item_id FROM likes WHERE user_id = $this->user_id AND status = 1 ORDER BY date DESC";
 		
 		// Limit not null so create limit string
 		if ($limit != NULL) {
@@ -264,11 +255,9 @@ class User {
 	}
 	
 	// Get comments made by a user, returns an array of Comment objects
-	public function comments($user_id) {
+	public function comments() {
 		
-		$item_id = sanitize_input($item_id);
-		
-		$sql = "SELECT id, content, user_id, date FROM comments WHERE user_id = $user_id ORDER BY id ASC";
+		$sql = "SELECT id, content, user_id, date FROM comments WHERE user_id = $this->user_id ORDER BY id ASC";
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
@@ -284,21 +273,17 @@ class User {
 	}
 	
 	// Change password
-	public static function update_password($user_id, $new_password, $salt) {
-		
-		$user_id = sanitize_input($user_id);
+	public static function update_password($new_password, $salt) {
 		
 		$encrypted_password = md5($new_password.$salt);
 		
-		$sql = "UPDATE users SET password = '{$encrypted_password}' WHERE id = $user_id";
+		$sql = "UPDATE users SET password = '{$encrypted_password}' WHERE id = $this->user_id";
 		$query = mysql_query($sql);
 		
 	}
 
 	// Update profile info
-	public static function update_profile($user_id, $name = NULL, $bio = NULL, $url = NULL) {
-
-		$user_id = sanitize_input($user_id);
+	public static function update_profile($name = NULL, $bio = NULL, $url = NULL) {
 
 		$sql = "UPDATE users SET ";
 
@@ -325,20 +310,19 @@ class User {
 		}
 		$sql .= "url = $url";
 
-		$sql .= " WHERE id = $user_id";
+		$sql .= " WHERE id = $this->user_id";
 
 		$query = mysql_query($sql);
 
 	}
 
 	// Update a user's number of invites
-	public static function update_invites($user_id, $invites) {
+	public static function update_invites($invites) {
 
-		$user_id = sanitize_input($user_id);
 		$invites = sanitize_input($invites);
 
 		// Get current # of invites
-		$sql_get = "SELECT invites FROM users WHERE id = $user_id";
+		$sql_get = "SELECT invites FROM users WHERE id = $this->user_id";
 		$query = mysql_query($sql_get);
 		$old_invites = mysql_result($query, 0);
 
@@ -346,11 +330,11 @@ class User {
 		$new_invites = $old_invites + $invites;
 
 		// Update database
-		$sql_update = "UPDATE users SET invites = $new_invites WHERE id = $user_id";
+		$sql_update = "UPDATE users SET invites = $new_invites WHERE id = $this->user_id";
 		$query = mysql_query($sql_update);
 
 		// update session
-		if ($_SESSION['user']['id'] == $user_id) {
+		if ($_SESSION['user']['id'] == $this->user_id) {
 			$_SESSION['user']['invites'] = $new_invites;
 		}
 
@@ -459,7 +443,7 @@ class User {
 	}
 	
 	// Generate a random password reset code
-	public static function generate_password_reset_code($user_id) {
+	public static function generate_password_reset_code($this->user_id) {
 		
 		// Generate code
 		$code = '';
@@ -469,7 +453,7 @@ class User {
 		}
 		
 		// Write to database
-		$sql = "INSERT INTO users_password_reset SET user_id = $user_id, reset_code = '$code'";
+		$sql = "INSERT INTO users_password_reset SET user_id = $this->user_id, reset_code = '$code'";
 		$query = mysql_query($sql);
 
 		return $code;
