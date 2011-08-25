@@ -1,9 +1,7 @@
 
 <div class="row">
   <div class="span8 columns offset4">
-    
     <p>Enter your email address here and we'll let you in soon:</p>
-    
     <form action="<?php echo $this->link_to(NULL, 'users', 'add'); if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
       <fieldset>
         <?php if (isset($_GET['code'])) { echo '<input type="hidden" name="code" value="'.$_GET['code'].'" />'; } ?>
@@ -19,6 +17,5 @@
         </div>
       </fieldset>
     </form>
-    
   </div>
 </div>
