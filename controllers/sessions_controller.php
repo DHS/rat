@@ -66,7 +66,7 @@ class SessionsController extends Application {
 	
 	function remove() {
 		
-		if (!empty($_SESSION['user'])) {
+		if (isset($_SESSION['user'])) {
 			// do logout
 
 			$user_id = $_SESSION['user']['id'];

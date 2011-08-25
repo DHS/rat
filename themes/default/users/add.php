@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="<?php echo $this->link_to(NULL, 'users', 'add'); if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
+    <form action="<?php echo $this->link_to(NULL, 'users', 'add', $this->code); if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
       <fieldset>
         <?php if (isset($this->code)) { echo '<input type="hidden" name="code" value="'.$this->code.'" />'; } ?>
         <div class="clearfix">

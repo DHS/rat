@@ -50,7 +50,7 @@ class AdminController extends Application {
 			// Do setup
 			
 			$user_id = User::add($_POST['email']);
-			User::signup($user_id, $_POST['username'], $_POST['password']);
+			User::signup($user_id, $_POST['username'], $_POST['password'], $this->config->encryption_salt);
 			
 			$user = User::get_by_email($_POST['email']);
 			

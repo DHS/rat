@@ -124,9 +124,6 @@ class ItemsController extends Application {
 				$_GET['title']		= $_POST['title'];
 				$_GET['content']	= $_POST['content'];
 				
-				// Commented out the line below while objectifying $app
-				//$app = $GLOBALS['app'];
-				
 				// Show error message
 				$this->message = $error;
 				$this->loadLayout('items/add');
