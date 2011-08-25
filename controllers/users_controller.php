@@ -56,21 +56,27 @@ class UsersController extends Application {
 			
 			// No email submitted so show signup form
 			
-			if ($this->config->beta == TRUE) {
-				// Show beta signup form
+			if (isset($code) && $code != '') {
 				
-				$this->title = 'Beta signup';
-				$this->loadLayout('users/add_beta');
-				
-			} else {
-				// Show full signup form
-				
-				if (isset($code)) {
-					$this->code = $code;
-				}
-				
+				$this->code = $code;
 				$this->title = 'Signup';
 				$this->loadLayout('users/add');
+				
+			} else {
+				
+				if ($this->config->beta == TRUE) {
+					// Show beta signup form
+
+					$this->title = 'Beta signup';
+					$this->loadLayout('users/add_beta');
+
+				} else {
+					// Show full signup form
+
+					$this->title = 'Signup';
+					$this->loadLayout('users/add');
+
+				}
 				
 			}
 			
@@ -371,7 +377,7 @@ class UsersController extends Application {
 		
 		if ($this->config->beta == TRUE) {
 			
-			if (User::validate_invite_code($_POST['code'], $_POST['email']) != TRUE) {
+			if (Invite::check_code_valid($_POST['code'], $_POST['email']) != TRUE) {
 				$error .= 'Invalid invite code.<br />';
 			}
 			
@@ -385,7 +391,7 @@ class UsersController extends Application {
 		}
 		
 		// Check username
-		$username_check = $this->check_username();
+		$username_check = $this->check_username($_POST['username']);
 		if ($username_check !== TRUE) {
 			$error .= $username_check;
 		}
@@ -413,7 +419,7 @@ class UsersController extends Application {
 			}
 			
 			// Do signup
-			User::signup($user->id, $_POST['username'], $_POST['password1']);
+			User::signup($user->id, $_POST['username'], $_POST['password1'], $this->config->encryption_salt);
             
 			if ($this->config->send_emails == TRUE) {
 				// Send 'thank you for signing up' email
@@ -435,34 +441,37 @@ class UsersController extends Application {
 			}
             
 			// Start session
-			$_SESSION['user'] = $user;
+			foreach ($user as $key => $value) {
+				$user_array[$key] = $value;
+			}
+			$_SESSION['user'] = $user_array;
             
-			// Check invites are enabled and the code is valid
-			if ($this->config->invites['enabled'] == TRUE && validate_invite_code($_POST['code'], $_POST['email']) == TRUE) {
+			// Check invites are enabled
+			if ($this->config->invites['enabled'] == TRUE) {
 				
 				// Get invites
-				$invites = invites_get_by_code($_POST['code']);
+				$invites = Invite::list_by_code($_POST['code']);
 				
 				if (is_array($invites)) {
 					foreach ($invites as $invite) {
 						
 						// Update invites
-						Invite::update($invite['id']);
+						Invite::update($invite->id);
 						
 						// Log invite update
 						if (isset($this->plugins->log)) {
-							$this->plugins->log->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
+							$this->plugins->log->add($_SESSION['user']['id'], 'invite', $invite->id, 'accept');
 						}
 						
 						// Update points (but only if inviting user is not an admin)
-						if (isset($this->plugins->points) && in_array($invite['user_id'], $this->config->admin_users) != TRUE) {
+						if (isset($this->plugins->points) && in_array($invite->user_id, $this->config->admin_users) != TRUE) {
 							
 							// Update points
-							$this->plugins->points->update($invite['user_id'], $this->plugins->points['per_invite_accepted']);
+							$this->plugins->points->update($invite->user_id, $this->plugins->points['per_invite_accepted']);
 							
 							// Log points update
 							if (isset($this->plugins->log)) {
-								$this->plugins->log->add($invite['user_id'], 'points', NULL, $this->plugins->points['per_invite_accepted'], 'invite_accepted = '.$invite['id']);
+								$this->plugins->log->add($invite->user_id, 'points', NULL, $this->plugins->points['per_invite_accepted'], 'invite_accepted = '.$invite->id);
 							}
 							
 						}
@@ -486,7 +495,7 @@ class UsersController extends Application {
 			}
             
 			// Set welcome message
-			$this->message = urlencode('Welcome to '.$GLOBALS['app']->name.'!');
+			$this->message = urlencode('Welcome to '.$this->config->name.'!');
             
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
@@ -507,15 +516,10 @@ class UsersController extends Application {
 			
 			// Show error message
 			$this->message = $error;
+			$this->title = 'Signup';
 			
-			// Show relevant signup form
-			if ($this->config->beta == TRUE) {
-				$this->title = 'Beta signup';
-				$this->loadLayout('users/add_beta');
-			} else {
-				$this->title = 'Signup';
-				$this->loadLayout('users/add');
-			}
+			// Show signup form
+			$this->loadLayout('users/add');
 			
 		}
 		
@@ -564,24 +568,19 @@ class UsersController extends Application {
             
 		} else {
 			// There was an error
-
+			
 			// Propagate get vars to be picked up by the form
 			$_GET['email']		= $_POST['email'];
 			$_GET['username']	= $_POST['username'];
 			$_GET['code']		= $_POST['code'];
-
+			
 			// Show error message
 			$this->message = $error;
-
-			// Show relevant signup form
-			if ($this->config->beta == TRUE) {
-				$this->title = 'Beta signup';
-				$this->loadLayout('users/add_beta');
-			} else {
-				$this->title = 'Signup';
-				$this->loadLayout('users/add');
-			}
-
+			$this->title = 'Beta signup';
+			
+			// Show signup form
+			$this->loadLayout('users/add_beta');
+			
 		}
 		
 	}
@@ -597,7 +596,7 @@ class UsersController extends Application {
 		}
 
 		// Check username
-		$username_check = $this->check_username();
+		$username_check = $this->check_username($_POST['username']);
 		if ($username_check !== TRUE) {
 			$error .= $username_check;
 		}
@@ -624,7 +623,7 @@ class UsersController extends Application {
 			}
 			
 			// Do signup
-			User::signup($user->id, $_POST['username'], $_POST['password1']);
+			User::signup($user->id, $_POST['username'], $_POST['password1'], $this->config->encryption_salt);
             
 			if ($this->config->send_emails == TRUE) {
 				// Send 'thank you for signing up' email
@@ -646,34 +645,37 @@ class UsersController extends Application {
 			}
             
 			// Start session
-			$_SESSION['user'] = $user;
+			foreach ($user as $key => $value) {
+				$user_array[$key] = $value;
+			}
+			$_SESSION['user'] = $user_array;
             
 			// Check invites are enabled and the code is valid
-			if ($this->config->invites['enabled'] == TRUE && validate_invite_code($_POST['code'], $_POST['email']) == TRUE) {
+			if ($this->config->invites['enabled'] == TRUE && Invite::check_code_valid($_POST['code'], $_POST['email']) == TRUE) {
 				
 				// Get invites
-				$invites = invites_get_by_code($_POST['code']);
+				$invites = Invite::list_by_code($_POST['code']);
 				
 				if (is_array($invites)) {
 					foreach ($invites as $invite) {
 						
 						// Update invites
-						Invite::update($invite['id']);
+						Invite::update($invite->id);
 						
 						// Log invite update
 						if (isset($this->plugins->log)) {
-							$this->plugins->log->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
+							$this->plugins->log->add($_SESSION['user']['id'], 'invite', $invite->id, 'accept');
 						}
 						
 						// Update points (but only if inviting user is not an admin)
-						if (isset($this->plugins->points) && in_array($invite['user_id'], $this->config->admin_users) != TRUE) {
+						if (isset($this->plugins->points) && in_array($invite->user_id, $this->config->admin_users) != TRUE) {
 							
 							// Update points
-							$this->plugins->points->update($invite['user_id'], $this->plugins->points['per_invite_accepted']);
+							$this->plugins->points->update($invite->user_id, $this->plugins->points['per_invite_accepted']);
 							
 							// Log points update
 							if (isset($this->plugins->log)) {
-								$this->plugins->log->add($invite['user_id'], 'points', NULL, $this->plugins->points['per_invite_accepted'], 'invite_accepted = '.$invite['id']);
+								$this->plugins->log->add($invite->user_id, 'points', NULL, $this->plugins->points['per_invite_accepted'], 'invite_accepted = '.$invite->id);
 							}
 							
 						}
@@ -697,7 +699,7 @@ class UsersController extends Application {
 			}
             
 			// Set welcome message
-			$this->message = urlencode('Welcome to '.$GLOBALS['app']->name.'!');
+			$this->message = urlencode('Welcome to '.$this->config->name.'!');
             
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
@@ -718,15 +720,10 @@ class UsersController extends Application {
 			
 			// Show error message
 			$this->message = $error;
+			$this->title = 'Signup';
 			
-			// Show relevant signup form
-			if ($this->config->beta == TRUE) {
-				$this->title = 'Beta signup';
-				$this->loadLayout('users/add_beta');
-			} else {
-				$this->title = 'Signup';
-				$this->loadLayout('users/add');
-			}
+			// Show signup form
+			$this->loadLayout('users/add');
 			
 		}
 		

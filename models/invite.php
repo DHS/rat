@@ -85,23 +85,24 @@ class Invite {
 	
 	// Validates an invite code, returns TRUE or FALSE
 	public static function check_code_valid($code, $email) {
-
-		if ($code == '')
+		
+		if ($code == '') {
 			return FALSE;
-
+		}
+		
 		$code = sanitize_input($code);
 		$email = sanitize_input($email);
-
+		
 		$sql = "SELECT result FROM invites WHERE code = $code AND email = $email";
 		$query = mysql_query($sql);
-		$status = mysql_result($query, 0);
-
-		if ($status == 0) {
+		$status = mysql_num_rows($query);
+		
+		if ($status > 0) {
 			return TRUE;
 		} else {
 			return FALSE;
 		}
-
+		
 	}
 	
 }

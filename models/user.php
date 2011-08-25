@@ -98,16 +98,16 @@ class User {
 	}
 	
 	// Signup a new user!	
-	public static function signup($user_id, $username, $password) {
+	public static function signup($user_id, $username, $password, $salt) {
 		
 		$user_id = sanitize_input($user_id);
 		$username = sanitize_input($username);
-
-		$encrypted_password = md5($password.$this->config->encryption_salt);
-
+		
+		$encrypted_password = md5($password.$salt);
+		
 		$sql = "UPDATE users SET username = $username, password = '$encrypted_password', date_joined = NOW() WHERE id = $user_id";
 		$query = mysql_query($sql);
-
+		
 	}
 	
 	// Get a user's items, returns array of Item objects
