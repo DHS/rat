@@ -20,30 +20,6 @@ class Invite {
 
 	}
 
-	// Get all invites sent by a user, returns an array of Invite objects
-	public static function list_sent($user_id) {
-
-		$user_id = sanitize_input($user_id);
-
-		$sql = "SELECT id, email, result FROM invites WHERE user_id = $user_id ORDER BY id DESC";
-		$query = mysql_query($sql);
-
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
-			$invite = new Invite;
-			
-			foreach($result as $k => $v) {
-				$invite->$k = $v;
-			}
-			
-			$invites[] = $invite;
-			
-		}
-
-		return $invites;
-
-	}
-	
 	// Get all invites with a given code, returns an array of Invite objects
 	public static function list_by_code($code) {
 		

@@ -21,7 +21,7 @@ class InvitesController extends Application {
 	function index() {
 		
 		$this->invites_remaining = $_SESSION['user']['invites'];
-		$this->invites = Invite::list_sent($_SESSION['user']['id']);
+		$this->invites = User::invites($_SESSION['user']['id']);
 		
 		if (isset($this->invites_remaining) && $this->invites_remaining == 1) {
 			$this->message .= 'You have one invite remaining.<br />';
