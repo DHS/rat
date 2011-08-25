@@ -3,9 +3,9 @@
 foreach ($this->config->admin_users as $value) {
 	$author = User::get_by_id($value);
 	if ($this->config->private != TRUE || $_SESSION['user'] != NULL) {
-		$authors .= '<a href="/'.$author['username'].'">'.$author['username'].'</a>, ';
+		$authors .= '<a href="/'.$author->username.'">'.$author->username.'</a>, ';
 	} else {
-		$authors .= $author['username'].', ';
+		$authors .= $author->username.', ';
 	}
 
 }
@@ -47,7 +47,7 @@ if ($this->config->items['comments']['enabled'] == TRUE || $this->config->items[
 
 $content .= ". </p>\n";
 
-if ($this->config->invites['enabled'] == TRUE)
+if ($this->config->invites['enabled'] == TRUE) {
 	$content .= "<p>It also has an invite system so that you can invite your friends.</p>\n";
 }
 
