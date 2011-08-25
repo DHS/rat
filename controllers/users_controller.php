@@ -83,7 +83,21 @@ class UsersController extends Application {
 	function update($page) {
 		
 		if (!isset($page)) {
+			
 			$page = 'password';
+			
+		} elseif ($page == 'password') {
+			
+			if (isset($_POST['old_password']) && isset($_POST['new_password1']) && isset($_POST['new_password2'])) {
+				$this->update_password($this->config->encryption_salt);
+			}
+			
+		} elseif ($page == 'profile') {
+			
+			if (isset($_POST['full_name']) || isset($_POST['bio']) || isset($_POST['url'])) {
+				$this->update_profile();
+			}
+			
 		}
 		
 		$this->user = User::get_by_id($_SESSION['user']['id']);
@@ -119,7 +133,7 @@ class UsersController extends Application {
 					$user_id = User::check_password_reset_code($code);
 					
 					// Do update
-					User::update_password($user_id, $_POST['password1']);
+					User::update_password($user_id, $_POST['password1'], $this->config->encryption_salt);
 					
 					$user = User::get_by_id($user_id);
 					
@@ -190,6 +204,87 @@ class UsersController extends Application {
 		$this->json = $user;
 		$this->loadView('pages/json');
 		
+	}
+	
+	private function update_password($salt) {
+		
+		if (md5($_POST['old_password'].$salt) == $_SESSION['user']['password']) {
+			// Check old passwords match
+			
+			if ($_POST['new_password1'] == $_POST['new_password2']) {
+				// New passwords match
+				
+				// Call update_password in user model
+				User::update_password($_SESSION['user']['id'], $_POST['new_password1'], $salt);
+				
+				// Update session
+				$_SESSION['user']['password'] = md5($_POST['new_password1'].$salt);
+				
+				// Log password update
+				if (isset($this->plugins->log)) {
+					$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'change_password');
+				}
+				
+				$this->message = 'Password udpated!';
+				
+			} else {
+				// New passwords don't match
+				
+				$this->message = 'There was a problem, please try again.';
+				
+			}
+			
+		} else {
+			// Old passwords don't match
+			
+			$this->message = 'There was a problem, please try again.';
+			
+		}
+		
+	}
+	
+	private function update_profile() {
+
+		$error = '';
+
+		// Validate URL
+        
+		// Check for empty URL. Default value: http://
+		if ($_POST['url'] == 'http://') {
+			$_POST['url'] = NULL;
+		}
+        
+		// Ensure URL begins with http://
+		if ($_POST['url'] != NULL && (substr($_POST['url'], 0, 7) != 'http://' && substr($_POST['url'], 0, 8) != 'https://')) {
+			$_POST['url'] = 'http://'.$_POST['url'];
+		}
+        
+		// Check for spaces
+		if (User::check_contains_spaces($_POST['url']) == TRUE) {
+			$error = 'URL cannot contain spaces.';
+		}
+        
+		// End URL validation
+        
+		if ($error == '') {
+        
+			// Update session vars
+			$_SESSION['user']['full_name'] = $_POST['full_name'];
+			$_SESSION['user']['bio'] = $_POST['bio'];
+			$_SESSION['user']['url'] = $_POST['url'];
+			
+			// Call user_update_profile in user model
+			User::update_profile($_SESSION['user']['id'], $_POST['full_name'], $_POST['bio'], $_POST['url']);
+        
+			// Set success message
+			$this->message = 'Profile information updated!';
+        
+		} else {
+        
+			$this->message = $error;
+        
+		}
+        
 	}
 	
 }

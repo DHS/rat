@@ -17,7 +17,10 @@ class SessionsController extends Application {
 			
 			if ($user->password == $encrypted_password) {
 				
-				$_SESSION['user'] = $user;
+				foreach ($user as $key => $value) {
+					$user_array[$key] = $value;
+				}
+				$_SESSION['user'] = $user_array;
 				
 				// Log login
 				if (isset($this->plugins->log)) {

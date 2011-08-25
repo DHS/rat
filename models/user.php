@@ -282,15 +282,15 @@ class User {
 	}
 	
 	// Change password
-	public static function update_password($user_id, $new_password) {
-
+	public static function update_password($user_id, $new_password, $salt) {
+		
 		$user_id = sanitize_input($user_id);
-
-		$encrypted_password = md5($new_password.$this->config->encryption_salt);
-
+		
+		$encrypted_password = md5($new_password.$salt);
+		
 		$sql = "UPDATE users SET password = '{$encrypted_password}' WHERE id = $user_id";
 		$query = mysql_query($sql);
-
+		
 	}
 
 	// Update profile info

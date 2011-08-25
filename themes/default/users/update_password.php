@@ -13,19 +13,19 @@
         <div class="clearfix">
           <label for="old_password">Old password</label>
           <div class="input">
-            <input class="medium" name="old_password" size="30" type="text" />
+            <input class="medium" name="old_password" size="30" type="password" />
           </div>
         </div> <!-- /clearfix -->
         <div class="clearfix">
           <label for="new_password1">New password</label>
           <div class="input">
-            <input class="medium" name="new_password1" size="30" type="text" />
+            <input class="medium" name="new_password1" size="30" type="password" />
           </div>
         </div> <!-- /clearfix -->
         <div class="clearfix">
           <label for="new_password2">New password again</label>
           <div class="input">
-            <input class="medium" name="new_password2" size="30" type="text" />
+            <input class="medium" name="new_password2" size="30" type="password" />
           </div>
         </div> <!-- /clearfix -->
         <div class="actions">

@@ -30,9 +30,9 @@
 <?php if ($this->user->full_name != NULL) { ?>
       <strong>Name</strong> <?php echo $this->user->full_name; ?>
 <?php } if ($this->user->bio != NULL) { ?>
-      <strong>Bio</strong> <?php echo $this->user->bio; ?>
+      <br /><strong>Bio</strong> <?php echo $this->user->bio; ?>
 <?php } if ($this->user->url != NULL) { ?>
-      <strong>URL</strong> <a href="<?php echo $this->user->url; ?>" target="_new"><?php echo $this->user->url; ?></a>
+      <br /><strong>URL</strong> <a href="<?php echo $this->user->url; ?>" target="_new"><?php echo $this->user->url; ?></a>
 <?php } ?>
 
 <p />
