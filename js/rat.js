@@ -1,7 +1,7 @@
 
 function like_add(item_id, url) {
 	
-	var new_url = url.substr(0, url.length - 3) + 'remove';
+	var new_url = '/likes/remove/'+item_id;
 	
 	if (window.XMLHttpRequest) {
 		// IE7+, Firefox, Chrome, Opera, Safari
@@ -34,7 +34,7 @@ function like_add(item_id, url) {
 
 function like_remove(item_id, url) {
 	
-	var new_url = url.substr(0, url.length - 6) + 'add';
+	var new_url = '/likes/add/'+item_id;
 
 	if (window.XMLHttpRequest) {
 		// IE7+, Firefox, Chrome, Opera, Safari
