@@ -1,6 +1,6 @@
 <?php
 
-$subject = "Your $this->config->name invite is here!";
+$subject = "Your {$this->config->name} invite is here!";
 
 $body = '<p>Hi there,</p>
 <p>Your '.$this->config->name.' invite is here! Click the following link to get started:</p>
