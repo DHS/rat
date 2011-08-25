@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="<?php echo $this->link_to(NULL, 'session', 'add'); if(isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
+    <form action="<?php echo $this->link_to(NULL, 'sessions', 'add'); if(isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
       <fieldset>
         <div class="clearfix">
           <label for="email">Email</label>

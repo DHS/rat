@@ -53,7 +53,11 @@ class AdminController extends Application {
 			User::signup($user_id, $_POST['username'], $_POST['password']);
 			
 			$user = User::get_by_email($_POST['email']);
-			$_SESSION['user'] = $user;
+			
+			foreach ($user as $key => $value) {
+				$user_array[$key] = $value;
+			}
+			$_SESSION['user'] = $user_array;
 			
 			// Log login
 			if (isset($this->plugins->log)) {

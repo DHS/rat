@@ -28,7 +28,7 @@ class SessionsController extends Application {
 				}
 				
 				// Get redirected
-				if ($_GET['redirect_to']) {
+				if (isset($_GET['redirect_to'])) {
 					header('Location: '.$_GET['redirect_to']);
 					exit();
 				}
