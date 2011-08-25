@@ -22,6 +22,35 @@ class Like {
 
 	}
 
+	// Get a single like, returns a Like object
+	public static function get_by_id($id) {
+		
+		$id = sanitize_input($id);
+        
+		$sql = "SELECT * FROM likes WHERE id = $id";
+		$query = mysql_query($sql);
+		$result = mysql_fetch_array($query, MYSQL_ASSOC);
+
+		if (!is_array($result)) {
+
+			$like = NULL;
+
+		} else {
+		
+			$like = new Like;
+			
+			foreach ($result as $k => $v) {
+				$like->$k = $v;
+			}
+			
+			$like->user = User::get_by_id($result['user_id']);
+			
+		}
+        
+		return $like;
+		
+	}
+
 	// Get all liked items, returns an array of Like objects
 	public static function list_all($limit = 10) {
 		

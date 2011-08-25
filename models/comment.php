@@ -47,6 +47,43 @@ class Comment {
 		
 	}
 	
+	// Get all comments, returns an array of Comments objects
+	public static function list_all($limit = 10) {
+		
+		$sql = "SELECT * FROM comments ORDER BY date DESC";
+
+		// Limit not null so create limit string
+		if ($limit != NULL) {
+			$sql .= " LIMIT $limit";
+			$limit = sanitize_input($limit);
+		}
+
+		// Get comments
+		$query = mysql_query($sql);
+
+		// Loop through comments
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			$comment = new Comment;
+			
+			foreach($result as $k => $v) {
+				$comment->$k = $v;
+			}
+			
+			// Get info about the commenter
+			$comment->user = User::get_by_id($comment->user_id);
+			
+			// Get item info
+			$comment->item = Item::get_by_id($comment->user_id);
+			
+			$comments[] = $comment;
+			
+		}
+		
+		return $comments;
+
+	}
+	
 	// Remove a comment from an item, returns comment id
 	public static function remove($user_id, $comment_id) {
 

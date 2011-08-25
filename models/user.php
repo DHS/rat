@@ -261,6 +261,26 @@ class User {
 		
 	}
 	
+	// Get comments made by a user, returns an array of Comment objects
+	public function comments($user_id) {
+		
+		$item_id = sanitize_input($item_id);
+		
+		$sql = "SELECT id, content, user_id, date FROM comments WHERE user_id = $user_id ORDER BY id ASC";
+		$query = mysql_query($sql);
+		
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			$comment = Comment::get_by_id($result['id']);
+			
+			$comments[] = $comment;
+			
+		}
+		
+		return $comments;
+		
+	}
+	
 	// Change password
 	public static function update_password($user_id, $new_password) {
 
