@@ -58,17 +58,19 @@ class Search {
 		$rows = array();
 	
 		$result = mysql_query($sql);
-		while($row = mysql_fetch_array($result, MYSQL_ASSOC)){
+		while($result = mysql_fetch_array($result, MYSQL_ASSOC)){
 	
-			$row['score'] = 0;
-	
-			foreach($terms_rx as $term_rx){
-				$row['score'] += preg_match_all("/$term_rx/i", $row['content'], $null);
-			}
+			//$row['score'] = 0;
+	        //
+			//foreach($terms_rx as $term_rx){
+			//	$row['score'] += preg_match_all("/$term_rx/i", $row['content'], $null);
+			//}
 			
-			$row['comments'] = Item::comments($row['id']);
-			$row['likes'] = Item::likes($row['id']);
-			$row['user'] = User::get_by_id($row['user_id']);
+			$row = Item::get_by_id($result['id']);
+			
+			$row->comments = Item::comments($result['id']);
+			$row->likes = Item::likes($result['id']);
+			$row->user = User::get_by_id($result['user_id']);
 	
 			$rows[] = $row;
 		}
