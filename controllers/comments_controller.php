@@ -16,7 +16,7 @@ class CommentsController extends Application {
 	
 	function remove($comment_id) {
 		
-		$comment = Comment::get($comment_id);
+		$comment = Comment::get_by_id($comment_id);
 		
 		Comment::remove($_SESSION['user']['id'], $comment_id);
 		

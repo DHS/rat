@@ -19,7 +19,7 @@ class Comment {
 	}
 	
 	// Get a single comment, returns a Comment object
-	public static function get($id) {
+	public static function get_by_id($id) {
 		
 		$id = sanitize_input($id);
         
