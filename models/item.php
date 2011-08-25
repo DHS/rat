@@ -168,7 +168,7 @@ class Item {
 	}
 
 	// Get comments for an item, returns an array of Comment objects
-	public static function comments($item_id) {
+	public function comments($item_id) {
 		
 		$item_id = sanitize_input($item_id);
 
@@ -194,7 +194,7 @@ class Item {
 	}
 
 	// Get likes for an item, returns an array of Like objects
-	public static function likes($item_id) {
+	public function likes($item_id) {
 
 		$item_id = sanitize_input($item_id);
 

@@ -111,7 +111,7 @@ class User {
 	}
 	
 	// Get a user's items, returns array of Item objects
-	public static function items($user_id, $limit = 10, $offset = 0) {
+	public function items($user_id, $limit = 10, $offset = 0) {
 			
 		$user_id = sanitize_input($user_id);
 
@@ -152,7 +152,7 @@ class User {
 	}
 	
 	// Get all invites sent by a user, returns an array of Invite objects
-	public static function invites($user_id) {
+	public function invites($user_id) {
 
 		$user_id = sanitize_input($user_id);
 
