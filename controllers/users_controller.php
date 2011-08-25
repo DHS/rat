@@ -88,7 +88,7 @@ class UsersController extends Application {
 	function show($id) {
 		
 		$this->user = User::get_by_id($id);
-		$this->items = $this->user->items($id);
+		$this->items = $this->user->items();
 
 		$this->title = $this->user->username;		
 		$this->loadView('users/show');

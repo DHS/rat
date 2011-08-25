@@ -100,36 +100,35 @@ class User {
 	// Signup a new user!	
 	public static function signup($username, $password, $salt) {
 		
-		$this->user_id = sanitize_input($this->user_id);
+		$this->id = sanitize_input($this->id);
 		$username = sanitize_input($username);
 		
 		$encrypted_password = md5($password.$salt);
 		
-		$sql = "UPDATE users SET username = $username, password = '$encrypted_password', date_joined = NOW() WHERE id = $this->user_id";
+		$sql = "UPDATE users SET username = $username, password = '$encrypted_password', date_joined = NOW() WHERE id = $this->id";
 		$query = mysql_query($sql);
 		
 	}
 	
 	// Get a user's items, returns array of Item objects
 	public function items($limit = 10, $offset = 0) {
-			
-
-		$sql = "SELECT * FROM items WHERE user_id = $this->user_id ORDER BY id DESC";
-
+		
+		$sql = "SELECT * FROM items WHERE user_id = $this->id ORDER BY id DESC";
+		
 		// Limit not null so create limit string
 		if ($limit != NULL) {
 			$limit = sanitize_input($limit);
 			$sql .= " LIMIT $limit";
 		}
-
+		
 		// Offset not zero so create offset string
 		if ($offset != NULL) {
 			$offset = sanitize_input($offset);
 			$sql .= " OFFSET $offset";
 		}
-
+		
 		$query = mysql_query($sql);
-
+		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 
 			$item = new Item;
@@ -153,7 +152,7 @@ class User {
 	// Get all invites sent by a user, returns an array of Invite objects
 	public function invites() {
 
-		$sql = "SELECT id, email, result FROM invites WHERE user_id = $this->user_id ORDER BY id DESC";
+		$sql = "SELECT id, email, result FROM invites WHERE user_id = $this->id ORDER BY id DESC";
 		$query = mysql_query($sql);
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
@@ -175,7 +174,7 @@ class User {
 	// Get a users's friends, returns a list of Friend items
 	public function friends() {
 
-	  $sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $this->user_id";
+	  $sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $this->id";
 		$query = mysql_query($sql);
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
@@ -201,7 +200,7 @@ class User {
 
 		$return = NULL;
 
-		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE friend_user_id = $this->user_id";
+		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE friend_user_id = $this->id";
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
@@ -225,7 +224,7 @@ class User {
 	// Get items liked by a user, returns array of Item objects
 	public function likes($limit = 10) {
 			
-		$sql = "SELECT item_id FROM likes WHERE user_id = $this->user_id AND status = 1 ORDER BY date DESC";
+		$sql = "SELECT item_id FROM likes WHERE user_id = $this->id AND status = 1 ORDER BY date DESC";
 		
 		// Limit not null so create limit string
 		if ($limit != NULL) {
@@ -257,7 +256,7 @@ class User {
 	// Get comments made by a user, returns an array of Comment objects
 	public function comments() {
 		
-		$sql = "SELECT id, content, user_id, date FROM comments WHERE user_id = $this->user_id ORDER BY id ASC";
+		$sql = "SELECT id, content, user_id, date FROM comments WHERE user_id = $this->id ORDER BY id ASC";
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
@@ -277,7 +276,7 @@ class User {
 		
 		$encrypted_password = md5($new_password.$salt);
 		
-		$sql = "UPDATE users SET password = '{$encrypted_password}' WHERE id = $this->user_id";
+		$sql = "UPDATE users SET password = '{$encrypted_password}' WHERE id = $this->id";
 		$query = mysql_query($sql);
 		
 	}
@@ -310,7 +309,7 @@ class User {
 		}
 		$sql .= "url = $url";
 
-		$sql .= " WHERE id = $this->user_id";
+		$sql .= " WHERE id = $this->id";
 
 		$query = mysql_query($sql);
 
@@ -322,7 +321,7 @@ class User {
 		$invites = sanitize_input($invites);
 
 		// Get current # of invites
-		$sql_get = "SELECT invites FROM users WHERE id = $this->user_id";
+		$sql_get = "SELECT invites FROM users WHERE id = $this->id";
 		$query = mysql_query($sql_get);
 		$old_invites = mysql_result($query, 0);
 
@@ -330,11 +329,11 @@ class User {
 		$new_invites = $old_invites + $invites;
 
 		// Update database
-		$sql_update = "UPDATE users SET invites = $new_invites WHERE id = $this->user_id";
+		$sql_update = "UPDATE users SET invites = $new_invites WHERE id = $this->id";
 		$query = mysql_query($sql_update);
 
 		// update session
-		if ($_SESSION['user']['id'] == $this->user_id) {
+		if ($_SESSION['user']['id'] == $this->id) {
 			$_SESSION['user']['invites'] = $new_invites;
 		}
 
@@ -453,7 +452,7 @@ class User {
 		}
 		
 		// Write to database
-		$sql = "INSERT INTO users_password_reset SET user_id = $this->user_id, reset_code = '$code'";
+		$sql = "INSERT INTO users_password_reset SET user_id = $this->id, reset_code = '$code'";
 		$query = mysql_query($sql);
 
 		return $code;
