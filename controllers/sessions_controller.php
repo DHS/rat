@@ -59,7 +59,7 @@ class SessionsController extends Application {
 		} else {
 			$this->message = 'You are already logged in!<br />';
 			$this->message .= $this->link_to('Click here', 'sessions', 'remove').' to logout.';
-			$this->loadLayout('partials/message');
+			$this->loadLayout();
 		}
 		
 	}
