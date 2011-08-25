@@ -62,10 +62,10 @@ if (isset($this->title)) {
         <div class="container">
           <h3><?php echo $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
           <ul>
-            <li><?php echo $this->link_to('Home', $this->config->default_controller); ?></li>
-            <li><?php echo $this->link_to('My profile', 'users', 'show', $_SESSION['user']['id']); ?></li>
-            <li><?php echo $this->link_to('Invites', 'invites'); ?></li>
-            <li><?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?></li>
+            <li<?php if ($this->uri['controller'] == $this->config->default_controller) { echo ' class="active" '; } ?>><?php echo $this->link_to('Home', $this->config->default_controller); ?></li>
+            <li<?php if ($this->uri['controller'] == 'users') { echo ' class="active" '; } ?>><?php echo $this->link_to('My profile', 'users', 'show', $_SESSION['user']['id']); ?></li>
+            <li<?php if ($this->uri['controller'] == 'invites') { echo ' class="active" '; } ?>><?php echo $this->link_to('Invites', 'invites'); ?></li>
+            <li<?php if ($this->uri['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?></li>
           </ul>
           <ul class="nav secondary-nav">
             <li>
@@ -94,9 +94,9 @@ if (isset($this->title)) {
         <div class="container">
           <h3><?php echo $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
           <ul class="nav secondary-nav">
-            <li><?php echo $this->link_to('Signup', 'users', 'add') ?></li>
-            <li><?php echo $this->link_to('Login', 'sessions', 'add') ?></li>
-            <li><?php echo $this->link_to('Help', 'pages', 'show', 'help') ?></li>
+            <li<?php if ($this->uri['controller'] == 'users' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php echo $this->link_to('Signup', 'users', 'add') ?></li>
+            <li<?php if ($this->uri['controller'] == 'sessions' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php echo $this->link_to('Login', 'sessions', 'add') ?></li>
+            <li<?php if ($this->uri['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help') ?></li>
           </ul>
         </div>
       </div>
