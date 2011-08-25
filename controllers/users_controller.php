@@ -91,7 +91,7 @@ class UsersController extends Application {
 		$this->items = $this->user->items($id);
 
 		$this->title = $this->user->username;		
-		$this->loadLayout('users/show');
+		$this->loadView('users/show');
 		
 	}
 	

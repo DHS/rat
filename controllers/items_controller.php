@@ -126,14 +126,14 @@ class ItemsController extends Application {
 				
 				// Show error message
 				$this->message = $error;
-				$this->loadLayout('items/add');
+				$this->loadView('items/add');
 				exit();
 				
 			}
 			
 		} else {
 			
-			$this->loadLayout('items/add');
+			$this->loadView('items/add');
 			
 		}
 		
@@ -197,7 +197,7 @@ class ItemsController extends Application {
 		
 		$this->item = Item::get_by_id($id);
 		
-		$this->loadLayout('items/show');
+		$this->loadView('items/show');
 		
 	}
 	
@@ -210,7 +210,7 @@ class ItemsController extends Application {
 			
 			$this->title = $this->config->tagline;
 			$this->items = Item::list_feed($_SESSION['user']['id']);
-			$this->loadLayout('items/index');
+			$this->loadView('items/index');
 			
 		} else {
 			

@@ -7,7 +7,16 @@
 
 	if (count($this->items) > 0) {
 
-		$this->loadView('items/user');
+		if (is_array($this->items)) {
+
+			foreach ($this->items as $this->item) {
+				$this->loadPartial('item');
+			}
+		
+			$this->loadPartial('pagination');
+		
+		}
+
 
 	} else {
 

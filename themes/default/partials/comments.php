@@ -33,8 +33,4 @@ if ($this->config->items['comments']['enabled'] == TRUE && ($this->config->priva
 		<input type="text" name="content" size="30" value="" /> <input type="submit" value="<?php echo $this->config->items['comments']['name']; ?>" class="btn" />
 	</form>
 
-<?php
-
-}
-
-?>
+<?php } ?>

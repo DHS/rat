@@ -4,13 +4,14 @@
 <div class="row">
   <div class="span8 columns offset3">
 
-<?php foreach ($this->items as $this->item) { ?>
-
-<?php $this->loadPartial('item'); ?>
-
 <?php
-unset($this->item);
-} // end foreach loop
+
+foreach ($this->items as $this->item) {
+	$this->loadPartial('item');
+}
+
+$this->loadPartial('pagination');
+
 ?>
 
   </div>
