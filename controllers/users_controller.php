@@ -80,12 +80,16 @@ class UsersController extends Application {
 		
 	}
 	
-	function update($id) {
+	function update($page) {
 		
-		$this->user = User::get_by_id($id);
+		if (!isset($page)) {
+			$page = 'password';
+		}
 		
+		$this->user = User::get_by_id($_SESSION['user']['id']);
+
 		$this->title = 'Settings';
-		$this->loadLayout('users/update');
+		$this->loadLayout('users/update_'.$page);
 		
 	}
 	

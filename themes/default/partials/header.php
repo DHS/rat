@@ -77,7 +77,7 @@ if (isset($this->title)) {
               <a href="#" class="menu"><?php echo $_SESSION['user']['username']; ?></a>
               <ul class="menu-dropdown">
                 <li><?php echo $this->link_to('Profile', 'users', 'show', $_SESSION['user']['id']); ?></li>
-                <li><?php echo $this->link_to('Settings', 'users', 'update', $_SESSION['user']['id']); ?></li>
+                <li><?php echo $this->link_to('Settings', 'users', 'update'); ?></li>
                 <li class="divider"></li>
                 <li><?php echo $this->link_to('Logout', 'sessions', 'remove'); ?></li>
               </ul>
