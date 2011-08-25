@@ -49,7 +49,7 @@ class Like {
 			$like->user = User::get_by_id($like->user_id);
 			
 			// Get item info
-			$like->item = Item::get($like->user_id);
+			$like->item = Item::get_by_id($like->user_id);
 			
 			$likes[] = $like;
 			

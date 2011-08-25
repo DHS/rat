@@ -144,7 +144,7 @@ class ItemsController extends Application {
 	
 	function remove($item_id) {
 		
-		$item = Item::get($item_id);
+		$item = Item::get_by_id($item_id);
 		
 		if ($_SESSION['user']['id'] == $item->user->id && $item != NULL) {
 			
@@ -198,7 +198,7 @@ class ItemsController extends Application {
 	// Show a single item
 	function show($id) {
 		
-		$this->item = Item::get($id);
+		$this->item = Item::get_by_id($id);
 		
 		$this->loadLayout('items/show');
 		

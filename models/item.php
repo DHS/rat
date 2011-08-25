@@ -29,7 +29,7 @@ class Item {
 	}
 
 	// Get an item by id, returns an Item object
-	public static function get($id) {
+	public static function get_by_id($id) {
 
 		$id = sanitize_input($id);
 
