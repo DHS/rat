@@ -113,7 +113,15 @@ class UsersController extends Application {
 	// Password reset
 	function reset($code) {
 		
-		if (!empty($code)) {
+		if (isset($_SESSION['user'])) {
+			
+			$this->title = 'Page not found';
+			$this->loadLayout();
+			exit;
+			
+		}
+		
+		if (isset($code)) {
 			// Process reset
 			
 			// If two passwords submitted then check, otherwise show form
@@ -142,27 +150,30 @@ class UsersController extends Application {
 					$user = User::get_by_id($user_id);
 					
 					// Start session
-					$_SESSION['user'] = $user;
+					foreach ($user as $key => $value) {
+						$user_array[$key] = $value;
+					}
+					$_SESSION['user'] = $user_array;
 					
 					// Log login
 					if (isset($this->plugins->log)) {
 						$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
 					}
 					
+					// Set welcome message
+					$this->message = urlencode('Password updated! Welcome back to '.$this->config->name.'!');
+					
 					// If redirect_to is set then redirect
-					if ($_GET['redirect_to']) {
-						header('Location: '.$_GET['redirect_to']);
+					if (isset($_GET['redirect_to'])) {
+						header('Location: '.$_GET['redirect_to'].'?message='.$this->message);
 						exit();
 					}
 					
-					// Set welcome message
-					$this->message = urlencode('Password updated.<br />Welcome back to '.$this->config->name.'!');
-					
 					// Go forth!
 					if (SITE_IDENTIFIER == 'live') {
-						header('Location: '.$this->config->url.'?message='.$this->message);
+						header('Location: '.$this->config->url.$this->config->default_controller.'/?message='.$this->message);
 					} else {
-						header('Location: '.$this->config->dev_url.'?message='.$this->message);
+						header('Location: '.$this->config->dev_url.$this->config->default_controller.'/?message='.$this->message);
 					}
 					
 					exit();
@@ -182,14 +193,65 @@ class UsersController extends Application {
 			} else {
 				// Code present so show password reset form
 				
-				$this->loadLayout('users/reset');
+				if (User::check_password_reset_code($code) == TRUE) {
+					// Invite code valid
+					
+					$this->code = $code;
+					$this->loadLayout('users/reset');
+
+				} else {
+					
+					$this->title = 'Page not found';
+					$this->loadLayout();
+					exit;
+					
+				}
+				
+			}
+			
+		} elseif (empty($_SESSION['user'])) {
+			// No code in URL so show new reset form
+			
+			if (isset($_POST['email'])) {
+				// Email submitted so send password reset email
+				
+				$user = User::get_by_email($_POST['email']);
+				
+				// Check is a user
+				if ($user != NULL) {
+					
+					// Generate code
+					$code = User::generate_password_reset_code($user->id);
+					
+					$to = $_POST['email'];
+					$link = substr($this->config->url, 0, -1).$this->link_to(NULL, 'users', 'reset', $code);
+					$headers = "From: {$this->config->name} <robot@blah.com>\r\nContent-type: text/html\r\n";
+					
+					// Load subject and body from template
+					$this->loadView('emails/password_reset');
+					
+					// Email user
+					if ($this->config->send_emails == TRUE) {
+						mail($to, $subject, $body, $headers);
+					}
+					
+				}
+				
+				$this->message = 'Check your email for instructions about how to reset your password!';
+				$this->loadLayout();
+				
+			} else {
+				
+				$this->loadLayout('users/reset_new');
 				
 			}
 			
 		} else {
-			// No code in URL so show new reset form
 			
-			$this->loadLayout('users/reset_new');
+			$this->title = 'Page not found';
+			$this->loadView('partials/header');
+			$this->loadView('partials/footer');
+			exit;
 			
 		}
 		

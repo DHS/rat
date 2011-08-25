@@ -435,7 +435,7 @@ class User {
 
 	}
 	
-	// Check if a password reset token is valid ie. <24hrs old
+	// Check if a password reset token is valid (ie. <24hrs old), returns user_id
 	public static function check_password_reset_code($code) {
 		
 		$code = sanitize_input($code);

@@ -1,11 +1,26 @@
 
-<h2>Set new password</h2>
 
-<form action="reset.php" method="post">
-	<input type="hidden" name="code" value="<?php echo $_GET['code']; ?>" />
-	<table>
-	<tr><td class="align_right">New password:</td><td><input type="password" name="password1" id="password1" size="20" /></td></tr>
-	<tr><td class="align_right">Confirm new password:</td><td><input type="password" name="password2" id="password2" size="20" /></td></tr>
-	<tr><td></td><td><input type="submit" value="Reset" class="btn" /></td></tr>
-	</table>
-</form>
+<div class="row">
+  <div class="span8 columns offset4">
+    <form action="<?php echo $this->link_to(NULL, 'users', 'reset', $this->code); ?>" method="post">
+      <fieldset>
+        <legend>Set new password</legend>
+        <div class="clearfix">
+          <label for="password1">Password</label>
+          <div class="input">
+            <input class="medium" name="password1" size="30" type="password" />
+          </div>
+        </div> <!-- /clearfix -->
+        <div class="clearfix">
+          <label for="password2">Password again</label>
+          <div class="input">
+            <input class="medium" name="password2" size="30" type="password" />
+          </div>
+        </div> <!-- /clearfix -->
+        <div class="actions">
+          <button type="submit" class="btn primary">Reset</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
