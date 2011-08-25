@@ -24,7 +24,12 @@ class SearchController extends Application {
 		$search = new Search;
 		
 		$this->items = $search->do_search($q);
-
+		
+		if (isset($this->plugins->log)) {
+			$result_count = count($this->items);
+			$this->plugins->log->add($_SESSION['user']['id'], 'search', NULL, 'new', "Term = $q\nResult_count = $result_count");
+		}
+		
 		$this->loadView('partials/header');
 		$this->loadView('search/add');
 		$this->loadView('items/index');
