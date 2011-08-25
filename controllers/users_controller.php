@@ -27,21 +27,26 @@ class UsersController extends Application {
 	// Add a user / signup
 	function add($code) {
 		
-		if ($_POST['email'] != '') {
+		if (isset($_POST['email'])) {
+			//User is trying to signup
 			
-			if ($_POST['code'] != '') {
+			if (isset($code)){
+				// User is signing up with a code
 				
-				$this->do_signup('code');
+				$this->signup_code();
 				
 			} else {
+				// User is signing up without a code 
 				
 				if ($this->config->beta == TRUE) {
+					// Do beta signup
 					
-					$this->do_signup('beta');
+					$this->signup_beta();
 					
 				} else {
+					// Do full signup
 					
-					$this->do_signup('full');
+					$this->signup_full();
 					
 				}
 				
@@ -49,17 +54,19 @@ class UsersController extends Application {
 			
 		} else {
 			
-			// Show signup form
+			// No email submitted so show signup form
 			
 			if ($this->config->beta == TRUE) {
 				// Show beta signup form
+				
 				$this->title = 'Beta signup';
 				$this->loadLayout('users/add_beta');
+				
 			} else {
 				// Show full signup form
 				
 				if (isset($code)) {
-					$this->page['code'] = $code;
+					$this->code = $code;
 				}
 				
 				$this->title = 'Signup';
@@ -355,6 +362,454 @@ class UsersController extends Application {
         
 		}
         
+	}
+	
+	// Helper function: signup with an invite code
+	private function signup_code() {
+		
+		// Check invite code (only really matters if app is in beta)
+
+		if ($this->config->beta == TRUE) {
+
+			if (User::validate_invite_code($_POST['code'], $_POST['email']) != TRUE) {
+				$error .= 'Invalid invite code.<br />';
+			}
+
+		}
+
+		// Check email
+
+		$_POST['email'] = trim($_POST['email']);
+
+		if ($_POST['email'] == '') {
+			$error .= 'Email cannot be left blank.<br />';
+		}
+
+		if (User::check_contains_spaces($_POST['email']) == TRUE) {
+			$error .= 'Email cannot contain spaces.<br />';
+		}
+
+		if (User::check_contains_at($_POST['email']) != TRUE) {
+			$error .= 'Email must contain an @ symbol.<br />';
+		}
+
+		if (User::check_email_available($_POST['email']) != TRUE) {
+			$error .= 'Email already in the system!<br />';
+		}
+
+		// Check username
+
+		if ($_POST['username'] == '') {
+			$error .= 'Username cannot be left blank.<br />';
+		}
+        
+		if (User::check_alphanumeric($_POST['username']) != TRUE) {
+			$error .= 'Username must only contain letters and numbers.<br />';
+		}
+        
+		if (User::check_username_available($_POST['username']) != TRUE) {
+			$error .= 'Username not available.<br />';
+		}
+
+		// Check password
+
+		if ($_POST['password1'] == '' || $_POST['password2'] == '') {
+			$error .= 'Please enter your password twice.<br />';
+		}
+
+		if ($_POST['password1'] != $_POST['password2']) {
+			$error .= 'Passwords do not match.<br />';
+		}
+
+		// Error processing
+
+		if ($error == '') {
+			// No error so proceed...
+
+			// First check if user added
+			$user = User::get_by_email($_POST['email']);
+
+			// If not then add
+			if ($user == NULL) {
+
+				$user_id = User::add($_POST['email']);
+				$user = User::get_by_id($user_id);
+
+			}
+
+			// Do signup
+			User::signup($user->id, $_POST['username'], $_POST['password1']);
+            
+			if ($this->config->send_emails == TRUE) {
+				// Send 'thank you for signing up' email
+            
+				$to = "{$_POST['username']} <{$_POST['email']}>";
+				$headers = "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
+            
+				// Load subject and body from template
+				$this->loadView('email/signup');
+            
+				// Email user
+				mail($to, $subject, $body, $headers);
+            
+			}
+            
+			// Log signup
+			if (isset($this->plugins->log)) {
+				$this->plugins->log->add($user->id, 'user', NULL, 'signup');
+			}
+            
+			// Start session
+			$_SESSION['user'] = $user;
+            
+			// Check invites are enabled and the code is valid
+			if ($this->config->invites['enabled'] == TRUE && validate_invite_code($_POST['code'], $_POST['email']) == TRUE) {
+            
+				// Get invites
+				$invites = invites_get_by_code($_POST['code']);
+            
+				if (is_array($invites)) {
+					foreach ($invites as $invite) {
+            
+						// Update invites
+						Invite::update($invite['id']);
+            
+						// Log invite update
+						if (isset($this->plugins->log)) {
+							$this->plugins->log->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
+						}
+            
+						// Update points (but only if inviting user is not an admin)
+						if (isset($this->plugins->points) && in_array($invite['user_id'], $this->config->admin_users) != TRUE) {
+            
+							// Update points
+							$this->plugins->points->update($invite['user_id'], $this->plugins->points['per_invite_accepted']);
+            
+							// Log points update
+							if (isset($this->plugins->log)) {
+								$this->plugins->log->add($invite['user_id'], 'points', NULL, $this->plugins->points['per_invite_accepted'], 'invite_accepted = '.$invite['id']);
+							}
+            
+						}
+            
+					}
+					// end foreach
+				}
+				// end if is_array
+            
+			}
+            
+			// Log login
+			if (isset($this->plugins->log)) {
+				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+			}
+            
+			// If redirect_to is set then redirect
+			if ($_GET['redirect_to']) {
+				header('Location: '.$_GET['redirect_to']);
+				exit();
+			}
+            
+			// Set welcome message
+			$this->message = urlencode('Welcome to '.$GLOBALS['app']->name.'!');
+            
+			// Go forth!
+			if (SITE_IDENTIFIER == 'live') {
+				header('Location: '.$this->config->url.'?message='.$this->message);
+			} else {
+				header('Location: '.$this->config->dev_url.'?message='.$this->message);
+			}
+            
+			exit();
+
+		} else {
+			// There was an error
+
+			// Propagate get vars to be picked up by the form
+			$_GET['email']		= $_POST['email'];
+			$_GET['username']	= $_POST['username'];
+			$_GET['code']		= $_POST['code'];
+
+			// Commented out while objectifying $app
+			//$app = $GLOBALS['app'];
+
+			// Show error message
+			$this->message = $error;
+			$this->loadView('partials/header');
+
+			// Show relevant signup form
+			if ($mode == 'beta') {
+				$this->loadView('users/add_beta');
+			} else {
+				$this->loadView('users/add');
+			}
+
+		}
+		
+	}
+	
+	// Helper function: beta signup
+	private function signup_beta() {
+		
+		// Check email
+
+		$_POST['email'] = trim($_POST['email']);
+
+		if ($_POST['email'] == '') {
+			$error .= 'Email cannot be left blank.<br />';
+		}
+
+		if (User::check_contains_spaces($_POST['email']) == TRUE) {
+			$error .= 'Email cannot contain spaces.<br />';
+		}
+
+		if (User::check_contains_at($_POST['email']) != TRUE) {
+			$error .= 'Email must contain an @ symbol.<br />';
+		}
+
+		if (User::check_email_available($_POST['email']) != TRUE) {
+			$error .= 'Email already in the system!<br />';
+		}
+
+		// Error processing
+
+		if ($error == '') {
+			// No error so proceed...
+
+			// First check if user added
+			$user = User::get_by_email($_POST['email']);
+
+			// If not then add
+			if ($user == NULL) {
+
+				$user_id = User::add($_POST['email']);
+				$user = User::get_by_id($user_id);
+
+			}
+
+			// Do beta signup
+			if ($mode == 'beta') {
+
+				// Log beta signup
+				if (isset($this->plugins->log)) {
+					$this->plugins->log->add($user_id, 'user', NULL, 'beta_signup', $_POST['email']);
+				}
+
+				// Set thank you & tweet this message
+				$this->message = 'Thanks for signing up!<br /><br />We\'d be very grateful if you could help spread the word:<br /><br />';
+				$this->message .= '<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ScribeSub.com/" data-text="I just signed up to the ScribeSub beta!" data-count="none" data-via="ScribeSubHQ" data-related="DHS:Creator of ScribeSub">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
+
+				//$this->loadView('partials/message');
+
+				// Go forth!
+				if (SITE_IDENTIFIER == 'live') {
+					header('Location: '.$this->config->url.'?message='.$this->message);
+				} else {
+					header('Location: '.$this->config->dev_url.'?message='.$this->message);
+				}
+
+				exit();
+
+			}
+
+		} else {
+			// There was an error
+
+			// Propagate get vars to be picked up by the form
+			$_GET['email']		= $_POST['email'];
+			$_GET['username']	= $_POST['username'];
+			$_GET['code']		= $_POST['code'];
+
+			// Commented out while objectifying $app
+			//$app = $GLOBALS['app'];
+
+			// Show error message
+			$this->message = $error;
+			$this->loadView('partials/header');
+
+			// Show relevant signup form
+			if ($mode == 'beta') {
+				$this->loadView('users/add_beta');
+			} else {
+				$this->loadView('users/add');
+			}
+
+		}
+		
+	}
+	
+	// Helper function: full signup
+	private function signup_full() {
+		
+		// Check email
+
+		$_POST['email'] = trim($_POST['email']);
+
+		if ($_POST['email'] == '') {
+			$error .= 'Email cannot be left blank.<br />';
+		}
+
+		if (User::check_contains_spaces($_POST['email']) == TRUE) {
+			$error .= 'Email cannot contain spaces.<br />';
+		}
+
+		if (User::check_contains_at($_POST['email']) != TRUE) {
+			$error .= 'Email must contain an @ symbol.<br />';
+		}
+
+		if (User::check_email_available($_POST['email']) != TRUE) {
+			$error .= 'Email already in the system!<br />';
+		}
+
+		// Check username
+
+		if ($_POST['username'] == '') {
+			$error .= 'Username cannot be left blank.<br />';
+		}
+        
+		if (User::check_alphanumeric($_POST['username']) != TRUE) {
+			$error .= 'Username must only contain letters and numbers.<br />';
+		}
+        
+		if (User::check_username_available($_POST['username']) != TRUE) {
+			$error .= 'Username not available.<br />';
+		}
+
+		// Check password
+
+		if ($_POST['password1'] == '' || $_POST['password2'] == '') {
+			$error .= 'Please enter your password twice.<br />';
+		}
+
+		if ($_POST['password1'] != $_POST['password2']) {
+			$error .= 'Passwords do not match.<br />';
+		}
+
+		// Error processing
+
+		if ($error == '') {
+			// No error so proceed...
+
+			// First check if user added
+			$user = User::get_by_email($_POST['email']);
+
+			// If not then add
+			if ($user == NULL) {
+
+				$user_id = User::add($_POST['email']);
+				$user = User::get_by_id($user_id);
+
+			}
+
+			// Do signup
+			User::signup($user->id, $_POST['username'], $_POST['password1']);
+            
+			if ($this->config->send_emails == TRUE) {
+				// Send 'thank you for signing up' email
+            
+				$to = "{$_POST['username']} <{$_POST['email']}>";
+				$headers = "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
+            
+				// Load subject and body from template
+				$this->loadView('email/signup');
+            
+				// Email user
+				mail($to, $subject, $body, $headers);
+            
+			}
+            
+			// Log signup
+			if (isset($this->plugins->log)) {
+				$this->plugins->log->add($user->id, 'user', NULL, 'signup');
+			}
+            
+			// Start session
+			$_SESSION['user'] = $user;
+            
+			// Check invites are enabled and the code is valid
+			if ($this->config->invites['enabled'] == TRUE && validate_invite_code($_POST['code'], $_POST['email']) == TRUE) {
+            
+				// Get invites
+				$invites = invites_get_by_code($_POST['code']);
+            
+				if (is_array($invites)) {
+					foreach ($invites as $invite) {
+            
+						// Update invites
+						Invite::update($invite['id']);
+            
+						// Log invite update
+						if (isset($this->plugins->log)) {
+							$this->plugins->log->add($_SESSION['user']['id'], 'invite', $invite['id'], 'accept');
+						}
+            
+						// Update points (but only if inviting user is not an admin)
+						if (isset($this->plugins->points) && in_array($invite['user_id'], $this->config->admin_users) != TRUE) {
+            
+							// Update points
+							$this->plugins->points->update($invite['user_id'], $this->plugins->points['per_invite_accepted']);
+            
+							// Log points update
+							if (isset($this->plugins->log)) {
+								$this->plugins->log->add($invite['user_id'], 'points', NULL, $this->plugins->points['per_invite_accepted'], 'invite_accepted = '.$invite['id']);
+							}
+            
+						}
+            
+					}
+					// end foreach
+				}
+				// end if is_array
+            
+			}
+            
+			// Log login
+			if (isset($this->plugins->log)) {
+				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+			}
+            
+			// If redirect_to is set then redirect
+			if ($_GET['redirect_to']) {
+				header('Location: '.$_GET['redirect_to']);
+				exit();
+			}
+            
+			// Set welcome message
+			$this->message = urlencode('Welcome to '.$GLOBALS['app']->name.'!');
+            
+			// Go forth!
+			if (SITE_IDENTIFIER == 'live') {
+				header('Location: '.$this->config->url.'?message='.$this->message);
+			} else {
+				header('Location: '.$this->config->dev_url.'?message='.$this->message);
+			}
+            
+			exit();
+
+		} else {
+			// There was an error
+
+			// Propagate get vars to be picked up by the form
+			$_GET['email']		= $_POST['email'];
+			$_GET['username']	= $_POST['username'];
+			$_GET['code']		= $_POST['code'];
+
+			// Commented out while objectifying $app
+			//$app = $GLOBALS['app'];
+
+			// Show error message
+			$this->message = $error;
+			$this->loadView('partials/header');
+
+			// Show relevant signup form
+			if ($mode == 'beta') {
+				$this->loadView('users/add_beta');
+			} else {
+				$this->loadView('users/add');
+			}
+
+		}
+		
 	}
 	
 }
