@@ -22,32 +22,6 @@ class Like {
 
 	}
 
-	// Get likes for an item, returns an array of Like objects
-	public static function list_item($item_id) {
-
-		$item_id = sanitize_input($item_id);
-
-		$sql = "SELECT id, user_id, date FROM likes WHERE item_id = $item_id";
-		$query = mysql_query($sql);
-
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
-			$like = new Like;
-
-			foreach($result as $k => $v) {
-				$like->$k = $v;
-			}
-			
-			$like->user = User::get($result['user_id']);
-			
-			$likes[$result['id']] = $like;
-			
-		}
-
-		return $likes;
-
-	}
-
 	// Get all liked items, returns an array of Like objects
 	public static function list_all($limit = 10) {
 		

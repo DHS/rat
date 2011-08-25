@@ -51,7 +51,7 @@ class Item {
 
 			$item->user = User::get($result['user_id']);
 			$item->comments = Item::comments($id);
-			$item->likes = Like::list_item($id);
+			$item->likes = Item::likes($id);
 
 		}
 
@@ -81,7 +81,7 @@ class Item {
 			}
 			
 			$item->comments = Item::comments($result['id']);
-			$item->likes = Like::list_item($result['id']);
+			$item->likes = Item::likes($result['id']);
 			$item->user = User::get($result['user_id']);
 
 			$items[] = $item;
@@ -123,7 +123,7 @@ class Item {
 
 			$item->user = User::get($result['user_id']);
 			$item->comments = Item::comments($result['id']);
-			$item->likes = Like::list_item($result['id']);
+			$item->likes = Item::likes($result['id']);
 
 			$items[] = $item;
 
@@ -162,7 +162,7 @@ class Item {
 
 			$item->user = User::get($result['user_id']);
 			$item->comments = Item::comments($result['id']);
-			$item->likes = Like::list_item($result['id']);
+			$item->likes = Item::likes($result['id']);
 
 			$items[] = $item;
 
@@ -198,7 +198,7 @@ class Item {
 
 			$item->user = User::get($result['user_id']);
 			$item->comments = Item::comments($result['id']);
-			$item->likes = Like::list_item($result['id']);
+			$item->likes = Item::likes($result['id']);
 
 			$items[] = $item;
 
@@ -233,6 +233,33 @@ class Item {
 		return $comments;
 
 	}
+
+	// Get likes for an item, returns an array of Like objects
+	public static function list_item($item_id) {
+
+		$item_id = sanitize_input($item_id);
+
+		$sql = "SELECT id, user_id, date FROM likes WHERE item_id = $item_id";
+		$query = mysql_query($sql);
+
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			$like = new Like;
+
+			foreach($result as $k => $v) {
+				$like->$k = $v;
+			}
+			
+			$like->user = User::get($result['user_id']);
+			
+			$likes[$result['id']] = $like;
+			
+		}
+
+		return $likes;
+
+	}
+
 
 	// Remove an item, returns item id
 	public static function remove($item_id) {
