@@ -98,7 +98,7 @@ class User {
 	}
 	
 	// Signup a new user!	
-	public static function signup($this->user_id, $username, $password, $salt) {
+	public static function signup($username, $password, $salt) {
 		
 		$this->user_id = sanitize_input($this->user_id);
 		$username = sanitize_input($username);
@@ -173,7 +173,7 @@ class User {
 	}
 	
 	// Get a users's friends, returns a list of Friend items
-	public function friends($this->user_id) {
+	public function friends() {
 
 	  $sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $this->user_id";
 		$query = mysql_query($sql);
@@ -197,7 +197,7 @@ class User {
 	}
 	
 	// Get a users's followers, returns a list of Friend items
-	public function followers($this->user_id) {
+	public function followers() {
 
 		$return = NULL;
 
@@ -443,7 +443,7 @@ class User {
 	}
 	
 	// Generate a random password reset code
-	public static function generate_password_reset_code($this->user_id) {
+	public static function generate_password_reset_code() {
 		
 		// Generate code
 		$code = '';

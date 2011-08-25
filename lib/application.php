@@ -79,13 +79,7 @@ class Application {
 		
 	}
 	
-	protected function loadView($view) {
-		
-		include "themes/{$this->config->theme}/{$view}.php";
-		
-	}
-	
-	protected function loadLayout($view, $layout = NULL) {
+	protected function loadView($view, $layout = NULL) {
 		
 		if (is_null($layout)) {
 			$layout = 'default';
