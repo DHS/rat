@@ -60,8 +60,8 @@ class Search {
 			
 			$item = Item::get_by_id($result['id']);
 			
-			$item->comments = Item::comments($result['id']);
-			$item->likes = Item::likes($result['id']);
+			$item->comments = $item->comments($result['id']);
+			$item->likes = $item->likes($result['id']);
 			$item->user = User::get_by_id($result['user_id']);
 
 			$item->score = 0;

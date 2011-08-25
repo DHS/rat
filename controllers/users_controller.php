@@ -88,7 +88,7 @@ class UsersController extends Application {
 	function show($id) {
 		
 		$this->user = User::get_by_id($id);
-		$this->items = User::items($id);
+		$this->items = $this->user->items($id);
 
 		$this->title = $this->user->username;		
 		$this->loadLayout('users/show');
@@ -280,8 +280,10 @@ class UsersController extends Application {
 	// Show user profile in json format
 	function json($username) {
 		
-		$user['user'] = User::get_by_username($username);
-		$user['items'] = User::items($user['user']->id);
+		$user = User::get_by_username($username);
+		
+		$user['user'] = $user;
+		$user['items'] = $user->items($user->id);
 		$this->json = $user;
 		$this->loadView('pages/json');
 		

@@ -50,8 +50,8 @@ class Item {
 			}
 
 			$item->user = User::get_by_id($result['user_id']);
-			$item->comments = Item::comments($id);
-			$item->likes = Item::likes($id);
+			$item->comments = $item->comments($id);
+			$item->likes = $item->comments($id);
 
 		}
 
@@ -80,8 +80,8 @@ class Item {
 				$item->$k = $v;
 			}
 			
-			$item->comments = Item::comments($result['id']);
-			$item->likes = Item::likes($result['id']);
+			$item->comments = $item->comments($result['id']);
+			$item->likes = $item->comments($result['id']);
 			$item->user = User::get_by_id($result['user_id']);
 
 			$items[] = $item;
@@ -94,38 +94,39 @@ class Item {
 
 	// Get a feed of a friend's activity, returns array of Item objects
 	public static function list_feed($user_id) {
-
+		
 		// Start by adding the viewer to the query string
 		$friends_string = "user_id = $user_id";
-
-		// Fetch friends
-		$friends = User::friends($user_id);
-
+		
+		$user = User::get_by_id($user_id);
+		$friends = $user->friends($user_id);
+		
 		// Loop through friends adding them to the query string
-		foreach ($friends as $friend)
+		foreach ($friends as $friend) {
 			$friends_string .= " OR user_id = {$friend['friend_user_id']}";
-
+		}
+		
 		$sql = "SELECT * FROM items WHERE $friends_string ORDER BY id DESC LIMIT 100";
 		$query = mysql_query($sql);
-
+		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-
+			
 			$item = new Item;
-
+			
 			foreach($result as $k => $v) {
 				$item->$k = $v;
 			}
-
+			
 			$item->user = User::get_by_id($result['user_id']);
-			$item->comments = Item::comments($result['id']);
-			$item->likes = Item::likes($result['id']);
-
+			$item->comments = $item->comments($result['id']);
+			$item->likes = $item->comments($result['id']);
+			
 			$items[] = $item;
-
+			
 		}
-
+		
 		return $items;
-
+		
 	}
 
 	// Get comments for an item, returns an array of Comment objects
