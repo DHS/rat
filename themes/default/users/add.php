@@ -2,7 +2,7 @@
 <div class="row">
   <div class="span8 columns offset4">
 
-    <form action="/users/add/<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>" method="post">
+    <form action="<?php echo $this->link_to(NULL, 'users', 'add'); if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
     
       <?php
       
@@ -23,7 +23,7 @@
         <tr><td></td><td class="align_left"><input type="submit" value="Signup" class="btn" /></td></tr>
       </table>
       	
-      <p class="small">Already got a <?php echo $this->config->name ?> account? <a href="login.php<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>">Login</a> now!</p>
+      <p class="small">Already got a <?php echo $this->config->name ?> account? <a href="login.php<?php if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>">Login</a> now!</p>
     
     </form>
 

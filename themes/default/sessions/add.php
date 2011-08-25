@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="/sessions/add<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>" method="post">
+    <form action="<?php echo $this->link_to(NULL, 'session', 'add'); if(isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
       <fieldset>
         <div class="clearfix">
           <label for="email">Email</label>
@@ -25,7 +25,7 @@
 
 <div class="row">
   <div class="span3 columns offset6">
-    <p class="small">New to <?php echo $this->config->name ?>? <a href="signup.php<?php if($_GET['redirect_to']) echo '?redirect_to='.$_GET['redirect_to']; ?>">Signup</a> now!
-    <br /><a href="reset.php">Forgotten your password</a>?</p>
+    <p class="small">New to <?php echo $this->config->name ?>? <a href="<?php echo $this->link_to(NULL, 'users', 'add'); if(isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>">Signup</a> now!
+    <br /><?php echo $this->link_to('Forgotten your password', 'users', 'reset'); ?>?</p>
   </div>
 </div>
