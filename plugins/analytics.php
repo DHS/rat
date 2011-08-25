@@ -17,7 +17,7 @@
 *
 */
 
-class analytics {
+class analytics extends Application {
 
 	function __construct($analytics_id) {
 		

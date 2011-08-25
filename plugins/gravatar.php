@@ -17,7 +17,7 @@
 *
 */
 
-class gravatar {
+class gravatar extends Application {
 
 	function format_email($email) {
 		

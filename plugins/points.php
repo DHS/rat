@@ -22,7 +22,7 @@
 */
 
 
-class points {
+class points extends Application {
 
 	function update($user_id, $points) {
 
