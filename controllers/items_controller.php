@@ -20,7 +20,7 @@ class ItemsController extends Application {
 		$this->title = $this->config->tagline;
 		$this->items = Item::list_all();
 		
-		$this->loadLayout('items/index');
+		$this->loadView('items/index');
 		
 	}
 	

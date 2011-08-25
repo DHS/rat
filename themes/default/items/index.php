@@ -4,57 +4,9 @@
 <div class="row">
   <div class="span8 columns offset3">
 
-<?php foreach ($this->items as $item) {
-	
-	$this->item = $item;
-	
-	// Populate some vars
-	if (isset($this->plugins->gravatar)) {
-		$image = $this->plugins->gravatar->show($item->user->email, array('size' => 48, 'style' => 'float: left; padding: 0px 10px 10px 0px;'));
-		$gravatar = $this->link_to($image, 'users', 'show', $item->user->id).' ';
-	} else {
-		$gravatar = $this->link_to($like->user->username, 'users', 'show', $item->user->id).' ';
-	}
-	
-	if ($this->config->items['titles']['enabled'] == TRUE && $item->title != NULL) {
-		$content = '<h4>'.$this->link_to($item->title, 'items', 'show', $item->id).' <small>by '.$this->link_to($item->user->username, 'users', 'show', $item->user->id).'</small></h4>';
-		$content .= '<p>'.$item->content.'</p>';
-	} else {
-		$content = '<p>'.$this->link_to($item->user->username, 'users', 'show', $item->user->id).' '.$item->content.'</p>';
-	}
-	
-	// Comment form toggle
-	if (count($item->comments) > 0) {
-		$this->show_comment_form = TRUE;
-	} else {
-		$this->show_comment_form = FALSE;
-	}
-	
-?>
+<?php foreach ($this->items as $this->item) { ?>
 
-    <!-- Begin item -->
-    
-    <!-- Content -->
-    <?php echo $gravatar; ?>
-    <?php echo $content; ?>
-    
-    <!-- Meta -->
-    <?php $this->loadView('items/meta'); ?>
-
-<?php if ($this->config->items['likes']['enabled'] == TRUE) { ?>
-    <!-- Likes -->
-    <?php $this->loadView('likes/index'); ?>
-<?php } ?>
-
-<?php if ($this->config->items['comments']['enabled'] == TRUE) { ?>
-    <!-- Comments -->
-    <?php $this->loadView('comments/index'); ?>
-<?php } ?>
-
-    <!-- Spacer -->
-    <p>&nbsp;</p>
-
-    <!-- End item -->
+<?php $this->loadPartial('item'); ?>
 
 <?php
 unset($this->item);
@@ -78,7 +30,7 @@ unset($this->item);
     </div>
 -->
 
-<?php $this->loadView('items/add'); ?>
+<?php $this->loadPartial('items_add'); ?>
 
   </div>
 </div>
