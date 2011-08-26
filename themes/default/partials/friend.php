@@ -1,3 +1,5 @@
+<?php $this->viewer = User::get_by_id($_SESSION['user']['id']); ?>
+
 <?php if ($this->user->id != $_SESSION['user']['id']) { ?>
 
   <span id="friends_<?php echo $this->user->id; ?>">
@@ -10,7 +12,7 @@
 
   <?php } else { ?>
   
-    <?php if (Friend::check($_SESSION['user']['id'], $this->user->id) == TRUE) { ?>
+    <?php if ($this->viewer->friend_check($this->user->id) == TRUE) { ?>
 
       <a href="#" class="btn" onclick="friend_remove(<?php echo $this->user->id; ?>); return false;">
       <?php if ($this->config->friends['asymmetric'] == TRUE) { echo 'Unfollow'; } else { echo 'Remove friend'; } ?>

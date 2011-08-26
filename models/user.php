@@ -171,7 +171,7 @@ class User {
 
 	}
 	
-	// Get a users's friends, returns a list of Friend items
+	// Get a users's friends, returns a list of User items
 	public function friends() {
 
 	  $sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $this->id";
@@ -179,14 +179,8 @@ class User {
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$friend = new Friend;
-			
-			foreach($result as $k => $v) {
-				$friend->$k = $v;
-			}
-			
-			$friend->user = User::get_by_id($result['friend_user_id']);
-			
+			$friend = User::get_by_id($result['friend_user_id']);
+
 			$friends[$result['id']] = $friend;
 			
 		}
@@ -205,13 +199,7 @@ class User {
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$friend = new Friend;
-			
-			foreach($result as $k => $v) {
-				$friend->$k = $v;
-			}
-			
-			$friend->user = User::get_by_id($result['user_id']);
+			$friend = User::get_by_id($result['user_id']);
 			
 			$friends[$result['id']] = $friend;
 			
@@ -264,6 +252,64 @@ class User {
 		}
 		
 		return $comments;
+		
+	}
+	
+	// Add a friend, returns friendship id
+	public function friend_add($friend_user_id) {
+		
+		$friend_user_id = sanitize_input($friend_user_id);
+		
+		$count_sql = "SELECT id FROM friends WHERE user_id = {$this->id} AND friend_user_id = $friend_user_id";
+		$count_query = mysql_query($count_sql);
+		
+		if (mysql_num_rows($count_query) < 1) {
+			$sql = "INSERT INTO friends SET user_id = {$this->id}, friend_user_id = $friend_user_id";
+			$query = mysql_query($sql);
+		}
+		
+	}
+	
+	// Update a friendship status
+	public function friend_update($friend_user_id, $status) {
+		
+		$friend_user_id = sanitize_input($friend_user_id);
+		$status = sanitize_input($status);
+		
+		$sql = "UPDATE friends SET status = $status WHERE user_id = {$this->id} AND friend_user_id = {$friend_user_id}";
+		$query = mysql_query($sql);
+		
+	}
+
+	// Unfriend! Returns friendship id
+	public function friend_remove($friend_user_id) {
+		
+		$friend_user_id = sanitize_input($friend_user_id);
+		
+		$count_sql = "SELECT id FROM friends WHERE user_id = {$this->id} AND friend_user_id = {$friend_user_id}";
+		$count_query = mysql_query($count_sql);
+		
+		if (mysql_num_rows($count_query) > 0) {
+			$sql = "DELETE FROM friends WHERE user_id = {$this->id} AND friend_user_id = {$friend_user_id}";
+			$query = mysql_query($sql);
+		}
+		
+	}
+	
+	// Check whether two users are friends, returns TRUE or FALSE
+	public function friend_check($friend_user_id) {
+		
+		$friend_user_id = sanitize_input($friend_user_id);
+		
+		$sql = "SELECT COUNT(id) FROM friends WHERE user_id = {$this->id} AND friend_user_id = $friend_user_id";
+		$query = mysql_query($sql);
+		$result = mysql_result($query, 0);
+		
+		if ($result > 0) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
 		
 	}
 	
