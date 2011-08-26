@@ -95,7 +95,7 @@ class Comment {
 			$query = mysql_query($sql);
 		}
 
-		return $id;
+		return $this->id;
 
 	}
 	
