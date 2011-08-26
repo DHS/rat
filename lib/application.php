@@ -20,6 +20,7 @@ class Application {
 		
 		$app->route();
 		
+		unset($_SESSION['flash']);
 	}
 	
 	private function loadConfig($config) {
@@ -128,6 +129,16 @@ class Application {
 		
 		return $link;
 		
+	}
+
+	public function flash($category, $message) {
+	
+		if (! in_array($category, array('error', 'notice', 'success'))) {
+			$category = 'success';
+		}
+
+		$_SESSION['flash'] = array('category' => $category, 'message' => $message);
+	
 	}
 	
 }

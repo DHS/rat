@@ -118,15 +118,29 @@ if (isset($_GET['message'])) {
 	$this->message = $_GET['message'];
 }
 
+if (isset($_SESSION['flash'])) {
+	echo '
+	<!-- Message -->
+	<div class="row">
+		<div class="span8 columns offset4">
+			<div class="alert-message info '.$_SESSION['flash']['category'].'">
+				<p>'.$_SESSION['flash']['message'].'</p>
+			</div>
+		</div>
+	</div>';
+
+}
+
 if (isset($this->message)) {
-	echo '<!-- Message -->
-  <div class="row">
-    <div class="span8 columns offset4">
-      <div class="alert-message info">
-        <p>'.$this->message.'</p>
-      </div>
-    </div>
-  </div>';
+	echo '
+	<!-- Message -->
+	<div class="row">
+		<div class="span8 columns offset4">
+			<div class="alert-message info">
+				<p>'.$this->message.'</p>
+			</div>
+		</div>
+	</div>';
 
 }
 
