@@ -29,7 +29,7 @@ class LikesController extends Application {
 	function show($item_id) {
 		
 		$this->item = Item::get_by_id($item_id);
-		$this->loadView('likes/index');
+		$this->loadPartial('likes');
 		
 	}
 	
@@ -37,7 +37,7 @@ class LikesController extends Application {
 		
 		$item = Item::get_by_id($item_id);
 		$this->json = $item->likes;
-		$this->loadView('pages/json');
+		$this->loadView('pages/json', 'none');
 		
 	}
 	

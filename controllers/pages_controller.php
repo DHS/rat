@@ -12,7 +12,7 @@ class PagesController extends Application {
 		
 		$this->title = ucfirst($name);
 		
-		$this->loadLayout('pages/'.$name);
+		$this->loadView('pages/'.$name);
 		
 	}
 	

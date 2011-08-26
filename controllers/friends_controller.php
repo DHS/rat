@@ -27,7 +27,7 @@ class FriendsController extends Application {
 			$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 			
 			// Load subject and body from template
-			$this->loadView('email/follower_new');
+			include "themes/{$this->config->theme}/emails/follower_new.php";
 			
 			// Email user
 			mail($to, $subject, $body, $headers);
@@ -36,7 +36,7 @@ class FriendsController extends Application {
 		
 		$this->user->id = $friend_id;
 		
-		$this->loadView('friends/remove');
+		$this->loadPartial('friend');
 		
 	}
 	
@@ -50,7 +50,7 @@ class FriendsController extends Application {
 		
 		$this->user->id = $friend_id;
 		
-		$this->loadView('friends/add');
+		$this->loadPartial('friend');
 		
 	}
 	

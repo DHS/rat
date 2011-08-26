@@ -19,7 +19,7 @@ class AdminController extends Application {
 			}
 			
 		}
-		
+		/*
 		// Comment out the following if statment to see admin sectin, $this->config->admin_users not available in constructor
 		if (in_array($_SESSION['user']['id'], $this->config->admin_users) != TRUE) {
 			// User not an admin
@@ -30,7 +30,7 @@ class AdminController extends Application {
 			exit;
 			
 		}
-		
+		*/
 	}
 	
 	// Show admin dashboard
@@ -39,7 +39,7 @@ class AdminController extends Application {
 		$this->title = 'Admin &raquo; Dashboard';
 		$this->users = Admin::list_users();
 		$this->page['users_beta'] = Admin::list_users_beta();
-		$this->loadLayout('admin/index', 'admin');
+		$this->loadView('admin/index', 'admin');
 		
 	}
 	
@@ -81,7 +81,7 @@ class AdminController extends Application {
 			// Show setup form
 			
 			$this->message = 'Welcome to Rat! Please enter your details:';
-			$this->loadLayout('admin/setup');
+			$this->loadView('admin/setup', 'admin');
 
 		}
 		
@@ -92,7 +92,7 @@ class AdminController extends Application {
 		
 		$this->title = 'Admin &raquo; Beta signups';	
 		$this->users = Admin::list_users_beta();
-		$this->loadLayout('admin/signups', 'admin');
+		$this->loadView('admin/signups', 'admin');
 		
 	}
 	
@@ -101,7 +101,7 @@ class AdminController extends Application {
 		
 		$this->title = 'Admin &raquo; Users';
 		$this->users = Admin::list_users();
-		$this->loadLayout('admin/users', 'admin');
+		$this->loadView('admin/users', 'admin');
 		
 	}
 	
@@ -110,9 +110,9 @@ class AdminController extends Application {
 		
 		if (isset($this->plugins->log)) {
 			
-			$this->title = 'Admin &raquo; Dashboard';
+			$this->title = 'Admin &raquo; Log';
 			$this->loadPartial('header');
-			$this->loadView('admin/menu');
+			$this->loadPartial('admin_menu');
 			$this->plugins->log->view();
 			$this->loadPartial('footer');
 			
@@ -145,7 +145,7 @@ class AdminController extends Application {
 			$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
 			
 			// Load template into $body variable
-			$this->loadView('email/invite_admin');
+			include "themes/{$this->config->theme}/emails/invite_admin.php";
 			
 			if ($this->config->send_emails == TRUE) {
 				// Email user

@@ -262,7 +262,7 @@ class UsersController extends Application {
 		$user['user'] = $user;
 		$user['items'] = $user->items($user->id);
 		$this->json = $user;
-		$this->loadView('pages/json');
+		$this->loadView('pages/json', 'none');
 		
 	}
 	
@@ -407,7 +407,7 @@ class UsersController extends Application {
 				$headers = "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
             	
 				// Load subject and body from template
-				$this->loadView('email/signup');
+				include "themes/{$this->config->theme}/emails/signup.php";
             	
 				// Email user
 				mail($to, $subject, $body, $headers);
@@ -611,7 +611,7 @@ class UsersController extends Application {
 				$headers = "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 				
 				// Load subject and body from template
-				$this->loadView('email/signup');
+				include "themes/{$this->config->theme}/emails/signup.php";
 				
 				// Email user
 				mail($to, $subject, $body, $headers);

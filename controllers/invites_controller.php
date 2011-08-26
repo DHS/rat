@@ -34,7 +34,7 @@ class InvitesController extends Application {
 		}
 		
 		$this->title = 'Invites';
-		$this->loadLayout('invites/index');
+		$this->loadView('invites/index');
 		
 	}
 	
@@ -98,7 +98,7 @@ class InvitesController extends Application {
 			$headers = "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 			
 			// Load subject and body from template
-			$this->loadView('emails/invite_friend');
+			include "themes/{$this->config->theme}/emails/invite_friend.php";
 			
 			if ($this->config->send_emails == TRUE) {
 				// Email user

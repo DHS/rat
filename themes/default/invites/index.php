@@ -4,7 +4,7 @@
 
 <?php if (isset($this->invites_remaining) && $this->invites_remaining >= 1) { ?>
 	
-	<?php $this->loadView('invites/add'); ?>
+	<?php $this->loadPartial('invite'); ?>
 	
 <?php } ?>
 
