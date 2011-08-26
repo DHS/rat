@@ -56,7 +56,7 @@ if (isset($this->title)) {
 
 <body>
 
-  <div id="container">
+  <div id="container" class="container">
 
 <?php if (isset($_SESSION['user'])) { ?>
 
@@ -133,3 +133,4 @@ if (isset($this->message)) {
 ?>
 
     <div id="main" role="main">
+

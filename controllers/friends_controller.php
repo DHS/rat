@@ -2,12 +2,6 @@
 
 class FriendsController extends Application {
 	
-	function index() {
-		
-		// Not needed?
-		
-	}
-	
 	function add($friend_id) {
 		
 		$friendship_id = Friend::add($_SESSION['user']['id'], $friend_id);

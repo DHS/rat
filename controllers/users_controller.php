@@ -17,13 +17,6 @@ class UsersController extends Application {
 		
 	}
 	
-	// Show a list of users / not used
-	function index() {
-		
-		// Not needed?
-		
-	}
-	
 	// Add a user / signup
 	function add($code) {
 		

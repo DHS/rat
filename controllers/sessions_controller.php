@@ -2,12 +2,6 @@
 
 class SessionsController extends Application {
 	
-	function index() {
-		
-		// Not needed?
-		
-	}
-	
 	function add() {
 		
 		if ($_POST['email'] && $_POST['password']) {
