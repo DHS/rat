@@ -260,7 +260,7 @@ class UsersController extends Application {
 		$user = User::get_by_username($username);
 		
 		$user['user'] = $user;
-		$user['items'] = $user->items($user->id);
+		$user['items'] = $user->items();
 		$this->json = $user;
 		$this->loadView('pages/json', 'none');
 		

@@ -23,7 +23,7 @@ class InvitesController extends Application {
 		$user = User::get_by_id($_SESSION['user']['id']);
 		
 		$this->invites_remaining = $_SESSION['user']['invites'];
-		$this->invites = $user->invites($_SESSION['user']['id']);
+		$this->invites = $user->invites();
 		
 		if (isset($this->invites_remaining) && $this->invites_remaining == 1) {
 			$this->message .= 'You have one invite remaining.<br />';

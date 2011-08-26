@@ -99,7 +99,7 @@ class Item {
 		$friends_string = "user_id = $user_id";
 		
 		$user = User::get_by_id($user_id);
-		$friends = $user->friends($user_id);
+		$friends = $user->friends();
 		
 		// Loop through friends adding them to the query string
 		foreach ($friends as $friend) {
