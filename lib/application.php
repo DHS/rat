@@ -111,8 +111,8 @@ class Application {
 		
 	}
 	
-	public function link_to($link_text, $controller, $action = "", $id = "") {
-		
+	public function url_for($controller, $action = "", $id = "") {
+	
 		$url = BASE_DIR . "/{$controller}";
 		
 		if (!empty($action)) {
@@ -122,21 +122,21 @@ class Application {
 		if (!empty($id)) {
 			$url .= "/$id";
 		}
+
+		return $url;
+
+	}
+
+	public function link_to($link_text, $controller, $action = "", $id = "") {
 		
-		if ($link_text == NULL) {
-			// No link text so just return url
+		return '<a href="'.$this->url_for($controller, $action, $id).'">'.$link_text.'</a>';
+					
+	}
+
+	public function redirect_to($controller, $action = "", $id = "") {
+	
+		header('Location: ' . $this->url_for($controller, $action, $id));
 			
-			$link = $url;
-			
-		} else {
-			// Link text set so return full link
-			
-			$link = '<a href="'.$url.'">'.$link_text.'</a>';
-			
-		}
-		
-		return $link;
-		
 	}
 
 	public function flash($category, $message) {
