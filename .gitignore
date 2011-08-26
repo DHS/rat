@@ -1,7 +1,4 @@
-# Using the .gitignore from http://github.com/paulirish/html5-boilerplate as starting point
-
 # Rat-specific
-
 config/server.php
 uploads/originals/*
 uploads/stream/*
