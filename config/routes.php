@@ -8,8 +8,8 @@ class Routes {
   // Complex routes
   public $complexRoutes = array(
 
-    array('/<username>', 'users', 'show', '<username>'),
-    array('/<username>/item/<id>', 'items', 'show', '<id>')
+    '/<username>' => array('controller' => 'users', 'action' => 'show', 'params' => '<username>'),
+    '/<username>/item/<id>' => array('controller' => 'items', 'action' => 'show', 'params' => '<id>')
 
   );
 
