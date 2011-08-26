@@ -143,12 +143,14 @@ class ItemsController extends Application {
 		
 		$item = Item::get_by_id($item_id);
 		
-		if ($_SESSION['user']['id'] == $item->user->id || $item != NULL) {
+		if ($_SESSION['user']['id'] == $item->user->id && $item != NULL) {
 			
 			// Delete item
-			Item::remove($item_id);
+			$item->remove();
+			
+			// Log item deletion
 			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($_SESSION['user']['id'], 'item', $item_id, 'remove');
+				$this->plugins->log->add($_SESSION['user']['id'], 'item', $item->id, 'remove');
 			}
 			
 			// Delete comments
@@ -170,11 +172,19 @@ class ItemsController extends Application {
 			
 			// Delete likes
 			if (is_array($item->comments)) {
-				foreach ($item->likes as $key => $value) {
-					$id = Like::remove($value->user_id, $item->id);
-					if (isset($this->plugins->log))
-						$this->plugins->log->add($_SESSION['user']['id'], 'like', $id, 'remove');
+				
+				foreach ($item->likes as $like) {
+					
+					// Remove like
+					$id = $like->remove();
+					
+					// Log like removal
+					if (isset($this->plugins->log)) {
+						$this->plugins->log->add($_SESSION['user']['id'], 'like', $like->id, 'remove');
+					}
+
 				}
+				
 			}
 			
 			// Set message

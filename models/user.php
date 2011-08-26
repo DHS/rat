@@ -110,6 +110,21 @@ class User {
 		
 	}
 	
+	// Remove a user. WTF?
+	public static function remove() {
+		
+		// Check item exists
+		$sql_check = "SELECT id FROM users WHERE id = $this->id";
+		$count_query = mysql_query($sql_check);
+		
+		if (mysql_num_rows($count_query) > 0) {
+			// If user exists, go ahead and delete
+			$sql_delete = "DELETE FROM user WHERE id = $this->id";
+			$query = mysql_query($sql_delete);
+		}
+		
+	}
+	
 	// Get a user's items, returns array of Item objects
 	public function items($limit = 10, $offset = 0) {
 		

@@ -50,7 +50,31 @@ class Like {
 		return $like;
 		
 	}
-
+	
+	// Get a single like, returns a Like object
+	public static function get_by_user_item($user_id, $item_id) {
+		
+		$user_id = sanitize_input($user_id);
+		$item_id = sanitize_input($item_id);
+        
+		$sql = "SELECT id FROM likes WHERE user_id = $user_id AND item_id = $item_id";
+		$query = mysql_query($sql);
+		$result = mysql_result($query, 0);
+		
+		if ($result == FALSE) {
+			
+			$like = NULL;
+			
+		} else {
+			
+			$like = Like::get_by_id($result);
+			
+		}
+        
+		return $like;
+		
+	}
+	
 	// Get all liked items, returns an array of Like objects
 	public static function list_all($limit = 10) {
 		
@@ -89,23 +113,16 @@ class Like {
 	}
 
 	// Unlike an item, returns like id
-	public static function remove($user_id, $item_id) {
-
-		$user_id = sanitize_input($user_id);
-		$item_id = sanitize_input($item_id);
-
-		$count_sql = "SELECT id FROM likes WHERE user_id = $user_id AND item_id = $item_id";
+	public function remove() {
+		
+		$count_sql = "SELECT id FROM likes WHERE id = $this->id";
 		$count_query = mysql_query($count_sql);
-
-		$id = mysql_result($count_query, 0);
-
+		
 		if (mysql_num_rows($count_query) > 0) {
-			$sql = "DELETE FROM likes WHERE user_id = $user_id AND item_id = $item_id";
+			$sql = "DELETE FROM likes WHERE id = $this->id";
 			$query = mysql_query($sql);
 		}
-
-		return $id;
-
+		
 	}
 
 }

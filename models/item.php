@@ -185,24 +185,18 @@ class Item {
 	}
 
 	// Remove an item, returns item id
-	public static function remove($item_id) {
-
-		$item_id = sanitize_input($item_id);
-
+	public function remove() {
+		
 		// Check item exists
-		$sql_check = "SELECT id FROM items WHERE id = $item_id";
+		$sql_check = "SELECT id FROM items WHERE id = $this->id";
 		$count_query = mysql_query($sql_check);
-		$id = mysql_result($count_query, 0);
-
-
+		
 		if (mysql_num_rows($count_query) > 0) {
 			// If item exists, go ahead and delete
-			$sql_delete = "DELETE FROM items WHERE id = $item_id";
+			$sql_delete = "DELETE FROM items WHERE id = $this->id";
 			$query = mysql_query($sql_delete);
 		}
-
-		return $id;
-
+		
 	}
 
 }

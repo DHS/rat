@@ -16,12 +16,14 @@ class LikesController extends Application {
 	
 	function remove($item_id) {
 		
-		$like_id = Like::remove($_SESSION['user']['id'], $item_id);
-
+		$like = Like::get_by_user_item($_SESSION['user']['id'], $item_id);
+		
+		$like->remove();
+		
 		if (isset($this->plugins->log)) {
-			$this->plugins->log->add($_SESSION['user']['id'], 'like', $like_id, 'remove');
+			$this->plugins->log->add($_SESSION['user']['id'], 'like', $this->id, 'remove');
 		}
-
+		
 		$this->show($item_id);
 		
 	}
