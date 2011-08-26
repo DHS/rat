@@ -56,10 +56,10 @@ class AdminController extends Application {
 			
 			$user = User::get_by_email($_POST['email']);
 			
+			// Update session
 			foreach ($user as $key => $value) {
-				$user_array[$key] = $value;
+				$_SESSION['user'][$key] = $value;
 			}
-			$_SESSION['user'] = $user_array;
 			
 			// Log login
 			if (isset($this->plugins->log)) {

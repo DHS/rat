@@ -138,9 +138,8 @@ class UsersController extends Application {
 					
 					// Start session
 					foreach ($user as $key => $value) {
-						$user_array[$key] = $value;
+						$_SESSION['user'][$key] = $value;
 					}
-					$_SESSION['user'] = $user_array;
 					
 					// Log login
 					if (isset($this->plugins->log)) {
@@ -414,9 +413,8 @@ class UsersController extends Application {
             
 			// Start session
 			foreach ($user as $key => $value) {
-				$user_array[$key] = $value;
+				$_SESSION['user'][$key] = $value;
 			}
-			$_SESSION['user'] = $user_array;
             
 			// Check invites are enabled
 			if ($this->config->invites['enabled'] == TRUE) {
@@ -618,9 +616,8 @@ class UsersController extends Application {
             
 			// Start session
 			foreach ($user as $key => $value) {
-				$user_array[$key] = $value;
+				$_SESSION['user'][$key] = $value;
 			}
-			$_SESSION['user'] = $user_array;
             
 			// Check invites are enabled and the code is valid
 			if ($this->config->invites['enabled'] == TRUE && Invite::check_code_valid($_POST['code'], $_POST['email']) == TRUE) {
