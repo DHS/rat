@@ -85,17 +85,13 @@ class Comment {
 	}
 	
 	// Remove a comment from an item, returns comment id
-	public static function remove($user_id, $comment_id) {
+	public function remove() {
 
-		$user_id = sanitize_input($user_id);
-		$comment_id = sanitize_input($comment_id);
-
-		$count_sql = "SELECT id FROM comments WHERE user_id = $user_id AND id = $comment_id";
+		$count_sql = "SELECT id FROM comments WHERE id = {$this->id}";
 		$count_query = mysql_query($count_sql);
-		$id = mysql_result($count_query, 0);
 
 		if (mysql_num_rows($count_query) > 0) {
-			$sql = "DELETE FROM comments WHERE user_id = $user_id AND id = $comment_id";
+			$sql = "DELETE FROM comments WHERE id = {$this->id}";
 			$query = mysql_query($sql);
 		}
 
