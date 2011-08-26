@@ -139,7 +139,7 @@ class Item {
 	// Get comments for an item, returns an array of Comment objects
 	public function comments() {
 		
-		$sql = "SELECT id, content, user_id, date FROM comments WHERE item_id = $item_id ORDER BY id ASC";
+		$sql = "SELECT id, content, user_id, date FROM comments WHERE item_id = $this->id ORDER BY id ASC";
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
@@ -161,11 +161,9 @@ class Item {
 	}
 
 	// Get likes for an item, returns an array of Like objects
-	public function likes($item_id) {
-
-		$item_id = sanitize_input($item_id);
-
-		$sql = "SELECT id, user_id, date FROM likes WHERE item_id = $item_id";
+	public function likes() {
+		
+		$sql = "SELECT id, user_id, date FROM likes WHERE item_id = $this->id";
 		$query = mysql_query($sql);
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {

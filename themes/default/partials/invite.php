@@ -1,4 +1,3 @@
-
 <form action="<?php echo $this->link_to(NULL, 'invites', 'add'); ?>" method="post">
   <fieldset>
     <legend>Send an invite</legend>

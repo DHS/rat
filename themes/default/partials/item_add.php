@@ -1,4 +1,3 @@
-
 <?php if (!empty($_SESSION['user'])) { ?>
 
       <form action="<?php echo $this->link_to(NULL, 'items', 'add'); ?>" method="post" enctype="multipart/form-data">
