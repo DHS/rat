@@ -175,9 +175,8 @@ class UsersController extends Application {
 				} else {
 					// Show error message
 					
-					$this->message = $error;
-
 					if (User::check_password_reset_code($code) != FALSE) {
+						$this->message = $error;
 						$this->loadView('users/reset');
 					} else {
 						$this->loadView();
@@ -241,8 +240,7 @@ class UsersController extends Application {
 		} else {
 			
 			$this->title = 'Page not found';
-			$this->loadView('partials/header');
-			$this->loadView('partials/footer');
+			$this->loadView();
 			exit;
 			
 		}

@@ -54,12 +54,12 @@ class SessionsController extends Application {
 		if (empty($_SESSION['user'])) {
 
 			$this->title = 'Login';
-			$this->loadLayout('sessions/add');
+			$this->loadView('sessions/add');
 
 		} else {
 			$this->message = 'You are already logged in!<br />';
 			$this->message .= $this->link_to('Click here', 'sessions', 'remove').' to logout.';
-			$this->loadLayout();
+			$this->loadView();
 		}
 		
 	}
@@ -95,7 +95,7 @@ class SessionsController extends Application {
 		}
 		
 		$this->message = 'Nothing to see here';
-		$this->loadLayout();
+		$this->loadView();
 		
 	}
 	
