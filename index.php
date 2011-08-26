@@ -3,6 +3,11 @@
 // Start session
 session_start();
 
+$exceptions = glob('/lib/exceptions/*.php' );
+foreach ($exceptions as $exception) {
+	require($exception);
+}
+
 // Prepare config classes, ready to be loaded inside application class
 require_once 'config/server.php';
 require_once 'config/application.php';

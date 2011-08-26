@@ -71,20 +71,28 @@ class Application {
 	}
 	
 	private function route() {
+
+		try {
+
+			if (method_exists($this, $this->uri['action'])) {
+				$this->{$this->uri['action']}($this->uri['id']);
+			} elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
+				$this->index($this->uri['id']);
+			} else {
+				// Load 404
+				$uri = array(	'controller'	=> 'pages',
+								'action'		=> 'show',
+								'id'			=> '404'
+							);
+				$this->initialise($uri, $this->config);
+			}
 		
-		if (method_exists($this, $this->uri['action'])) {
-			$this->{$this->uri['action']}($this->uri['id']);
-		} elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
-			$this->index($this->uri['id']);
-		} else {
-			// Load 404
-			$uri = array(	'controller'	=> 'pages',
-							'action'		=> 'show',
-							'id'			=> '404'
-						);
-			$this->initialise($uri, $this->config);
+		} catch (Exception $e) {
+		
+			$this->flash('error', $e->getMessage());
+			header('Location: ' . $_SERVER['HTTP_REFERER']);
+
 		}
-		
 	}
 	
 	protected function loadView($view, $layout = NULL) {
