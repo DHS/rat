@@ -1,7 +1,4 @@
-
-function like_add(item_id, url) {
-	
-	var new_url = '/likes/remove/'+item_id;
+function ajax_call(method, url, params, response_destination, encode_header, callback) {
 	
 	if (window.XMLHttpRequest) {
 		// IE7+, Firefox, Chrome, Opera, Safari
@@ -10,173 +7,93 @@ function like_add(item_id, url) {
 		// IE6, IE5
 		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-
+	
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			if (xmlhttp.responseText != '') {
-				
-				if (like_link = document.getElementById('like_link_'+item_id)) {
-					like_link.innerHTML = '<a href="#" onclick="like_remove('+item_id+', \''+new_url+'\'); return false;">Unlike</a>';
+				if (response_destination) {
+					response_destination.innerHTML = xmlhttp.responseText;
 				}
-				
-				if (likes = document.getElementById('likes_'+item_id)) {
-					likes.innerHTML = xmlhttp.responseText;
-				}
-				
 			}
+			callback();
 		}
 	}
 
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
+	xmlhttp.open(method, url, true);
+	
+	if (encode_header == true) {
+		xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+	}
+	
+	xmlhttp.send(params);
 	
 }
 
-function like_remove(item_id, url) {
+function like_add(item_id, word_add, word_remove) {
 	
-	var new_url = '/likes/add/'+item_id;
-
-	if (window.XMLHttpRequest) {
-		// IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp = new XMLHttpRequest();
-	} else {
-		// IE6, IE5
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			if (xmlhttp.responseText != '') {
-				
-				if (like_link = document.getElementById('like_link_'+item_id)) {
-					like_link.innerHTML = '<a href="#" onclick="like_add('+item_id+', \''+new_url+'\'); return false;">Like</a>';
-				}
-				
-				if (likes = document.getElementById('likes_'+item_id)) {
-					likes.innerHTML = xmlhttp.responseText;
-				}
-
-			}
+	var url = '/likes/add/' + item_id;
+	var response_destination = document.getElementById('likes_' + item_id);
+	
+	ajax_call('POST', url, null, response_destination, null, function(){
+		if (update_element = document.getElementById('like_link_' + item_id)) {
+			update_element.innerHTML = '<a href="#" onclick="like_remove(' + item_id + ', \'' + word_add + '\', \'' + word_remove + '\'); return false;">' + word_remove + '</a>';
 		}
-	}
-
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
+	});
 	
 }
 
-function comment_add(item_id, url) {
+function like_remove(item_id, word_add, word_remove) {
 	
-	var content = 'item_id=' + item_id + '&content=' + document.forms('comment_form_'+item_id).content.value;
+	var url = '/likes/remove/' + item_id;
+	var response_destination = document.getElementById('likes_' + item_id);
 	
-	if (window.XMLHttpRequest) {
-		// IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp = new XMLHttpRequest();
-	} else {
-		// IE6, IE5
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			if (xmlhttp.responseText != '') {
-				
-				if (comments = document.getElementById('comments_'+item_id)) {
-					comments.innerHTML = xmlhttp.responseText;
-				}
-				
-				if (comment_form = document.forms('comment_form_'+item_id)) {
-					comment_form.content.value = '';
-				}
-				
-			}
+	ajax_call('POST', url, null, response_destination, null, function(){
+		if (update_element = document.getElementById('like_link_' + item_id)) {
+			update_element.innerHTML = '<a href="#" onclick="like_add(' + item_id+ ', \'' + word_add + '\', \'' + word_remove + '\'); return false;">' + word_add + '</a>';
 		}
-	}
-	
-	xmlhttp.open("POST", url, true);
-	xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-	xmlhttp.send(content);
+	});
 	
 }
 
-function comment_remove(item_id, url) {
+function comment_add(item_id) {
 	
-	if (window.XMLHttpRequest) {
-		// IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp = new XMLHttpRequest();
-	} else {
-		// IE6, IE5
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			if (xmlhttp.responseText != '') {
-				
-				if (comments = document.getElementById('comments_'+item_id)) {
-					comments.innerHTML = xmlhttp.responseText;
-				}
-				
-			}
+	var content = document.forms['comment_form_' + item_id].content;
+	
+	var url = '/comments/add/' + item_id;
+	var params = 'item_id=' + item_id + '&content=' + content.value;
+	var response_destination = document.getElementById('comments_' + item_id);
+	
+	ajax_call('POST', url, params, response_destination, true, function(){
+		if (update_element = content) {
+			update_element.value = '';
 		}
-	}
-
-	xmlhttp.open("POST", url, true);
-	xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-	xmlhttp.send();
+	});
 	
 }
 
-function friend_add(user_id, friend_user_id) {
-
-	if (window.XMLHttpRequest) {
-		// IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp = new XMLHttpRequest();
-	} else {
-		// IE6, IE5
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			if (xmlhttp.responseText != '') {
-				
-				if (friends_button = document.getElementById('friends_'+friend_user_id)) {
-					friends_button.innerHTML = xmlhttp.responseText;
-				}
-				
-			}
-		}
-	}
-
-	xmlhttp.open("GET", '/friends/add/'+friend_user_id, true);
-	xmlhttp.send();
+function comment_remove(comment_id, item_id) {
+	
+	var url = '/comments/remove/' + comment_id;
+	var response_destination = document.getElementById('comments_' + item_id);
+	
+	ajax_call('POST', url, null, response_destination, null, null);
 	
 }
 
-function friend_remove(user_id, friend_user_id) {
-		
-	if (window.XMLHttpRequest) {
-		// IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp = new XMLHttpRequest();
-	} else {
-		// IE6, IE5
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	}
+function friend_add(friend_user_id) {
+	
+	var url = '/friends/add/' + friend_user_id;
+	var response_destination = document.getElementById('friends_' + friend_user_id);
+	
+	ajax_call('POST', url, null, response_destination, null, null);
+	
+}
 
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			if (xmlhttp.responseText != '') {
-				
-				if (friends_button = document.getElementById('friends_'+friend_user_id)) {
-					friends_button.innerHTML = xmlhttp.responseText;
-				}
-				
-			}
-		}
-	}
-
-	xmlhttp.open("GET", '/friends/remove/'+friend_user_id, true);
-	xmlhttp.send();
+function friend_remove(friend_user_id) {
+	
+	var url = '/friends/remove/' + friend_user_id;
+	var response_destination = document.getElementById('friends_' + friend_user_id);
+	
+	ajax_call('POST', url, null, response_destination, null, null);
 	
 }

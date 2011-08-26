@@ -143,7 +143,7 @@ class ItemsController extends Application {
 		
 		$item = Item::get_by_id($item_id);
 		
-		if ($_SESSION['user']['id'] == $item->user->id && $item != NULL) {
+		if ($_SESSION['user']['id'] == $item->user->id || $item != NULL) {
 			
 			// Delete item
 			Item::remove($item_id);
