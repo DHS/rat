@@ -4,7 +4,9 @@
   
   <?php if (empty($_SESSION['user'])) { ?>
 
-    <a href="<?php $this->link_to(NULL, 'sessions', 'add'); ?>/?redirect_to=/<?php echo $this->link_to(NULL, 'users', 'show', $this->user->id); ?>" class="btn"><?php if ($this->config->friends['asymmetric'] == TRUE) { echo 'Follow'; } else { echo 'Add friend'; } ?></a>
+    <a href="<?php $this->link_to(NULL, 'sessions', 'add'); ?>/?redirect_to=/<?php echo $this->link_to(NULL, 'users', 'show', $this->user->id); ?>" class="btn">
+    <?php if ($this->config->friends['asymmetric'] == TRUE) { echo 'Follow'; } else { echo 'Add friend'; } ?>
+    </a>
 
   <?php } else { ?>
   
