@@ -14,7 +14,7 @@ class SearchController extends Application {
 	
 	function add() {
 		
-		$this->loadLayout('search/add');
+		$this->loadView('search/add');
 		
 	}
 	
@@ -30,10 +30,7 @@ class SearchController extends Application {
 			$this->plugins->log->add($_SESSION['user']['id'], 'search', NULL, 'new', "Term = $q\nResult_count = $result_count");
 		}
 		
-		$this->loadView('partials/header');
-		$this->loadView('search/add');
-		$this->loadView('items/index');
-		$this->loadView('partials/footer');
+		$this->loadView('search/index');
 		
 	}
 	
