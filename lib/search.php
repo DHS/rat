@@ -60,9 +60,9 @@ class Search {
 			
 			$item = Item::get_by_id($result['id']);
 			
-			$item->comments = $item->comments($result['id']);
-			$item->likes = $item->likes($result['id']);
-			$item->user = User::get_by_id($result['user_id']);
+			$item->comments = $item->comments();
+			$item->likes = $item->likes();
+			$item->user = $item->user();
 
 			$item->score = 0;
 			foreach($terms_rx as $term_rx){

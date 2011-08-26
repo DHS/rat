@@ -137,9 +137,9 @@ class User {
 				$item->$k = $v;
 			}
 
-			$item->user = User::get_by_id($result['user_id']);
-			$item->comments = $item->comments($result['id']);
-			$item->likes = $item->likes($result['id']);
+			$item->user = $item->user();
+			$item->comments = $item->comments();
+			$item->likes = $item->likes();
 
 			$items[] = $item;
 
@@ -236,14 +236,10 @@ class User {
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			// Instantiate new object? Or will this suffice:
-			
-			$item = new Item;
-			
 			$item = Item::get_by_id($result['item_id']);
-			$item->user = User::get_by_id($item->user_id);
-			$item->comments = $item->comments($result['item_id']);
-			$item->likes = $item->likes($result['item_id']);
+			$item->user = $item->user();
+			$item->comments = $item->comments();
+			$item->likes = $item->likes();
 			
 			$items[] = $item;
 			

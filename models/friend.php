@@ -23,14 +23,13 @@ class Friend {
 	}
 	
 	// Update a friendship status
-	public static function update($id, $status) {
-
-		$id = sanitize_input($id);
+	public function update($status) {
+		
 		$status = sanitize_input($status);
-
-		$sql = "UPDATE items SET status = $status WHERE id = $id";
+		
+		$sql = "UPDATE friends SET status = $status WHERE id = {$this->id}";
 		$query = mysql_query($sql);
-
+		
 	}
 
 	// Unfriend! Returns friendship id

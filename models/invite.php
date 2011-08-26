@@ -45,20 +45,18 @@ class Invite {
 	}
 	
 	// Update an invite	
-	public static function update($id) {
-
-		$id = sanitize_input($id);
-
-		$sql_get = "SELECT result FROM invites WHERE id = $id";
+	public function update() {
+		
+		$sql_get = "SELECT result FROM invites WHERE id = $this->id";
 		$query_get = mysql_query($sql_get);
 		$old_result = mysql_result($query_get, 0);
-
+		
 		$new_result = $old_result + 1;
-
+		
 		// Update database
-		$sql_update = "UPDATE invites SET result = $new_result WHERE id = $id";
+		$sql_update = "UPDATE invites SET result = $new_result WHERE id = $this->id";
 		$query_update = mysql_query($sql_update);
-
+		
 	}
 	
 	// Checks to see if a user is already invited, returns TRUE or FALSE

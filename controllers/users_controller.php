@@ -435,7 +435,7 @@ class UsersController extends Application {
 					foreach ($invites as $invite) {
 						
 						// Update invites
-						Invite::update($invite->id);
+						$invite->update();
 						
 						// Log invite update
 						if (isset($this->plugins->log)) {
@@ -639,7 +639,7 @@ class UsersController extends Application {
 					foreach ($invites as $invite) {
 						
 						// Update invites
-						Invite::update($invite->id);
+						$invite->update();
 						
 						// Log invite update
 						if (isset($this->plugins->log)) {
