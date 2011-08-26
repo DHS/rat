@@ -70,7 +70,7 @@ if (isset($this->title)) {
           <ul class="nav secondary-nav">
             <li>
               <form class="nav secondary-nav" action="/search/" method="get">
-                <input type="text" name="q" placeholder="Search" />
+                <input type="text" name="q" placeholder="Search" value="<?php if ($_GET['q']) { echo $_GET['q']; } ?>" />
               </form>
             </li>
             <li class="menu">

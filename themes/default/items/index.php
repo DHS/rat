@@ -17,11 +17,9 @@ $this->loadPartial('pagination');
   </div>
   <div class="span4 columns">
 
-    <?php $this->loadPartial('items_add'); ?>
+    <?php $this->loadPartial('item_add'); ?>
 
   </div>
 </div>
 
-<?php
-} // end if is_array
-?>
+<?php } ?>
