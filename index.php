@@ -11,6 +11,6 @@ foreach ($exceptions as $exception) {
 
 require_once 'lib/application.php';
 
-Application::initialise($uri, $config);
+Application::initialise();
 
 ?>
