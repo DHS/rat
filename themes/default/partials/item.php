@@ -2,7 +2,7 @@
 
 // Populate some vars
 if (isset($this->plugins->gravatar)) {
-	$image = $this->plugins->gravatar->show($this->item->user->email, array('size' => 48, 'style' => 'float: left; padding: 0px 10px 10px 0px;'));
+	$image = $this->plugins->gravatar->show($this->item->user->email, array('size' => 48, 'style' => 'float: left; padding: 0px 10px 5px 0px;'));
 	$gravatar = $this->link_to($image, 'users', 'show', $this->item->user->id).' ';
 } else {
 	$gravatar = $this->link_to($like->user->username, 'users', 'show', $this->item->user->id).' ';
