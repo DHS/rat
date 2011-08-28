@@ -23,7 +23,8 @@ class Application {
 			if (class_exists($controller)) {
 				$app = new $controller;
 			} else {
-				throw new RoutingException($uri, "Page not found");
+				Application::checkAliases();
+				//throw new RoutingException($uri, "Page not found");
 			}
 		
 			$app->loadConfig($config);
@@ -115,16 +116,13 @@ class Application {
 	
 	private function loadModels() {
 		
-    require_once 'lib/mysql.php';
+		require_once 'lib/mysql.php';
 		
-		$handle = opendir('models');	
-		while (false != ($file = readdir($handle))) {
-			$model = substr($file, 0, -4);
-			if ($file[0] != '.') {
-				require_once "models/$model.php";
-			}
+		$models = glob('models/*.php' );
+		foreach ($models as $model) {
+			require_once $model;
 		}
-		
+				
 	}
 	
 	private function loadPlugins() {
@@ -137,6 +135,21 @@ class Application {
 		}
 		
 	}
+
+	private static function checkAliases() {
+		
+		require_once 'config/routes.php';
+
+		$routes = new Routes;
+
+		foreach ($routes->aliases as $k => $v) {
+
+			var_dump(preg_match($k, substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10))));
+
+		
+		}
+	
+	}
 	
 	private function route() {
 
@@ -145,12 +158,6 @@ class Application {
 			} elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
 				$this->index($this->uri['id']);
 			} else {
-				// Load 404
-				//$uri = array(	'controller'	=> 'pages',
-				//				'action'		=> 'show',
-				//				'id'			=> '404'
-				//			);
-				//$this->initialise($uri, $this->config);
 				throw new RoutingException($uri, "Page not found");
 			}
 

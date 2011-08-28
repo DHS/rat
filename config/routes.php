@@ -2,17 +2,15 @@
 
 class Routes {
 
-  // Simple alias
-  public $signup = array('users', 'new');
+	// Simple alias
+	public $aliases = array(
+	
+		'/signup' =>array('controller' => 'users', 'action' => 'new'),
+		'/*' => array('controller' => 'users', 'action' => 'show', 'params' => '$1'),
+		'/*/item/*' => array('controller' => 'items', 'action' => 'show', 'params' => '$2')
 
-  // Complex routes
-  public $complexRoutes = array(
 
-    '/<username>' => array('controller' => 'users', 'action' => 'show', 'params' => '<username>'),
-    '/<username>/item/<id>' => array('controller' => 'items', 'action' => 'show', 'params' => '<id>')
-
-  );
-
+	);
 }
 
 ?>
