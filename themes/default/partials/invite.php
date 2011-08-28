@@ -1,4 +1,4 @@
-<form action="<?php echo $this->link_to(NULL, 'invites', 'add'); ?>" method="post">
+<form action="<?php echo $this->url_for('invites', 'add'); ?>" method="post">
   <fieldset>
     <legend>Send an invite</legend>
     <label for="email">Email</label>

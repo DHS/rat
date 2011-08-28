@@ -1,6 +1,6 @@
 <?php if (!empty($_SESSION['user'])) { ?>
 
-      <form action="<?php echo $this->link_to(NULL, 'items', 'add'); ?>" method="post" enctype="multipart/form-data">
+      <form action="<?php echo $this->url_for('items', 'add'); ?>" method="post" enctype="multipart/form-data">
         <fieldset>
           <legend>New <?php echo $this->config->items['name']; ?></legend>
 <?php if ($this->config->items['titles']['enabled'] == TRUE) { ?>

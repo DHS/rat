@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="<?php echo $this->link_to(NULL, 'users', 'reset', $this->code); ?>" method="post">
+    <form action="<?php echo $this->url_for('users', 'reset', $this->code); ?>" method="post">
       <fieldset>
         <legend>Set new password</legend>
         <div class="clearfix">
@@ -30,7 +30,7 @@
 
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="<?php echo $this->link_to(NULL, 'users', 'reset'); ?>" method="post">
+    <form action="<?php echo $this->url_for('users', 'reset'); ?>" method="post">
       <fieldset>
         <legend>Reset password</legend>
         <div class="clearfix">

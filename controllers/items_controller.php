@@ -105,7 +105,7 @@ class ItemsController extends Application {
 				
 				$this->message = ucfirst($this->config->items['name']).' added!';
 				
-				$page = $this->link_to(NULL, 'users', 'show', $_SESSION['user']['id']);
+				$page = $this->url_for('users', 'show', $_SESSION['user']['id']);
 				
 				// Go forth!
 				if (SITE_IDENTIFIER == 'live') {

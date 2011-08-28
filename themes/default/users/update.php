@@ -9,7 +9,7 @@
 
 <?php if ($this->page == 'password') { ?>
 	
-	<form action="<?php echo $this->link_to(NULL, 'users', 'update', 'password'); ?>" method="post">
+	<form action="<?php echo $this->url_for('users', 'update', 'password'); ?>" method="post">
       <fieldset>
         <legend>Change password</legend>
         <div class="clearfix">
@@ -38,7 +38,7 @@
 
 <?php } elseif ($this->page == 'profile') { ?>
 
-    <form action="<?php echo $this->link_to(NULL, 'users', 'update', 'profile'); ?>" method="post">
+    <form action="<?php echo $this->url_for('users', 'update', 'profile'); ?>" method="post">
       <fieldset>
         <legend>Update profile</legend>
         <div class="clearfix">

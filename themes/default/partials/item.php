@@ -58,7 +58,7 @@ if (is_array($this->item->likes)) {
 	}
     
 	if ($this->item->user->id == $_SESSION['user']['id']) {
-		echo ' &middot; <a onclick="return confirm(\'Are you sure you want to delete this?\')" href="'.$this->link_to(NULL, 'items', 'remove', $this->item->id).'">Delete</a>';
+		echo ' &middot; <a onclick="return confirm(\'Are you sure you want to delete this?\')" href="'.$this->url_for('items', 'remove', $this->item->id).'">Delete</a>';
 	}
 ?>
 	</p>

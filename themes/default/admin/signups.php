@@ -22,7 +22,7 @@ foreach ($this->users as $user) {
 	}
 
 	echo '<tr><td>'.$user['email'].'</td><td>
-	<form action="'.$this->link_to(NULL, 'admin', 'invite').'" method="post">
+	<form action="'.$this->url_for('admin', 'invite').'" method="post">
 	<input type="hidden" name="email" value="'.$user['email'].'">
 	'.$days_waiting.' &middot; '.$invite_summary.' <input type="submit" value="Invite" class="btn" />
 	</form>

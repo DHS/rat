@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="<?php echo $this->link_to(NULL, 'admin', 'setup'); ?>" method="post">
+    <form action="<?php echo $this->url_for('admin', 'setup'); ?>" method="post">
       <fieldset>
         <div class="clearfix">
           <label for="email">Email</label>

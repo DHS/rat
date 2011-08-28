@@ -210,7 +210,7 @@ class UsersController extends Application {
 					$code = $user->generate_password_reset_code();
 					
 					$to = $_POST['email'];
-					$link = substr($this->config->url, 0, -1).$this->link_to(NULL, 'users', 'reset', $code);
+					$link = substr($this->config->url, 0, -1).$this->url_for('users', 'reset', $code);
 					$headers = "From: {$this->config->name} <robot@blah.com>\r\nContent-type: text/html\r\n";
 					
 					// Load subject and body from template

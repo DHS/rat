@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="<?php echo $this->link_to(NULL, 'users', 'add', $this->code); if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
+    <form action="<?php echo $this->url_for('users', 'add', $this->code); if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
       <fieldset>
         <?php if (isset($this->code)) { echo '<input type="hidden" name="code" value="'.$this->code.'" />'; } ?>
         <div class="clearfix">
@@ -35,7 +35,7 @@
         </div>
       </fieldset>
     </form>
-    <p class="small">Already got a <?php echo $this->config->name ?> account? <a href="<?php echo $this->link_to(NULL, 'sessions', 'add'); if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>">Login</a> now!</p>
+    <p class="small">Already got a <?php echo $this->config->name ?> account? <a href="<?php echo $this->url_for('sessions', 'add'); if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>">Login</a> now!</p>
   </div>
 </div>
 
@@ -44,7 +44,7 @@
 <div class="row">
   <div class="span8 columns offset4">
     <p>Enter your email address here and we'll let you in soon:</p>
-    <form action="<?php echo $this->link_to(NULL, 'users', 'add'); if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
+    <form action="<?php echo $this->url_for('users', 'add'); if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
       <fieldset>
         <?php if (isset($_GET['code'])) { echo '<input type="hidden" name="code" value="'.$_GET['code'].'" />'; } ?>
         <?php if (isset($_GET['email'])) { echo '<input type="hidden" name="email" value="'.$_GET['email'].'" />'; } ?>
