@@ -2,10 +2,13 @@
 
 // Create database connection
 
-$connection = mysql_pconnect($this->config->database[SITE_IDENTIFIER]['host'], $this->config->database[SITE_IDENTIFIER]['username'], $this->config->database[SITE_IDENTIFIER]['password'])
-	or die ("Couldn't connect to server.");
-$db = mysql_select_db($this->config->database[SITE_IDENTIFIER]['database'], $connection)
-	or die("Couldn't select database.");
+$connection = mysql_pconnect($this->config->database[SITE_IDENTIFIER]['host'], $this->config->database[SITE_IDENTIFIER]['username'], $this->config->database[SITE_IDENTIFIER]['password']);
+
+if ($connection == false) { throw new ApplicationException("Couldn't connect to server."); }
+
+$db = mysql_select_db($this->config->database[SITE_IDENTIFIER]['database'], $connection);
+
+if ($db == false) { throw new ApplicationException("Couldn't select database."); }
 
 
 // SQL injection protection function

@@ -6,10 +6,10 @@ class Application {
 	
 	private function __construct() {}
 	
-	public static function initialise($uri, $config) {
-		
-		try {
+	public static function initialise() {
 
+		try {
+			
 			require_once 'config/server.php';
 			require_once 'config/application.php';
 
@@ -31,16 +31,32 @@ class Application {
 			$app->loadPlugins();
 		
 			$app->uri = $uri;
-		
+	
 			$app->route();
-		
+
 			unset($_SESSION['flash']);
 		
-		} catch (Exception $e) {
-		
+		} catch (ValidationException $e) {
+			
+			ob_end_clean();
 			Application::flash('error', $e->getMessage());
 			header('Location: ' . $_SERVER['HTTP_REFERER']);
 
+		} catch (RoutingException $e) {
+
+			ob_end_flush();
+			include 'static/404.html';
+
+		} catch (ApplicationException $e) {
+			
+			ob_end_flush();
+			include 'static/500.html';
+
+		} catch (Exception $e) {
+		
+			ob_end_flush();
+			include 'static/500.html';
+			
 		}
 
 	}
@@ -136,7 +152,7 @@ class Application {
 				//			);
 				//$this->initialise($uri, $this->config);
 				throw new RoutingException($uri, "Page not found");
-			}	
+			}
 
 	}
 	
