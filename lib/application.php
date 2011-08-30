@@ -141,14 +141,37 @@ class Application {
 		require_once 'config/routes.php';
 
 		$routes = new Routes;
+		
+		// Get request from server and remove BASE_DIR
+		$request = substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10));
 
 		foreach ($routes->aliases as $k => $v) {
 
-			var_dump(preg_match($k, substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10))));
+			// Swap asterisks for valid regex
+			$k = str_replace("*", "([a-zA-Z0-9]+)", $k);
 
+			// Match the request against current route
+			if (preg_match('|^'.$k.'$|', $request, $matches)) {
+				
+				// Assign components of $uri based on array in routes class
+				foreach ($v as $k => $v) {
+
+					// Convert $x to xth parameter
+					if (strstr($v, "$")) {
+						$i = substr($v, 1);
+						$v = $matches[$i];
+					}
+
+					$uri[$k] = $v;
+				}
+
+				break;
+			}	
 		
 		}
 	
+		return $uri;
+
 	}
 	
 	private function route() {
