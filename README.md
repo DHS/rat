@@ -82,7 +82,5 @@ Missing functionality
 - Signup using Facebook/Twitter
 - Option to post new item to Facebook/Twitter
 - Option in Settings to auto-post to Facebook/Twitter
-- Enhance friends functionality (friend requests with emails)
 - Find friends on Facebook/Twitter
-- Incorporate more defaults from [HTML5 Boilerplate](https://github.com/paulirish/html5-boilerplate)
 - OAuth API and developer section
