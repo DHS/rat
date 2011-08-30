@@ -4,22 +4,22 @@ class Invite {
 	
 	// Add an invite, returns invite id
 	public static function add($user_id, $email) {
-
+		
 		$user_id = sanitize_input($user_id);
 		$email = sanitize_input($email);
-
+		
 		$insert_sql = "INSERT INTO invites SET user_id = $user_id, email = $email";
 		$insert_query = mysql_query($insert_sql);
-
+		
 		$id = mysql_insert_id();
-
+		
 		$update_sql = "UPDATE invites SET code = '$id' WHERE id = $id";
 		$query = mysql_query($update_sql);
-
+		
 		return $id;
-
+		
 	}
-
+	
 	// Get all invites with a given code, returns an array of Invite objects
 	public static function list_by_code($code) {
 		
@@ -61,24 +61,24 @@ class Invite {
 	
 	// Checks to see if a user is already invited, returns TRUE or FALSE
 	public static function check_invited($user_id, $email) {
-
+		
 		$user_id = sanitize_input($user_id);
 		$email = sanitize_input($email);
-
+		
 		$sql = "SELECT COUNT(id) FROM invites WHERE user_id = $user_id AND email = $email";
 		$query = mysql_query($sql);
 		$user_count = mysql_result($query, 0);
-
+		
 		if ($user_count >= 1) {
-
+			
 			return TRUE;
-
+			
 		} else {
-
+			
 			return FALSE;
-
+			
 		}
-
+		
 	}
 	
 	// Validates an invite code, returns TRUE or FALSE

@@ -1,27 +1,27 @@
 <?php
 
 class Like {
-
+	
 	// Add a like for an item, returns id
 	public static function add($user_id, $item_id) {
 		
 		$user_id = sanitize_input($user_id);
 		$item_id = sanitize_input($item_id);
-
+		
 		$count_sql = "SELECT id FROM likes WHERE user_id = $user_id AND item_id = $item_id";
 		$count_query = mysql_query($count_sql);
-
+		
 		if (mysql_num_rows($count_query) < 1) {
 			$sql = "INSERT INTO likes SET user_id = $user_id, item_id = $item_id";
 			$query = mysql_query($sql);
 		}
-
+		
 		$id = mysql_insert_id();
-
+		
 		return $id;
-
+		
 	}
-
+	
 	// Get a single like, returns a Like object
 	public static function get_by_id($id) {
 		
@@ -30,13 +30,13 @@ class Like {
 		$sql = "SELECT * FROM likes WHERE id = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
-
-		if (!is_array($result)) {
-
-			$like = NULL;
-
-		} else {
 		
+		if (!is_array($result)) {
+			
+			$like = NULL;
+			
+		} else {
+			
 			$like = new Like;
 			
 			foreach ($result as $k => $v) {
@@ -79,16 +79,16 @@ class Like {
 	public static function list_all($limit = 10) {
 		
 		$sql = "SELECT * FROM likes ORDER BY date DESC";
-
+		
 		// Limit not null so create limit string
 		if ($limit != NULL) {
 			$sql .= " LIMIT $limit";
 			$limit = sanitize_input($limit);
 		}
-
+		
 		// Get likes
 		$query = mysql_query($sql);
-
+		
 		// Loop through likes
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
@@ -109,9 +109,9 @@ class Like {
 		}
 		
 		return $likes;
-
+		
 	}
-
+	
 	// Unlike an item, returns like id
 	public function remove() {
 		
