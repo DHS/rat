@@ -1,26 +1,26 @@
 <?php
 
 class User {
-
+	
 	// Add a user (beta signup)	
 	public static function add($email) {
-
+		
 		$email = sanitize_input($email);
-
+		
 		$sql = "INSERT INTO users SET email = $email, date_added = NOW()";
 		$query = mysql_query($sql);
-
+		
 		$id = mysql_insert_id();
-
+		
 		return $id;
-
+		
 	}
-
+	
 	// Fetch a user's info given a user_id
 	public static function get_by_id($id) {
-
+		
 		$id = sanitize_input($id);
-
+		
 		$sql = "SELECT * FROM users WHERE id = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
@@ -42,12 +42,12 @@ class User {
 		return $user;
 		
 	}
-
+	
 	// Fetch a user's info given an email
 	public static function get_by_username($username) {
-
+		
 		$username = sanitize_input($username);
-
+		
 		$sql = "SELECT * FROM users WHERE username = $username";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
@@ -67,14 +67,14 @@ class User {
 		}
 		
 		return $user;
-
+		
 	}
-
+	
 	// Fetch a user's info given an email
 	public static function get_by_email($email) {
-
+		
 		$email = sanitize_input($email);
-
+		
 		$sql = "SELECT * FROM users WHERE email = $email";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
@@ -145,31 +145,31 @@ class User {
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-
+			
 			$item = new Item;
-
+			
 			foreach($result as $k => $v) {
 				$item->$k = $v;
 			}
-
+			
 			$item->user = $item->user();
 			$item->comments = $item->comments();
 			$item->likes = $item->likes();
-
+			
 			$items[] = $item;
-
+			
 		}
-
+		
 		return $items;
-
+		
 	}
 	
 	// Get all invites sent by a user, returns an array of Invite objects
 	public function invites() {
-
+		
 		$sql = "SELECT id, email, result FROM invites WHERE user_id = $this->id ORDER BY id DESC";
 		$query = mysql_query($sql);
-
+		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
 			$invite = new Invite;
@@ -181,34 +181,34 @@ class User {
 			$invites[] = $invite;
 			
 		}
-
+		
 		return $invites;
-
+		
 	}
 	
 	// Get a users's friends, returns a list of User items
 	public function friends() {
-
-	  $sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $this->id";
+		
+		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $this->id";
 		$query = mysql_query($sql);
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
 			$friend = User::get_by_id($result['friend_user_id']);
-
+			
 			$friends[$result['id']] = $friend;
 			
 		}
-
+		
 		return $friends;
-
+		
 	}
 	
 	// Get a users's followers, returns a list of Friend items
 	public function followers() {
-
+		
 		$return = NULL;
-
+		
 		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE friend_user_id = $this->id";
 		$query = mysql_query($sql);
 		
@@ -221,7 +221,7 @@ class User {
 		}
 		
 		return $friends;
-
+		
 	}
 	
 	// Get items liked by a user, returns array of Item objects
@@ -295,7 +295,7 @@ class User {
 		$query = mysql_query($sql);
 		
 	}
-
+	
 	// Unfriend! Returns friendship id
 	public function friend_remove($friend_user_id) {
 		
@@ -337,144 +337,142 @@ class User {
 		$query = mysql_query($sql);
 		
 	}
-
+	
 	// Update profile info
 	public static function update_profile($name = NULL, $bio = NULL, $url = NULL) {
-
+		
 		$sql = "UPDATE users SET ";
-
+		
 		if ($name != '') {
 			$name = sanitize_input($name);
 		} else {
 			$name = 'NULL';
 		}
 		$sql .= "full_name = $name, ";	
-
-
+		
 		if ($bio != '') {
 			$bio = sanitize_input($bio);
 		} else {
 			$bio = 'NULL';
 		}
-
 		$sql .= "bio = $bio, ";
-
+		
 		if ($url != '') {
 			$url = sanitize_input($url);
 		} else {
 			$url = 'NULL';
 		}
 		$sql .= "url = $url";
-
+		
 		$sql .= " WHERE id = $this->id";
-
+		
 		$query = mysql_query($sql);
-
+		
 	}
-
+	
 	// Update a user's number of invites
 	public static function update_invites($invites) {
-
+		
 		$invites = sanitize_input($invites);
-
+		
 		// Get current # of invites
 		$sql_get = "SELECT invites FROM users WHERE id = $this->id";
 		$query = mysql_query($sql_get);
 		$old_invites = mysql_result($query, 0);
-
+		
 		// Calculate new # of invites
 		$new_invites = $old_invites + $invites;
-
+		
 		// Update database
 		$sql_update = "UPDATE users SET invites = $new_invites WHERE id = $this->id";
 		$query = mysql_query($sql_update);
-
+		
 		// update session
 		if ($_SESSION['user']['id'] == $this->id) {
 			$_SESSION['user']['invites'] = $new_invites;
 		}
-
+		
 	}
 	
 	// Check if a username is available
 	public static function check_username_available($username) {
-
+		
 		$username = sanitize_input($username);
-
+		
 		$query = mysql_query("SELECT COUNT(id) FROM users WHERE username = $username");
 		$count = mysql_result($query, 0);
-
+		
 		if ($count >= 1) {
-
+			
 			return FALSE;
-
+			
 		} else {
-
+			
 			return TRUE;
-
+			
 		}
-
+		
 	}
-
+	
 	// Check if a given email already exists in the system
 	public static function check_email_available($email) {
-
+		
 		$email = sanitize_input($email);
-
+		
 		$query = mysql_query("SELECT COUNT(id) FROM users WHERE email = $email AND date_joined IS NOT NULL");
 		$user_count = mysql_result($query, 0);
-
+		
 		if ($user_count >= 1) {
-
+			
 			return FALSE;
-
+			
 		} else {
-
+			
 			return TRUE;
-
+			
 		}
-
+		
 	}
-
+	
 	// Check if a string (usually username) contains spaces
 	public static function check_contains_spaces($string) {
-
+		
 		$array = explode(" ", $string);
-
+		
 		if (count($array) > 1) {
 			return TRUE;
 		} else {
 			return FALSE;
 		}
-
+		
 	}
 
 	// Check if a string (usually email) contains an @ symbol
 	public static function check_contains_at($string) {
-
+		
 		$array = explode("@", $string);
-
+		
 		if (count($array) > 1) {
 			return TRUE;
 		} else {
 			return FALSE;
 		}
-
+		
 	}
 
 	// Check if a string (usually username) only contains only alphanumeric characters
 	public static function check_alphanumeric($string) {
-
+		
 		if (ctype_alnum($string)) {
-
+			
 			return TRUE;
-
+			
 		} else {
-
+			
 			return FALSE;
-
+			
 		}
-
+		
 	}
 	
 	// Check if a password reset token is valid (ie. <24hrs old), returns user_id
@@ -487,13 +485,13 @@ class User {
 		$count = mysql_num_rows($query);
 		
 		if ($count >= 1) {
-        
+        	
 			return mysql_result($query, 0);
-        
+        	
 		} else {
-        
+        	
 			return FALSE;
-        
+        	
 		}
 		
 	}
