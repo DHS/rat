@@ -27,7 +27,7 @@ class Like {
 		
 		$id = sanitize_input($id);
         
-		$sql = "SELECT * FROM likes WHERE id = $id";
+		$sql = "SELECT id, user_id, item_id, date FROM likes WHERE id = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -68,9 +68,10 @@ class Like {
 		} else {
 			
 			$like = Like::get_by_id($result);
+			$like->user = User::get_by_id($user_id);
 			
 		}
-        
+		
 		return $like;
 		
 	}
@@ -78,7 +79,7 @@ class Like {
 	// Get all liked items, returns an array of Like objects
 	public static function list_all($limit = 10) {
 		
-		$sql = "SELECT * FROM likes ORDER BY date DESC";
+		$sql = "SELECT id FROM likes ORDER BY date DESC";
 		
 		// Limit not null so create limit string
 		if ($limit != NULL) {
@@ -89,22 +90,10 @@ class Like {
 		// Get likes
 		$query = mysql_query($sql);
 		
-		// Loop through likes
+		// Loop through likes, fetching objects
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$like = new Like;
-			
-			foreach($result as $k => $v) {
-				$like->$k = $v;
-			}
-			
-			// Get info about the liker
-			$like->user = User::get_by_id($like->user_id);
-			
-			// Get item info
-			$like->item = Item::get_by_id($like->user_id);
-			
-			$likes[] = $like;
+			$likes[] = Like::get_by_id($result['id']);
 			
 		}
 		

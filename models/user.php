@@ -21,7 +21,7 @@ class User {
 		
 		$id = sanitize_input($id);
 		
-		$sql = "SELECT * FROM users WHERE id = $id";
+		$sql = "SELECT id, username, email, full_name, bio, url, points, invites, password, date_added, date_joined FROM users WHERE id = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -48,7 +48,7 @@ class User {
 		
 		$username = sanitize_input($username);
 		
-		$sql = "SELECT * FROM users WHERE username = $username";
+		$sql = "SELECT id, username, email, full_name, bio, url, points, invites, password, date_added, date_joined FROM users WHERE username = $username";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -75,7 +75,7 @@ class User {
 		
 		$email = sanitize_input($email);
 		
-		$sql = "SELECT * FROM users WHERE email = $email";
+		$sql = "SELECT id, username, email, full_name, bio, url, points, invites, password, date_added, date_joined FROM users WHERE email = $email";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -126,9 +126,9 @@ class User {
 	}
 	
 	// Get a user's items, returns array of Item objects
-	public function items($limit = 10, $offset = 0) {
+	public function items($limit = 10) {
 		
-		$sql = "SELECT * FROM items WHERE user_id = $this->id ORDER BY id DESC";
+		$sql = "SELECT id FROM items WHERE user_id = $this->id ORDER BY id DESC";
 		
 		// Limit not null so create limit string
 		if ($limit != NULL) {
@@ -146,17 +146,7 @@ class User {
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$item = new Item;
-			
-			foreach($result as $k => $v) {
-				$item->$k = $v;
-			}
-			
-			$item->user = $item->user();
-			$item->comments = $item->comments();
-			$item->likes = $item->likes();
-			
-			$items[] = $item;
+			$items[] = Item::get_by_id($result['id']);
 			
 		}
 		
@@ -167,18 +157,12 @@ class User {
 	// Get all invites sent by a user, returns an array of Invite objects
 	public function invites() {
 		
-		$sql = "SELECT id, email, result FROM invites WHERE user_id = $this->id ORDER BY id DESC";
+		$sql = "SELECT id FROM invites WHERE user_id = $this->id ORDER BY id DESC";
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$invite = new Invite;
-			
-			foreach($result as $k => $v) {
-				$invite->$k = $v;
-			}
-			
-			$invites[] = $invite;
+			$invites[] = Invite::get_by_id($result['id']);
 			
 		}
 		
@@ -189,14 +173,12 @@ class User {
 	// Get a users's friends, returns a list of User items
 	public function friends() {
 		
-		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $this->id";
+		$sql = "SELECT id, friend_user_id FROM friends WHERE user_id = $this->id";
 		$query = mysql_query($sql);
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$friend = User::get_by_id($result['friend_user_id']);
-			
-			$friends[$result['id']] = $friend;
+			$friends[$result['id']] = User::get_by_id($result['friend_user_id']);
 			
 		}
 		
@@ -207,16 +189,12 @@ class User {
 	// Get a users's followers, returns a list of Friend items
 	public function followers() {
 		
-		$return = NULL;
-		
-		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE friend_user_id = $this->id";
+		$sql = "SELECT id, friend_user_id FROM friends WHERE friend_user_id = $this->id";
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$friend = User::get_by_id($result['user_id']);
-			
-			$friends[$result['id']] = $friend;
+			$friends[$result['id']] = User::get_by_id($result['user_id']);
 			
 		}
 		
@@ -227,7 +205,7 @@ class User {
 	// Get items liked by a user, returns array of Item objects
 	public function likes($limit = 10) {
 			
-		$sql = "SELECT item_id FROM likes WHERE user_id = $this->id AND status = 1 ORDER BY date DESC";
+		$sql = "SELECT item_id FROM likes WHERE user_id = $this->id ORDER BY date DESC";
 		
 		// Limit not null so create limit string
 		if ($limit != NULL) {
@@ -239,12 +217,7 @@ class User {
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$item = Item::get_by_id($result['item_id']);
-			$item->user = $item->user();
-			$item->comments = $item->comments();
-			$item->likes = $item->likes();
-			
-			$items[] = $item;
+			$items[] = Item::get_by_id($result['item_id']);
 			
 		}
 		
@@ -255,14 +228,12 @@ class User {
 	// Get comments made by a user, returns an array of Comment objects
 	public function comments() {
 		
-		$sql = "SELECT id, content, user_id, date FROM comments WHERE user_id = $this->id ORDER BY id ASC";
+		$sql = "SELECT id FROM comments WHERE user_id = $this->id ORDER BY id ASC";
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$comment = Comment::get_by_id($result['id']);
-			
-			$comments[] = $comment;
+			$comments[] = Comment::get_by_id($result['id']);
 			
 		}
 		

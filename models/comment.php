@@ -23,11 +23,12 @@ class Comment {
 		
 		$id = sanitize_input($id);
         
-		$sql = "SELECT * FROM comments WHERE id = $id";
+		$sql = "SELECT id, user_id, content, date FROM comments WHERE id = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
 		if (!is_array($result)) {
+			// Comment not found
 			
 			$comment = NULL;
 			
@@ -42,7 +43,7 @@ class Comment {
 			$comment->user = User::get_by_id($result['user_id']);
 			
 		}
-        
+		
 		return $comment;
 		
 	}
@@ -50,7 +51,7 @@ class Comment {
 	// Get all comments, returns an array of Comments objects
 	public static function list_all($limit = 10) {
 		
-		$sql = "SELECT * FROM comments ORDER BY date DESC";
+		$sql = "SELECT id FROM comments ORDER BY date DESC";
 		
 		// Limit not null so create limit string
 		if ($limit != NULL) {
@@ -58,25 +59,13 @@ class Comment {
 			$limit = sanitize_input($limit);
 		}
 		
-		// Get comments
+		// Get list of ids
 		$query = mysql_query($sql);
 		
-		// Loop through comments
+		// Loop through comment ids, fetching objects
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$comment = new Comment;
-			
-			foreach($result as $k => $v) {
-				$comment->$k = $v;
-			}
-			
-			// Get info about the commenter
-			$comment->user = User::get_by_id($comment->user_id);
-			
-			// Get item info
-			$comment->item = Item::get_by_id($comment->user_id);
-			
-			$comments[] = $comment;
+			$comments[] = Comment::get_by_id($result['id']);
 			
 		}
 		

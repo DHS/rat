@@ -53,17 +53,13 @@ class Search {
 		}
 		$parts = implode(' AND ', $parts);
 		
-		$sql = "SELECT * FROM items WHERE $parts";
+		$sql = "SELECT id FROM items WHERE $parts";
 		$query = mysql_query($sql);
 		
 		while($result = mysql_fetch_array($query, MYSQL_ASSOC)){
 			
-			$item = Item::get_by_id($result['id']);
+			$items = Item::get_by_id($result['id']);
 			
-			$item->comments = $item->comments();
-			$item->likes = $item->likes();
-			$item->user = $item->user();
-
 			$item->score = 0;
 			foreach($terms_rx as $term_rx){
 				$item->score += preg_match_all("/$term_rx/i", $item->content, $null);

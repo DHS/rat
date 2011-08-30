@@ -20,15 +20,21 @@ class Invite {
 		
 	}
 	
-	// Get all invites with a given code, returns an array of Invite objects
-	public static function list_by_code($code) {
+	// Get a single invite, returns an Invite object
+	public static function get_by_id($id) {
 		
-		$code = sanitize_input($code);
-		
-		$sql = "SELECT * FROM invites WHERE code = $code";
+		$id = sanitize_input($id);
+        
+		$sql = "SELECT id, user_id, email, code, result, date FROM invites WHERE id = $id";
 		$query = mysql_query($sql);
+		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
-		while($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		if (!is_array($result)) {
+			// Invite not found
+			
+			$invite = NULL;
+			
+		} else {
 			
 			$invite = new Invite;
 			
@@ -36,7 +42,26 @@ class Invite {
 				$invite->$k = $v;
 			}
 			
-			$invites[] = $invite;
+			$invite->user = User::get_by_id($result['user_id']);
+			
+		}
+        
+		return $invite;
+		
+	}
+	
+	// Get all invites with a given code, returns an array of Invite objects
+	public static function list_by_code($code) {
+		
+		$code = sanitize_input($code);
+		
+		$sql = "SELECT id FROM invites WHERE code = $code";
+		$query = mysql_query($sql);
+		
+		// Loop through invite ids, fetching objects
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			
+			$invites[] = Invite::get_by_id($result['id']);
 			
 		}
 		

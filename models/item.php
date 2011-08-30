@@ -33,7 +33,7 @@ class Item {
 		
 		$id = sanitize_input($id);
 		
-		$sql = "SELECT * FROM items WHERE id = $id ORDER BY id DESC";
+		$sql = "SELECT id, user_id, title, content, status, image, date FROM items WHERE id = $id ORDER BY id DESC";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -60,9 +60,9 @@ class Item {
 	}
 	
 	// Get recent items, returns array of Item objects
-	public static function list_all($limit = 20) {
+	public static function list_all($limit = NULL) {
 		
-		$sql = "SELECT * FROM items ORDER BY id DESC";
+		$sql = "SELECT id FROM items ORDER BY id DESC";
 		
 		// Limit not null so create limit string
 		if ($limit != NULL) {
@@ -72,19 +72,10 @@ class Item {
 		
 		$query = mysql_query($sql);
 		
+		// Loop through item ids, fetching objects
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$item = new Item;
-			
-			foreach($result as $k => $v) {
-				$item->$k = $v;
-			}
-			
-			$item->comments = $item->comments();
-			$item->likes = $item->likes();
-			$item->user = $item->user();
-			
-			$items[] = $item;
+			$items[] = Item::get_by_id($result['id']);
 			
 		}
 		
@@ -106,22 +97,13 @@ class Item {
 			$friends_string .= " OR user_id = {$friend['friend_user_id']}";
 		}
 		
-		$sql = "SELECT * FROM items WHERE $friends_string ORDER BY id DESC LIMIT 100";
+		$sql = "SELECT id FROM items WHERE $friends_string ORDER BY id DESC LIMIT 100";
 		$query = mysql_query($sql);
 		
+		// Loop through item ids, fetching objects
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$item = new Item;
-			
-			foreach($result as $k => $v) {
-				$item->$k = $v;
-			}
-			
-			$item->user = $item->user();
-			$item->comments = $item->comments();
-			$item->likes = $item->likes();
-			
-			$items[] = $item;
+			$items[] = Item::get_by_id($result['id']);
 			
 		}
 		
@@ -139,20 +121,12 @@ class Item {
 	// Get comments for an item, returns an array of Comment objects
 	public function comments() {
 		
-		$sql = "SELECT id, content, user_id, date FROM comments WHERE item_id = $this->id ORDER BY id ASC";
+		$sql = "SELECT id FROM comments WHERE item_id = $this->id ORDER BY id ASC";
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$comment = new Comment;
-			
-			foreach($result as $k => $v) {
-				$comment->$k = $v;
-			}
-			
-			$comment->user = User::get_by_id($result['user_id']);
-			
-			$comments[] = $comment;
+			$comments[] = Comment::get_by_id($result['id']);
 			
 		}
 		
@@ -163,20 +137,12 @@ class Item {
 	// Get likes for an item, returns an array of Like objects
 	public function likes() {
 		
-		$sql = "SELECT id, user_id, date FROM likes WHERE item_id = $this->id";
+		$sql = "SELECT id FROM likes WHERE item_id = $this->id";
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			
-			$like = new Like;
-			
-			foreach($result as $k => $v) {
-				$like->$k = $v;
-			}
-			
-			$like->user = User::get_by_id($result['user_id']);
-			
-			$likes[$result['id']] = $like;
+			$likes[$result['id']] = Like::get_by_id($result['id']);
 			
 		}
 		
