@@ -98,14 +98,14 @@ class User {
 	}
 	
 	// Signup a new user!	
-	public static function signup($username, $password, $salt) {
+	public function signup($id, $username, $password, $salt) {
 		
-		$this->id = sanitize_input($this->id);
+		$id = sanitize_input($id);
 		$username = sanitize_input($username);
 		
 		$encrypted_password = md5($password.$salt);
 		
-		$sql = "UPDATE users SET username = $username, password = '$encrypted_password', date_joined = NOW() WHERE id = $this->id";
+		$sql = "UPDATE users SET username = $username, password = '$encrypted_password', date_joined = NOW() WHERE id = $id";
 		$query = mysql_query($sql);
 		
 	}

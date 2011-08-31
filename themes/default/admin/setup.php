@@ -18,7 +18,7 @@
         <div class="clearfix">
           <label for="email">Password</label>
           <div class="input">
-            <input class="medium" name="email" size="30" type="password" value="" />
+            <input class="medium" name="password" size="30" type="password" value="" />
           </div>
         </div> <!-- /clearfix -->
         <div class="actions">
