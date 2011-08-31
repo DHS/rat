@@ -33,7 +33,7 @@ class Item {
 		
 		$id = sanitize_input($id);
 		
-		$sql = "SELECT id, user_id, title, content, status, image, date FROM items WHERE id = $id ORDER BY id DESC";
+		$sql = "SELECT id, user_id, title, content, image, date FROM items WHERE id = $id ORDER BY id DESC";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
