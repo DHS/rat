@@ -1,7 +1,7 @@
 <?php
 
 class ItemsController extends Application {
-	
+
 	function __construct() {
 		
 		// To add an item you must be logged in

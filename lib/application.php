@@ -37,7 +37,10 @@ class Application {
 			$app->loadPlugins();
 			
 			$app->uri = $uri;
-	
+
+			require_once 'lib/filter.php';
+			$app->runFilters();
+			
 			$app->loadAction();
 
 			unset($_SESSION['flash']);
@@ -194,6 +197,22 @@ class Application {
 			}
 		}
 		
+	}
+
+	private function runFilters() {
+
+		$uri = $this->uri;
+		if (is_null($uri['action'])) {
+			$uri['action'] = 'index';
+		}
+
+		$reflect = new ReflectionClass($this);
+		foreach ($reflect->getProperties(ReflectionProperty::IS_PROTECTED) as $filter)
+		{
+			$filter_name = $filter->getName();
+			Filter::$filter_name($uri, $this->$filter_name);
+		}
+
 	}
 	
 	private function loadAction() {
