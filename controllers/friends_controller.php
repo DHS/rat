@@ -2,6 +2,8 @@
 
 class FriendsController extends Application {
 	
+	protected $requireLoggedIn = array('add', 'remove');
+
 	function add($friend_id) {
 		
 		$user = User::get_by_id($_SESSION['user_id']);

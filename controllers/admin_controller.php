@@ -1,7 +1,8 @@
 <?php
 
 class AdminController extends Application {
-	
+
+	// TODO: Move this to a filter
 	function __construct() {
 		
 		// If user is admin or first user then let them pass otherwise exit

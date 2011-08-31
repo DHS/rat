@@ -2,17 +2,7 @@
 
 class ItemsController extends Application {
 
-	function __construct() {
-		
-		// To add an item you must be logged in
-		if (($this->uri['action'] == 'add' || $this->uri['action'] == 'remove') && !isset($_SESSION['user_id'])) {
-			$this->title = 'Page not found';
-			$this->loadView('partials/header');
-			$this->loadView('partials/footer');
-			exit;
-		}
-		
-	}
+	protected $requireLoggedIn = array('add', 'remove');
 	
 	// Show stream of everyone's items
 	function index() {

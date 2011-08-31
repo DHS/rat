@@ -2,6 +2,8 @@
 
 class LikesController extends Application {
 	
+	protected $requireLoggedIn = array('add', 'remove');
+
 	function add($item_id) {
 		
 		$like_id = Like::add($_SESSION['user_id'], $item_id);

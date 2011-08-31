@@ -2,6 +2,8 @@
 
 class SearchController extends Application {
 	
+	protected $requireLoggedIn = array('index', 'show');
+
 	function index() {
 		
 		if (isset($_GET['q'])) {

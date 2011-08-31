@@ -1,21 +1,8 @@
 <?php
 
 class UsersController extends Application {
-	
-	function __construct() {
-		
-		// Check if user is logged in and trying to signup
-		if ($this->uri['action'] == 'add' && isset($_SESSION['user_id'])) {
 
-			$this->title = 'Signup';
-			Application::flash('warning', 'You are already logged in!');
-			$this->loadPartial('header');
-			$this->loadPartial('footer');
-			exit;
-
-		}
-		
-	}
+	protected $requireLoggedOut = array('add', 'update', 'reset', 'confirm');
 	
 	// Add a user / signup
 	function add($code) {

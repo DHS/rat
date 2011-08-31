@@ -2,10 +2,12 @@
 
 class CommentsController extends Application {
 	
+	protected $requireLoggedIn = array('add', 'remove');
+
 	function add() {
 		
 		// Check necessary vars are present
-		if (isset($_SESSION['user_id']) && isset($_POST['item_id']) && isset($_POST['content'])) {
+		if (isset($_POST['item_id']) && isset($_POST['content'])) {
 			
 			// Add comment
 			$comment_id = Comment::add($_SESSION['user_id'], $_POST['item_id'], $_POST['content']);

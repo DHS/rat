@@ -2,6 +2,9 @@
 
 class SessionsController extends Application {
 	
+	protected $requireLoggedIn = array('remove');
+	protected $requireLoggedOut = array('add');
+
 	function add() {
 		
 		if (isset($_POST['email']) && isset($_POST['password'])) {
