@@ -210,7 +210,8 @@ class Application {
 		foreach ($reflect->getProperties(ReflectionProperty::IS_PROTECTED) as $filter)
 		{
 			$filter_name = $filter->getName();
-			Filter::$filter_name($uri, $this->$filter_name);
+			$filter = new Filter($this);
+			$filter->$filter_name($uri, $this->$filter_name);
 		}
 
 	}
