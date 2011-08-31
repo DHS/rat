@@ -72,11 +72,11 @@ The typical flow through the app for a given request is as follows:
 2. .htaccess calls index.php
 3. index.php handles exceptions
 4. Then initializes lib/application.php which does the following:
-5. Initialize config
+5. Initialise config
 6. Parse URL
-7. Initialize appropriate controller
-8. Initialize models
-9. Initialize plugins
+7. Initialise appropriate controller
+8. Initialise models
+9. Initialie plugins
 10. Call the appropriate controller action
 11. Controller actions first call the appropriate models
 12. Then handle any application logic
