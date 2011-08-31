@@ -17,7 +17,6 @@ class ItemsController extends Application {
 	// Show stream of everyone's items
 	function index() {
 	
-		$this->title = $this->config->tagline;
 		$this->items = Item::list_all();
 		
 		$this->loadView('items/index');
