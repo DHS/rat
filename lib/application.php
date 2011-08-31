@@ -7,21 +7,27 @@ class Application {
 	private function __construct() {}
 	
 	public static function initialise() {
-
+		
 		try {
 			
 			require_once 'config/server.php';
 			require_once 'config/application.php';
-
+			
 			$config = new AppConfig;
-
+			
 			$uri = Application::fetch_uri($config);
 			
 			$controller = ucfirst($uri['controller']).'Controller';
+<<<<<<< HEAD
 			@include "controllers/{$uri['controller']}_controller.php";
 
 			if (class_exists($controller) && (method_exists($controller, $uri['action'])) 
 			|| (empty($uri['action']) && method_exists($controller, 'index'))) {
+=======
+			include "controllers/{$uri['controller']}_controller.php";
+			
+			if (class_exists($controller)) {
+>>>>>>> b7260cfb8faed44f586dff3b17ea4088d651026a
 				$app = new $controller;
 			} else {
 				$uri = Application::route();
@@ -31,71 +37,81 @@ class Application {
 				
 				$app = new $controller;
 			}
-		
+			
 			$app->loadConfig($config);
 			$app->loadModels();
 			$app->loadPlugins();
-		
+			
 			$app->uri = $uri;
+<<<<<<< HEAD
 	
 			$app->loadAction();
 
+=======
+			
+			$app->route();
+			
+>>>>>>> b7260cfb8faed44f586dff3b17ea4088d651026a
 			unset($_SESSION['flash']);
-		
+			
 		} catch (ValidationException $e) {
 			
 			ob_end_clean();
 			Application::flash('error', $e->getMessage());
 			header('Location: ' . $_SERVER['HTTP_REFERER']);
-
+			
 		} catch (RoutingException $e) {
-
+			
 			ob_end_flush();
 			include 'static/404.html';
-
+			
 		} catch (ApplicationException $e) {
 			
 			ob_end_flush();
 			include 'static/500.html';
-
+			
 		} catch (Exception $e) {
-		
+			
 			ob_end_flush();
 			include 'static/500.html';
 			
 		}
-
+		
 	}
-
+	
 	private static function fetch_uri($config) {
-
+		
 		// Get request from server, split into segments, store as controller, view, id and params
 		$request = substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10));
-
+		
 		// Split at '.' and before '?' to obtain request format
 		$segments = preg_split("/\./", $request);
 		$format = preg_split("/\?/", $segments[1]);
 		$format = $format[0];
-
+		
 		// Split request at each '/' to obtain route
 		$segments = preg_split("/\//", $segments[0]);
-
+		
 		// Set up uri variable to pass to app
 		$uri = array(	'controller'	=> $segments[1],
 						'action'		=> $segments[2],
 						'format'		=> $format,
 						'params'		=> $_GET
 					);
+<<<<<<< HEAD
 
 		$uri['params']['id'] = $segments[3];
 
+=======
+		
+>>>>>>> b7260cfb8faed44f586dff3b17ea4088d651026a
 		// Set the controller to the default if not in URI
 		if (empty($uri['controller'])) {
 			$uri['controller'] = $config->default_controller;
 		}
-
+		
 		return $uri;
-
+		
 	}
 
 	private static function route() {
@@ -224,7 +240,7 @@ class Application {
 		
 	}
 	
-	public function url_for($controller, $action = "", $id = "") {
+	public function url_for($controller, $action = '', $id = '') {
 	
 		$url = BASE_DIR . "/{$controller}";
 		
@@ -239,27 +255,27 @@ class Application {
 		return $url;
 
 	}
-
-	public function link_to($link_text, $controller, $action = "", $id = "") {
+	
+	public function link_to($link_text, $controller, $action = '', $id = '') {
 		
 		return '<a href="'.$this->url_for($controller, $action, $id).'">'.$link_text.'</a>';
 					
 	}
-
-	public function redirect_to($controller, $action = "", $id = "") {
 	
+	public function redirect_to($controller, $action = '', $id = '') {
+		
 		header('Location: ' . $this->url_for($controller, $action, $id));
-			
+		
 	}
-
-	public static function flash($category, $message) {
 	
+	public static function flash($category, $message) {
+		
 		if (! in_array($category, array('error', 'notice', 'success'))) {
 			$category = 'success';
 		}
-
+		
 		$_SESSION['flash'] = array('category' => $category, 'message' => $message);
-	
+		
 	}
 	
 }

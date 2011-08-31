@@ -12,7 +12,7 @@
 *		To log an event:
 *		
 *			if (isset($this->plugins->log)) {
-*				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'signup');
+*				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'signup');
 *			}
 *
 */

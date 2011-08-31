@@ -59,7 +59,7 @@ function comment_add(item_id) {
 	
 	var content = document.forms['comment_form_' + item_id].content;
 	
-	var url = '/comments/add/' + item_id;
+	var url = '/comments/add';
 	var params = 'item_id=' + item_id + '&content=' + content.value;
 	var response_destination = document.getElementById('comments_' + item_id);
 	

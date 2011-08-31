@@ -10,7 +10,7 @@ if (!isset($this->head_title)) {
 
 if (isset($this->title)) {
 	$this->title = '<!-- Page title -->
-  <h1><a href="/">'.$this->config->name.'</a> <small>'.$this->title.'</small></h1>';
+  <h1>'.$this->title.'</h1>';
 }
 
 ?>
@@ -58,7 +58,7 @@ if (isset($this->title)) {
 
   <div id="container" class="container">
 
-<?php if (isset($_SESSION['user'])) { ?>
+<?php if (isset($_SESSION['user_id'])) { ?>
 
     <div class="topbar">
       <div class="fill">
@@ -66,7 +66,7 @@ if (isset($this->title)) {
           <h3><?php echo $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
           <ul>
             <li<?php if ($this->uri['controller'] == $this->config->default_controller) { echo ' class="active" '; } ?>><?php echo $this->link_to('Home', $this->config->default_controller); ?></li>
-            <li<?php if ($this->uri['controller'] == 'users') { echo ' class="active" '; } ?>><?php echo $this->link_to('My profile', 'users', 'show', $_SESSION['user']['id']); ?></li>
+            <li<?php if ($this->uri['controller'] == 'users') { echo ' class="active" '; } ?>><?php echo $this->link_to('My profile', 'users', 'show', $_SESSION['user_id']); ?></li>
             <li<?php if ($this->uri['controller'] == 'invites') { echo ' class="active" '; } ?>><?php echo $this->link_to('Invites', 'invites'); ?></li>
             <li<?php if ($this->uri['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?></li>
           </ul>
@@ -77,9 +77,9 @@ if (isset($this->title)) {
               </form>
             </li>
             <li class="menu">
-              <a href="#" class="menu"><?php echo $_SESSION['user']['username']; ?></a>
+              <a href="#" class="menu"><?php $viewer = User::get_by_id($_SESSION['user_id']); echo $viewer->username; ?></a>
               <ul class="menu-dropdown">
-                <li><?php echo $this->link_to('Profile', 'users', 'show', $_SESSION['user']['id']); ?></li>
+                <li><?php echo $this->link_to('Profile', 'users', 'show', $_SESSION['user_id']); ?></li>
                 <li><?php echo $this->link_to('Settings', 'users', 'update'); ?></li>
                 <li class="divider"></li>
                 <li><?php echo $this->link_to('Logout', 'sessions', 'remove'); ?></li>
@@ -114,34 +114,16 @@ if (isset($this->title)) {
 
 <?php
 
-if (isset($_GET['message'])) {
-	$this->message = $_GET['message'];
-}
-
 if (isset($_SESSION['flash'])) {
 	echo '
-	<!-- Message -->
-	<div class="row">
-		<div class="span8 columns offset4">
-			<div class="alert-message info '.$_SESSION['flash']['category'].'">
-				<p>'.$_SESSION['flash']['message'].'</p>
-			</div>
-		</div>
-	</div>';
-
-}
-
-if (isset($this->message)) {
-	echo '
-	<!-- Message -->
-	<div class="row">
-		<div class="span8 columns offset4">
-			<div class="alert-message info">
-				<p>'.$this->message.'</p>
-			</div>
-		</div>
-	</div>';
-
+  <!-- Message -->
+  <div class="row">
+    <div class="span8 columns offset4">
+  	  <div class="alert-message info '.$_SESSION['flash']['category'].'">
+        <p>'.$_SESSION['flash']['message'].'</p>
+      </div>
+    </div>
+  </div>';
 }
 
 ?>

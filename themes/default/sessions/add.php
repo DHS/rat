@@ -3,6 +3,7 @@
   <div class="span8 columns offset4">
     <form action="<?php echo $this->url_for('sessions', 'add'); if(isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
       <fieldset>
+        <legend>Login</legend>
         <div class="clearfix">
           <label for="email">Email</label>
           <div class="input">

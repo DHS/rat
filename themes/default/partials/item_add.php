@@ -1,4 +1,4 @@
-<?php if (!empty($_SESSION['user'])) { ?>
+<?php if (isset($_SESSION['user_id'])) { ?>
 
       <form action="<?php echo $this->url_for('items', 'add'); ?>" method="post" enctype="multipart/form-data">
         <fieldset>

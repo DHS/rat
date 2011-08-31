@@ -21,7 +21,7 @@ class User {
 		
 		$id = sanitize_input($id);
 		
-		$sql = "SELECT * FROM users WHERE id = $id";
+		$sql = "SELECT id, username, email, full_name, bio, url, points, invites, password, date_added, date_joined FROM users WHERE id = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -48,7 +48,7 @@ class User {
 		
 		$username = sanitize_input($username);
 		
-		$sql = "SELECT * FROM users WHERE username = $username";
+		$sql = "SELECT id, username, email, full_name, bio, url, points, invites, password, date_added, date_joined FROM users WHERE username = $username";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -75,7 +75,7 @@ class User {
 		
 		$email = sanitize_input($email);
 		
-		$sql = "SELECT * FROM users WHERE email = $email";
+		$sql = "SELECT id, username, email, full_name, bio, url, points, invites, password, date_added, date_joined FROM users WHERE email = $email";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -110,6 +110,52 @@ class User {
 		
 	}
 	
+	// Check user's login details
+	public function authenticate($new_password, $salt) {
+		
+		if ($this->password == md5($new_password.$salt)) {
+			
+			// Update session
+			$_SESSION['user_id'] = $this->id;
+			
+			// Log login
+			if (isset($this->plugins->log)) {
+				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'login');
+			}
+			
+			return TRUE;
+			
+		} else {
+			
+			return FALSE;
+			
+		}
+		
+	}
+	
+	// Log a user out
+	public function deauthenticate() {
+		
+		if (isset($_SESSION['user_id'])) {
+			
+			session_unset();
+			session_destroy();
+			
+			// Log logout
+			if (isset($this->plugins->log)) {
+				$this->plugins->log->add($this->id, 'user', NULL, 'logout');
+			}
+			
+			return TRUE;
+			
+		} else {
+			
+			return FALSE;
+			
+		}
+		
+	}
+	
 	// Remove a user. WTF?
 	public static function remove() {
 		
@@ -128,36 +174,20 @@ class User {
 	// Get a user's items, returns array of Item objects
 	public function items($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT * FROM items WHERE user_id = $this->id ORDER BY id DESC";
+		$sql = "SELECT id FROM items WHERE user_id = $this->id ORDER BY id DESC";
 		
-		// Limit not null so create limit string
-		if ($limit != NULL) {
-			$limit = sanitize_input($limit);
-			$sql .= " LIMIT $limit";
-		}
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
 		
-		// Offset not zero so create offset string
-		if ($offset != NULL) {
-			$offset = sanitize_input($offset);
-			$sql .= " OFFSET $offset";
-		}
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
 		
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
-			$item = new Item;
-			
-			foreach($result as $k => $v) {
-				$item->$k = $v;
-			}
-			
-			$item->user = $item->user();
-			$item->comments = $item->comments();
-			$item->likes = $item->likes();
-			
-			$items[] = $item;
-			
+			$items[] = Item::get_by_id($result['id']);
 		}
 		
 		return $items;
@@ -165,21 +195,22 @@ class User {
 	}
 	
 	// Get all invites sent by a user, returns an array of Invite objects
-	public function invites() {
+	public function invites($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT id, email, result FROM invites WHERE user_id = $this->id ORDER BY id DESC";
+		$sql = "SELECT id FROM invites WHERE user_id = $this->id ORDER BY id DESC";
+		
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
+		
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
-			$invite = new Invite;
-			
-			foreach($result as $k => $v) {
-				$invite->$k = $v;
-			}
-			
-			$invites[] = $invite;
-			
+			$invites[] = Invite::get_by_id($result['id']);
 		}
 		
 		return $invites;
@@ -187,17 +218,22 @@ class User {
 	}
 	
 	// Get a users's friends, returns a list of User items
-	public function friends() {
+	public function friends($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE user_id = $this->id";
+		$sql = "SELECT id, friend_user_id FROM friends WHERE user_id = $this->id";
+		
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
+		
 		$query = mysql_query($sql);
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
-			$friend = User::get_by_id($result['friend_user_id']);
-			
-			$friends[$result['id']] = $friend;
-			
+			$friends[$result['id']] = User::get_by_id($result['friend_user_id']);
 		}
 		
 		return $friends;
@@ -205,19 +241,22 @@ class User {
 	}
 	
 	// Get a users's followers, returns a list of Friend items
-	public function followers() {
+	public function followers($limit = 10, $offset = 0) {
 		
-		$return = NULL;
+		$sql = "SELECT id, friend_user_id FROM friends WHERE friend_user_id = $this->id";
 		
-		$sql = "SELECT id, user_id, friend_user_id, status, date_added, date_updated FROM friends WHERE friend_user_id = $this->id";
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
+		
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
-			$friend = User::get_by_id($result['user_id']);
-			
-			$friends[$result['id']] = $friend;
-			
+			$friends[$result['id']] = User::get_by_id($result['user_id']);
 		}
 		
 		return $friends;
@@ -225,27 +264,22 @@ class User {
 	}
 	
 	// Get items liked by a user, returns array of Item objects
-	public function likes($limit = 10) {
+	public function likes($limit = 10, $offset = 0) {
 			
-		$sql = "SELECT item_id FROM likes WHERE user_id = $this->id AND status = 1 ORDER BY date DESC";
+		$sql = "SELECT item_id FROM likes WHERE user_id = $this->id ORDER BY date DESC";
 		
-		// Limit not null so create limit string
-		if ($limit != NULL) {
-			$limit = sanitize_input($limit);
-			$sql .= " LIMIT $limit";
-		}
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
 		
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
-			$item = Item::get_by_id($result['item_id']);
-			$item->user = $item->user();
-			$item->comments = $item->comments();
-			$item->likes = $item->likes();
-			
-			$items[] = $item;
-			
+			$items[] = Item::get_by_id($result['item_id']);
 		}
 		
 		return $items;
@@ -253,17 +287,22 @@ class User {
 	}
 	
 	// Get comments made by a user, returns an array of Comment objects
-	public function comments() {
+	public function comments($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT id, content, user_id, date FROM comments WHERE user_id = $this->id ORDER BY id ASC";
+		$sql = "SELECT id FROM comments WHERE user_id = $this->id ORDER BY id ASC";
+		
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
+		
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
-			$comment = Comment::get_by_id($result['id']);
-			
-			$comments[] = $comment;
-			
+			$comments[] = Comment::get_by_id($result['id']);
 		}
 		
 		return $comments;
@@ -386,11 +425,6 @@ class User {
 		// Update database
 		$sql_update = "UPDATE users SET invites = $new_invites WHERE id = $this->id";
 		$query = mysql_query($sql_update);
-		
-		// update session
-		if ($_SESSION['user']['id'] == $this->id) {
-			$_SESSION['user']['invites'] = $new_invites;
-		}
 		
 	}
 	

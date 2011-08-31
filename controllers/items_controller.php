@@ -5,7 +5,7 @@ class ItemsController extends Application {
 	function __construct() {
 		
 		// To add an item you must be logged in
-		if (($this->uri['action'] == 'add' || $this->uri['action'] == 'remove') && $_SESSION['user'] == NULL) {
+		if (($this->uri['action'] == 'add' || $this->uri['action'] == 'remove') && !isset($_SESSION['user_id'])) {
 			$this->title = 'Page not found';
 			$this->loadView('partials/header');
 			$this->loadView('partials/footer');
@@ -17,9 +17,7 @@ class ItemsController extends Application {
 	// Show stream of everyone's items
 	function index() {
 	
-		$this->title = $this->config->tagline;
 		$this->items = Item::list_all();
-		
 		$this->loadView('items/index');
 		
 	}
@@ -85,33 +83,33 @@ class ItemsController extends Application {
 					// Generate stream image
 					generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 350, 500, 'stream');
 					
-					$item_id = Item::add($_SESSION['user']['id'], $_POST['content'], $_POST['title'], $_FILES['file']['name']);
+					$item_id = Item::add($_SESSION['user_id'], $_POST['content'], $_POST['title'], $_FILES['file']['name']);
 					
 				} else {
 					
-					$item_id = Item::add($_SESSION['user']['id'], $_POST['content'], $_POST['title']);
+					$item_id = Item::add($_SESSION['user_id'], $_POST['content'], $_POST['title']);
 					
 				}
 				
 				// Give points
 				if (isset($this->plugins->points)) {
-					$this->plugins->points->update($_SESSION['user']['id'], $this->plugins->points['per_item']);
+					$this->plugins->points->update($_SESSION['user_id'], $this->plugins->points['per_item']);
 				}
 				
 				// Log item add
 				if (isset($this->plugins->log)) {
-					$this->plugins->log->add($_SESSION['user']['id'], 'item', $item_id, 'add', "title = {$_POST['title']}\ncontent = {$_POST['content']}");
+					$this->plugins->log->add($_SESSION['user_id'], 'item', $item_id, 'add', "title = {$_POST['title']}\ncontent = {$_POST['content']}");
 				}
 				
-				$this->message = ucfirst($this->config->items['name']).' added!';
+				Application::flash('success', ucfirst($this->config->items['name']).' added!');
 				
-				$page = $this->url_for('users', 'show', $_SESSION['user']['id']);
+				$page = $this->url_for('users', 'show', $_SESSION['user_id']);
 				
 				// Go forth!
 				if (SITE_IDENTIFIER == 'live') {
-					header('Location: '.$this->config->url.$page.'?message='.urlencode($this->message));
+					header('Location: '.$this->config->url.$page);
 				} else {
-					header('Location: '.$this->config->dev_url.$page.'user.php?message='.urlencode($this->message));
+					header('Location: '.$this->config->dev_url.$page.'user.php');
 				}
 				
 				exit();
@@ -125,7 +123,7 @@ class ItemsController extends Application {
 				$_GET['content']	= $_POST['content'];
 				
 				// Show error message
-				$this->message = $error;
+				Application::flash('error', $error);
 				$this->loadView('items/add');
 				exit();
 				
@@ -143,14 +141,14 @@ class ItemsController extends Application {
 		
 		$item = Item::get_by_id($item_id);
 		
-		if ($_SESSION['user']['id'] == $item->user->id && $item != NULL) {
+		if ($_SESSION['user_id'] == $item->user->id && $item != NULL) {
 			
 			// Delete item
 			$item->remove();
 			
 			// Log item deletion
 			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($_SESSION['user']['id'], 'item', $item->id, 'remove');
+				$this->plugins->log->add($_SESSION['user_id'], 'item', $item->id, 'remove');
 			}
 			
 			// Delete comments
@@ -163,7 +161,7 @@ class ItemsController extends Application {
 					
 					// Log comment removal
 					if (isset($this->plugins->log)) {
-						$this->plugins->log->add($_SESSION['user']['id'], 'comment', $id, 'remove');
+						$this->plugins->log->add($_SESSION['user_id'], 'comment', $id, 'remove');
 					}
 					
 				}
@@ -180,7 +178,7 @@ class ItemsController extends Application {
 					
 					// Log like removal
 					if (isset($this->plugins->log)) {
-						$this->plugins->log->add($_SESSION['user']['id'], 'like', $like->id, 'remove');
+						$this->plugins->log->add($_SESSION['user_id'], 'like', $like->id, 'remove');
 					}
 
 				}
@@ -188,7 +186,7 @@ class ItemsController extends Application {
 			}
 			
 			// Set message
-			$this->message = ucfirst($this->config->items['name']).' removed!';
+			Application::flash('success', ucfirst($this->config->items['name']).' removed!');
 			
 			// Return from whence you came
 			header('Location: '.$_SERVER['HTTP_REFERER']);
@@ -226,8 +224,7 @@ class ItemsController extends Application {
 			
 			// If friends enabled then show feed of friends' activity
 			
-			$this->title = $this->config->tagline;
-			$this->items = Item::list_feed($_SESSION['user']['id']);
+			$this->items = Item::list_feed($_SESSION['user_id']);
 			$this->loadView('items/index');
 			
 		} else {

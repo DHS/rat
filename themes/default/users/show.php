@@ -19,7 +19,7 @@
 	} else {
 
 		// If own page and no post_permission OR someone else's page show 'no articles yet'
-		if (($_SESSION['user']['id'] == $this->user->id && $_SESSION['user']['post_permission'] == 0) || $_SESSION['user']['id'] != $this->user->id) {
+		if (($_SESSION['user_id'] == $this->user->id) || $_SESSION['user_id'] != $this->user->id) {
 			echo '<p>'.$this->user->username.' hasn\'t published any '.$this->config->items['name_plural'].' yet.</p>';
 		}
 
@@ -38,16 +38,16 @@ if ($this->config->friends['enabled'] == TRUE) {
 }
 
 // User pofile
-if ($this->user->full_name != NULL || $this->user->bio != NULL || $this->user->url != NULL) { ?>
+if (isset($this->user->full_name) || isset($this->user->bio) || isset($this->user->url)) { ?>
 
   <h3>Profile</h3>
   
   <p>
-  <?php if ($this->user->full_name != NULL) { ?>
+  <?php if (isset($this->user->full_name)) { ?>
     <strong>Name</strong> <?php echo $this->user->full_name; ?>
-  <?php } if ($this->user->bio != NULL) { ?>
+  <?php } if (isset($this->user->bio)) { ?>
     <br /><strong>Bio</strong> <?php echo $this->user->bio; ?>
-  <?php } if ($this->user->url != NULL) { ?>
+  <?php } if (isset($this->user->url)) { ?>
     <br /><strong>URL</strong> <a href="<?php echo $this->user->url; ?>"><?php echo $this->user->url; ?></a>
   <?php } ?>
   <p />

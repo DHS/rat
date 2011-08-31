@@ -5,6 +5,7 @@
   <div class="span8 columns offset4">
     <form action="<?php echo $this->url_for('users', 'add', $this->code); if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
       <fieldset>
+        <legend>Signup</legend>
         <?php if (isset($this->code)) { echo '<input type="hidden" name="code" value="'.$this->code.'" />'; } ?>
         <div class="clearfix">
           <label for="email">Email</label>
@@ -35,6 +36,11 @@
         </div>
       </fieldset>
     </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span3 columns offset6">
     <p class="small">Already got a <?php echo $this->config->name ?> account? <a href="<?php echo $this->url_for('sessions', 'add'); if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>">Login</a> now!</p>
   </div>
 </div>
@@ -43,9 +49,9 @@
 
 <div class="row">
   <div class="span8 columns offset4">
-    <p>Enter your email address here and we'll let you in soon:</p>
     <form action="<?php echo $this->url_for('users', 'add'); if (isset($_GET['redirect_to'])) { echo '/?redirect_to='.$_GET['redirect_to']; } ?>" method="post">
       <fieldset>
+        <legend>Signup for our beta</legend>
         <?php if (isset($_GET['code'])) { echo '<input type="hidden" name="code" value="'.$_GET['code'].'" />'; } ?>
         <?php if (isset($_GET['email'])) { echo '<input type="hidden" name="email" value="'.$_GET['email'].'" />'; } ?>
         <div class="clearfix">

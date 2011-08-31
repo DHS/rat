@@ -19,7 +19,7 @@ class AppConfig extends ServerConfig {
 
 	// Basic app variables
 	public $name							= 'Ratter';
-	public $tagline							= 'Demo of rat\'s functionality';
+	public $tagline							= 'Ratter is an app to demonstrate the functionality of <a href="http://github.com/DHS/rat">Rat</a>';
 	public $default_controller				= 'items';
 
 	// Beta - users can't signup, can only enter their email addresses

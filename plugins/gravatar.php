@@ -12,7 +12,7 @@
 *		To display a users's gravatar:
 *		
 *			if (isset($this->plugins->gravatar)) {
-*				echo $this->plugins->gravatar->show($_SESSION['user']['email'], array('user_id' => $_SESSION['user']['id'], 'size' => 20, 'style' => "margin: 10px;"));
+*				echo $this->plugins->gravatar->show($email, array('user_id' => $_SESSION['user_id'], 'size' => 20, 'style' => "margin: 10px;"));
 *			}
 *
 */
