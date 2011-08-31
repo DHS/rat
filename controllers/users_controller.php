@@ -138,7 +138,7 @@ class UsersController extends Application {
 					
 					$user = User::get_by_id($user_id);
 					
-					$user->authenticate($_POST['password1']);
+					$user->authenticate($_POST['password1'], $this->config->encryption_salt);
 					
 					// Set welcome message
 					Application::flash('success', 'Password updated! Welcome back to '.$this->config->name.'!');

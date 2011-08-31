@@ -8,7 +8,7 @@ class SessionsController extends Application {
 			
 			$user = User::get_by_email($_POST['email']);
 			
-			if ($user->authenticate($_POST['password']) == TRUE) {
+			if ($user->authenticate($_POST['password'], $this->config->encryption_salt) == TRUE) {
 				
 				// Get redirected
 				if (isset($_GET['redirect_to'])) {

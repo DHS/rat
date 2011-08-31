@@ -111,9 +111,9 @@ class User {
 	}
 	
 	// Check user's login details
-	public function authenticate($password) {
+	public function authenticate($new_password, $salt) {
 		
-		if ($this->password == md5($password . $this->config->encryption_salt)) {
+		if ($this->password == md5($new_password.$salt)) {
 			
 			// Update session
 			$_SESSION['user_id'] = $this->id;
