@@ -10,7 +10,7 @@ if (!isset($this->head_title)) {
 
 if (isset($this->title)) {
 	$this->title = '<!-- Page title -->
-  <h1><a href="/">'.$this->config->name.'</a> <small>'.$this->title.'</small></h1>';
+  <h1>'.$this->title.'</h1>';
 }
 
 ?>
