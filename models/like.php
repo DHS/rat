@@ -92,9 +92,7 @@ class Like {
 		
 		// Loop through likes, fetching objects
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
 			$likes[] = Like::get_by_id($result['id']);
-			
 		}
 		
 		return $likes;

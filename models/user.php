@@ -191,9 +191,7 @@ class User {
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
 			$items[] = Item::get_by_id($result['id']);
-			
 		}
 		
 		return $items;
@@ -207,9 +205,7 @@ class User {
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
 			$invites[] = Invite::get_by_id($result['id']);
-			
 		}
 		
 		return $invites;
@@ -223,9 +219,7 @@ class User {
 		$query = mysql_query($sql);
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
 			$friends[$result['id']] = User::get_by_id($result['friend_user_id']);
-			
 		}
 		
 		return $friends;
@@ -239,9 +233,7 @@ class User {
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
 			$friends[$result['id']] = User::get_by_id($result['user_id']);
-			
 		}
 		
 		return $friends;
@@ -262,9 +254,7 @@ class User {
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
 			$items[] = Item::get_by_id($result['item_id']);
-			
 		}
 		
 		return $items;
@@ -278,9 +268,7 @@ class User {
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
 			$comments[] = Comment::get_by_id($result['id']);
-			
 		}
 		
 		return $comments;

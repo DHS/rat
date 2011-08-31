@@ -60,9 +60,7 @@ class Invite {
 		
 		// Loop through invite ids, fetching objects
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			
 			$invites[] = Invite::get_by_id($result['id']);
-			
 		}
 		
 		return $invites;

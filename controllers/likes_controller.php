@@ -5,11 +5,11 @@ class LikesController extends Application {
 	function add($item_id) {
 		
 		$like_id = Like::add($_SESSION['user_id'], $item_id);
-
+		
 		if (isset($this->plugins->log)) {
 			$this->plugins->log->add($_SESSION['user_id'], 'like', $like_id, 'add');
 		}
-
+		
 		$this->show($item_id);
 		
 	}
