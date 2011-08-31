@@ -104,7 +104,7 @@ class Application {
 			define('SITE_IDENTIFIER', 'dev');
 			$base_dir = $this->config->dev_base_dir;
 		}
-		
+
 		if (is_null($base_dir)) {
 			$base_dir = '/';
 		}
@@ -115,7 +115,7 @@ class Application {
 	
 	private function loadModels() {
 		
-    	require_once 'lib/mysql.php';
+    require_once 'lib/mysql.php';
 		
 		$handle = opendir('models');	
 		while (false != ($file = readdir($handle))) {
@@ -139,15 +139,21 @@ class Application {
 	}
 	
 	private function route() {
-		
-		if (method_exists($this, $this->uri['action'])) {
-			$this->{$this->uri['action']}($this->uri['id']);
-		} elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
-			$this->index($this->uri['id']);
-		} else {
-			throw new RoutingException($uri, "Page not found");
-		}
-		
+
+			if (method_exists($this, $this->uri['action'])) {
+				$this->{$this->uri['action']}($this->uri['id']);
+			} elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
+				$this->index($this->uri['id']);
+			} else {
+				// Load 404
+				//$uri = array(	'controller'	=> 'pages',
+				//				'action'		=> 'show',
+				//				'id'			=> '404'
+				//			);
+				//$this->initialise($uri, $this->config);
+				throw new RoutingException($uri, "Page not found");
+			}
+
 	}
 	
 	protected function loadView($view, $layout = NULL) {
@@ -167,7 +173,7 @@ class Application {
 	}
 	
 	public function url_for($controller, $action = '', $id = '') {
-		
+	
 		$url = BASE_DIR . "/{$controller}";
 		
 		if (!empty($action)) {
@@ -177,15 +183,15 @@ class Application {
 		if (!empty($id)) {
 			$url .= "/$id";
 		}
-		
+
 		return $url;
-		
+
 	}
 	
 	public function link_to($link_text, $controller, $action = '', $id = '') {
 		
 		return '<a href="'.$this->url_for($controller, $action, $id).'">'.$link_text.'</a>';
-		
+					
 	}
 	
 	public function redirect_to($controller, $action = '', $id = '') {
