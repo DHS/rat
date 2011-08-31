@@ -64,13 +64,13 @@ class AdminController extends Application {
 				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'signup');
 			}
 			
-			Application::flash('success', 'You are now logged out.');
+			Application::flash('success', 'You are now logged in to your app!');
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$this->config->url);
+				header('Location: '.$this->url_for('items', 'add'));
 			} else {
-				header('Location: '.$this->config->dev_url);
+				header('Location: '.$this->url_for('items', 'add'));
 			}
 			
 			exit();
@@ -79,7 +79,7 @@ class AdminController extends Application {
 			// Show setup form
 			
 			Application::flash('info', 'Welcome to Rat! Please enter your details:');
-			$this->loadView('admin/setup', 'admin');
+			$this->loadView('admin/setup');
 			
 		}
 		
