@@ -83,15 +83,70 @@ class Application {
 		// Set up uri variable to pass to app
 		$uri = array(	'controller'	=> $segments[1],
 						'action'		=> $segments[2],
-						'id'			=> $segments[3],
 						'format'		=> $format,
 						'params'		=> $_GET
 					);
+
+		$uri['params']['id'] = $segments[3];
 
 		// Set the controller to the default if not in URI
 		if (empty($uri['controller'])) {
 			$uri['controller'] = $config->default_controller;
 		}
+
+		return $uri;
+
+	}
+
+	private static function route() {
+		
+		require_once 'config/routes.php';
+
+		$routes = new Routes;
+		
+		// Get request from server and remove BASE_DIR
+		$request = substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10));
+		
+		// Split at '.' and before '?' to obtain request format
+		$request = preg_split("/\./", $request);
+		$request = $request[0];
+		$format = preg_split("/\?/", $request[1]);
+		$format = $format[0];
+
+		$routeFound = FALSE;
+
+		foreach ($routes->aliases as $k => $v) {
+
+			// Swap asterisks for valid regex
+			$k = str_replace("*", "([a-zA-Z0-9]+)", $k);
+
+			// Match the request against current route
+			if (preg_match('|^'.$k.'$|', $request, $matches)) {
+
+				$uri['controller'] = $v['controller'];
+				$uri['action'] = $v['action'];
+
+				// Assign components of $uri['params'] based on array in routes class
+				foreach ($v as $k => $v) {
+					if ($k != 'controller' || $k != 'action') {
+
+						// Convert $x to xth parameter
+						if (strstr($v, "$")) {
+							$i = substr($v, 1);
+							$v = $matches[$i];
+						}
+						$uri['params'][$k] = $v;
+					}
+				}
+
+				$uri['format'] = $format;
+				$routeFound = TRUE;
+				break;
+			}
+		
+		}
+
+		if (! $routeFound) throw new RoutingException($uri, "Page not found");
 
 		return $uri;
 
@@ -140,63 +195,13 @@ class Application {
 		}
 		
 	}
-
-	private static function route() {
-		
-		require_once 'config/routes.php';
-
-		$routes = new Routes;
-		
-		// Get request from server and remove BASE_DIR
-		$request = substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10));
-		
-		// Split at '.' and before '?' to obtain request format
-		$request = preg_split("/\./", $request);
-		$request = $request[0];
-		$format = preg_split("/\?/", $request[1]);
-		$format = $format[0];
-
-		$routeFound = FALSE;
-
-		foreach ($routes->aliases as $k => $v) {
-
-			// Swap asterisks for valid regex
-			$k = str_replace("*", "([a-zA-Z0-9]+)", $k);
-
-			// Match the request against current route
-			if (preg_match('|^'.$k.'$|', $request, $matches)) {
-
-				// Assign components of $uri based on array in routes class
-				foreach ($v as $k => $v) {
-
-					// Convert $x to xth parameter
-					if (strstr($v, "$")) {
-						$i = substr($v, 1);
-						$v = $matches[$i];
-					}
-
-					$uri[$k] = $v;
-				}
-
-				$uri['format'] = $format;
-				$routeFound = TRUE;
-				break;
-			}
-		
-		}
-
-		if (! $routeFound) throw new RoutingException($uri, "Page not found");
-
-		return $uri;
-
-	}
 	
 	private function loadAction() {
 
 			if (method_exists($this, $this->uri['action'])) {
-				$this->{$this->uri['action']}($this->uri['id']);
+				$this->{$this->uri['action']}($this->uri['params']['id']);
 			} elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
-				$this->index($this->uri['id']);
+				$this->index($this->uri['params']['id']);
 			} else {
 				throw new RoutingException($uri, "Page not found");
 			}
