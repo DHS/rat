@@ -20,7 +20,8 @@ class Application {
 			$controller = ucfirst($uri['controller']).'Controller';
 			@include "controllers/{$uri['controller']}_controller.php";
 
-			if (class_exists($controller) && method_exists($controller, $uri['action'])) {
+			if (class_exists($controller) && (method_exists($controller, $uri['action'])) 
+			|| (empty($uri['action']) && method_exists($controller, 'index'))) {
 				$app = new $controller;
 			} else {
 				$uri = Application::route();
