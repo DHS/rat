@@ -70,20 +70,19 @@ The typical flow through the app for a given request is as follows:
 
 1. The server calls .htaccess
 2. .htaccess calls index.php
-3. index.php handles exceptions
-4. Then initializes lib/application.php which does the following:
-5. Initialise config
-6. Parse URL
-7. Initialise appropriate controller
-8. Initialise models
-9. Initialie plugins
-10. Call the appropriate controller action
-11. Controller actions first call the appropriate models
-12. Then handle any application logic
-13. Then load the appropriate view
-14. Views can load re-usable fragments called partials
-15. Views are loaded within layout files which handle common headers, footers, menus
-16. A page is born
+3. Then initializes lib/application.php which does the following:
+4. Initialise config
+5. Parse URL
+6. Initialise appropriate controller
+7. Initialise models
+8. Initialie plugins
+9. Call the appropriate controller action
+10. Controller actions first call the appropriate models
+11. Then handle any application logic
+12. Then load the appropriate view
+13. Views can load re-usable fragments called partials
+14. Views are loaded within layout files which handle common headers, footers, menus
+15. A page is born
 
 Theming Rat
 -----------
