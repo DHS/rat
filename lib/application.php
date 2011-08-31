@@ -18,16 +18,10 @@ class Application {
 			$uri = Application::fetch_uri($config);
 			
 			$controller = ucfirst($uri['controller']).'Controller';
-<<<<<<< HEAD
 			@include "controllers/{$uri['controller']}_controller.php";
 
 			if (class_exists($controller) && (method_exists($controller, $uri['action'])) 
 			|| (empty($uri['action']) && method_exists($controller, 'index'))) {
-=======
-			include "controllers/{$uri['controller']}_controller.php";
-			
-			if (class_exists($controller)) {
->>>>>>> b7260cfb8faed44f586dff3b17ea4088d651026a
 				$app = new $controller;
 			} else {
 				$uri = Application::route();
@@ -43,15 +37,9 @@ class Application {
 			$app->loadPlugins();
 			
 			$app->uri = $uri;
-<<<<<<< HEAD
 	
 			$app->loadAction();
 
-=======
-			
-			$app->route();
-			
->>>>>>> b7260cfb8faed44f586dff3b17ea4088d651026a
 			unset($_SESSION['flash']);
 			
 		} catch (ValidationException $e) {
@@ -98,13 +86,9 @@ class Application {
 						'format'		=> $format,
 						'params'		=> $_GET
 					);
-<<<<<<< HEAD
 
 		$uri['params']['id'] = $segments[3];
 
-=======
-		
->>>>>>> b7260cfb8faed44f586dff3b17ea4088d651026a
 		// Set the controller to the default if not in URI
 		if (empty($uri['controller'])) {
 			$uri['controller'] = $config->default_controller;
@@ -144,7 +128,7 @@ class Application {
 
 				// Assign components of $uri['params'] based on array in routes class
 				foreach ($v as $k => $v) {
-					if ($k != 'controller' || $k != 'action') {
+					if ($k != 'controller' && $k != 'action') {
 
 						// Convert $x to xth parameter
 						if (strstr($v, "$")) {
