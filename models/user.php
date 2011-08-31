@@ -110,6 +110,54 @@ class User {
 		
 	}
 	
+	// Check user's login details
+	public function authenticate($password) {
+		
+		if ($this->password == md5($password . $this->config->encryption_salt)) {
+			
+			// Update session
+			foreach ($user as $key => $value) {
+				$_SESSION['user'][$key] = $value;
+			}
+			
+			// Log login
+			if (isset($this->plugins->log)) {
+				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+			}
+			
+			return TRUE;
+			
+		} else {
+			
+			return FALSE;
+			
+		}
+		
+	}
+	
+	// Log a user out
+	public function deauthenticate() {
+		
+		if (isset($_SESSION['user'])) {
+			
+			session_unset();
+			session_destroy();
+			
+			// Log logout
+			if (isset($this->plugins->log)) {
+				$this->plugins->log->add($this->id, 'user', NULL, 'logout');
+			}
+			
+			return TRUE;
+			
+		} else {
+			
+			return FALSE;
+			
+		}
+		
+	}
+	
 	// Remove a user. WTF?
 	public static function remove() {
 		
