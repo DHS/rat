@@ -512,13 +512,13 @@ class UsersController extends Application {
 			}
             
 			// Set thank you & tweet this message
-			Application::flash('success', 'Thanks for signing up!<br />We will be in touch soon...);'
+			Application::flash('success', 'Thanks for signing up!<br />We will be in touch soon...');
             
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$this->config->url.$this->config->default_controller);
+				header('Location: '.$this->config->url);
 			} else {
-				header('Location: '.$this->config->dev_url.$this->config->default_controller);
+				header('Location: '.$this->config->dev_url);
 			}
             
 			exit();
