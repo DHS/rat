@@ -2,7 +2,7 @@
 
 foreach ($this->config->admin_users as $value) {
 	$author = User::get_by_id($value);
-	if ($this->config->private != TRUE || $_SESSION['user'] != NULL) {
+	if ($this->config->private != TRUE || isset($_SESSION['user_id'])) {
 		$authors .= $this->link_to($author->username, 'users', 'show', $author->id).', ';
 	} else {
 		$authors .= $author->username.', ';

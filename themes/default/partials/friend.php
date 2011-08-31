@@ -1,10 +1,10 @@
-<?php $this->viewer = User::get_by_id($_SESSION['user']['id']); ?>
+<?php $this->viewer = User::get_by_id($_SESSION['user_id']); ?>
 
-<?php if ($this->user->id != $_SESSION['user']['id']) { ?>
+<?php if ($this->user->id != $_SESSION['user_id']) { ?>
 
   <span id="friends_<?php echo $this->user->id; ?>">
   
-  <?php if (empty($_SESSION['user'])) { ?>
+  <?php if (!isset($_SESSION['user_id'])) { ?>
 
 	<a href="<?php $this->url_for('sessions', 'add'); ?>/?redirect_to=/<?php echo $this->url_for('users', 'show', $this->user->id); ?>" class="btn">
 	<?php if ($this->config->friends['asymmetric'] == TRUE) { echo 'Follow'; } else { echo 'Add friend'; } ?>

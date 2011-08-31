@@ -5,14 +5,14 @@ class CommentsController extends Application {
 	function add() {
 		
 		// Check necessary vars are present
-		if (isset($_SESSION['user']['id']) && isset($_POST['item_id']) && isset($_POST['content'])) {
+		if (isset($_SESSION['user_id']) && isset($_POST['item_id']) && isset($_POST['content'])) {
 			
 			// Add comment
-			$comment_id = Comment::add($_SESSION['user']['id'], $_POST['item_id'], $_POST['content']);
+			$comment_id = Comment::add($_SESSION['user_id'], $_POST['item_id'], $_POST['content']);
 			
 			// Log new comment
 			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($_SESSION['user']['id'], 'comment', $comment_id, 'add', $_POST['content']);
+				$this->plugins->log->add($_SESSION['user_id'], 'comment', $comment_id, 'add', $_POST['content']);
 			}
 			
 		}
@@ -28,14 +28,14 @@ class CommentsController extends Application {
 		$comment = Comment::get_by_id($comment_id);
 		
 		// Check that comment belongs to current user
-		if ($_SESSION['user']['id'] == $comment->user->id) {
+		if ($_SESSION['user_id'] == $comment->user->id) {
 			
 			// Remove comment
 			$comment->remove();
 
 			// Log comment removal
 			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($_SESSION['user']['id'], 'comment', $comment->id, 'remove');
+				$this->plugins->log->add($_SESSION['user_id'], 'comment', $comment->id, 'remove');
 			}
 			
 		}

@@ -34,7 +34,7 @@ class SessionsController extends Application {
 			
 		}
 		
-		if (empty($_SESSION['user'])) {
+		if (!isset($_SESSION['user_id'])) {
 			
 			$this->title = 'Login';
 			$this->loadView('sessions/add');
@@ -51,7 +51,7 @@ class SessionsController extends Application {
 	
 	function remove() {
 		
-		$user = User::get_by_id($_SESSION['user']['id']);
+		$user = User::get_by_id($_SESSION['user_id']);
 		
 		if ($user->deauthenticate() == TRUE) {
 			

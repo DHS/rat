@@ -5,7 +5,7 @@ class UsersController extends Application {
 	function __construct() {
 		
 		// Check if user is logged in and trying to signup
-		if ($this->uri['action'] == 'add' && !empty($_SESSION['user'])) {
+		if ($this->uri['action'] == 'add' && isset($_SESSION['user_id'])) {
 
 			$this->title = 'Signup';
 			$this->message = 'You are already logged in!';
@@ -71,6 +71,8 @@ class UsersController extends Application {
 	// Update user: change passsword, update profile
 	function update($page) {
 		
+		$user = User::get_by_id($_SESSION['user_id']);
+		
 		if (!isset($page)) {
 			
 			$page = 'password';
@@ -91,7 +93,7 @@ class UsersController extends Application {
 		
 		$this->title = 'Settings';
 		$this->page = $page;
-		$this->user = User::get_by_id($_SESSION['user']['id']);
+		$this->user = User::get_by_id($_SESSION['user_id']);
 		
 		$this->loadView('users/update');
 		
@@ -100,7 +102,7 @@ class UsersController extends Application {
 	// Password reset
 	function reset($code) {
 		
-		if (isset($_SESSION['user'])) {
+		if (isset($_SESSION['user_id'])) {
 			
 			$this->title = 'Page not found';
 			$this->loadView();
@@ -136,15 +138,7 @@ class UsersController extends Application {
 					
 					$user = User::get_by_id($user_id);
 					
-					// Start session
-					foreach ($user as $key => $value) {
-						$_SESSION['user'][$key] = $value;
-					}
-					
-					// Log login
-					if (isset($this->plugins->log)) {
-						$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
-					}
+					$user->authenticate($_POST['password1']);
 					
 					// Set welcome message
 					$this->message = urlencode('Password updated! Welcome back to '.$this->config->name.'!');
@@ -195,7 +189,7 @@ class UsersController extends Application {
 				
 			}
 			
-		} elseif (empty($_SESSION['user'])) {
+		} elseif (!isset($_SESSION['user_id'])) {
 			// No code in URL so show new reset form
 			
 			if (isset($_POST['email'])) {
@@ -261,21 +255,21 @@ class UsersController extends Application {
 	// Helper function: update password
 	private function update_password($salt) {
 		
-		if (md5($_POST['old_password'].$salt) == $_SESSION['user']['password']) {
+		if (md5($_POST['old_password'].$salt) == $user->password) {
 			// Check old passwords match
 			
 			if ($_POST['new_password1'] == $_POST['new_password2']) {
 				// New passwords match
 				
 				// Call update_password in user model
-				User::update_password($_SESSION['user']['id'], $_POST['new_password1'], $salt);
+				User::update_password($_SESSION['user_id'], $_POST['new_password1'], $salt);
 				
 				// Update session
-				$_SESSION['user']['password'] = md5($_POST['new_password1'].$salt);
+				$user->password = md5($_POST['new_password1'].$salt);
 				
 				// Log password update
 				if (isset($this->plugins->log)) {
-					$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'change_password');
+					$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'change_password');
 				}
 				
 				$this->message = 'Password udpated!';
@@ -321,22 +315,17 @@ class UsersController extends Application {
 		// End URL validation
         
 		if ($error == '') {
-        
-			// Update session vars
-			$_SESSION['user']['full_name'] = $_POST['full_name'];
-			$_SESSION['user']['bio'] = $_POST['bio'];
-			$_SESSION['user']['url'] = $_POST['url'];
 			
 			// Call user_update_profile in user model
-			User::update_profile($_SESSION['user']['id'], $_POST['full_name'], $_POST['bio'], $_POST['url']);
-        
+			User::update_profile($_SESSION['user_id'], $_POST['full_name'], $_POST['bio'], $_POST['url']);
+        	
 			// Set success message
 			$this->message = 'Profile information updated!';
-        
+        	
 		} else {
-        
+        	
 			$this->message = $error;
-        
+        	
 		}
         
 	}
@@ -412,9 +401,7 @@ class UsersController extends Application {
 			}
             
 			// Start session
-			foreach ($user as $key => $value) {
-				$_SESSION['user'][$key] = $value;
-			}
+			$_SESSION['user_id'] = $user->id;
             
 			// Check invites are enabled
 			if ($this->config->invites['enabled'] == TRUE) {
@@ -430,7 +417,7 @@ class UsersController extends Application {
 						
 						// Log invite update
 						if (isset($this->plugins->log)) {
-							$this->plugins->log->add($_SESSION['user']['id'], 'invite', $invite->id, 'accept');
+							$this->plugins->log->add($_SESSION['user_id'], 'invite', $invite->id, 'accept');
 						}
 						
 						// Update points (but only if inviting user is not an admin)
@@ -455,7 +442,7 @@ class UsersController extends Application {
             
 			// Log login
 			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'login');
 			}
             
 			// If redirect_to is set then redirect
@@ -615,9 +602,7 @@ class UsersController extends Application {
 			}
             
 			// Start session
-			foreach ($user as $key => $value) {
-				$_SESSION['user'][$key] = $value;
-			}
+			$_SESSION['user_id'] = $user->id;
             
 			// Check invites are enabled and the code is valid
 			if ($this->config->invites['enabled'] == TRUE && Invite::check_code_valid($_POST['code'], $_POST['email']) == TRUE) {
@@ -633,7 +618,7 @@ class UsersController extends Application {
 						
 						// Log invite update
 						if (isset($this->plugins->log)) {
-							$this->plugins->log->add($_SESSION['user']['id'], 'invite', $invite->id, 'accept');
+							$this->plugins->log->add($_SESSION['user_id'], 'invite', $invite->id, 'accept');
 						}
 						
 						// Update points (but only if inviting user is not an admin)
@@ -658,7 +643,7 @@ class UsersController extends Application {
             
 			// Log login
 			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'login');
 			}
             
 			// If redirect_to is set then redirect

@@ -116,13 +116,11 @@ class User {
 		if ($this->password == md5($password . $this->config->encryption_salt)) {
 			
 			// Update session
-			foreach ($user as $key => $value) {
-				$_SESSION['user'][$key] = $value;
-			}
+			$_SESSION['user_id'] = $this->id;
 			
 			// Log login
 			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'login');
+				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'login');
 			}
 			
 			return TRUE;
@@ -138,7 +136,7 @@ class User {
 	// Log a user out
 	public function deauthenticate() {
 		
-		if (isset($_SESSION['user'])) {
+		if (isset($_SESSION['user_id'])) {
 			
 			session_unset();
 			session_destroy();
@@ -405,11 +403,6 @@ class User {
 		// Update database
 		$sql_update = "UPDATE users SET invites = $new_invites WHERE id = $this->id";
 		$query = mysql_query($sql_update);
-		
-		// update session
-		if ($_SESSION['user']['id'] == $this->id) {
-			$_SESSION['user']['invites'] = $new_invites;
-		}
 		
 	}
 	

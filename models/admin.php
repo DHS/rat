@@ -64,9 +64,6 @@ class Admin {
 			
 		}
 		
-		// update own invites
-		$_SESSION['user']['invites'] = $_SESSION['user']['invites'] + $invites;
-		
 	}
 	
 	// Updates an item

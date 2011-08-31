@@ -21,7 +21,7 @@ class AdminController extends Application {
 		}
 		/*
 		// Comment out the following if statment to see admin sectin, $this->config->admin_users not available in constructor
-		if (in_array($_SESSION['user']['id'], $this->config->admin_users) != TRUE) {
+		if (in_array($_SESSION['user_id'], $this->config->admin_users) != TRUE) {
 			// User not an admin
 			
 			$this->title = 'Page not found';
@@ -57,13 +57,11 @@ class AdminController extends Application {
 			$user = User::get_by_email($_POST['email']);
 			
 			// Update session
-			foreach ($user as $key => $value) {
-				$_SESSION['user'][$key] = $value;
-			}
+			$_SESSION['user_id'] = $user->id;
 			
 			// Log login
 			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($_SESSION['user']['id'], 'user', NULL, 'signup');
+				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'signup');
 			}
 			
 			$this->message = 'Rat is now setup and you are logged in!';
@@ -123,16 +121,17 @@ class AdminController extends Application {
 	// Grant access to a beta signup
 	function invite() {
 		
+		$user = User::get_by_id($_SESSION['user_id']);
 		$email = $_POST['email'];
 		
 		if ($email != '') {
 			
 			// Add invite to database
-			$id = Invite::add($_SESSION['user']['id'], $email);
+			$id = Invite::add($_SESSION['user_id'], $email);
 			
 			// Log invite
 			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($_SESSION['user']['id'], 'invite', $id, 'admin_add', $email);
+				$this->plugins->log->add($_SESSION['user_id'], 'invite', $id, 'admin_add', $email);
 			}
 			
 			if (SITE_IDENTIFIER == 'live') {
@@ -142,7 +141,7 @@ class AdminController extends Application {
 			}
 			
 			$link		= $this->config->url.'signup.php?code='.$id.'&email='.urlencode($email);
-			$headers	= "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nContent-type: text/html\r\n";
+			$headers	= "From: {$user->username} <{$user->email}>\r\nContent-type: text/html\r\n";
 			
 			// Load template into $body variable
 			include "themes/{$this->config->theme}/emails/invite_admin.php";

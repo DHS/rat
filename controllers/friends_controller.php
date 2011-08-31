@@ -4,7 +4,7 @@ class FriendsController extends Application {
 	
 	function add($friend_id) {
 		
-		$user = User::get_by_id($_SESSION['user']['id']);
+		$user = User::get_by_id($_SESSION['user_id']);
 		$friend = User::get_by_id($friend_id);
 		
 		$user->friend_add($friend_id);
@@ -36,7 +36,7 @@ class FriendsController extends Application {
 	
 	function remove($friend_id) {
 		
-		$user = User::get_by_id($_SESSION['user']['id']);
+		$user = User::get_by_id($_SESSION['user_id']);
 		$friend = User::get_by_id($friend_id);
 		
 		// Check that frienship is legit

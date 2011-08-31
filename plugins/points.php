@@ -9,14 +9,14 @@
 *
 *	Usage
 *	
-*		Points are stored as a session variable:
+*		Points are stored in the user object
 *			
-*			$_SESSION['user']['points']
+*			$user->points
 *		
 *		To display users's points:
 *		
 *			if (isset($this->plugins->points)) {
-*				echo 'You have '.$_SESSION['user']['points'].' '.$this->plugins->points['name'];
+*				echo 'You have '.$user->points.' '.$this->plugins->points['name'];
 *			}
 *
 */
@@ -36,16 +36,11 @@ class points extends Application {
 		// update database
 		$query = mysql_query("UPDATE users SET points = $new_points WHERE id = $user_id");
 
-		// update session
-		if ($_SESSION['user']['id'] == $user_id) {
-			$_SESSION['user']['points'] = $new_points;
-		}
-
 	}
 
 	function view() {
 		
-		if ($id == $_SESSION['user']['id']) {
+		if ($id == $_SESSION['user_id']) {
 				echo '<p>You have '.$user['points'].' '.$this->plugins->points['name'].'!</p>';
 			if ($this->plugins->points['leaderboard'] == TRUE) {
 				echo '<p class="small">Where do you rank on the <a href="leaderboard.php">leaderboard</a>?</p>';

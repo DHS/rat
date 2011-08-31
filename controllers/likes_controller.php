@@ -4,10 +4,10 @@ class LikesController extends Application {
 	
 	function add($item_id) {
 		
-		$like_id = Like::add($_SESSION['user']['id'], $item_id);
+		$like_id = Like::add($_SESSION['user_id'], $item_id);
 
 		if (isset($this->plugins->log)) {
-			$this->plugins->log->add($_SESSION['user']['id'], 'like', $like_id, 'add');
+			$this->plugins->log->add($_SESSION['user_id'], 'like', $like_id, 'add');
 		}
 
 		$this->show($item_id);
@@ -16,12 +16,12 @@ class LikesController extends Application {
 	
 	function remove($item_id) {
 		
-		$like = Like::get_by_user_item($_SESSION['user']['id'], $item_id);
+		$like = Like::get_by_user_item($_SESSION['user_id'], $item_id);
 		
 		$like->remove();
 		
 		if (isset($this->plugins->log)) {
-			$this->plugins->log->add($_SESSION['user']['id'], 'like', $this->id, 'remove');
+			$this->plugins->log->add($_SESSION['user_id'], 'like', $this->id, 'remove');
 		}
 		
 		$this->show($item_id);

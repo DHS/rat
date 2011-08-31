@@ -7,6 +7,6 @@ $body = '<p>Hi there,</p>
 <p>'.$link.'</p>
 <p>We value your feedback very highly. Once you\'ve had a play with '.$this->config->name.', please reply to this email with your thoughts!</p>
 <p>Many thanks,</p>
-<p>'.$_SESSION['user']['username'].', '.$this->config->name.' admin</p>';
+<p>'.$user->username.', '.$this->config->name.' admin</p>';
 
 ?>

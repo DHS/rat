@@ -7,7 +7,7 @@ class InvitesController extends Application {
 		// Config seems to be empty when accessed in controller so this fails... weird
 		
 		// Check if feature is disabled or user is logged out
-		//if ($this->config->invites['enabled'] == FALSE || empty($_SESSION['user'])) {
+		//if ($this->config->invites['enabled'] == FALSE || empty($_SESSION['user_id'])) {
 		//	
 		//	$this->title = 'Page not found';
 		//	$this->loadView('partials/header');
@@ -20,9 +20,9 @@ class InvitesController extends Application {
 	
 	function index() {
 		
-		$user = User::get_by_id($_SESSION['user']['id']);
+		$user = User::get_by_id($_SESSION['user_id']);
 		
-		$this->invites_remaining = $_SESSION['user']['invites'];
+		$this->invites_remaining = $user->invites;
 		$this->invites = $user->invites();
 		
 		if (isset($this->invites_remaining) && $this->invites_remaining == 1) {
@@ -40,13 +40,15 @@ class InvitesController extends Application {
 	
 	function add() {
 		
+		$user = User::get_by_id($_SESSION['user_id']);
+		
 		$_POST['email'] = trim($_POST['email']);
 
 		if ($_POST['email'] == '') {
 			$error .= 'Please enter an email address.<br />';
 		}
 
-		if ($_SESSION['user']['invites'] < 1) {
+		if ($user->invites < 1) {
 			$error .= 'You don\'t have any invites remaining.<br />';
 		}
 		
@@ -60,7 +62,7 @@ class InvitesController extends Application {
 		}
 		
 		// Check if already invited
-		if (Invite::check_invited($_SESSION['user']['id'], $_POST['email']) == TRUE) {
+		if (Invite::check_invited($_SESSION['user_id'], $_POST['email']) == TRUE) {
 			$error .= 'You have already invited this person.<br />';
 		}
 		
@@ -73,19 +75,19 @@ class InvitesController extends Application {
 			// No problems so do signup + login
 			
 			// Add invite to database
-			$id = Invite::add($_SESSION['user']['id'], $_POST['email']);
+			$id = Invite::add($_SESSION['user_id'], $_POST['email']);
 			
 			// Decrement invites in users table
-			User::update_invites($_SESSION['user']['id'], -1);
+			User::update_invites($_SESSION['user_id'], -1);
 			
 			// Award points
 			if (isset($this->plugins->points)) {
-				$this->plugins->points->update($_SESSION['user']['id'], $this->plugins->points['per_invite_sent']);
+				$this->plugins->points->update($_SESSION['user_id'], $this->plugins->points['per_invite_sent']);
 			}
 			
 			// Log invite
 			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($_SESSION['user']['id'], 'invite', $id, 'add', $_POST['email']);
+				$this->plugins->log->add($_SESSION['user_id'], 'invite', $id, 'add', $_POST['email']);
 			}
 			
 			if (SITE_IDENTIFIER == 'live') {
@@ -95,7 +97,7 @@ class InvitesController extends Application {
 			}
 			
 			$link = $this->config->url.'signup/'.$id;
-			$headers = "From: {$_SESSION['user']['username']} <{$_SESSION['user']['email']}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
+			$headers = "From: {$user->username} <{$user->email}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 			
 			// Load subject and body from template
 			include "themes/{$this->config->theme}/emails/invite_friend.php";
