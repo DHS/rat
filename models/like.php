@@ -77,15 +77,17 @@ class Like {
 	}
 	
 	// Get all liked items, returns an array of Like objects
-	public static function list_all($limit = 10) {
+	public static function list_all($limit = 10, $offset = 0) {
 		
 		$sql = "SELECT id FROM likes ORDER BY date DESC";
 		
-		// Limit not null so create limit string
-		if ($limit != NULL) {
-			$sql .= " LIMIT $limit";
-			$limit = sanitize_input($limit);
-		}
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
 		
 		// Get likes
 		$query = mysql_query($sql);

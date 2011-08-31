@@ -60,15 +60,17 @@ class Item {
 	}
 	
 	// Get recent items, returns array of Item objects
-	public static function list_all($limit = NULL) {
+	public static function list_all($limit = 10, $offset = 0) {
 		
 		$sql = "SELECT id FROM items ORDER BY id DESC";
 		
-		// Limit not null so create limit string
-		if ($limit != NULL) {
-			$limit = sanitize_input($limit);
-			$sql .= " LIMIT $limit";
-		}
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
 		
 		$query = mysql_query($sql);
 		
@@ -82,7 +84,7 @@ class Item {
 	}
 	
 	// Get a feed of a friend's activity, returns array of Item objects
-	public static function list_feed($user_id) {
+	public static function list_feed($limit = 10, $offset = 0) {
 		
 		// Start by adding the viewer to the query string
 		$friends_string = "user_id = $user_id";
@@ -95,7 +97,16 @@ class Item {
 			$friends_string .= " OR user_id = {$friend['friend_user_id']}";
 		}
 		
-		$sql = "SELECT id FROM items WHERE $friends_string ORDER BY id DESC LIMIT 100";
+		$sql = "SELECT id FROM items WHERE $friends_string ORDER BY id DESC";
+		
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
+		
 		$query = mysql_query($sql);
 		
 		// Loop through item ids, fetching objects
@@ -115,9 +126,18 @@ class Item {
 	}
 	
 	// Get comments for an item, returns an array of Comment objects
-	public function comments() {
+	public function comments($limit = 10, $offset = 0) {
 		
 		$sql = "SELECT id FROM comments WHERE item_id = $this->id ORDER BY id ASC";
+		
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
+		
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
@@ -129,9 +149,18 @@ class Item {
 	}
 	
 	// Get likes for an item, returns an array of Like objects
-	public function likes() {
+	public function likes($limit = 10, $offset = 0) {
 		
 		$sql = "SELECT id FROM likes WHERE item_id = $this->id";
+		
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
+		
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {

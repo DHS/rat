@@ -172,21 +172,17 @@ class User {
 	}
 	
 	// Get a user's items, returns array of Item objects
-	public function items($limit = 10) {
+	public function items($limit = 10, $offset = 0) {
 		
 		$sql = "SELECT id FROM items WHERE user_id = $this->id ORDER BY id DESC";
 		
-		// Limit not null so create limit string
-		if ($limit != NULL) {
-			$limit = sanitize_input($limit);
-			$sql .= " LIMIT $limit";
-		}
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
 		
-		// Offset not zero so create offset string
-		if ($offset != NULL) {
-			$offset = sanitize_input($offset);
-			$sql .= " OFFSET $offset";
-		}
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
 		
 		$query = mysql_query($sql);
 		
@@ -199,9 +195,18 @@ class User {
 	}
 	
 	// Get all invites sent by a user, returns an array of Invite objects
-	public function invites() {
+	public function invites($limit = 10, $offset = 0) {
 		
 		$sql = "SELECT id FROM invites WHERE user_id = $this->id ORDER BY id DESC";
+		
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
+		
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
@@ -213,9 +218,18 @@ class User {
 	}
 	
 	// Get a users's friends, returns a list of User items
-	public function friends() {
+	public function friends($limit = 10, $offset = 0) {
 		
 		$sql = "SELECT id, friend_user_id FROM friends WHERE user_id = $this->id";
+		
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
+		
 		$query = mysql_query($sql);
 
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
@@ -227,9 +241,18 @@ class User {
 	}
 	
 	// Get a users's followers, returns a list of Friend items
-	public function followers() {
+	public function followers($limit = 10, $offset = 0) {
 		
 		$sql = "SELECT id, friend_user_id FROM friends WHERE friend_user_id = $this->id";
+		
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
+		
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
@@ -241,15 +264,17 @@ class User {
 	}
 	
 	// Get items liked by a user, returns array of Item objects
-	public function likes($limit = 10) {
+	public function likes($limit = 10, $offset = 0) {
 			
 		$sql = "SELECT item_id FROM likes WHERE user_id = $this->id ORDER BY date DESC";
 		
-		// Limit not null so create limit string
-		if ($limit != NULL) {
-			$limit = sanitize_input($limit);
-			$sql .= " LIMIT $limit";
-		}
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
 		
 		$query = mysql_query($sql);
 		
@@ -262,9 +287,18 @@ class User {
 	}
 	
 	// Get comments made by a user, returns an array of Comment objects
-	public function comments() {
+	public function comments($limit = 10, $offset = 0) {
 		
 		$sql = "SELECT id FROM comments WHERE user_id = $this->id ORDER BY id ASC";
+		
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
+		
 		$query = mysql_query($sql);
 		
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {

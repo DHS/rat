@@ -51,11 +51,20 @@ class Invite {
 	}
 	
 	// Get all invites with a given code, returns an array of Invite objects
-	public static function list_by_code($code) {
+	public static function list_by_code($code, $limit = 10, $offset = 0) {
 		
 		$code = sanitize_input($code);
 		
 		$sql = "SELECT id FROM invites WHERE code = $code";
+		
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
+		
 		$query = mysql_query($sql);
 		
 		// Loop through invite ids, fetching objects

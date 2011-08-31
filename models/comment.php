@@ -49,15 +49,17 @@ class Comment {
 	}
 	
 	// Get all comments, returns an array of Comments objects
-	public static function list_all($limit = 10) {
+	public static function list_all($limit = 10, $offset = 0) {
 		
 		$sql = "SELECT id FROM comments ORDER BY date DESC";
 		
-		// Limit not null so create limit string
-		if ($limit != NULL) {
-			$sql .= " LIMIT $limit";
-			$limit = sanitize_input($limit);
-		}
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
 		
 		// Get list of ids
 		$query = mysql_query($sql);
