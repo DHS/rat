@@ -35,7 +35,7 @@ class CommentsController extends Application {
 
 			// Log comment removal
 			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($_SESSION['user']['id'], 'comment', $comment_id, 'remove');
+				$this->plugins->log->add($_SESSION['user']['id'], 'comment', $comment->id, 'remove');
 			}
 			
 		}
@@ -48,6 +48,7 @@ class CommentsController extends Application {
 	function show($item_id) {
 		
 		$this->item = Item::get_by_id($item_id);
+		$this->show_comment_form = TRUE;
 		$this->loadPartial('comments');
 		
 	}

@@ -19,8 +19,6 @@ if (count($this->item->comments) > 0) {
 
 ?>
 
-</span>
-
 <?php if ($this->config->items['comments']['enabled'] == TRUE && ($this->config->private == TRUE || $_SESSION['user'] != NULL)) { ?>
 
   <form action="javascript:comment_add(<?php echo $this->item->id; ?>);" id="comment_form_<?php echo $this->item->id; ?>" class="meta" style="margin: 0px; <?php if ($this->show_comment_form != TRUE) { echo 'visibility: hidden; height: 0px;'; } ?>" method="post">
@@ -28,3 +26,5 @@ if (count($this->item->comments) > 0) {
   </form>
 
 <?php } ?>
+
+</span>
