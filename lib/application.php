@@ -18,12 +18,24 @@ class Application {
 			$uri = Application::fetch_uri($config);
 			
 			$controller = ucfirst($uri['controller']).'Controller';
+<<<<<<< HEAD
+			@include "controllers/{$uri['controller']}_controller.php";
+
+			if (class_exists($controller) && (method_exists($controller, $uri['action'])) 
+			|| (empty($uri['action']) && method_exists($controller, 'index'))) {
+=======
 			include "controllers/{$uri['controller']}_controller.php";
 			
 			if (class_exists($controller)) {
+>>>>>>> b7260cfb8faed44f586dff3b17ea4088d651026a
 				$app = new $controller;
 			} else {
-				throw new RoutingException($uri, "Page not found");
+				$uri = Application::route();
+
+				$controller = ucfirst($uri['controller']).'Controller';
+				@include "controllers/{$uri['controller']}_controller.php";
+				
+				$app = new $controller;
 			}
 			
 			$app->loadConfig($config);
@@ -31,9 +43,15 @@ class Application {
 			$app->loadPlugins();
 			
 			$app->uri = $uri;
+<<<<<<< HEAD
+	
+			$app->loadAction();
+
+=======
 			
 			$app->route();
 			
+>>>>>>> b7260cfb8faed44f586dff3b17ea4088d651026a
 			unset($_SESSION['flash']);
 			
 		} catch (ValidationException $e) {
@@ -77,11 +95,16 @@ class Application {
 		// Set up uri variable to pass to app
 		$uri = array(	'controller'	=> $segments[1],
 						'action'		=> $segments[2],
-						'id'			=> $segments[3],
 						'format'		=> $format,
 						'params'		=> $_GET
 					);
+<<<<<<< HEAD
+
+		$uri['params']['id'] = $segments[3];
+
+=======
 		
+>>>>>>> b7260cfb8faed44f586dff3b17ea4088d651026a
 		// Set the controller to the default if not in URI
 		if (empty($uri['controller'])) {
 			$uri['controller'] = $config->default_controller;
@@ -89,6 +112,60 @@ class Application {
 		
 		return $uri;
 		
+	}
+
+	private static function route() {
+		
+		require_once 'config/routes.php';
+
+		$routes = new Routes;
+		
+		// Get request from server and remove BASE_DIR
+		$request = substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10));
+		
+		// Split at '.' and before '?' to obtain request format
+		$request = preg_split("/\./", $request);
+		$request = $request[0];
+		$format = preg_split("/\?/", $request[1]);
+		$format = $format[0];
+
+		$routeFound = FALSE;
+
+		foreach ($routes->aliases as $k => $v) {
+
+			// Swap asterisks for valid regex
+			$k = str_replace("*", "([a-zA-Z0-9]+)", $k);
+
+			// Match the request against current route
+			if (preg_match('|^'.$k.'$|', $request, $matches)) {
+
+				$uri['controller'] = $v['controller'];
+				$uri['action'] = $v['action'];
+
+				// Assign components of $uri['params'] based on array in routes class
+				foreach ($v as $k => $v) {
+					if ($k != 'controller' || $k != 'action') {
+
+						// Convert $x to xth parameter
+						if (strstr($v, "$")) {
+							$i = substr($v, 1);
+							$v = $matches[$i];
+						}
+						$uri['params'][$k] = $v;
+					}
+				}
+
+				$uri['format'] = $format;
+				$routeFound = TRUE;
+				break;
+			}
+		
+		}
+
+		if (! $routeFound) throw new RoutingException($uri, "Page not found");
+
+		return $uri;
+
 	}
 	
 	private function loadConfig($config) {
@@ -115,16 +192,13 @@ class Application {
 	
 	private function loadModels() {
 		
-    require_once 'lib/mysql.php';
+		require_once 'lib/mysql.php';
 		
-		$handle = opendir('models');	
-		while (false != ($file = readdir($handle))) {
-			$model = substr($file, 0, -4);
-			if ($file[0] != '.') {
-				require_once "models/$model.php";
-			}
+		$models = glob('models/*.php' );
+		foreach ($models as $model) {
+			require_once $model;
 		}
-		
+				
 	}
 	
 	private function loadPlugins() {
@@ -138,19 +212,13 @@ class Application {
 		
 	}
 	
-	private function route() {
+	private function loadAction() {
 
 			if (method_exists($this, $this->uri['action'])) {
-				$this->{$this->uri['action']}($this->uri['id']);
+				$this->{$this->uri['action']}($this->uri['params']['id']);
 			} elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
-				$this->index($this->uri['id']);
+				$this->index($this->uri['params']['id']);
 			} else {
-				// Load 404
-				//$uri = array(	'controller'	=> 'pages',
-				//				'action'		=> 'show',
-				//				'id'			=> '404'
-				//			);
-				//$this->initialise($uri, $this->config);
 				throw new RoutingException($uri, "Page not found");
 			}
 
