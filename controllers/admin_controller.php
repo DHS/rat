@@ -64,13 +64,13 @@ class AdminController extends Application {
 				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'signup');
 			}
 			
-			$this->message = 'Rat is now setup and you are logged in!';
+			Application::flash('success', 'You are now logged out.');
 			
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$this->config->url.'?message='.urlencode($this->message));
+				header('Location: '.$this->config->url);
 			} else {
-				header('Location: '.$this->config->dev_url.'?message='.urlencode($this->message));
+				header('Location: '.$this->config->dev_url);
 			}
 			
 			exit();
@@ -78,9 +78,9 @@ class AdminController extends Application {
 		} else {
 			// Show setup form
 			
-			$this->message = 'Welcome to Rat! Please enter your details:';
+			Application::flash('info', 'Welcome to Rat! Please enter your details:');
 			$this->loadView('admin/setup', 'admin');
-
+			
 		}
 		
 	}
@@ -151,7 +151,7 @@ class AdminController extends Application {
 				mail($to, $subject, $body, $headers);
 			}
 			
-			$this->message = 'User invited!';
+			Application::flash('success', 'User invited!');
 			
 		}
 
@@ -165,7 +165,7 @@ class AdminController extends Application {
 			
 			Admin::update_invites($_GET['count']);
 			
-			$this->message = 'Invites updated!';
+			Application::flash('success', 'Invites updated!');
 			
 		}
 		

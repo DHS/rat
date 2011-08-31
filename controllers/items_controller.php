@@ -103,15 +103,15 @@ class ItemsController extends Application {
 					$this->plugins->log->add($_SESSION['user_id'], 'item', $item_id, 'add', "title = {$_POST['title']}\ncontent = {$_POST['content']}");
 				}
 				
-				$this->message = ucfirst($this->config->items['name']).' added!';
+				Application::flash('success', ucfirst($this->config->items['name']).' added!');
 				
 				$page = $this->url_for('users', 'show', $_SESSION['user_id']);
 				
 				// Go forth!
 				if (SITE_IDENTIFIER == 'live') {
-					header('Location: '.$this->config->url.$page.'?message='.urlencode($this->message));
+					header('Location: '.$this->config->url.$page);
 				} else {
-					header('Location: '.$this->config->dev_url.$page.'user.php?message='.urlencode($this->message));
+					header('Location: '.$this->config->dev_url.$page.'user.php');
 				}
 				
 				exit();
@@ -125,7 +125,7 @@ class ItemsController extends Application {
 				$_GET['content']	= $_POST['content'];
 				
 				// Show error message
-				$this->message = $error;
+				Application::flash('error', $error);
 				$this->loadView('items/add');
 				exit();
 				
@@ -188,7 +188,7 @@ class ItemsController extends Application {
 			}
 			
 			// Set message
-			$this->message = ucfirst($this->config->items['name']).' removed!';
+			Application::flash('success', ucfirst($this->config->items['name']).' removed!');
 			
 			// Return from whence you came
 			header('Location: '.$_SERVER['HTTP_REFERER']);

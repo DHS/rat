@@ -27,7 +27,7 @@ class SessionsController extends Application {
 				
 			} else {
 				
-				$this->message .= 'Something isn\'t quite right.<br />Please try again...';
+				Application::flash('error', 'Something isn\'t quite right. Please try again...');
 				$email = $_POST['email'];
 				
 			}
@@ -41,8 +41,7 @@ class SessionsController extends Application {
 			
 		} else {
 			
-			$this->message = 'You are already logged in!<br />';
-			$this->message .= $this->link_to('Click here', 'sessions', 'remove').' to logout.';
+			Application::flash('error', 'You are already logged in! '.$this->link_to('Click here', 'sessions', 'remove').' to logout.');
 			$this->loadView();
 			
 		}

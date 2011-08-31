@@ -26,11 +26,11 @@ class InvitesController extends Application {
 		$this->invites = $user->invites();
 		
 		if (isset($this->invites_remaining) && $this->invites_remaining == 1) {
-			$this->message .= 'You have one invite remaining.<br />';
+			Application::flash('info', 'You have one invite remaining.');
 		} elseif (isset($this->invites_remaining) && $this->invites_remaining > 1) {
-			$this->message .= 'You have '.$this->invites_remaining.' invites remaining.<br />';
+			Application::flash('info', 'You have '.$this->invites_remaining.' invites remaining.');
 		} else {
-			$this->message .= 'You have no remaining invites.<br />';
+			Application::flash('info', 'You have no remaining invites.');
 		}
 		
 		$this->title = 'Invites';
@@ -107,13 +107,13 @@ class InvitesController extends Application {
 				mail($to, $subject, $body, $headers);
 			}
 			
-			$this->message .= 'Invite sent!<br />';
+			Application::flash('success', 'Invite sent!');
 			
 		} else {
 			
 			$_GET['email'] = $_POST['email'];
 			
-			$this->message .= $error;
+			Application::flash('error', $error);
 			
 		}
 		

@@ -8,7 +8,7 @@ class UsersController extends Application {
 		if ($this->uri['action'] == 'add' && isset($_SESSION['user_id'])) {
 
 			$this->title = 'Signup';
-			$this->message = 'You are already logged in!';
+			Application::flash('warning', 'You are already logged in!');
 			$this->loadPartial('header');
 			$this->loadPartial('footer');
 			exit;
@@ -141,19 +141,19 @@ class UsersController extends Application {
 					$user->authenticate($_POST['password1']);
 					
 					// Set welcome message
-					$this->message = urlencode('Password updated! Welcome back to '.$this->config->name.'!');
+					Application::flash('success', 'Password updated! Welcome back to '.$this->config->name.'!');
 					
 					// If redirect_to is set then redirect
 					if (isset($_GET['redirect_to'])) {
-						header('Location: '.$_GET['redirect_to'].'?message='.$this->message);
+						header('Location: '.$_GET['redirect_to']);
 						exit();
 					}
 					
 					// Go forth!
 					if (SITE_IDENTIFIER == 'live') {
-						header('Location: '.$this->config->url.$this->config->default_controller.'/?message='.$this->message);
+						header('Location: '.$this->config->url.$this->config->default_controller);
 					} else {
-						header('Location: '.$this->config->dev_url.$this->config->default_controller.'/?message='.$this->message);
+						header('Location: '.$this->config->dev_url.$this->config->default_controller);
 					}
 					
 					exit();
@@ -162,7 +162,7 @@ class UsersController extends Application {
 					// Show error message
 					
 					if (User::check_password_reset_code($code) != FALSE) {
-						$this->message = $error;
+						Application::flash('error', $error);
 						$this->loadView('users/reset');
 					} else {
 						$this->loadView();
@@ -217,7 +217,7 @@ class UsersController extends Application {
 					
 				}
 				
-				$this->message = 'Check your email for instructions about how to reset your password!';
+				Application::flash('info', 'Check your email for instructions about how to reset your password!');
 				
 			}
 				
@@ -272,19 +272,19 @@ class UsersController extends Application {
 					$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'change_password');
 				}
 				
-				$this->message = 'Password udpated!';
+				Application::flash('success', 'Password updated!');
 				
 			} else {
 				// New passwords don't match
 				
-				$this->message = 'There was a problem, please try again.';
+				Application::flash('error', 'There was a problem, please try again.');
 				
 			}
 			
 		} else {
 			// Old passwords don't match
 			
-			$this->message = 'There was a problem, please try again.';
+			Application::flash('error', 'There was a problem, please try again.');
 			
 		}
 		
@@ -320,11 +320,11 @@ class UsersController extends Application {
 			User::update_profile($_SESSION['user_id'], $_POST['full_name'], $_POST['bio'], $_POST['url']);
         	
 			// Set success message
-			$this->message = 'Profile information updated!';
+			Application::flash('success', 'Profile information updated!');
         	
 		} else {
         	
-			$this->message = $error;
+			Application::flash('error', $error);
         	
 		}
         
@@ -452,13 +452,13 @@ class UsersController extends Application {
 			}
             
 			// Set welcome message
-			$this->message = urlencode('Welcome to '.$this->config->name.'!');
+			Application::flash('success', 'Welcome to '.$this->config->name.'!');
             
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$this->config->url.$this->config->default_controller.'/?message='.$this->message);
+				header('Location: '.$this->config->url.$this->config->default_controller);
 			} else {
-				header('Location: '.$this->config->dev_url.$this->config->default_controller.'/?message='.$this->message);
+				header('Location: '.$this->config->dev_url.$this->config->default_controller);
 			}
             
 			exit();
@@ -472,7 +472,7 @@ class UsersController extends Application {
 			$this->code			= $_POST['code'];
 			
 			// Show error message
-			$this->message = $error;
+			Application::flash('error', $error);
 			$this->title = 'Signup';
 			
 			// Show signup form
@@ -512,13 +512,13 @@ class UsersController extends Application {
 			}
             
 			// Set thank you & tweet this message
-			$this->message = "Thanks for signing up!<br />We will be in touch soon...";
+			Application::flash('success', 'Thanks for signing up!<br />We will be in touch soon...);'
             
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$this->config->url.$this->config->default_controller.'/?message='.urlencode($this->message));
+				header('Location: '.$this->config->url.$this->config->default_controller);
 			} else {
-				header('Location: '.$this->config->dev_url.$this->config->default_controller.'/?message='.urlencode($this->message));
+				header('Location: '.$this->config->dev_url.$this->config->default_controller);
 			}
             
 			exit();
@@ -532,7 +532,7 @@ class UsersController extends Application {
 			$this->code			= $_POST['code'];
 			
 			// Show error message
-			$this->message = $error;
+			Application::flash('error', $error);
 			$this->title = 'Beta signup';
 			
 			// Show signup form
@@ -653,13 +653,13 @@ class UsersController extends Application {
 			}
             
 			// Set welcome message
-			$this->message = urlencode('Welcome to '.$this->config->name.'!');
+			Application::flash('success', 'Welcome to '.$this->config->name.'!');
             
 			// Go forth!
 			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$this->config->url.$this->config->default_controller.'/?message='.$this->message);
+				header('Location: '.$this->config->url.$this->config->default_controller);
 			} else {
-				header('Location: '.$this->config->dev_url.$this->config->default_controller.'/?message='.$this->message);
+				header('Location: '.$this->config->dev_url.$this->config->default_controller);
 			}
             
 			exit();
@@ -673,7 +673,7 @@ class UsersController extends Application {
 			$this->code			= $_POST['code'];
 			
 			// Show error message
-			$this->message = $error;
+			Application::flash('error', $error);
 			$this->title = 'Signup';
 			
 			// Show signup form
