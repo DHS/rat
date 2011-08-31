@@ -18,13 +18,17 @@ class Application {
 			$uri = Application::fetch_uri($config);
 			
 			$controller = ucfirst($uri['controller']).'Controller';
-			include "controllers/{$uri['controller']}_controller.php";
+			@include "controllers/{$uri['controller']}_controller.php";
 
-			if (class_exists($controller)) {
+			if (class_exists($controller) && method_exists($controller, $uri['action'])) {
 				$app = new $controller;
 			} else {
-				Application::checkAliases();
-				//throw new RoutingException($uri, "Page not found");
+				$uri = Application::route();
+
+				$controller = ucfirst($uri['controller']).'Controller';
+				@include "controllers/{$uri['controller']}_controller.php";
+				
+				$app = new $controller;
 			}
 		
 			$app->loadConfig($config);
@@ -33,7 +37,7 @@ class Application {
 		
 			$app->uri = $uri;
 	
-			$app->route();
+			$app->loadAction();
 
 			unset($_SESSION['flash']);
 		
@@ -136,7 +140,7 @@ class Application {
 		
 	}
 
-	private static function checkAliases() {
+	private static function route() {
 		
 		require_once 'config/routes.php';
 
@@ -144,6 +148,14 @@ class Application {
 		
 		// Get request from server and remove BASE_DIR
 		$request = substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10));
+		
+		// Split at '.' and before '?' to obtain request format
+		$request = preg_split("/\./", $request);
+		$request = $request[0];
+		$format = preg_split("/\?/", $request[1]);
+		$format = $format[0];
+
+		$routeFound = FALSE;
 
 		foreach ($routes->aliases as $k => $v) {
 
@@ -152,7 +164,7 @@ class Application {
 
 			// Match the request against current route
 			if (preg_match('|^'.$k.'$|', $request, $matches)) {
-				
+
 				// Assign components of $uri based on array in routes class
 				foreach ($v as $k => $v) {
 
@@ -165,16 +177,20 @@ class Application {
 					$uri[$k] = $v;
 				}
 
+				$uri['format'] = $format;
+				$routeFound = TRUE;
 				break;
-			}	
+			}
 		
 		}
-	
+
+		if (! $routeFound) throw new RoutingException($uri, "Page not found");
+
 		return $uri;
 
 	}
 	
-	private function route() {
+	private function loadAction() {
 
 			if (method_exists($this, $this->uri['action'])) {
 				$this->{$this->uri['action']}($this->uri['id']);
