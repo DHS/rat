@@ -1,25 +1,37 @@
+<?php
 
-<?php if (is_array($this->items)) { ?>
+// User not logged in so show explanation sentence
+if (!isset($_SESSION['user_id'])) {
+	echo '<h1><small>'.$this->config->tagline.'</small></h1>';
+}
+
+// App is private and user not logged in so show beta signup form
+if ($this->config->private == TRUE && !isset($_SESSION['user_id'])) {
+	$this->loadView('users/add', 'none');
+}
+
+// App public or user logged in so show items
+if ($this->config->private == FALSE || isset($_SESSION['user_id'])) {
+
+	if (is_array($this->items)) { ?>
 
 <div class="row">
   <div class="span8 columns offset3">
 
-<?php
+	<?php foreach ($this->items as $this->item) {
+		$this->loadPartial('item');
+	} ?>
 
-foreach ($this->items as $this->item) {
-	$this->loadPartial('item');
-}
-
-$this->loadPartial('pagination');
-
-?>
+	<?php $this->loadPartial('pagination'); ?>
 
   </div>
   <div class="span4 columns">
 
-    <?php $this->loadPartial('item_add'); ?>
+	<?php $this->loadPartial('item_add'); ?>
 
   </div>
 </div>
+
+	<?php } ?>
 
 <?php } ?>

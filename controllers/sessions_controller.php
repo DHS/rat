@@ -36,7 +36,6 @@ class SessionsController extends Application {
 		
 		if (!isset($_SESSION['user_id'])) {
 			
-			$this->title = 'Login';
 			$this->loadView('sessions/add');
 			
 		} else {

@@ -18,7 +18,6 @@ class ItemsController extends Application {
 	function index() {
 	
 		$this->items = Item::list_all();
-		
 		$this->loadView('items/index');
 		
 	}
@@ -225,7 +224,6 @@ class ItemsController extends Application {
 			
 			// If friends enabled then show feed of friends' activity
 			
-			$this->title = $this->config->tagline;
 			$this->items = Item::list_feed($_SESSION['user_id']);
 			$this->loadView('items/index');
 			

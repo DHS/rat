@@ -49,7 +49,6 @@ class UsersController extends Application {
 			
 			// No email submitted so show signup form
 			
-			$this->title = 'Signup';
 			$this->code = $code;
 			$this->loadView('users/add');
 			
