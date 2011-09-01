@@ -1,7 +1,9 @@
 <?php
 
 class AdminController extends Application {
-
+	
+	protected $requireAdmin = array('index', 'setup', 'signups', 'users', 'history', 'invite', 'grant_invites');
+	
 	// TODO: Move this to a filter
 	function __construct() {
 		
