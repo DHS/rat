@@ -38,8 +38,8 @@ class Application {
 			
 			$app->uri = $uri;
 
-			//require_once 'lib/filters.php';
-			//$app->runFilters();
+			require_once 'lib/filter.php';
+			$app->runFilters();
 			
 			$app->loadAction();
 
@@ -201,58 +201,30 @@ class Application {
 
 	private function runFilters() {
 
-		// Save uri to a new variable for use inside this function
 		$uri = $this->uri;
-		
-		// If uri action is missing, assume index
 		if (is_null($uri['action'])) {
 			$uri['action'] = 'index';
 		}
-		
-		// Instantiate Filters class
-		$filters = new Filters($this);
-		
-		// Create a reflection of the Application class (controller file was included earlier)
-		$reflect = new ReflectionClass(ucfirst($uri['controller']).'Controller');
-		
-		// Loop through protected variables of Application class looking for things like:
-		// protected $requireLoggedIn = array('add', 'remove');
-		foreach ($reflect->getProperties(ReflectionProperty::IS_PROTECTED) as $filter) {
-			
-			// Grab the name of the variable ie. requireLoggedIn
+
+		$reflect = new ReflectionClass($this);
+		foreach ($reflect->getProperties(ReflectionProperty::IS_PROTECTED) as $filter)
+		{
 			$filter_name = $filter->getName();
-			
-			// This was my original idea but grabbing the property's value isn't as easy as this
-			
-			//// Check to see if uri action is in the list of actions that require filtering
-			//if (in_array($uri['action'], $filter)) {
-			//	
-			//	// Match found! So call the relevant method in the Filters class
-			//	$filter->$filter_name();
-			//	
-			//}
-			
-			// And it's probably going to involve using something like this inside the loop
-			
-			//$property = $reflect->getProperty($filter_name);
-			//$property->setAccessible(true);
-			//echo $reflect->getProperty($filter_name)->getValue();
-			
-			// The answer is here somewhere: http://php.net/manual/en/class.reflectionclass.php
-			
+			$filter = new Filter($this);
+			$filter->$filter_name($uri, $this->$filter_name);
 		}
-		
+
 	}
 	
 	private function loadAction() {
 
-		if (method_exists($this, $this->uri['action'])) {
-			$this->{$this->uri['action']}($this->uri['params']['id']);
-		} elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
-			$this->index($this->uri['params']['id']);
-		} else {
-			throw new RoutingException($uri, "Page not found");
-		}
+			if (method_exists($this, $this->uri['action'])) {
+				$this->{$this->uri['action']}($this->uri['params']['id']);
+			} elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
+				$this->index($this->uri['params']['id']);
+			} else {
+				throw new RoutingException($uri, "Page not found");
+			}
 
 	}
 	
@@ -301,6 +273,10 @@ class Application {
 	}
 	
 	public static function flash($category, $message) {
+		
+		if (! in_array($category, array('error', 'notice', 'success'))) {
+			$category = 'success';
+		}
 		
 		$_SESSION['flash'] = array('category' => $category, 'message' => $message);
 		
