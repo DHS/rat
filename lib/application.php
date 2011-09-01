@@ -39,14 +39,14 @@ class Application {
 			$app->uri = $uri;
 			
 			// Helper var to simplify reponding to json
-			$app->json = $app->uri['format'] == 'json';			
-			
-			require_once 'lib/filter.php';
-			$app->runFilters();
+			$app->json = $app->uri['format'] == 'json';		
 			
 			$app->loadAction();
 			
 			unset($_SESSION['flash']);
+			
+			require_once 'lib/filter.php';
+			$app->runFilters();
 			
 		} catch (ValidationException $e) {
 			

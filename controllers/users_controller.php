@@ -2,7 +2,8 @@
 
 class UsersController extends Application {
 
-	protected $requireLoggedOut = array('add', 'update', 'reset', 'confirm');
+	protected $requireLoggedOut = array('add');
+	protected $requireLoggedIn = array('show', 'update', 'reset', 'confirm');
 	
 	// Add a user / signup
 	function add($code) {
