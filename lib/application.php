@@ -127,7 +127,7 @@ class Application {
 			$k = str_replace("*", "([a-zA-Z0-9]+)", $k);
 			
 			// Match the request against current route
-			if (preg_match('|^'.$k.'$|', $request, $matches)) {
+			if (preg_match('|^'.$k.'/*$|', $request, $matches)) {
 				
 				$uri['controller'] = $v['controller'];
 				$uri['action'] = $v['action'];
