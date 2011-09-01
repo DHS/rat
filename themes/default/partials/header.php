@@ -67,8 +67,10 @@ if (isset($this->title)) {
           <ul>
             <li<?php if ($this->uri['controller'] == $this->config->default_controller) { echo ' class="active" '; } ?>><?php echo $this->link_to('Home', $this->config->default_controller); ?></li>
             <li<?php if ($this->uri['controller'] == 'users') { echo ' class="active" '; } ?>><?php echo $this->link_to('My profile', 'users', 'show', $_SESSION['user_id']); ?></li>
+            <?php if ($this->config->invites['enabled'] == TRUE) { ?>
             <li<?php if ($this->uri['controller'] == 'invites') { echo ' class="active" '; } ?>><?php echo $this->link_to('Invites', 'invites'); ?></li>
-            <li<?php if ($this->uri['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?></li>
+            <?php } ?>
+            <li<?php if ($this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?></li>
           </ul>
           <ul class="nav secondary-nav">
             <li>
@@ -99,7 +101,7 @@ if (isset($this->title)) {
           <ul class="nav secondary-nav">
             <li<?php if ($this->uri['controller'] == 'users' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php echo $this->link_to('Signup', 'users', 'add') ?></li>
             <li<?php if ($this->uri['controller'] == 'sessions' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php echo $this->link_to('Login', 'sessions', 'add') ?></li>
-            <li<?php if ($this->uri['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help') ?></li>
+            <li<?php if ($this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help') ?></li>
           </ul>
         </div>
       </div>
