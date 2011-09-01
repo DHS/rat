@@ -3,23 +3,7 @@
 class InvitesController extends Application {
 	
 	protected $requireLoggedIn = array('index', 'add');
-
-	// TODO: Move this to a filter
-	//function __construct() {
-		
-		// Config seems to be empty when accessed in controller so this fails... weird
-		
-		// Check if feature is disabled
-		//if ($this->config->invites['enabled'] == FALSE) {
-		//	
-		//	$this->title = 'Page not found';
-		//	$this->loadView('partials/header');
-		//	$this->loadView('partials/footer');
-		//	exit;
-		//	
-		//}
-		
-	//}
+	protected $requireInvitesEnabled = array('index', 'add');
 	
 	function index() {
 		
