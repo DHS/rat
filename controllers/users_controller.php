@@ -61,7 +61,7 @@ class UsersController extends Application {
 		
 		if (!isset($page)) {
 			
-			$page = 'password';
+			$page = 'profile';
 			
 		} elseif ($page == 'password') {
 			
@@ -119,10 +119,11 @@ class UsersController extends Application {
 					
 					$user_id = User::check_password_reset_code($code);
 					
-					// Do update
-					User::update_password($user_id, $_POST['password1'], $this->config->encryption_salt);
-					
+					// Get user object
 					$user = User::get_by_id($user_id);
+					
+					// Do update
+					$user->update_password($_POST['password1'], $this->config->encryption_salt);
 					
 					$user->authenticate($_POST['password1'], $this->config->encryption_salt);
 					
@@ -247,8 +248,10 @@ class UsersController extends Application {
 			if ($_POST['new_password1'] == $_POST['new_password2']) {
 				// New passwords match
 				
+				$user = User::get_by_id($_SESSION['user_id']);
+				
 				// Call update_password in user model
-				User::update_password($_SESSION['user_id'], $_POST['new_password1'], $salt);
+				$user->update_password($_POST['new_password1'], $salt);
 				
 				// Update session
 				$user->password = md5($_POST['new_password1'].$salt);
@@ -295,15 +298,17 @@ class UsersController extends Application {
         
 		// Check for spaces
 		if (User::check_contains_spaces($_POST['url']) == TRUE) {
-			$error = 'URL cannot contain spaces.';
+			$error .= 'URL cannot contain spaces.';
 		}
         
 		// End URL validation
         
 		if ($error == '') {
 			
-			// Call user_update_profile in user model
-			User::update_profile($_SESSION['user_id'], $_POST['full_name'], $_POST['bio'], $_POST['url']);
+			$user = User::get_by_id($_SESSION['user_id']);
+			
+			// Call update_profile in user model
+			$user->update_profile($_POST['full_name'], $_POST['bio'], $_POST['url']);
         	
 			// Set success message
 			Application::flash('success', 'Profile information updated!');

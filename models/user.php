@@ -368,7 +368,7 @@ class User {
 	}
 	
 	// Change password
-	public static function update_password($new_password, $salt) {
+	public function update_password($new_password, $salt) {
 		
 		$encrypted_password = md5($new_password.$salt);
 		
@@ -378,7 +378,7 @@ class User {
 	}
 	
 	// Update profile info
-	public static function update_profile($name = NULL, $bio = NULL, $url = NULL) {
+	public function update_profile($name = NULL, $bio = NULL, $url = NULL) {
 		
 		$sql = "UPDATE users SET ";
 		
@@ -410,7 +410,7 @@ class User {
 	}
 	
 	// Update a user's number of invites
-	public static function update_invites($invites) {
+	public function update_invites($invites) {
 		
 		$invites = sanitize_input($invites);
 		

@@ -81,7 +81,7 @@ class InvitesController extends Application {
 			$id = Invite::add($_SESSION['user_id'], $_POST['email']);
 			
 			// Decrement invites in users table
-			User::update_invites($_SESSION['user_id'], -1);
+			$user->update_invites(-1);
 			
 			// Award points
 			if (isset($this->plugins->points)) {
