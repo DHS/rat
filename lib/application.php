@@ -82,9 +82,7 @@ class Application {
 		
 		// Split request at each '/' to obtain route
 		$segments = preg_split("/\//", $segments[0]);
-	
-		var_dump(array_map('htmlentities', $_GET));
-
+		
 		// Set up uri variable to pass to app
 		$uri = array(	'controller'	=> $segments[1],
 						'action'		=> $segments[2],
