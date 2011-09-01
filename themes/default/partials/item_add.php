@@ -7,7 +7,7 @@
             <div class="clearfix">
               <label for="title"><?php echo $this->config->items['titles']['name']; ?></label>
               <div class="input">
-                <input class="medium" name="title" size="50" type="text" value="<?php if (isset($_GET['title'])) { echo $_GET['title']; } ?>" />
+                <input class="medium" name="title" size="50" type="text" value="<?php if (isset($this->uri->params['title'])) { echo $this->uri->params['title']; } ?>" />
               </div>
             </div> <!-- /clearfix -->
 <?php } ?>
@@ -15,7 +15,7 @@
             <div class="clearfix">
               <label for="content"><?php echo $this->config->items['content']['name']; ?></label>
               <div class="input">
-                <textarea name="content" rows="5" cols="50"><?php if (isset($_GET['content'])) { echo $_GET['content']; } ?></textarea>
+                <textarea name="content" rows="5" cols="50"><?php if (isset($this->uri->params['content'])) { echo $this->uri->params['content']; } ?></textarea>
               </div>
             </div> <!-- /clearfix -->
 <?php } ?>

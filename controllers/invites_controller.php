@@ -114,7 +114,7 @@ class InvitesController extends Application {
 			
 		} else {
 			
-			$_GET['email'] = $_POST['email'];
+			$this->uri->params['email'] = $_POST['email'];
 			
 			Application::flash('error', $error);
 			

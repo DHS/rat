@@ -107,8 +107,8 @@ class ItemsController extends Application {
 				// There was an error
 				
 				// Propagate get vars to be picked up by the form
-				$_GET['title']		= $_POST['title'];
-				$_GET['content']	= $_POST['content'];
+				$this->uri->params['title']		= $_POST['title'];
+				$this->uri->params['content']	= $_POST['content'];
 				
 				// Show error message
 				Application::flash('error', $error);
