@@ -7,7 +7,7 @@ class CommentsController extends Application {
 	function add() {
 		
 		// Check necessary vars are present
-		if (isset($_POST['item_id']) && isset($_POST['content'])) {
+		if (isset($_POST['item_id']) && $_POST['content'] != '') {
 			
 			// Add comment
 			$comment_id = Comment::add($_SESSION['user_id'], $_POST['item_id'], $_POST['content']);

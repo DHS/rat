@@ -15,7 +15,7 @@ class ItemsController extends Application {
 	// Add an item
 	function add() {
 		
-		if (isset($_POST['content']) || (isset($_POST['title']) && $this->config->items['titles']['enabled'] == TRUE)) {
+		if ($_POST['content'] != '' || ($_POST['title'] != '' && $this->config->items['titles']['enabled'] == TRUE)) {
 			
 			// Form validation
 			

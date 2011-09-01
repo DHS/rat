@@ -65,13 +65,13 @@ class UsersController extends Application {
 			
 		} elseif ($page == 'password') {
 			
-			if (isset($_POST['old_password']) && isset($_POST['new_password1']) && isset($_POST['new_password2'])) {
+			if ($_POST['old_password'] != '' && $_POST['new_password1'] != '' && $_POST['new_password2'] != '') {
 				$this->update_password($this->config->encryption_salt);
 			}
 			
 		} elseif ($page == 'profile') {
 			
-			if (isset($_POST['full_name']) || isset($_POST['bio']) || isset($_POST['url'])) {
+			if ($_POST['full_name'] != '' || $_POST['bio'] != '' || $_POST['url'] != '') {
 				$this->update_profile();
 			}
 			
@@ -100,7 +100,7 @@ class UsersController extends Application {
 			// Process reset
 			
 			// If two passwords submitted then check, otherwise show form
-			if (isset($_POST['password1']) && isset($_POST['password2'])) {
+			if ($_POST['password1'] != '' && $_POST['password2'] != '') {
 				
 				if (User::check_password_reset_code($code) == FALSE) {
 					exit();
@@ -178,7 +178,7 @@ class UsersController extends Application {
 		} elseif (!isset($_SESSION['user_id'])) {
 			// No code in URL so show new reset form
 			
-			if (isset($_POST['email'])) {
+			if ($_POST['email'] != '') {
 				// Email submitted so send password reset email
 				
 				$user = User::get_by_email($_POST['email']);
