@@ -22,9 +22,9 @@ CREATE TABLE `users_password_reset` (
 CREATE TABLE `items` (
   `id` int(10) NOT NULL auto_increment,
   `user_id` int(10) NOT NULL default '0',
-  `title` varchar(140) NOT NULL default '0',
-  `content` varchar(500) NOT NULL default '0',
-  `image` varchar(140) NOT NULL default '0',
+  `title` varchar(140) default NULL,
+  `content` varchar(500) default NULL,
+  `image` varchar(140) default NULL,
   `date` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
