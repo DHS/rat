@@ -131,8 +131,8 @@ class UsersController extends Application {
 					Application::flash('success', 'Password updated! Welcome back to '.$this->config->name.'!');
 					
 					// If redirect_to is set then redirect
-					if (isset($this->uri->params['redirect_to'])) {
-						header('Location: '.$this->uri->params['redirect_to']);
+					if (isset($this->uri['params']['redirect_to'])) {
+						header('Location: '.$this->uri['params']['redirect_to']);
 						exit();
 					}
 					
@@ -437,8 +437,8 @@ class UsersController extends Application {
 			}
             
 			// If redirect_to is set then redirect
-			if ($this->uri->params['redirect_to']) {
-				header('Location: '.$this->uri->params['redirect_to']);
+			if ($this->uri['params']['redirect_to']) {
+				header('Location: '.$this->uri['params']['redirect_to']);
 				exit();
 			}
             
@@ -458,8 +458,8 @@ class UsersController extends Application {
 			// There was an error
 			
 			// Propagate get vars to be picked up by the form
-			$this->uri->params['email']		= $_POST['email'];
-			$this->uri->params['username']	= $_POST['username'];
+			$this->uri['params']['email']		= $_POST['email'];
+			$this->uri['params']['username']	= $_POST['username'];
 			$this->code			= $_POST['code'];
 			
 			// Show error message
@@ -518,8 +518,8 @@ class UsersController extends Application {
 			// There was an error
 			
 			// Propagate get vars to be picked up by the form
-			$this->uri->params['email']		= $_POST['email'];
-			$this->uri->params['username']	= $_POST['username'];
+			$this->uri['params']['email']		= $_POST['email'];
+			$this->uri['params']['username']	= $_POST['username'];
 			$this->code			= $_POST['code'];
 			
 			// Show error message
@@ -638,8 +638,8 @@ class UsersController extends Application {
 			}
             
 			// If redirect_to is set then redirect
-			if ($this->uri->params['redirect_to']) {
-				header('Location: '.$this->uri->params['redirect_to']);
+			if ($this->uri['params']['redirect_to']) {
+				header('Location: '.$this->uri['params']['redirect_to']);
 				exit();
 			}
             
@@ -659,8 +659,8 @@ class UsersController extends Application {
 			// There was an error
 			
 			// Propagate get vars to be picked up by the form
-			$this->uri->params['email']		= $_POST['email'];
-			$this->uri->params['username']	= $_POST['username'];
+			$this->uri['params']['email']		= $_POST['email'];
+			$this->uri['params']['username']	= $_POST['username'];
 			$this->code			= $_POST['code'];
 			
 			// Show error message

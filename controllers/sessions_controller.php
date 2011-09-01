@@ -14,8 +14,8 @@ class SessionsController extends Application {
 			if ($user->authenticate($_POST['password'], $this->config->encryption_salt) == TRUE) {
 				
 				// Get redirected
-				if (isset($this->uri->params['redirect_to'])) {
-					header('Location: '.$this->uri->params['redirect_to']);
+				if (isset($this->uri['params']['redirect_to'])) {
+					header('Location: '.$this->uri['params']['redirect_to']);
 					exit();
 				}
 				

@@ -6,8 +6,8 @@ class SearchController extends Application {
 
 	function index() {
 		
-		if (isset($this->uri->params['q'])) {
-			$this->show($this->uri->params['q']);
+		if (isset($this->uri['params']['q'])) {
+			$this->show($this->uri['params']['q']);
 		} else {
 			$this->add();
 		}

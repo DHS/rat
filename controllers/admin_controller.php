@@ -162,9 +162,9 @@ class AdminController extends Application {
 	
 	function grant_invites() {
 		
-		if ($this->uri->params['count] > 0) {
+		if ($this->uri['params']['count'] > 0) {
 			
-			Admin::update_invites($this->uri->params['count];
+			Admin::update_invites($this->uri['params']['count']);
 			
 			Application::flash('success', 'Invites updated!');
 			
