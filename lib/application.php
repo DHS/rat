@@ -37,12 +37,12 @@ class Application {
 			$app->loadPlugins();
 			
 			$app->uri = $uri;
-
+			
 			require_once 'lib/filter.php';
 			$app->runFilters();
 			
 			$app->loadAction();
-
+			
 			unset($_SESSION['flash']);
 			
 		} catch (ValidationException $e) {
@@ -91,9 +91,9 @@ class Application {
 						'format'		=> $format,
 						'params'		=> array_map('htmlentities', $_GET)
 					);
-
+		
 		$uri['params']['id'] = $segments[3];
-
+		
 		// Set the controller to the default if not in URI
 		if (empty($uri['controller'])) {
 			$uri['controller'] = $config->default_controller;
@@ -106,7 +106,7 @@ class Application {
 	private static function route() {
 		
 		require_once 'config/routes.php';
-
+		
 		$routes = new Routes;
 		
 		// Get request from server and remove BASE_DIR
@@ -117,44 +117,49 @@ class Application {
 		$request = $request[0];
 		$format = preg_split("/\?/", $request[1]);
 		$format = $format[0];
-
+		
 		$routeFound = FALSE;
-
+		
 		foreach ($routes->aliases as $k => $v) {
-
+			
 			// Swap asterisks for valid regex
 			$k = str_replace("*", "([a-zA-Z0-9]+)", $k);
-
+			
 			// Match the request against current route
 			if (preg_match('|^'.$k.'$|', $request, $matches)) {
-
+				
 				$uri['controller'] = $v['controller'];
 				$uri['action'] = $v['action'];
-
+				
 				// Assign components of $uri['params'] based on array in routes class
 				foreach ($v as $k => $v) {
+					
 					if ($k != 'controller' && $k != 'action') {
-
+						
 						// Convert $x to xth parameter
 						if (strstr($v, "$")) {
 							$i = substr($v, 1);
 							$v = $matches[$i];
 						}
+						
 						$uri['params'][$k] = $v;
+						
 					}
+					
 				}
-
+				
 				$uri['format'] = $format;
 				$routeFound = TRUE;
 				break;
+				
 			}
-		
+			
 		}
-
+		
 		if (! $routeFound) throw new RoutingException($uri, "Page not found");
-
+		
 		return $uri;
-
+		
 	}
 	
 	private function loadConfig($config) {
@@ -202,32 +207,33 @@ class Application {
 	}
 
 	private function runFilters() {
-
+		
 		$uri = $this->uri;
+		
 		if (is_null($uri['action'])) {
 			$uri['action'] = 'index';
 		}
-
+		
 		$reflect = new ReflectionClass($this);
-		foreach ($reflect->getProperties(ReflectionProperty::IS_PROTECTED) as $filter)
-		{
+		
+		foreach ($reflect->getProperties(ReflectionProperty::IS_PROTECTED) as $filter) {
 			$filter_name = $filter->getName();
 			$filter = new Filter($this);
 			$filter->$filter_name($uri, $this->$filter_name);
 		}
-
+		
 	}
 	
 	private function loadAction() {
-
-			if (method_exists($this, $this->uri['action'])) {
-				$this->{$this->uri['action']}($this->uri['params']['id']);
-			} elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
-				$this->index($this->uri['params']['id']);
-			} else {
-				throw new RoutingException($uri, "Page not found");
-			}
-
+		
+		if (method_exists($this, $this->uri['action'])) {
+			$this->{$this->uri['action']}($this->uri['params']['id']);
+		} elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
+			$this->index($this->uri['params']['id']);
+		} else {
+			throw new RoutingException($uri, "Page not found");
+		}
+		
 	}
 	
 	protected function loadView($view, $layout = NULL) {
@@ -247,7 +253,7 @@ class Application {
 	}
 	
 	public function url_for($controller, $action = '', $id = '') {
-	
+		
 		$url = BASE_DIR . "/{$controller}";
 		
 		if (!empty($action)) {
@@ -257,15 +263,15 @@ class Application {
 		if (!empty($id)) {
 			$url .= "/$id";
 		}
-
+		
 		return $url;
-
+		
 	}
 	
 	public function link_to($link_text, $controller, $action = '', $id = '') {
 		
 		return '<a href="'.$this->url_for($controller, $action, $id).'">'.$link_text.'</a>';
-					
+		
 	}
 	
 	public function redirect_to($controller, $action = '', $id = '') {
