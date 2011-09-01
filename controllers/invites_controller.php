@@ -21,8 +21,13 @@ class InvitesController extends Application {
 		}
 		
 		$this->title = 'Invites';
-		$this->loadView('invites/index');
-		
+
+		if ($this->json) {
+			$this->render_json($this->invites);
+		} else {
+			$this->loadView('invites/index');
+		}
+	
 	}
 	
 	function add() {

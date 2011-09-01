@@ -38,6 +38,9 @@ class Application {
 			
 			$app->uri = $uri;
 			
+			// Helper var to simplify reponding to json
+			$app->json = $app->uri['format'] == 'json';			
+			
 			require_once 'lib/filter.php';
 			$app->runFilters();
 			
@@ -288,6 +291,20 @@ class Application {
 		
 	}
 	
+	public function render_json($ref) {
+
+		if (is_array($ref)) {
+			foreach ($ref as $r) {
+				unset($r->user);
+			}
+		} else {
+			unset($ref->user);
+		}
+
+		echo json_encode($ref);
+	
+	}
+
 }
 
 ?>

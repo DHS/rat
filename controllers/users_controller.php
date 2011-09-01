@@ -50,8 +50,13 @@ class UsersController extends Application {
 		$this->items = $this->user->items();
 		
 		$this->title = $this->user->username;		
-		$this->loadView('users/show');
 		
+		if ($this->json) {
+			$this->render_json($this->user);
+		} else {
+			$this->loadView('users/show');
+		}
+	
 	}
 	
 	// Update user: change passsword, update profile
@@ -226,19 +231,7 @@ class UsersController extends Application {
 		
 		
 	}
-	
-	// Show user profile in json format
-	function json($username) {
 		
-		$user = User::get_by_username($username);
-		
-		$user['user'] = $user;
-		$user['items'] = $user->items();
-		$this->json = $user;
-		$this->loadView('pages/json', 'none');
-		
-	}
-	
 	// Helper function: update password
 	private function update_password($salt) {
 		

@@ -8,7 +8,12 @@ class ItemsController extends Application {
 	function index() {
 	
 		$this->items = Item::list_all();
-		$this->loadView('items/index');
+		
+		if ($this->json) {
+			$this->render_json($this->items);
+		} else {
+			$this->loadView('items/index');
+		}
 		
 	}
 	
@@ -201,8 +206,12 @@ class ItemsController extends Application {
 		
 		$this->item = Item::get_by_id($id);
 		
-		$this->loadView('items/show');
-		
+		if ($this->json) {
+			$this->render_json($this->item);
+		} else {
+			$this->loadView('items/show');
+		}
+
 	}
 	
 	// Show feed of friends' new items

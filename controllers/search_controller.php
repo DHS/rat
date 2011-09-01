@@ -32,18 +32,11 @@ class SearchController extends Application {
 			$this->plugins->log->add($_SESSION['user_id'], 'search', NULL, 'new', "Term = $q\nResult_count = $result_count");
 		}
 		
-		$this->loadView('search/index');
-		
-	}
-	
-	function json($q) {
-		
-		include 'lib/search.php';
-		$search = new Search;
-		
-		$items['items'] = $search->do_search($q);
-		$this->json = $items;
-		$this->loadView('pages/json', 'none');
+		if ($this->json) {
+			$this->render_json($this->items);
+		} else {
+			$this->loadView('search/index');
+		}
 		
 	}
 
