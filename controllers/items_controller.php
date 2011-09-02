@@ -6,8 +6,22 @@ class ItemsController extends Application {
 	
 	// Show stream of everyone's items
 	function index() {
-	
-		$this->items = Item::list_all();
+		
+		// Page zero so overwrite to 1
+		if ($this->uri['params']['page'] === 0) {
+			$this->uri['params']['page'] = 1;
+		}
+		
+		// Items per page, change this to test pagination
+		$limit = 10;
+		
+		if (isset($this->uri['params']['page'])) {
+			$offset = ($this->uri['params']['page'] - 1) * $limit;
+		} else {
+			$offset = 0;
+		}
+		
+		$this->items = Item::list_all($limit, $offset);
 		
 		if ($this->json) {
 			$this->render_json($this->items);
