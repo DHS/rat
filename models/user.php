@@ -453,7 +453,7 @@ class User {
 		
 		$email = sanitize_input($email);
 		
-		$query = mysql_query("SELECT COUNT(id) FROM users WHERE email = $email AND date_joined IS NOT NULL");
+		$query = mysql_query("SELECT COUNT(id) FROM users WHERE email = $email");
 		$user_count = mysql_result($query, 0);
 		
 		if ($user_count >= 1) {
