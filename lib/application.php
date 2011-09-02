@@ -254,17 +254,38 @@ class Application {
 	
 	public function url_for($controller, $action = '', $id = '') {
 		
-		$url = BASE_DIR . "/{$controller}";
+		$uri_array = array('controller' => $controller);
 		
 		if (!empty($action)) {
-			$url .= "/$action";
+			$uri_array['action'] = $action;
 		}
 		
 		if (!empty($id)) {
-			$url .= "/$id";
+			$uri_array['id'] .= $id;
 		}
 		
-		return $url;
+		require_once 'config/routes.php';
+		$routes = new Routes();
+		
+		if ($route = array_search($uri_array, $routes->aliases)){
+			
+			return BASE_DIR . $route;
+			
+		} else {
+			
+			$url = BASE_DIR . "/{$controller}";
+			
+			if (!empty($action)) {
+				$url .= "/$action";
+			}
+			
+			if (!empty($id)) {
+				$url .= "/$id";
+			}
+			
+			return $url;
+			
+		}
 		
 	}
 	
