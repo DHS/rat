@@ -8,7 +8,7 @@ class ItemsController extends Application {
 	function index() {
 		
 		// Page zero so overwrite to 1
-		if ($this->uri['params']['page'] === 0) {
+		if ($this->uri['params']['page'] == 0) {
 			$this->uri['params']['page'] = 1;
 		}
 		
@@ -238,7 +238,7 @@ class ItemsController extends Application {
 			$user = User::get_by_id($_SESSION['user_id']);
 			
 			// Page zero so overwrite to 1
-			if ($this->uri['params']['page'] === 0) {
+			if ($this->uri['params']['page'] == 0) {
 				$this->uri['params']['page'] = 1;
 			}
 
