@@ -218,10 +218,6 @@ class Application {
 		
 		$uri = $this->uri;
 		
-		if (is_null($uri['action'])) {
-			$uri['action'] = 'index';
-		}
-		
 		$reflect = new ReflectionClass($this);
 		
 		foreach ($reflect->getProperties(ReflectionProperty::IS_PROTECTED) as $filter) {
