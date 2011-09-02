@@ -261,7 +261,7 @@ class Application {
 		}
 		
 		if (!empty($id)) {
-			$uri_array['id'] .= $id;
+			$uri_array['id'] = $id;
 		}
 		
 		require_once 'config/routes.php';
