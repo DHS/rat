@@ -48,7 +48,27 @@ class UsersController extends Application {
 	function show($id) {
 		
 		$this->user = User::get_by_id($id);
-		$this->items = $this->user->items();
+		
+		// id failed so try username (used by routes)
+		if ($this->user == NULL) {
+			$this->user = User::get_by_username($id);
+		}
+		
+		// page zero so overwrite to 1
+		if ($this->uri['params']['page'] === 0) {
+			$this->uri['params']['page'] = 1;
+		}
+		
+		// items per page, change this to test pagination
+		$limit = 10;
+		
+		if (isset($this->uri['params']['page'])) {
+			$offset = ($this->uri['params']['page'] - 1) * $limit;
+		} else {
+			$offset = 0;
+		}
+		
+		$this->items = $this->user->items($limit, $offset);
 		
 		$this->title = $this->user->username;		
 		

@@ -10,8 +10,9 @@ class Routes {
 		'/about' => array('controller' => 'pages', 'action' => 'show', 'id' => 'about'),
 		'/contact' => array('controller' => 'pages', 'action' => 'show', 'id' => 'contact'),
 		'/help' => array('controller' => 'pages', 'action' => 'show', 'id' => 'help'),
-		'/*' => array('controller' => 'users', 'action' => 'show', 'params' => '$1'),
-		'/*/item/*' => array('controller' => 'items', 'action' => 'show', 'params' => '$2')
+		'/*' => array('controller' => 'users', 'action' => 'show', 'id' => '$1'),
+		'/*/*' => array('controller' => 'users', 'action' => 'show', 'id' => '$1', 'page' => '$2'),
+		'/*/item/*' => array('controller' => 'items', 'action' => 'show', 'id' => '$2')
 		
 	);
 	
