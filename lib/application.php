@@ -19,17 +19,25 @@ class Application {
 			
 			$controller = ucfirst($uri['controller']).'Controller';
 			@include "controllers/{$uri['controller']}_controller.php";
-
-			if (class_exists($controller) && (method_exists($controller, $uri['action'])) 
-			|| (empty($uri['action']) && method_exists($controller, 'index'))) {
+			
+			if (empty($uri['action']) && method_exists($controller, 'index')) {
+				$uri['action'] = 'index';
+			}
+			
+			// If controller found and action exists
+			if (class_exists($controller) && method_exists($controller, $uri['action'])) {
+				
 				$app = new $controller;
+				
 			} else {
+				
 				$uri = Application::route();
-
+				
 				$controller = ucfirst($uri['controller']).'Controller';
 				@include "controllers/{$uri['controller']}_controller.php";
 				
 				$app = new $controller;
+				
 			}
 			
 			$app->loadConfig($config);
