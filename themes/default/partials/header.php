@@ -83,6 +83,10 @@ if (isset($this->title)) {
               <ul class="menu-dropdown">
                 <li><?php echo $this->link_to('Profile', 'users', 'show', $_SESSION['user_id']); ?></li>
                 <li><?php echo $this->link_to('Settings', 'users', 'update'); ?></li>
+                <?php if (in_array($_SESSION['user_id'], $this->config->admin_users)) { ?>
+                <li class="divider"></li>
+                <li><?php echo $this->link_to('Admin', 'admin'); ?></li>
+                <?php } ?>
                 <li class="divider"></li>
                 <li><?php echo $this->link_to('Logout', 'sessions', 'remove'); ?></li>
               </ul>
