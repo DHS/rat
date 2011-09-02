@@ -17,12 +17,9 @@
 		}
 		
 	} else {
-
-		// If own page and no post_permission OR someone else's page show 'no articles yet'
-		if (($_SESSION['user_id'] == $this->user->id) || $_SESSION['user_id'] != $this->user->id) {
-			echo '<p>'.$this->user->username.' hasn\'t published any '.$this->config->items['name_plural'].' yet.</p>';
-		}
-
+		
+		echo '<p>No '.$this->config->items['name_plural'].' found.</p>';
+		
 	}
 
 	?>
