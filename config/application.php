@@ -1,7 +1,7 @@
 <?php
 
 class AppConfig extends ServerConfig {
-
+	
 	/*
 	*	Contents
 	*
@@ -16,15 +16,15 @@ class AppConfig extends ServerConfig {
 	*		9. Plugins
 	*		
 	*/
-
+	
 	// Basic app variables
 	public $name							= 'Ratter';
 	public $tagline							= 'Ratter is an app to demonstrate the functionality of <a href="http://github.com/DHS/rat">Rat</a>';
 	public $default_controller				= 'items';
-
+	
 	// Beta - users can't signup, can only enter their email addresses
 	public $beta							= TRUE;
-
+	
 	// Private app - requires login to view pages (except public_pages), no share buttons
 	public $private							= TRUE;
 	
@@ -38,19 +38,19 @@ class AppConfig extends ServerConfig {
 							'comments'		=> array('enabled' => TRUE, 'name' => 'Comment', 'name_plural' => 'Comments'),
 							'likes'			=> array('enabled' => TRUE, 'name' => 'Like', 'name_plural' => 'Likes', 'opposite_name' => 'Unlike', 'past_tense' => 'Liked by')
 							);
-
+	
 	// Invites system
 	public $invites = array('enabled' => TRUE);
-
+	
 	// Friends - still testing, works with asymmetric set to true... just! (Shows 'Follow' link & generates homepage feed)
 	public $friends = array('enabled' => FALSE, 'asymmetric' => FALSE);
-
+	
 	// Admin users - array of user IDs who have access to admin area
 	public $admin_users						= array(1);
-
+	
 	// Theme
 	public $theme = 'default';
-
+	
 	// Plugins
 	public $plugins = array(	'log'		=> TRUE,
 								'gravatar'	=> TRUE,
