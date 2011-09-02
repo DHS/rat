@@ -107,8 +107,7 @@ class Application {
 	private static function route() {
 		
 		require_once 'config/routes.php';
-		
-		$routes = new Routes;
+		$routes = new Routes();
 		
 		// Get request from server and remove BASE_DIR
 		$request = substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10));
