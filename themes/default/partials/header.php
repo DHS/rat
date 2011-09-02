@@ -40,7 +40,7 @@ if (isset($this->title)) {
   <!-- CSS: implied media=all -->
   <link rel="stylesheet" href="<?php echo BASE_DIR; ?>/themes/<?php echo $this->config->theme; ?>/css/style.css">
   <!-- Include Twitter Bootstrap http://twitter.github.com/bootstrap/ -->
-  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>/themes/<?php echo $this->config->theme; ?>/css/bootstrap-1.0.0.min.css">
+  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>/themes/<?php echo $this->config->theme; ?>/css/bootstrap-1.1.1.min.css">
   <!-- end CSS-->
 
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
