@@ -18,9 +18,15 @@ if ($this->config->private == FALSE || isset($_SESSION['user_id'])) {
 <div class="row">
   <div class="span8 columns offset3">
 
-	<?php foreach ($this->items as $this->item) {
-		$this->loadPartial('item');
-	} ?>
+	<?php
+	if (count($this->items) > 0) {
+		foreach ($this->items as $this->item) {
+			$this->loadPartial('item');
+		}
+	} else {
+		echo '<p>No '.$this->config->items['name_plural'].' found.</p>';
+	}
+	?>
 
 	<?php $this->loadPartial('pagination'); ?>
 
