@@ -103,7 +103,7 @@ class InvitesController extends Application {
 			
 		} else {
 			
-			$this->uri->['params']['email'] = $_POST['email'];
+			$this->uri['params']['email'] = $_POST['email'];
 			
 			Application::flash('error', $error);
 			
