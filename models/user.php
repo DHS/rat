@@ -350,6 +350,40 @@ class User {
 		
 	}
 	
+	// Get a feed of a friend's activity, returns array of Item objects
+	public function list_feed($limit = 10, $offset = 0) {
+		
+		// Start by adding the viewer to the query string
+		$friends_string = "user_id = {$this->id}";
+		
+		$friends = $this->friends();
+		
+		// Loop through friends adding them to the query string
+		foreach ($friends as $friend) {
+			$friends_string .= " OR user_id = {$friend['friend_user_id']}";
+		}
+		
+		$sql = "SELECT id FROM items WHERE $friends_string ORDER BY id DESC";
+		
+		// Limit string
+		$limit = sanitize_input($limit);
+		$sql .= " LIMIT $limit";
+		
+		// Offset string
+		$offset = sanitize_input($offset);
+		$sql .= " OFFSET $offset";
+		
+		$query = mysql_query($sql);
+		
+		// Loop through item ids, fetching objects
+		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+			$items[] = Item::get_by_id($result['id']);
+		}
+		
+		return $items;
+		
+	}
+	
 	// Check whether two users are friends, returns TRUE or FALSE
 	public function friend_check($friend_user_id) {
 		

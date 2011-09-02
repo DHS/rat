@@ -83,41 +83,6 @@ class Item {
 		
 	}
 	
-	// Get a feed of a friend's activity, returns array of Item objects
-	public static function list_feed($limit = 10, $offset = 0) {
-		
-		// Start by adding the viewer to the query string
-		$friends_string = "user_id = $user_id";
-		
-		$user = User::get_by_id($user_id);
-		$friends = $user->friends();
-		
-		// Loop through friends adding them to the query string
-		foreach ($friends as $friend) {
-			$friends_string .= " OR user_id = {$friend['friend_user_id']}";
-		}
-		
-		$sql = "SELECT id FROM items WHERE $friends_string ORDER BY id DESC";
-		
-		// Limit string
-		$limit = sanitize_input($limit);
-		$sql .= " LIMIT $limit";
-		
-		// Offset string
-		$offset = sanitize_input($offset);
-		$sql .= " OFFSET $offset";
-		
-		$query = mysql_query($sql);
-		
-		// Loop through item ids, fetching objects
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$items[] = Item::get_by_id($result['id']);
-		}
-		
-		return $items;
-		
-	}
-	
 	// Get the user for an item, returns a User object
 	public function user() {
 		

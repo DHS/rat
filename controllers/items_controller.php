@@ -231,11 +231,27 @@ class ItemsController extends Application {
 	// Show feed of friends' new items
 	function feed() {
 		
-		if ($this->config->friends['enabled'] == TRUE) {
+		if ($this->config->friends['enabled'] == TRUE || isset($_SESSION['user_id'])) {
 			
 			// If friends enabled then show feed of friends' activity
 			
-			$this->items = Item::list_feed($_SESSION['user_id']);
+			$user = User::get_by_id($_SESSION['user_id']);
+			
+			// Page zero so overwrite to 1
+			if ($this->uri['params']['page'] === 0) {
+				$this->uri['params']['page'] = 1;
+			}
+
+			// Items per page, change this to test pagination
+			$limit = 10;
+
+			if (isset($this->uri['params']['page'])) {
+				$offset = ($this->uri['params']['page'] - 1) * $limit;
+			} else {
+				$offset = 0;
+			}
+			
+			$this->items = $user->list_feed($limit, $offset);
 			$this->loadView('items/index');
 			
 		} else {
