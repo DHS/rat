@@ -7,6 +7,7 @@ class Routes {
 		
 		// Static pages
 		
+		'/' => array('controller' => 'items'),
 		'/about' => array('controller' => 'pages', 'action' => 'show', 'id' => 'about'),
 		'/contact' => array('controller' => 'pages', 'action' => 'show', 'id' => 'contact'),
 		'/help' => array('controller' => 'pages', 'action' => 'show', 'id' => 'help'),
