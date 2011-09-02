@@ -86,13 +86,15 @@ class Application {
 		// Get request from server, split into segments, store as controller, view, id and params
 		$request = substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10));
 		
-		// Split at '.' and before '?' to obtain request format
-		$segments = preg_split("/\./", $request);
-		$format = preg_split("/\?/", $segments[1]);
-		$format = $format[0];
+		// Split at '.'
+		$dot_split = preg_split("/\./", $request);
 		
-		// Split request at each '/' to obtain route
-		$segments = preg_split("/\//", $segments[0]);
+		// Grab format from after '.' but before '?'
+		$format_split = preg_split("/\?/", $dot_split[1]);
+		$format = $format_split[0];
+		
+		// Split request at each '/' to obtain route (using everything before '.')
+		$segments = preg_split("/\//", $dot_split[0]);
 		
 		// Set up uri variable to pass to app
 		$uri = array(	'controller'	=> $segments[1],
