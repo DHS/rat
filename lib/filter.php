@@ -11,6 +11,7 @@ class Filter {
 		if (in_array($uri['action'], $actions) && ! isset($_SESSION['user_id'])) {
 			Application::flash('error', 'You must be logged in!');
 			$this->app->redirect_to('sessions', 'add');
+			exit;
 		}
 
 	}
@@ -20,6 +21,7 @@ class Filter {
 		if (in_array($uri['action'], $actions) && isset($_SESSION['user_id'])) {
 			Application::flash('error', 'You are already logged in!');
 			$this->app->redirect_to('items');
+			exit;
 		}
 
 	}
@@ -29,6 +31,7 @@ class Filter {
 		if (in_array($uri['action'], $actions) && $this->app->config->invites['enabled'] != TRUE) {
 			Application::flash('warning', 'Invites are not enabled!');
 			$this->app->redirect_to('items');
+			exit;
 		}
 		
 	}
@@ -38,6 +41,7 @@ class Filter {
 		if (in_array($uri['action'], $actions) && !in_array($_SESSION['user_id'], $this->app->config->admin_users)) {
 			Application::flash('warning', 'You are not an admin!');
 			$this->app->redirect_to('items');
+			exit;
 		}
 		
 	}
