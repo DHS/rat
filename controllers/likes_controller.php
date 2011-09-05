@@ -30,7 +30,7 @@ class LikesController extends Application {
 		
 	}
 	
-	function show($item_id) {
+	private function show($item_id) {
 		
 		$this->item = Item::get_by_id($item_id);
 		$this->loadPartial('likes');
