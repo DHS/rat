@@ -13,9 +13,9 @@ if ($this->config->private == TRUE && !isset($_SESSION['user_id'])) {
 // App public or user logged in so show items
 if ($this->config->private == FALSE || isset($_SESSION['user_id'])) { ?>
 
-	<h1>Stream</h1>
-
 	<?php if (is_array($this->items)) { ?>
+
+    <h1>Stream</h1>
 
 <div class="row">
   <div class="span8 columns offset3">
@@ -40,6 +40,10 @@ if ($this->config->private == FALSE || isset($_SESSION['user_id'])) { ?>
   </div>
 </div>
 
+	<?php } else { ?>
+		
+	<p>Nothing to see here.</p>
+		
 	<?php } ?>
 
 <?php } ?>
