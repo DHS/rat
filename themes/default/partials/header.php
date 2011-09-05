@@ -113,9 +113,6 @@ if (isset($this->title)) {
 
 <?php } ?>
 
-	<p class="clear">&nbsp;</p>
-	<p class="clear">&nbsp;</p>
-
     <?php if (isset($this->title)) { echo $this->title; } ?>
 
 <?php

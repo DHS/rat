@@ -211,7 +211,7 @@ td { vertical-align: top; }
    Author: David Haywood Smith
    ========================================================================== */
 
-body { font-family: Verdana, Arial, Helvetica, sans-serif; }
+body { font-family: Verdana, Arial, Helvetica, sans-serif; padding-top: 40px; }
 
 h1 { font-size: 140%; text-align: center; }
 h2 { font-size: 100%; font-weight: bold; }
