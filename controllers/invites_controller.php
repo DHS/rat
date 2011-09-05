@@ -82,14 +82,9 @@ class InvitesController extends Application {
 				$this->plugins->log->add($_SESSION['user_id'], 'invite', $id, 'add', $_POST['email']);
 			}
 			
-			if (SITE_IDENTIFIER == 'live') {
-				$to		= "{$_POST['username']} <{$_POST['email']}>";
-			} else {
-				$to		= "{$_POST['username']} <davehs@gmail.com>";
-			}
-			
-			$link = $this->config->url.'signup/'.$id;
-			$headers = "From: {$user->username} <{$user->email}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
+			$to			= "{$_POST['username']} <{$_POST['email']}>";
+			$link		= $this->config->url.'signup/'.$id;
+			$headers	= "From: {$user->username} <{$user->email}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
 			
 			// Load subject and body from template
 			include "themes/{$this->config->theme}/emails/invite_friend.php";

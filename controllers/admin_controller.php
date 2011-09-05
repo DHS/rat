@@ -137,12 +137,7 @@ class AdminController extends Application {
 				$this->plugins->log->add($_SESSION['user_id'], 'invite', $id, 'admin_add', $email);
 			}
 			
-			if (SITE_IDENTIFIER == 'live') {
-				$to		= "{$_POST['username']} <{$email}>";
-			} else {
-				$to		= "{$_POST['username']} <davehs@gmail.com>";
-			}
-			
+			$to			= "{$_POST['username']} <{$email}>";
 			$link		= $this->config->url.'signup.php?code='.$id.'&email='.urlencode($email);
 			$headers	= "From: {$user->username} <{$user->email}>\r\nContent-type: text/html\r\n";
 			
