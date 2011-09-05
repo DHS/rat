@@ -14,13 +14,13 @@
   
     <?php if ($this->viewer->friend_check($this->user->id) == TRUE) { ?>
 
-      <a href="#" class="btn" onclick="friend_remove(<?php echo $this->user->id; ?>); return false;">
+      <a href="#" class="btn" onclick="friend_remove('<?php echo BASE_DIR; ?>', <?php echo $this->user->id; ?>); return false;">
       <?php if ($this->config->friends['asymmetric'] == TRUE) { echo 'Unfollow'; } else { echo 'Remove friend'; } ?>
       </a>
 
     <?php } else { ?>
 
-      <a href="#" class="btn" onclick="friend_add(<?php echo $this->user->id; ?>); return false;">
+      <a href="#" class="btn" onclick="friend_add('<?php echo BASE_DIR; ?>', <?php echo $this->user->id; ?>); return false;">
       <?php if ($this->config->friends['asymmetric'] == TRUE) { echo 'Follow'; } else { echo 'Add friend'; } ?>
       </a>
   

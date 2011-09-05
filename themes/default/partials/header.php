@@ -38,9 +38,9 @@ if (isset($this->title)) {
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
   <!-- CSS: implied media=all -->
-  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>/themes/<?php echo $this->config->theme; ?>/css/style.css">
+  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>themes/<?php echo $this->config->theme; ?>/css/style.css">
   <!-- Include Twitter Bootstrap http://twitter.github.com/bootstrap/ -->
-  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>/themes/<?php echo $this->config->theme; ?>/css/bootstrap-1.1.1.min.css">
+  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>themes/<?php echo $this->config->theme; ?>/css/bootstrap-1.1.1.min.css">
   <!-- end CSS-->
 
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
@@ -48,8 +48,8 @@ if (isset($this->title)) {
   <!-- All JavaScript at the bottom, except for Modernizr / Respond.
        Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
        For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
-  <script src="<?php echo BASE_DIR; ?>/js/libs/modernizr-2.0.6.min.js"></script>
-  <script src="<?php echo BASE_DIR; ?>/js/libs/respond.min.js"></script>
+  <script src="<?php echo BASE_DIR; ?>js/libs/modernizr-2.0.6.min.js"></script>
+  <script src="<?php echo BASE_DIR; ?>js/libs/respond.min.js"></script>
 </head>
 
 
@@ -74,7 +74,7 @@ if (isset($this->title)) {
           </ul>
           <ul class="nav secondary-nav">
             <li>
-              <form class="nav secondary-nav" action="/search/" method="get">
+              <form class="nav secondary-nav" action="<?php echo $this->url_for('search'); ?>" method="get">
                 <input type="text" name="q" placeholder="Search" value="<?php if ($this->uri['params']['q']) { echo $this->uri['params']['q']; } ?>" />
               </form>
             </li>

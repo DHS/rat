@@ -50,9 +50,9 @@ if (is_array($this->item->likes)) {
     
 	if ($this->config->items['likes']['enabled'] == TRUE) {
 		if ($i_like == TRUE) {
-			echo ' &middot <span id="like_link_'.$this->item->id.'"><a href="#" onclick="like_remove('.$this->item->id.', \''.$this->config->items['likes']['name'].'\', \''.$this->config->items['likes']['opposite_name'].'\'); return false;">'.$this->config->items['likes']['opposite_name'].'</a></a></span>';
+			echo ' &middot <span id="like_link_'.$this->item->id.'"><a href="#" onclick="like_remove(\''.BASE_DIR.'\', '.$this->item->id.', \''.$this->config->items['likes']['name'].'\', \''.$this->config->items['likes']['opposite_name'].'\'); return false;">'.$this->config->items['likes']['opposite_name'].'</a></a></span>';
 		} else {
-			echo ' &middot <span id="like_link_'.$this->item->id.'"><a href="#" onclick="like_add('.$this->item->id.', \''.$this->config->items['likes']['name'].'\', \''.$this->config->items['likes']['opposite_name'].'\'); return false;">'.$this->config->items['likes']['name'].'</a></a></span>';
+			echo ' &middot <span id="like_link_'.$this->item->id.'"><a href="#" onclick="like_add(\''.BASE_DIR.'\', '.$this->item->id.', \''.$this->config->items['likes']['name'].'\', \''.$this->config->items['likes']['opposite_name'].'\'); return false;">'.$this->config->items['likes']['name'].'</a></a></span>';
 		}
 
 	}

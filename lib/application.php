@@ -190,6 +190,11 @@ class Application {
 			$base_dir = '/';
 		}
 		
+		// Add trailing slash if necessary
+		if (substr($base_dir, -1) != '/') {
+			$base_dir = $base_dir.'/';
+		}
+		
 		define('BASE_DIR', $base_dir);
 		
 	}
@@ -275,11 +280,16 @@ class Application {
 		
 		if ($route = array_search($uri_array, $routes->aliases)){
 			
+			// Routes all preceded by / so snip it as base_dir includes trailing /
+			if (substr($route, 0, 1) == '/') {
+				$route = substr($route, 1);
+			}
+			
 			return BASE_DIR . $route;
 			
 		} else {
 			
-			$url = BASE_DIR . "/{$controller}";
+			$url = BASE_DIR . $controller;
 			
 			if (!empty($action)) {
 				$url .= "/$action";
