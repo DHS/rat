@@ -389,8 +389,10 @@ class UsersController extends Application {
 			if ($this->config->send_emails == TRUE) {
 				// Send 'thank you for signing up' email
             	
-				$to = "{$_POST['username']} <{$_POST['email']}>";
-				$headers = "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
+				$admin = User::get_by_id($this->config->admin_users[0]);
+				
+				$to			= "{$_POST['username']} <{$_POST['email']}>";
+				$headers	= "From: {$admin->username} <{$admin->email}>\r\nBcc: {$admin->email}\r\nContent-type: text/html\r\n";
             	
 				// Load subject and body from template
 				include "themes/{$this->config->theme}/emails/signup.php";
@@ -590,8 +592,10 @@ class UsersController extends Application {
 			if ($this->config->send_emails == TRUE) {
 				// Send 'thank you for signing up' email
 				
+				$admin = User::get_by_id($this->config->admin_users[0]);
+				
 				$to = "{$_POST['username']} <{$_POST['email']}>";
-				$headers = "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
+				$headers	= "From: {$admin->username} <{$admin->email}>\r\nBcc: {$admin->email}\r\nContent-type: text/html\r\n";
 				
 				// Load subject and body from template
 				include "themes/{$this->config->theme}/emails/signup.php";

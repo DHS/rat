@@ -82,9 +82,11 @@ class InvitesController extends Application {
 				$this->plugins->log->add($_SESSION['user_id'], 'invite', $id, 'add', $_POST['email']);
 			}
 			
+			$admin = User::get_by_id($this->config->admin_users[0]);
+			
 			$to			= "{$_POST['username']} <{$_POST['email']}>";
 			$link		= $this->config->url.'signup/'.$id;
-			$headers	= "From: {$user->username} <{$user->email}>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
+			$headers	= "From: {$user->username} <{$user->email}>\r\nBcc: {$admin->email}\r\nContent-type: text/html\r\n";
 			
 			// Load subject and body from template
 			include "themes/{$this->config->theme}/emails/invite_friend.php";

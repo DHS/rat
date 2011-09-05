@@ -18,10 +18,11 @@ class FriendsController extends Application {
 		if ($this->config->send_emails == TRUE) {
 			// Send 'new follower' email to writer
 			
-			$link = $this->config->url.'users/show/'.$user->id;
+			$admin = User::get_by_id($this->config->admin_users[0]);
 			
 			$to			= "{$friend['username']} <{$friend['email']}>";
-			$headers	= "From: David Haywood Smith <davehs@gmail.com>\r\nBcc: davehs@gmail.com\r\nContent-type: text/html\r\n";
+			$link		= $this->config->url.'users/show/'.$user->id;
+			$headers	= "From: {$admin->username} <{$admin->email}>\r\nBcc: {$admin->email}\r\nContent-type: text/html\r\n";
 			
 			// Load subject and body from template
 			include "themes/{$this->config->theme}/emails/follower_new.php";
