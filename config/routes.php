@@ -11,7 +11,6 @@ class Routes {
 		'/about' => array('controller' => 'pages', 'action' => 'show', 'id' => 'about'),
 		'/contact' => array('controller' => 'pages', 'action' => 'show', 'id' => 'contact'),
 		'/help' => array('controller' => 'pages', 'action' => 'show', 'id' => 'help'),
-		'/404' => array('controller' => 'pages', 'action' => 'show', 'id' => '404'),
 		
 		// User functions
 		
