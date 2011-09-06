@@ -13,7 +13,7 @@ if ($this->config->private == TRUE && !isset($_SESSION['user_id'])) {
 // App public or user logged in so show items
 if ($this->config->private == FALSE || isset($_SESSION['user_id'])) { ?>
 
-	<?php if (is_array($this->items)) { ?>
+	<?php if (is_array($this->items) && count($this->items) > 0) { ?>
 
     <h1>Stream</h1>
 
@@ -21,12 +21,8 @@ if ($this->config->private == FALSE || isset($_SESSION['user_id'])) { ?>
   <div class="span8 columns offset3">
 
 	<?php
-	if (count($this->items) > 0) {
-		foreach ($this->items as $this->item) {
-			$this->loadPartial('item');
-		}
-	} else {
-		echo '<p>No '.$this->config->items['name_plural'].' found.</p>';
+	foreach ($this->items as $this->item) {
+		$this->loadPartial('item');
 	}
 	?>
 
@@ -42,7 +38,7 @@ if ($this->config->private == FALSE || isset($_SESSION['user_id'])) { ?>
 
 	<?php } else { ?>
 		
-	<p>Nothing to see here.</p>
+		<h1>No <?php echo $this->config->items['name_plural']; ?> found...</h1>
 		
 	<?php } ?>
 
