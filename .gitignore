@@ -3,6 +3,7 @@ config/server.php
 uploads/originals/*
 uploads/stream/*
 uploads/thumbnails/*
+!.gitignore
 
 # Numerous always-ignore extensions
 *.diff
