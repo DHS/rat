@@ -43,7 +43,8 @@ class AppConfig extends ServerConfig {
 														'name' => 'Content',
 														'name_plural' => 'Contents'
 														),
-														
+
+							// Remember to update the permissions for your upload dir! e.g. chmod -R 777 uploads
 							'uploads'		=> array(	'enabled' => TRUE,
 														'name' => 'Image',
 														'directory' => 'uploads',
