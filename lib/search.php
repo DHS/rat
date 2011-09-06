@@ -58,7 +58,7 @@ class Search {
 		
 		while($result = mysql_fetch_array($query, MYSQL_ASSOC)){
 			
-			$items = Item::get_by_id($result['id']);
+			$item = Item::get_by_id($result['id']);
 			
 			$item->score = 0;
 			foreach($terms_rx as $term_rx){

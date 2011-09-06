@@ -20,7 +20,7 @@ class SearchController extends Application {
 		
 	}
 	
-	function show($q) {
+	private function show($q) {
 		
 		include 'lib/search.php';
 		$search = new Search;

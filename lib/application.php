@@ -20,6 +20,10 @@ class Application {
 			$controller = ucfirst($uri['controller']).'Controller';
 			@include "controllers/{$uri['controller']}_controller.php";
 			
+			if (substr($uri['action'], 0, 1) == '?') {
+				$uri['action'] = '';
+			}
+			
 			if (empty($uri['action']) && method_exists($controller, 'index')) {
 				$uri['action'] = 'index';
 			}

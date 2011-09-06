@@ -74,7 +74,7 @@ if (isset($this->title)) {
           </ul>
           <ul class="nav secondary-nav">
             <li>
-              <form class="nav secondary-nav" action="<?php echo $this->url_for('search'); ?>" method="get">
+              <form class="nav secondary-nav" action="<?php echo $this->url_for('search'); ?>/" method="get">
                 <input type="text" name="q" placeholder="Search" value="<?php if (isset($this->uri['params']['q'])) { echo $this->uri['params']['q']; } ?>" />
               </form>
             </li>
