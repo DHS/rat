@@ -1,18 +1,36 @@
 <?php
 
 // Populate some vars
+
+// Image
+if ($this->config->items['uploads']['enabled'] == TRUE && $this->item->image != NULL) {
+	$image = '<a href="'.$this->url_for('items', 'show', $this->item->id).'"><img src="'.BASE_DIR.$this->config->items['uploads']['directory'].'/stream/'.$this->item->image.'" style="margin: 0px 0px 10px 0px;" /></a>';
+	if ($this->item->title != NULL) {
+		$image = '<div class="clear">'.$image.'</div>';
+	}
+} else {
+	$image = '';
+}
+
+// Avatar
 if (isset($this->plugins->gravatar)) {
-	$image = $this->plugins->gravatar->show($this->item->user->email, array('size' => 48, 'style' => 'float: left; padding: 0px 10px 5px 0px;'));
-	$gravatar = $this->link_to($image, 'users', 'show', $this->item->user->id).' ';
+	$gravatar_pic = $this->plugins->gravatar->show($this->item->user->email, array('size' => 48, 'style' => 'float: left; padding: 0px 10px 5px 0px;'));
+	$gravatar = $this->link_to($gravatar_pic, 'users', 'show', $this->item->user->id).' ';
 } else {
 	$gravatar = $this->link_to($like->user->username, 'users', 'show', $this->item->user->id).' ';
 }
 
+// Title & content
 if ($this->config->items['titles']['enabled'] == TRUE && $this->item->title != NULL) {
-	$content = '<h4>'.$this->link_to($this->item->title, 'items', 'show', $this->item->id).' <small>by '.$this->link_to($this->item->user->username, 'users', 'show', $this->item->user->id).'</small></h4>';
-	$content .= '<p>'.$this->item->content.'</p>';
+	$title = '<h4>'.$this->link_to($this->item->title, 'items', 'show', $this->item->id).' <small>by '.$this->link_to($this->item->user->username, 'users', 'show', $this->item->user->id).'</small></h4>';
+	$content = '<p>'.$this->item->content.'</p>';
 } else {
-	$content = '<p>'.$this->link_to($this->item->user->username, 'users', 'show', $this->item->user->id).' '.$this->item->content.'</p>';
+	$title = '';
+	if ($this->item->content != NULL) {
+		$content = '<p><strong>'.$this->link_to($this->item->user->username, 'users', 'show', $this->item->user->id).'</strong> '.$this->item->content.'</p>';
+	} else {
+		$content = '';
+	}
 }
 
 // Comment form toggle
@@ -38,7 +56,9 @@ if (is_array($this->item->likes)) {
     
     <!-- Content -->
     <?php echo $gravatar; ?>
-    <?php echo $content; ?>
+	<?php echo $title; ?>
+	<?php echo $image; ?>
+	<?php echo $content; ?>
     
     <!-- Meta -->
 	<p class="item_meta clear">

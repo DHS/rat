@@ -34,7 +34,7 @@ class ItemsController extends Application {
 	// Add an item
 	function add() {
 		
-		if ($_POST['content'] != '' || ($_POST['title'] != '' && $this->config->items['titles']['enabled'] == TRUE)) {
+		if ($_POST['content'] != '' || ($this->config->items['titles']['enabled'] == TRUE && $_POST['title'] != '') || $_FILES['file']['name'] != '') {
 			
 			// Form validation
 			
@@ -42,7 +42,7 @@ class ItemsController extends Application {
 				$error .= ucfirst($this->config->items['name']).' must include '.strtolower($this->config->items['content']['name']).'.<br />';
 			}
 			
-			if ($this->config->items['uploads']['enabled'] == TRUE) {
+			if ($this->config->items['uploads']['enabled'] == TRUE && $_FILES['file']['name'] != '') {
 				
 				if ($_FILES['file']['error'] > 0) {
 					$error .= 'Error code: '.$_FILES['file']['error'].'<br />';
@@ -63,7 +63,7 @@ class ItemsController extends Application {
 			if ($error == '') {
 				// No error so proceed...
 				
-				if ($this->config->items['uploads']['enabled'] == TRUE) {
+				if ($this->config->items['uploads']['enabled'] == TRUE && $_FILES['file']['name'] != '') {
 					
 					// Check for file with same name and rename if neccessary
 					if (file_exists("{$this->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}")) {
