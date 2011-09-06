@@ -87,10 +87,10 @@ class ItemsController extends Application {
 					include 'lib/upload.php';
 					
 					// Generate thumbnail
-					generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 100, 100, 'thumbnails');
+					generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 100, 100, 'thumbnails', $this->config->items['uploads']['directory']);
 					
 					// Generate stream image
-					generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 350, 500, 'stream');
+					generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 350, 500, 'stream', $this->config->items['uploads']['directory']);
 					
 					$item_id = Item::add($_SESSION['user_id'], $_POST['content'], $_POST['title'], $_FILES['file']['name']);
 					
