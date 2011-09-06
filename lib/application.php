@@ -90,20 +90,39 @@ class Application {
 		$dot_split = preg_split("/\./", $request);
 		
 		// Grab format from after '.' but before '?'
-		$format_split = preg_split("/\?/", $dot_split[1]);
-		$format = $format_split[0];
+		if (isset($dot_split[1])) {
+			$format_split = preg_split("/\?/", $dot_split[1]);
+			$format = $format_split[0];
+		} else {
+			$format = NULL;
+		}
 		
-		// Split request at each '/' to obtain route (using everything before '.')
-		$segments = preg_split("/\//", $dot_split[0]);
+
 		
 		// Set up uri variable to pass to app
-		$uri = array(	'controller'	=> $segments[1],
-						'action'		=> $segments[2],
-						'format'		=> $format,
-						'params'		=> array_map('htmlentities', $_GET)
-					);
+		if (isset($dot_split[0])) {
+			
+			// Split request at each '/' to obtain route (using everything before '.')
+			$segments = preg_split("/\//", $dot_split[0]);
+			
+			if (isset($segments[1])) {
+				$uri['controller'] = $segments[1];
+			}
+			
+			if (isset($segments[2])) {
+				$uri['action'] = $segments[2];
+			}
+			
+		}
 		
-		$uri['params']['id'] = $segments[3];
+		$uri['format'] = $format;
+		$uri['params'] = array_map('htmlentities', $_GET);
+		
+		if (isset($segments[3])) {
+			$uri['params']['id'] = $segments[3];
+		} else {
+			$uri['params']['id'] = NULL;
+		}
 		
 		// Set the controller to the default if not in URI
 		if (empty($uri['controller'])) {
