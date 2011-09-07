@@ -3,7 +3,7 @@
 // Populate some vars
 
 // Image
-if ($this->config->items['uploads']['enabled'] == TRUE && $this->item->image != "0") {
+if ($this->config->items['uploads']['enabled'] == TRUE && $this->item->image != NULL && $this->item->image != '0') {
 	$image = '<a href="'.$this->url_for('items', 'show', $this->item->id).'"><img src="'.BASE_DIR.$this->config->items['uploads']['directory'].'/stream/'.$this->item->image.'" style="margin: 0px 0px 10px 0px;" /></a>';
 	if ($this->item->title != NULL) {
 		$image = '<div class="clear">'.$image.'</div>';
