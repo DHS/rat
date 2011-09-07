@@ -2,9 +2,13 @@
 
 class ApplicationException extends Exception {
 	
-	public function __construct($message, $code = 0, Exception $previous = null) {
+	public $app;
+
+	public function __construct($app, $message, $code = 0, Exception $previous = null) {
 		
 		parent::__construct($message, $code, $previous);
+
+		$this->app = $app;
 		
 	}
 	

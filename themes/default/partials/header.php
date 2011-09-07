@@ -78,19 +78,22 @@ if (isset($this->title)) {
                 <input type="text" name="q" placeholder="Search" value="<?php if (isset($this->uri['params']['q'])) { echo $this->uri['params']['q']; } ?>" />
               </form>
             </li>
-            <li class="menu">
-              <a href="#" class="menu"><?php $viewer = User::get_by_id($_SESSION['user_id']); echo $viewer->username; ?></a>
-              <ul class="menu-dropdown">
-                <li><?php echo $this->link_to('Profile', 'users', 'show', $_SESSION['user_id']); ?></li>
-                <li><?php echo $this->link_to('Settings', 'users', 'update'); ?></li>
-                <?php if (in_array($_SESSION['user_id'], $this->config->admin_users)) { ?>
-                <li class="divider"></li>
-                <li><?php echo $this->link_to('Admin', 'admin'); ?></li>
-                <?php } ?>
-                <li class="divider"></li>
-                <li><?php echo $this->link_to('Logout', 'sessions', 'remove'); ?></li>
-              </ul>
-            </li>
+			
+			<?php if (class_exists("User")) { ?>
+				<li class="menu">
+				<a href="#" class="menu"><?php $viewer = User::get_by_id($_SESSION['user_id']); echo $viewer->username; ?></a>
+				<ul class="menu-dropdown">
+					<li><?php echo $this->link_to('Profile', 'users', 'show', $_SESSION['user_id']); ?></li>
+					<li><?php echo $this->link_to('Settings', 'users', 'update'); ?></li>
+					<?php if (in_array($_SESSION['user_id'], $this->config->admin_users)) { ?>
+					<li class="divider"></li>
+					<li><?php echo $this->link_to('Admin', 'admin'); ?></li>
+					<?php } ?>
+					<li class="divider"></li>
+					<li><?php echo $this->link_to('Logout', 'sessions', 'remove'); ?></li>
+				</ul>
+				</li>
+			<?php } ?>
           </ul>
         </div>
       </div>

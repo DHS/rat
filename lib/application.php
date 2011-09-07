@@ -8,13 +8,13 @@ class Application {
 	
 	public static function initialise() {
 		
+		require_once 'config/server.php';
+		require_once 'config/application.php';
+			
+		$config = new AppConfig;
+
 		try {
-			
-			require_once 'config/server.php';
-			require_once 'config/application.php';
-			
-			$config = new AppConfig;
-			
+						
 			$uri = Application::fetch_uri($config);
 			
 			$controller = ucfirst($uri['controller']).'Controller';
@@ -63,24 +63,26 @@ class Application {
 		} catch (ValidationException $e) {
 			
 			ob_end_clean();
+
 			Application::flash('error', $e->getMessage());
 			header('Location: ' . $_SERVER['HTTP_REFERER']);
 			
 		} catch (RoutingException $e) {
 			
 			ob_end_flush();
-			include 'static/404.html';
+
+			// RoutingExceptions only thrown from static context
+			// so must set up new Application before rendering 404
+			$app = new Application;
+			$app->loadConfig($config);
+			$app->loadView('pages/404');
 			
 		} catch (ApplicationException $e) {
 			
 			ob_end_flush();
-			include 'static/500.html';
-			
-		} catch (Exception $e) {
-			
-			ob_end_flush();
-			include 'static/500.html';
-			
+
+			$e->app->loadView('pages/500');
+		
 		}
 		
 	}
