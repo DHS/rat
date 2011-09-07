@@ -122,7 +122,7 @@ if (isset($_SESSION['flash'])) {
   <!-- Message -->
   <div class="row">
     <div class="span8 columns offset4">
-  	  <div class="alert-message info '.$_SESSION['flash']['category'].'">
+  	  <div class="alert-message '.$_SESSION['flash']['category'].'">
         <p>'.$_SESSION['flash']['message'].'</p>
       </div>
     </div>
