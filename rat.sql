@@ -1,5 +1,5 @@
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` bigint(15) NOT NULL auto_increment,
   `username` varchar(180) default NULL,
   `email` varchar(180) default NULL,
   `full_name` varchar(180) default NULL,
@@ -14,14 +14,14 @@ CREATE TABLE `users` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `users_password_reset` (
-  `user_id` int(10) unsigned NOT NULL,
+  `user_id` bigint(15) unsigned NOT NULL,
   `reset_code` char(32) DEFAULT NULL,
   `date` timestamp NOT NULL default CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 CREATE TABLE `items` (
   `id` int(10) NOT NULL auto_increment,
-  `user_id` int(10) NOT NULL default '0',
+  `user_id` bigint(15) NOT NULL default '0',
   `title` varchar(140) default NULL,
   `content` varchar(500) default NULL,
   `image` varchar(140) default NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `items` (
 
 CREATE TABLE `invites` (
   `id` int(11) NOT NULL auto_increment,
-  `user_id` int(11) NOT NULL,
+  `user_id` bigint(15) NOT NULL,
   `email` varchar(50) default '',
   `code` varchar(11) default NULL,
   `result` int(1) default '0',
@@ -41,7 +41,7 @@ CREATE TABLE `invites` (
 
 CREATE TABLE `log` (
   `id` int(11) NOT NULL auto_increment,
-  `user_id` varchar(50) NOT NULL default '',
+  `user_id` bigint(15) NOT NULL default '',
   `object_type` varchar(50) default NULL,
   `object_id` varchar(50) default NULL,
   `action` varchar(50) NOT NULL default '',
@@ -52,7 +52,7 @@ CREATE TABLE `log` (
 
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL auto_increment,
-  `user_id` int(11) NOT NULL default '0',
+  `user_id` bigint(15) NOT NULL default '0',
   `item_id` int(11) NOT NULL default '0',
   `content` text NOT NULL,
   `date` timestamp NOT NULL default CURRENT_TIMESTAMP,
@@ -61,7 +61,7 @@ CREATE TABLE `comments` (
 
 CREATE TABLE `likes` (
   `id` int(11) NOT NULL auto_increment,
-  `user_id` int(11) NOT NULL default '0',
+  `user_id` bigint(15) NOT NULL default '0',
   `item_id` int(11) NOT NULL default '0',
   `date` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
@@ -69,8 +69,8 @@ CREATE TABLE `likes` (
 
 CREATE TABLE `friends` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `friend_user_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` bigint(15) NOT NULL DEFAULT '0',
+  `friend_user_id` bigint(15) NOT NULL DEFAULT '0',
   `status` tinyint(1) DEFAULT '0',
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` timestamp NULL DEFAULT NULL,
