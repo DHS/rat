@@ -203,6 +203,8 @@ class Application {
 		
 		define('BASE_DIR', $base_dir);
 		
+		$this->config->url .= BASE_DIR;
+		
 	}
 	
 	private function loadModels() {

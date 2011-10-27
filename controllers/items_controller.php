@@ -203,11 +203,7 @@ class ItemsController extends Application {
 			// Naughtiness = expulsion!
 			
 			// Go forth
-			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$this->config->url);
-			} else {
-				header('Location: '.$this->config->dev_url);
-			}
+			header('Location: '.$this->config->url);
 			
 			exit();
 			
