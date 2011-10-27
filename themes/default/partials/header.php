@@ -58,11 +58,12 @@ if (isset($this->title)) {
 
   <div id="container" class="container">
 
-<?php if (isset($_SESSION['user_id'])) { ?>
-
     <div class="topbar">
       <div class="fill">
         <div class="container">
+
+<?php if (isset($_SESSION['user_id'])) { ?>
+
           <h3><?php echo $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
           <ul>
             <li<?php if ($this->uri['controller'] == $this->config->default_controller) { echo ' class="active" '; } ?>><?php echo $this->link_to('Home', $this->config->default_controller); ?></li>
@@ -78,7 +79,7 @@ if (isset($this->title)) {
                 <input type="text" name="q" placeholder="Search" value="<?php if (isset($this->uri['params']['q'])) { echo $this->uri['params']['q']; } ?>" />
               </form>
             </li>
-			
+
 			<?php if (class_exists("User")) { ?>
 				<li class="menu">
 				<a href="#" class="menu"><?php $viewer = User::get_by_id($_SESSION['user_id']); echo $viewer->username; ?></a>
@@ -95,26 +96,21 @@ if (isset($this->title)) {
 				</li>
 			<?php } ?>
           </ul>
-        </div>
-      </div>
-    </div>
 
 <?php } else { ?>
-	
-    <div class="topbar">
-      <div class="fill">
-        <div class="container">
+
           <h3><?php echo $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
           <ul class="nav secondary-nav">
             <li<?php if ($this->uri['controller'] == 'users' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php echo $this->link_to('Signup', 'users', 'add') ?></li>
             <li<?php if ($this->uri['controller'] == 'sessions' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php echo $this->link_to('Login', 'sessions', 'add') ?></li>
             <li<?php if ($this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help') ?></li>
           </ul>
+
+<?php } ?>
+
         </div>
       </div>
     </div>
-
-<?php } ?>
 
     <?php if (isset($this->title)) { echo $this->title; } ?>
 
