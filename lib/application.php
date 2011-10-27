@@ -182,9 +182,9 @@ class Application {
 		
 		$this->config = $config;
 		
-		$domain = substr(substr($this->config->url, 0, -1), 7);
+		$live_domain = substr(substr($this->config->url, 0, -1), 7);
 		
-		if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.'.$domain) {
+		if ($_SERVER['HTTP_HOST'] == $live_domain || $_SERVER['HTTP_HOST'] == 'www.'.$live_domain) {
 			define('SITE_IDENTIFIER', 'live');
 			$base_dir = $this->config->base_dir;
 		} else {
