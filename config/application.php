@@ -34,34 +34,34 @@ class AppConfig extends ServerConfig {
 							
 							'name_plural'	=> 'posts',
 							
-							'titles'		=> array(	'enabled' => TRUE,
-														'name' => 'Title',
-														'name_plural' => 'Titles'
+							'titles'		=> array(	'enabled'		=> TRUE,
+														'name'			=> 'Title',
+														'name_plural'	=> 'Titles'
 														),
 														
-							'content'		=> array(	'enabled' => TRUE,
-														'name' => 'Content',
-														'name_plural' => 'Contents'
+							'content'		=> array(	'enabled'		=> TRUE,
+														'name'			=> 'Content',
+														'name_plural'	=> 'Contents'
 														),
 
 							// Remember to update the permissions for your upload dir! e.g. chmod -R 777 uploads
-							'uploads'		=> array(	'enabled' => TRUE,
-														'name' => 'Image',
-														'directory' => 'uploads',
-														'max-size' => '5242880',
-														'mime-types' => array('image/jpeg','image/png', 'image/gif', 'image/pjpeg')
+							'uploads'		=> array(	'enabled'		=> TRUE,
+														'name'			=> 'Image',
+														'directory'		=> 'uploads',
+														'max-size'		=> '5242880',
+														'mime-types'	=> array('image/jpeg','image/png', 'image/gif', 'image/pjpeg')
 														),
 														
-							'comments'		=> array(	'enabled' => TRUE,
-														'name' => 'Comment',
-														'name_plural' => 'Comments'
+							'comments'		=> array(	'enabled'		=> TRUE,
+														'name'			=> 'Comment',
+														'name_plural'	=> 'Comments'
 														),
 														
-							'likes'			=> array(	'enabled' => TRUE,
-														'name' => 'Like',
-														'name_plural' => 'Likes',
-														'opposite_name' => 'Unlike',
-														'past_tense' => 'Liked by'
+							'likes'			=> array(	'enabled'		=> TRUE,
+														'name'			=> 'Like',
+														'name_plural'	=> 'Likes',
+														'opposite_name'	=> 'Unlike',
+														'past_tense'	=> 'Liked by'
 														)
 							);
 	
