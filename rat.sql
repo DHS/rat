@@ -41,7 +41,7 @@ CREATE TABLE `invites` (
 
 CREATE TABLE `log` (
   `id` int(11) NOT NULL auto_increment,
-  `user_id` bigint(15) NOT NULL default '',
+  `user_id` bigint(15) NOT NULL default '0',
   `object_type` varchar(50) default NULL,
   `object_id` varchar(50) default NULL,
   `action` varchar(50) NOT NULL default '',
