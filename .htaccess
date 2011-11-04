@@ -444,7 +444,7 @@ Options -Indexes
 
 # Rat-specific rewrite
 <IfModule mod_headers.c>
-    RewriteCond $1 !^(js|themes|uploads)
+    RewriteCond $1 !^(js|themes|uploads|static)
     RewriteRule ^(.*)$ index.php
 </IfModule>
 
