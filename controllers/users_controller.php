@@ -81,23 +81,19 @@ class UsersController extends Application {
 	}
 	
 	// Update user: change passsword, update profile
-	function update($page) {
+	function update($page = 'profile') {
 		
 		$user = User::get_by_id($_SESSION['user_id']);
 		
-		if (!isset($page)) {
+		if ($page == 'password') {
 			
-			$page = 'profile';
-			
-		} elseif ($page == 'password') {
-			
-			if ($_POST['old_password'] != '' && $_POST['new_password1'] != '' && $_POST['new_password2'] != '') {
+			if ((isset($_POST['old_password']) && $_POST['old_password'] != '') && (isset($_POST['new_password1']) && $_POST['new_password1'] != '') && (isset($_POST['new_password2']) && $_POST['new_password2'] != '')) {
 				$this->update_password($this->config->encryption_salt);
 			}
 			
 		} elseif ($page == 'profile') {
 			
-			if ($_POST['full_name'] != '' || $_POST['bio'] != '' || $_POST['url'] != '') {
+			if (isset($_POST['full_name']) || isset($_POST['bio']) || isset($_POST['url'])) {
 				$this->update_profile();
 			}
 			
