@@ -44,7 +44,7 @@
         <div class="clearfix">
           <label for="name">Full name</label>
           <div class="input">
-            <input class="medium" name="full_name" size="30" type="text" value="<?php if (isset($this->user->full_name) { echo $this->user->full_name; } ?>" />
+            <input class="medium" name="full_name" size="30" type="text" value="<?php if (isset($this->user->full_name)) { echo $this->user->full_name; } ?>" />
           </div>
         </div> <!-- /clearfix -->
         <div class="clearfix">
