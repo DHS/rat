@@ -6,7 +6,7 @@ CREATE TABLE `users` (
   `bio` varchar(180) default NULL,
   `url` varchar(180) default NULL,
   `points` int(9) default '0',
-  `invites` int(9) default '0',
+  `invites` int(9) default '2',
   `password` varchar(180) default NULL,
   `date_added` datetime default NULL,
   `date_joined` datetime default NULL,
