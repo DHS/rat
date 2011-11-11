@@ -186,6 +186,7 @@ class User {
 		
 		$query = mysql_query($sql);
 		
+		$items = array();
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$items[] = Item::get_by_id($result['id']);
 		}
@@ -209,6 +210,7 @@ class User {
 		
 		$query = mysql_query($sql);
 		
+		$invites = array();
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$invites[] = Invite::get_by_id($result['id']);
 		}
@@ -231,7 +233,8 @@ class User {
 		$sql .= " OFFSET $offset";
 		
 		$query = mysql_query($sql);
-
+		
+		$friends = array();
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$friends[$result['id']] = User::get_by_id($result['friend_user_id']);
 		}
@@ -255,6 +258,7 @@ class User {
 		
 		$query = mysql_query($sql);
 		
+		$friends = array();
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$friends[$result['id']] = User::get_by_id($result['user_id']);
 		}
@@ -278,6 +282,7 @@ class User {
 		
 		$query = mysql_query($sql);
 		
+		$items = array();
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$items[] = Item::get_by_id($result['item_id']);
 		}
@@ -301,6 +306,7 @@ class User {
 		
 		$query = mysql_query($sql);
 		
+		$comments = array();
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$comments[] = Comment::get_by_id($result['id']);
 		}
@@ -376,6 +382,7 @@ class User {
 		$query = mysql_query($sql);
 		
 		// Loop through item ids, fetching objects
+		$items = array();
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$items[] = Item::get_by_id($result['id']);
 		}

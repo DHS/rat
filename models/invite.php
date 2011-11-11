@@ -68,6 +68,7 @@ class Invite {
 		$query = mysql_query($sql);
 		
 		// Loop through invite ids, fetching objects
+		$invites = array();
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$invites[] = Invite::get_by_id($result['id']);
 		}

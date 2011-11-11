@@ -59,6 +59,8 @@ class points extends Application {
 	function view_leaderboard($limit = 10) {
 		
 		$query = mysql_query("SELECT id, username, points FROM users WHERE date_joined IS NOT NULL ORDER BY points DESC LIMIT $limit");
+
+		$leaderboard = array();
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$leaderboard[] = $result;
 		}

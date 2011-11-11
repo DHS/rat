@@ -65,6 +65,7 @@ class Comment {
 		$query = mysql_query($sql);
 		
 		// Loop through comment ids, fetching objects
+		$comments = array();
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$comments[] = Comment::get_by_id($result['id']);
 		}

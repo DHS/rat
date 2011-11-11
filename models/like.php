@@ -93,6 +93,7 @@ class Like {
 		$query = mysql_query($sql);
 		
 		// Loop through likes, fetching objects
+		$likes = array();
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$likes[] = Like::get_by_id($result['id']);
 		}
