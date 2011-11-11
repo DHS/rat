@@ -182,8 +182,10 @@ class Application {
 		
 		$this->config = $config;
 		
+		// Work out the live domain from config
 		$live_domain = substr(substr($this->config->url, 0, -1), 7);
 		
+		// Determine if site is live or dev, set site_identifier constant and base_dir
 		if ($_SERVER['HTTP_HOST'] == $live_domain || $_SERVER['HTTP_HOST'] == 'www.'.$live_domain) {
 			define('SITE_IDENTIFIER', 'live');
 			$base_dir = $this->config->base_dir;
@@ -191,19 +193,30 @@ class Application {
 			define('SITE_IDENTIFIER', 'dev');
 			$base_dir = $this->config->dev_base_dir;
 		}
-
-		if (is_null($base_dir)) {
-			$base_dir = '/';
-		}
 		
 		// Add trailing slash if necessary
 		if (substr($base_dir, -1) != '/') {
 			$base_dir = $base_dir.'/';
 		}
 		
+		// Set base_dir constant
 		define('BASE_DIR', $base_dir);
 		
-		$this->config->url .= BASE_DIR;
+		// Update config->url
+		if (SITE_IDENTIFIER == 'live') {
+			// config->url already setup
+			if (BASE_DIR != '/') {
+				// Append base_dir if needed
+				$this->config->url .= BASE_DIR;
+			}
+		} else {
+			if (BASE_DIR != '/') {
+				$this->config->url = $this->config->dev_url . BASE_DIR;
+			} else {
+				// Dev site so set config->url to config->dev_url for use everywhere from now
+				$this->config->url = $this->config->dev_url;
+			}
+		}
 		
 	}
 	
