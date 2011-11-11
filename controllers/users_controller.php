@@ -6,12 +6,12 @@ class UsersController extends Application {
 	protected $requireLoggedIn = array('show', 'update', 'confirm');
 	
 	// Add a user / signup
-	function add($code) {
+	function add($code = NULL) {
 		
 		if (isset($_POST['email'])) {
 			//User is trying to signup
 			
-			if (isset($code)){
+			if ($code != NULL){
 				// User is signing up with a code
 				
 				$this->signup_code();
