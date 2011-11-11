@@ -71,7 +71,7 @@ if (isset($this->title)) {
             <?php if ($this->config->invites['enabled'] == TRUE) { ?>
             <li<?php if ($this->uri['controller'] == 'invites') { echo ' class="active" '; } ?>><?php echo $this->link_to('Invites', 'invites'); ?></li>
             <?php } ?>
-            <li<?php if ($this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?></li>
+            <li<?php if (isset($this->uri['params']['id']) && $this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?></li>
           </ul>
           <ul class="nav secondary-nav">
             <li>

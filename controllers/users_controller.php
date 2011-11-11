@@ -87,7 +87,7 @@ class UsersController extends Application {
 		
 		if ($page == 'password') {
 			
-			if ((isset($_POST['old_password']) && $_POST['old_password'] != '') && (isset($_POST['new_password1']) && $_POST['new_password1'] != '') && (isset($_POST['new_password2']) && $_POST['new_password2'] != '')) {
+			if (isset($_POST['old_password']) && $_POST['old_password'] != '' && isset($_POST['new_password1']) && $_POST['new_password1'] != '' && isset($_POST['new_password2']) && $_POST['new_password2'] != '') {
 				$this->update_password($this->config->encryption_salt);
 			}
 			
@@ -248,13 +248,13 @@ class UsersController extends Application {
 	// Helper function: update password
 	private function update_password($salt) {
 		
+		$user = User::get_by_id($_SESSION['user_id']);
+		
 		if (md5($_POST['old_password'].$salt) == $user->password) {
 			// Check old passwords match
 			
 			if ($_POST['new_password1'] == $_POST['new_password2']) {
 				// New passwords match
-				
-				$user = User::get_by_id($_SESSION['user_id']);
 				
 				// Call update_password in user model
 				$user->update_password($_POST['new_password1'], $salt);
