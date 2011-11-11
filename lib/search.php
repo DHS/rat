@@ -1,6 +1,5 @@
 <?php
 
-// Not sure search deserves its own model but ho hom
 // Code courtesy of the awesome Cal Henderson: http://www.iamcal.com/publish/articles/php/search/
 
 class Search {
