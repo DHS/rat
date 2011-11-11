@@ -23,7 +23,7 @@ class LikesController extends Application {
 		$like->remove();
 		
 		if (isset($this->plugins->log)) {
-			$this->plugins->log->add($_SESSION['user_id'], 'like', $this->id, 'remove');
+			$this->plugins->log->add($_SESSION['user_id'], 'like', $like->id, 'remove');
 		}
 		
 		$this->show($item_id);
