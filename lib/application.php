@@ -20,7 +20,7 @@ class Application {
 			$controller = ucfirst($uri['controller']).'Controller';
 			@include "controllers/{$uri['controller']}_controller.php";
 			
-			if (isset($uri['action']) && substr($uri['action'], 0, 1) == '?') {
+			if (substr($uri['action'], 0, 1) == '?') {
 				$uri['action'] = '';
 			}
 			
@@ -96,30 +96,20 @@ class Application {
 		$dot_split = preg_split("/\./", $request);
 		
 		// Grab format from after '.' but before '?'
-		if (count($dot_split) > 1) {
-			$format_split = preg_split("/\?/", $dot_split[1]);
-			$format = $format_split[0];
-		} else {
-			$format = NULL;
-		}
+		$format_split = preg_split("/\?/", $dot_split[1]);
+		$format = $format_split[0];
 		
 		// Split request at each '/' to obtain route (using everything before '.')
 		$segments = preg_split("/\//", $dot_split[0]);
 		
 		// Set up uri variable to pass to app
-		$uri['controller'] = $segments[1];
-		
-		if (isset($segments[2])) {
-			$uri['action'] = $segments[2];
-		}
-		
-		$uri = array(	'format'		=> $format,
+		$uri = array(	'controller'	=> $segments[1],
+						'action'		=> $segments[2],
+						'format'		=> $format,
 						'params'		=> array_map('htmlentities', $_GET)
-					);		
+					);
 		
-		if (isset($segments[3])) {
-			$uri['params']['id'] = $segments[3];
-		}
+		$uri['params']['id'] = $segments[3];
 		
 		// Set the controller to the default if not in URI
 		if (empty($uri['controller'])) {
@@ -256,11 +246,7 @@ class Application {
 	private function loadAction() {
 		
 		if (method_exists($this, $this->uri['action'])) {
-			if (isset($this->uri['params']['id'])) {
-				$this->{$this->uri['action']}($this->uri['params']['id']);
-			} else {
-				$this->{$this->uri['action']}();
-			}
+			$this->{$this->uri['action']}($this->uri['params']['id']);
 		} elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
 			$this->index($this->uri['params']['id']);
 		} else {
