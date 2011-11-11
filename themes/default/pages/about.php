@@ -1,5 +1,6 @@
 <?php
 
+$authors = '';
 foreach ($this->config->admin_users as $value) {
 	$author = User::get_by_id($value);
 	if ($this->config->private != TRUE || isset($_SESSION['user_id'])) {
