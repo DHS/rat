@@ -7,7 +7,7 @@
         <div class="clearfix">
           <label for="email">Email</label>
           <div class="input">
-            <input class="medium" name="email" size="30" type="text" value="<?php echo $email; ?>" />
+            <input class="medium" name="email" size="30" type="text" value="<?php if (isset($email)) { echo $email; } ?>" />
           </div>
         </div> <!-- /clearfix -->
         <div class="clearfix">

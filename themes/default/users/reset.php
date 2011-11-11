@@ -36,7 +36,7 @@
         <div class="clearfix">
           <label for="email">Email</label>
           <div class="input">
-            <input class="medium" name="email" size="30" type="text" value="<?php echo $this->uri['params']['email']; ?>" />
+            <input class="medium" name="email" size="30" type="text" value="<?php if (isset($this->uri['params']['email'])) { echo $this->uri['params']['email']; } ?>" />
           </div>
         </div> <!-- /clearfix -->
         <div class="actions">
