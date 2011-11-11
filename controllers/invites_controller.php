@@ -35,7 +35,9 @@ class InvitesController extends Application {
 		$user = User::get_by_id($_SESSION['user_id']);
 		
 		$_POST['email'] = trim($_POST['email']);
-
+		
+		$error = '';
+		
 		if ($_POST['email'] == '') {
 			$error .= 'Please enter an email address.<br />';
 		}

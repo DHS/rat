@@ -128,6 +128,8 @@ class UsersController extends Application {
 					exit();
 				}
 				
+				$error = '';
+				
 				if ($_POST['password1'] == '' || $_POST['password2'] == '') {
 					$error .= 'Please enter your password twice.<br />';
 				}
@@ -330,6 +332,8 @@ class UsersController extends Application {
 	// Helper function: signup with an invite code
 	private function signup_code() {
 		
+		$error = '';
+		
 		// Check invite code (only really matters if app is in beta)
 		
 		if ($this->config->beta == TRUE) {
@@ -480,6 +484,8 @@ class UsersController extends Application {
 	// Helper function: beta signup
 	private function signup_beta() {
 		
+		$error = '';
+		
 		// Check email
 		$_POST['email'] = trim($_POST['email']);
 		$email_check = $this->check_email($_POST['email']);
@@ -535,6 +541,8 @@ class UsersController extends Application {
 	
 	// Helper function: full signup
 	private function signup_full() {
+		
+		$error = '';
 		
 		// Check email
 		$_POST['email'] = trim($_POST['email']);

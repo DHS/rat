@@ -36,6 +36,8 @@ class ItemsController extends Application {
 		
 		if ($_POST['content'] != '' || ($this->config->items['titles']['enabled'] == TRUE && $_POST['title'] != '') || ($this->config->items['uploads']['enabled'] == TRUE && $_FILES['file']['name'] != '')) {
 			
+			$error = '';
+			
 			// Form validation
 			
 			if ($this->config->items['titles']['enabled'] == FALSE && $_POST['content'] == '') {
