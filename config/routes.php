@@ -18,6 +18,8 @@ class Routes {
 		'/login' => array('controller' => 'sessions', 'action' => 'add'),
 		'/logout' => array('controller' => 'sessions', 'action' => 'remove'),
 		'/settings' => array('controller' => 'users', 'action' => 'update'),
+		'/settings/profile' => array('controller' => 'users', 'action' => 'update', 'id' => 'profile'),
+		'/settings/password' => array('controller' => 'users', 'action' => 'update', 'id' => 'password'),
 		'/feed' => array('controller' => 'items', 'action' => 'feed'),
 		
 		// More complex

@@ -3,8 +3,8 @@
   <div class="span8 columns offset4">
 
     <ul class="tabs">
-      <li<?php if ($this->page == 'profile') { echo ' class="active"'; } ?>><?php echo $this->link_to('Profile', 'users', 'update', 'profile'); ?></li>
-      <li<?php if ($this->page == 'password') { echo ' class="active"'; } ?>><?php echo $this->link_to('Password', 'users', 'update', 'password'); ?></li>
+      <li<?php if ($this->page == 'profile') { echo ' class="active"'; } ?>><?php echo $this->link_to('Profile', 'settings', 'profile'); ?></li>
+      <li<?php if ($this->page == 'password') { echo ' class="active"'; } ?>><?php echo $this->link_to('Password', 'settings', 'password'); ?></li>
     </ul>
 
 <?php if ($this->page == 'password') { ?>
