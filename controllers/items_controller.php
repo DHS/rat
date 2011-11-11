@@ -8,17 +8,17 @@ class ItemsController extends Application {
 	function index() {
 		
 		// Page zero so overwrite to 1
-		if (!isset($this->uri['params']['page']) || $this->uri['params']['page'] == 0) {
+		if (!isset($this->uri['params']['page'])) {
 			$this->uri['params']['page'] = 1;
 		}
 		
 		// Items per page, change this to test pagination
 		$limit = 10;
 		
-		if (isset($this->uri['params']['page'])) {
-			$offset = ($this->uri['params']['page'] - 1) * $limit;
-		} else {
+		if ($this->uri['params']['page'] == 1) {
 			$offset = 0;
+		} else {
+			$offset = ($this->uri['params']['page'] - 1) * $limit;
 		}
 		
 		$this->items = Item::list_all($limit, $offset);
@@ -234,17 +234,17 @@ class ItemsController extends Application {
 			$user = User::get_by_id($_SESSION['user_id']);
 			
 			// Page zero so overwrite to 1
-			if ($this->uri['params']['page'] == 0) {
+			if (!isset($this->uri['params']['page'])) {
 				$this->uri['params']['page'] = 1;
 			}
-
+			
 			// Items per page, change this to test pagination
 			$limit = 10;
 
-			if (isset($this->uri['params']['page'])) {
-				$offset = ($this->uri['params']['page'] - 1) * $limit;
-			} else {
+			if ($this->uri['params']['page'] == 1) {
 				$offset = 0;
+			} else {
+				$offset = ($this->uri['params']['page'] - 1) * $limit;
 			}
 			
 			$this->items = $user->list_feed($limit, $offset);

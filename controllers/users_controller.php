@@ -54,18 +54,18 @@ class UsersController extends Application {
 			$this->user = User::get_by_username($id);
 		}
 		
-		// page zero so overwrite to 1
-		if ($this->uri['params']['page'] == 0) {
+		// Page zero so overwrite to 1
+		if (!isset($this->uri['params']['page'])) {
 			$this->uri['params']['page'] = 1;
 		}
 		
 		// items per page, change this to test pagination
 		$limit = 10;
 		
-		if (isset($this->uri['params']['page'])) {
-			$offset = ($this->uri['params']['page'] - 1) * $limit;
-		} else {
+		if ($this->uri['params']['page'] == 1) {
 			$offset = 0;
+		} else {
+			$offset = ($this->uri['params']['page'] - 1) * $limit;
 		}
 		
 		$this->items = $this->user->items($limit, $offset);
