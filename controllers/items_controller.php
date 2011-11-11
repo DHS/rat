@@ -8,7 +8,7 @@ class ItemsController extends Application {
 	function index() {
 		
 		// Page zero so overwrite to 1
-		if ($this->uri['params']['page'] == 0) {
+		if (!isset($this->uri['params']['page']) || $this->uri['params']['page'] == 0) {
 			$this->uri['params']['page'] = 1;
 		}
 		

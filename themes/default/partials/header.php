@@ -103,7 +103,7 @@ if (isset($this->title)) {
           <ul class="nav secondary-nav">
             <li<?php if ($this->uri['controller'] == 'users' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php echo $this->link_to('Signup', 'users', 'add') ?></li>
             <li<?php if ($this->uri['controller'] == 'sessions' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php echo $this->link_to('Login', 'sessions', 'add') ?></li>
-            <li<?php if ($this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help') ?></li>
+            <li<?php if (isset($this->uri['params']['id']) && $this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help') ?></li>
           </ul>
 
 <?php } ?>
