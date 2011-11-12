@@ -86,7 +86,7 @@ class InvitesController extends Application {
 			
 			$admin = User::get_by_id($this->config->admin_users[0]);
 			
-			$to			= "{$_POST['username']} <{$_POST['email']}>";
+			$to			= "{$_POST['email']}";
 			$link		= $this->config->url.'signup/'.$id;
 			$headers	= "From: {$user->username} <{$user->email}>\r\nBcc: {$admin->email}\r\nContent-type: text/html\r\n";
 			
