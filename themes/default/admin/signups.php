@@ -19,6 +19,8 @@ foreach ($this->users as $user) {
 	
 	if ($user['invites'] > 0) {
 		$invite_summary = 'Invited x'.$user['invites'].' &middot;';
+	} else {
+		$invite_summary = NULL;
 	}
 
 	echo '<tr><td>'.$user['email'].'</td><td>
