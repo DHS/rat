@@ -3,6 +3,7 @@
 class Application {
 	
 	public $uri, $config;
+	private $plugins = null;
 	
 	private function __construct() {}
 	
@@ -247,6 +248,7 @@ class Application {
 	
 	private function loadPlugins() {
 		
+		$this->plugins = new StdClass();
 		foreach ($this->config->plugins as $key => $value) {
 			if ($value == TRUE) {
 				require_once "plugins/$key.php";
