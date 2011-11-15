@@ -8,11 +8,11 @@ class Like {
 		$user_id = sanitize_input($user_id);
 		$item_id = sanitize_input($item_id);
 		
-		$count_sql = "SELECT id FROM likes WHERE user_id = $user_id AND item_id = $item_id";
+		$count_sql = "SELECT `id` FROM `likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
 		$count_query = mysql_query($count_sql);
 		
 		if (mysql_num_rows($count_query) < 1) {
-			$sql = "INSERT INTO likes SET user_id = $user_id, item_id = $item_id";
+			$sql = "INSERT INTO `likes` SET `user_id` = $user_id, `item_id` = $item_id";
 			$query = mysql_query($sql);
 		}
 		
@@ -27,7 +27,7 @@ class Like {
 		
 		$id = sanitize_input($id);
         
-		$sql = "SELECT id, user_id, item_id, date FROM likes WHERE id = $id";
+		$sql = "SELECT `id`, `user_id`, `item_id`, `date` FROM `likes` WHERE `id` = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -57,7 +57,7 @@ class Like {
 		$user_id = sanitize_input($user_id);
 		$item_id = sanitize_input($item_id);
         
-		$sql = "SELECT id FROM likes WHERE user_id = $user_id AND item_id = $item_id";
+		$sql = "SELECT `id` FROM `likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
 		$query = mysql_query($sql);
 		$result = mysql_result($query, 0);
 		
@@ -79,7 +79,7 @@ class Like {
 	// Get all liked items, returns an array of Like objects
 	public static function list_all($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT id FROM likes ORDER BY date DESC";
+		$sql = "SELECT `id` FROM `likes` ORDER BY `date` DESC";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -105,11 +105,11 @@ class Like {
 	// Unlike an item, returns like id
 	public function remove() {
 		
-		$count_sql = "SELECT id FROM likes WHERE id = $this->id";
+		$count_sql = "SELECT `id` FROM `likes` WHERE `id` = $this->id";
 		$count_query = mysql_query($count_sql);
 		
 		if (mysql_num_rows($count_query) > 0) {
-			$sql = "DELETE FROM likes WHERE id = $this->id";
+			$sql = "DELETE FROM `likes` WHERE `id` = $this->id";
 			$query = mysql_query($sql);
 		}
 		

@@ -7,7 +7,7 @@ class User {
 		
 		$email = sanitize_input($email);
 		
-		$sql = "INSERT INTO users SET email = $email, date_added = NOW()";
+		$sql = "INSERT INTO `users` SET `email` = $email, `date_added` = NOW()";
 		$query = mysql_query($sql);
 		
 		$id = mysql_insert_id();
@@ -21,7 +21,7 @@ class User {
 		
 		$id = sanitize_input($id);
 		
-		$sql = "SELECT id, username, email, full_name, bio, url, points, invites, password, date_added, date_joined FROM users WHERE id = $id";
+		$sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `users` WHERE `id` = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -48,7 +48,7 @@ class User {
 		
 		$username = sanitize_input($username);
 		
-		$sql = "SELECT id, username, email, full_name, bio, url, points, invites, password, date_added, date_joined FROM users WHERE username = $username";
+		$sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `users` WHERE `username` = $username";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -75,7 +75,7 @@ class User {
 		
 		$email = sanitize_input($email);
 		
-		$sql = "SELECT id, username, email, full_name, bio, url, points, invites, password, date_added, date_joined FROM users WHERE email = $email";
+		$sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `users` WHERE `email` = $email";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -105,7 +105,7 @@ class User {
 		
 		$encrypted_password = md5($password.$salt);
 		
-		$sql = "UPDATE users SET username = $username, password = '$encrypted_password', date_joined = NOW() WHERE id = $id";
+		$sql = "UPDATE `users` SET `username` = $username, `password` = '$encrypted_password', `date_joined` = NOW() WHERE `id` = $id";
 		$query = mysql_query($sql);
 		
 	}
@@ -160,12 +160,12 @@ class User {
 	public static function remove() {
 		
 		// Check item exists
-		$sql_check = "SELECT id FROM users WHERE id = $this->id";
+		$sql_check = "SELECT `id` FROM `users` WHERE `id` = $this->id";
 		$count_query = mysql_query($sql_check);
 		
 		if (mysql_num_rows($count_query) > 0) {
 			// If user exists, go ahead and delete
-			$sql_delete = "DELETE FROM user WHERE id = $this->id";
+			$sql_delete = "DELETE FROM `user` WHERE `id` = $this->id";
 			$query = mysql_query($sql_delete);
 		}
 		
@@ -174,7 +174,7 @@ class User {
 	// Get a user's items, returns array of Item objects
 	public function items($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT id FROM items WHERE user_id = $this->id ORDER BY id DESC";
+		$sql = "SELECT `id` FROM `items` WHERE `user_id` = $this->id ORDER BY `id` DESC";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -198,7 +198,7 @@ class User {
 	// Get all invites sent by a user, returns an array of Invite objects
 	public function invites($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT id FROM invites WHERE user_id = $this->id ORDER BY id DESC";
+		$sql = "SELECT `id` FROM `invites` WHERE `user_id` = $this->id ORDER BY `id` DESC";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -222,7 +222,7 @@ class User {
 	// Get a users's friends, returns a list of User items
 	public function friends($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT id, friend_user_id FROM friends WHERE user_id = $this->id";
+		$sql = "SELECT `id`, `friend_user_id` FROM `friends` WHERE `user_id` = $this->id";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -246,7 +246,7 @@ class User {
 	// Get a users's followers, returns a list of Friend items
 	public function followers($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT id, friend_user_id FROM friends WHERE friend_user_id = $this->id";
+		$sql = "SELECT `id`, `friend_user_id` FROM `friends` WHERE `friend_user_id` = $this->id";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -270,7 +270,7 @@ class User {
 	// Get items liked by a user, returns array of Item objects
 	public function likes($limit = 10, $offset = 0) {
 			
-		$sql = "SELECT item_id FROM likes WHERE user_id = $this->id ORDER BY date DESC";
+		$sql = "SELECT `item_id` FROM `likes` WHERE `user_id` = $this->id ORDER BY `date` DESC";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -294,7 +294,7 @@ class User {
 	// Get comments made by a user, returns an array of Comment objects
 	public function comments($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT id FROM comments WHERE user_id = $this->id ORDER BY id ASC";
+		$sql = "SELECT `id` FROM `comments` WHERE `user_id` = $this->id ORDER BY `id` ASC";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -320,11 +320,11 @@ class User {
 		
 		$friend_user_id = sanitize_input($friend_user_id);
 		
-		$count_sql = "SELECT id FROM friends WHERE user_id = {$this->id} AND friend_user_id = $friend_user_id";
+		$count_sql = "SELECT `id` FROM `friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = $friend_user_id";
 		$count_query = mysql_query($count_sql);
 		
 		if (mysql_num_rows($count_query) < 1) {
-			$sql = "INSERT INTO friends SET user_id = {$this->id}, friend_user_id = $friend_user_id";
+			$sql = "INSERT INTO `friends` SET `user_id` = {$this->id}, `friend_user_id` = $friend_user_id";
 			$query = mysql_query($sql);
 		}
 		
@@ -336,7 +336,7 @@ class User {
 		$friend_user_id = sanitize_input($friend_user_id);
 		$status = sanitize_input($status);
 		
-		$sql = "UPDATE friends SET status = $status WHERE user_id = {$this->id} AND friend_user_id = {$friend_user_id}";
+		$sql = "UPDATE `friends` SET `status` = $status WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
 		$query = mysql_query($sql);
 		
 	}
@@ -346,11 +346,11 @@ class User {
 		
 		$friend_user_id = sanitize_input($friend_user_id);
 		
-		$count_sql = "SELECT id FROM friends WHERE user_id = {$this->id} AND friend_user_id = {$friend_user_id}";
+		$count_sql = "SELECT `id` FROM `friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
 		$count_query = mysql_query($count_sql);
 		
 		if (mysql_num_rows($count_query) > 0) {
-			$sql = "DELETE FROM friends WHERE user_id = {$this->id} AND friend_user_id = {$friend_user_id}";
+			$sql = "DELETE FROM `friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
 			$query = mysql_query($sql);
 		}
 		
@@ -360,16 +360,16 @@ class User {
 	public function list_feed($limit = 10, $offset = 0) {
 		
 		// Start by adding the viewer to the query string
-		$friends_string = "user_id = {$this->id}";
+		$friends_string = "`user_id` = {$this->id}";
 		
 		$friends = $this->friends();
 		
 		// Loop through friends adding them to the query string
 		foreach ($friends as $friend) {
-			$friends_string .= " OR user_id = {$friend['friend_user_id']}";
+			$friends_string .= " OR `user_id` = {$friend['friend_user_id']}";
 		}
 		
-		$sql = "SELECT id FROM items WHERE $friends_string ORDER BY id DESC";
+		$sql = "SELECT `id` FROM `items` WHERE $friends_string ORDER BY `id` DESC";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -396,7 +396,7 @@ class User {
 		
 		$friend_user_id = sanitize_input($friend_user_id);
 		
-		$sql = "SELECT COUNT(id) FROM friends WHERE user_id = {$this->id} AND friend_user_id = $friend_user_id";
+		$sql = "SELECT COUNT(id) FROM `friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = $friend_user_id";
 		$query = mysql_query($sql);
 		$result = mysql_result($query, 0);
 		
@@ -413,7 +413,7 @@ class User {
 		
 		$encrypted_password = md5($new_password.$salt);
 		
-		$sql = "UPDATE users SET password = '{$encrypted_password}' WHERE id = $this->id";
+		$sql = "UPDATE `users` SET `password` = '{$encrypted_password}' WHERE `id` = $this->id";
 		$query = mysql_query($sql);
 		
 	}
@@ -421,30 +421,30 @@ class User {
 	// Update profile info
 	public function update_profile($name = NULL, $bio = NULL, $url = NULL) {
 		
-		$sql = "UPDATE users SET ";
+		$sql = "UPDATE `users` SET ";
 		
 		if ($name != '') {
 			$name = sanitize_input($name);
 		} else {
 			$name = 'NULL';
 		}
-		$sql .= "full_name = $name, ";	
+		$sql .= "`full_name` = $name, ";	
 		
 		if ($bio != '') {
 			$bio = sanitize_input($bio);
 		} else {
 			$bio = 'NULL';
 		}
-		$sql .= "bio = $bio, ";
+		$sql .= "`bio` = $bio, ";
 		
 		if ($url != '') {
 			$url = sanitize_input($url);
 		} else {
 			$url = 'NULL';
 		}
-		$sql .= "url = $url";
+		$sql .= "`url` = $url";
 		
-		$sql .= " WHERE id = $this->id";
+		$sql .= " WHERE `id` = $this->id";
 		
 		$query = mysql_query($sql);
 		
@@ -456,7 +456,7 @@ class User {
 		$invites = sanitize_input($invites);
 		
 		// Get current # of invites
-		$sql_get = "SELECT invites FROM users WHERE id = $this->id";
+		$sql_get = "SELECT `invites` FROM `users` WHERE `id` = $this->id";
 		$query = mysql_query($sql_get);
 		$old_invites = mysql_result($query, 0);
 		
@@ -464,7 +464,7 @@ class User {
 		$new_invites = $old_invites + $invites;
 		
 		// Update database
-		$sql_update = "UPDATE users SET invites = $new_invites WHERE id = $this->id";
+		$sql_update = "UPDATE `users` SET `invites` = $new_invites WHERE `id` = $this->id";
 		$query = mysql_query($sql_update);
 		
 	}
@@ -474,7 +474,7 @@ class User {
 		
 		$username = sanitize_input($username);
 		
-		$query = mysql_query("SELECT COUNT(id) FROM users WHERE username = $username");
+		$query = mysql_query("SELECT COUNT(id) FROM `users` WHERE `username` = $username");
 		$count = mysql_result($query, 0);
 		
 		if ($count >= 1) {
@@ -494,7 +494,7 @@ class User {
 		
 		$email = sanitize_input($email);
 		
-		$query = mysql_query("SELECT COUNT(id) FROM users WHERE email = $email");
+		$query = mysql_query("SELECT COUNT(id) FROM `users` WHERE `email` = $email");
 		$user_count = mysql_result($query, 0);
 		
 		if ($user_count >= 1) {
@@ -555,7 +555,7 @@ class User {
 		
 		$code = sanitize_input($code);
         
-		$sql = "SELECT user_id FROM users_password_reset WHERE reset_code = $code AND date > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY date DESC";
+		$sql = "SELECT `user_id` FROM `users_password_reset` WHERE `reset_code` = $code AND `date` > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY `date` DESC";
 		$query = mysql_query($sql);
 		$count = mysql_num_rows($query);
 		
@@ -582,7 +582,7 @@ class User {
 		}
 		
 		// Write to database
-		$sql = "INSERT INTO users_password_reset SET user_id = $this->id, reset_code = '$code'";
+		$sql = "INSERT INTO `users_password_reset` SET `user_id` = $this->id, `reset_code` = '$code'";
 		$query = mysql_query($sql);
 
 		return $code;

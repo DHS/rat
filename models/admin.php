@@ -5,12 +5,12 @@ class Admin {
 	// Get all users	
 	public static function list_users() {
 		
-		$sql = "SELECT * FROM users WHERE date_joined IS NOT NULL ORDER BY date_joined DESC";
+		$sql = "SELECT * FROM `users` WHERE `date_joined` IS NOT NULL ORDER BY `date_joined` DESC";
 		$users_query = mysql_query($sql);
 		while ($user = mysql_fetch_array($users_query, MYSQL_ASSOC)) {
 			
 			// Find last login
-			$last_login_query = mysql_query("SELECT TIMESTAMPDIFF(DAY, date, NOW()) FROM log WHERE user_id = '{$user['id']}' AND action = 'login' ORDER BY date DESC LIMIT 1");
+			$last_login_query = mysql_query("SELECT TIMESTAMPDIFF(DAY, date, NOW()) FROM `log` WHERE `user_id` = '{$user['id']}' AND `action` = 'login' ORDER BY `date` DESC LIMIT 1");
 			if (mysql_num_rows($last_login_query) > 0) {
 				$last_login = mysql_result($last_login_query, 0);
 				if ($last_login == 0) {
@@ -35,7 +35,7 @@ class Admin {
 	// Get beta signups who are still waiting for an invite
 	public static function list_users_beta() {
 		
-		$sql = "SELECT id, email, TIMESTAMPDIFF(DAY, date_added, NOW()) AS days_waiting, (SELECT COUNT(*) FROM invites WHERE email = users.email) AS invites FROM users WHERE date_joined IS NULL ORDER BY date_added ASC";
+		$sql = "SELECT `id`, `email`, TIMESTAMPDIFF(DAY, date_added, NOW()) AS days_waiting, (SELECT COUNT(*) FROM `invites` WHERE `email` = users.email) AS invites FROM `users` WHERE `date_joined` IS NULL ORDER BY `date_added` ASC";
 		$waiting_users_query = mysql_query($sql);
 		
 		while ($user = mysql_fetch_array($waiting_users_query, MYSQL_ASSOC)) {
@@ -60,7 +60,7 @@ class Admin {
 			// uncomment the following line to zero invites
 			//$user['invites'] = 0;
 			
-			$query = mysql_query("UPDATE users SET invites = $new_invites WHERE id = {$user['id']}");
+			$query = mysql_query("UPDATE `users` SET `invites` = $new_invites WHERE id = {$user['id']}");
 			
 		}
 		
@@ -86,7 +86,7 @@ class Admin {
 		$status = sanitize_input($status);
 		$update_string .= "status = $status";
 		
-		$query = mysql_query("UPDATE items SET $update_string WHERE id = $id");
+		$query = mysql_query("UPDATE `items` SET $update_string WHERE id = $id");
 		
 	}
 	

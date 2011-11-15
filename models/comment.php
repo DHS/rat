@@ -9,7 +9,7 @@ class Comment {
 		$item_id = sanitize_input($item_id);
 		$content = sanitize_input($content);
 		
-		$sql = "INSERT INTO comments SET user_id = $user_id, item_id = $item_id, content = $content";
+		$sql = "INSERT INTO `comments` SET `user_id` = $user_id, `item_id` = $item_id, `content` = $content";
 		$query = mysql_query($sql);
 		
 		$id = mysql_insert_id();
@@ -23,7 +23,7 @@ class Comment {
 		
 		$id = sanitize_input($id);
         
-		$sql = "SELECT id, user_id, item_id, content, date FROM comments WHERE id = $id";
+		$sql = "SELECT `id`, `user_id`, `item_id`, `content`, `date` FROM `comments` WHERE `id` = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -51,7 +51,7 @@ class Comment {
 	// Get all comments, returns an array of Comments objects
 	public static function list_all($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT id FROM comments ORDER BY date DESC";
+		$sql = "SELECT `id` FROM `comments` ORDER BY `date` DESC";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -77,11 +77,11 @@ class Comment {
 	// Remove a comment from an item, returns comment id
 	public function remove() {
 		
-		$count_sql = "SELECT id FROM comments WHERE id = {$this->id}";
+		$count_sql = "SELECT `id` FROM `comments` WHERE `id` = {$this->id}";
 		$count_query = mysql_query($count_sql);
 		
 		if (mysql_num_rows($count_query) > 0) {
-			$sql = "DELETE FROM comments WHERE id = {$this->id}";
+			$sql = "DELETE FROM `comments` WHERE `id` = {$this->id}";
 			$query = mysql_query($sql);
 		}
 		

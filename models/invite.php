@@ -8,12 +8,12 @@ class Invite {
 		$user_id = sanitize_input($user_id);
 		$email = sanitize_input($email);
 		
-		$insert_sql = "INSERT INTO invites SET user_id = $user_id, email = $email";
+		$insert_sql = "INSERT INTO `invites` SET `user_id` = $user_id, `email` = $email";
 		$insert_query = mysql_query($insert_sql);
 		
 		$id = mysql_insert_id();
 		
-		$update_sql = "UPDATE invites SET code = '$id' WHERE id = $id";
+		$update_sql = "UPDATE `invites` SET `code` = '$id' WHERE `id` = $id";
 		$query = mysql_query($update_sql);
 		
 		return $id;
@@ -25,7 +25,7 @@ class Invite {
 		
 		$id = sanitize_input($id);
         
-		$sql = "SELECT id, user_id, email, code, result, date FROM invites WHERE id = $id";
+		$sql = "SELECT `id`, `user_id`, `email`, `code`, `result`, `date` FROM `invites` WHERE `id` = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -55,7 +55,7 @@ class Invite {
 		
 		$code = sanitize_input($code);
 		
-		$sql = "SELECT id FROM invites WHERE code = $code";
+		$sql = "SELECT `id` FROM `invites` WHERE `code` = $code";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -80,14 +80,14 @@ class Invite {
 	// Update an invite	
 	public function update() {
 		
-		$sql_get = "SELECT result FROM invites WHERE id = $this->id";
+		$sql_get = "SELECT `result` FROM `invites` WHERE `id` = $this->id";
 		$query_get = mysql_query($sql_get);
 		$old_result = mysql_result($query_get, 0);
 		
 		$new_result = $old_result + 1;
 		
 		// Update database
-		$sql_update = "UPDATE invites SET result = $new_result WHERE id = $this->id";
+		$sql_update = "UPDATE `invites` SET `result` = $new_result WHERE `id` = $this->id";
 		$query_update = mysql_query($sql_update);
 		
 	}
@@ -98,7 +98,7 @@ class Invite {
 		$user_id = sanitize_input($user_id);
 		$email = sanitize_input($email);
 		
-		$sql = "SELECT COUNT(id) FROM invites WHERE user_id = $user_id AND email = $email";
+		$sql = "SELECT COUNT(id) FROM `invites` WHERE `user_id` = $user_id AND `email` = $email";
 		$query = mysql_query($sql);
 		$user_count = mysql_result($query, 0);
 		
@@ -124,7 +124,7 @@ class Invite {
 		$code = sanitize_input($code);
 		$email = sanitize_input($email);
 		
-		$sql = "SELECT result FROM invites WHERE code = $code AND email = $email";
+		$sql = "SELECT `result` FROM `invites` WHERE `code` = $code AND `email` = $email";
 		$query = mysql_query($sql);
 		$status = mysql_num_rows($query);
 		
