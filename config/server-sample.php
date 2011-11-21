@@ -7,8 +7,8 @@ class ServerConfig {
 	public $dev_url							= 'http://localhost/';
 	
 	// Base directory - the directory in which your site resides if not in the server root
-	public $base_dir          = '/';
-	public $dev_base_dir      = '/';
+	public $base_dir						= '/';
+	public $dev_base_dir					= '/';
 	
 	// Email enabled - search project for "// Email user" to find what this affects
 	public $send_emails						= FALSE;
