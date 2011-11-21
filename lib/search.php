@@ -3,7 +3,7 @@
 // Code courtesy of the awesome Cal Henderson: http://www.iamcal.com/publish/articles/php/search/
 
 class Search {
-
+	
 	function search_split_terms($terms) {
 	
 		$terms = preg_replace("/\"(.*?)\"/e", "search_transform_term('\$1')", $terms);
@@ -118,7 +118,7 @@ class Search {
 	
 		return implode(', ', $terms_html)." and $last";
 	}
-
+	
 }
 
 ?>

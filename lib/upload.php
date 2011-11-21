@@ -23,7 +23,7 @@ function generate_thumbnail($filename, $type, $max_width = 100, $max_height = 10
 		$new_width = $old_width;
 		$new_height = $old_height;
 	}
-
+	
 	// Then check height
 	if ($new_height > $max_height) {
 		$new_width = $old_width * ($max_height / $old_height);
