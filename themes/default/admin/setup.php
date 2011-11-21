@@ -3,6 +3,7 @@
   <div class="span8 columns offset4">
     <form action="<?php echo $this->url_for('admin', 'setup'); ?>" method="post">
       <fieldset>
+        <legend>Enter your details</legend>
         <div class="clearfix">
           <label for="email">Email</label>
           <div class="input">
@@ -22,7 +23,7 @@
           </div>
         </div> <!-- /clearfix -->
         <div class="actions">
-          <button type="submit" class="btn primary">Go!</button>
+          <button type="submit" class="btn primary">Login to your new app!</button>
         </div>
       </fieldset>
     </form>

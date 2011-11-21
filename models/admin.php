@@ -7,6 +7,8 @@ class Admin {
 		
 		$sql = "SELECT * FROM `users` WHERE `date_joined` IS NOT NULL ORDER BY `date_joined` DESC";
 		$users_query = mysql_query($sql);
+		
+		$users = array();
 		while ($user = mysql_fetch_array($users_query, MYSQL_ASSOC)) {
 			
 			// Find last login

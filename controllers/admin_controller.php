@@ -4,38 +4,6 @@ class AdminController extends Application {
 	
 	protected $requireAdmin = array('index', 'signups', 'users', 'history', 'invite', 'grant_invites');
 	
-	// TODO: Move this to a filter
-	function __construct() {
-		
-		// If user is admin or first user then let them pass otherwise exit
-		
-		if ($this->uri['action'] == 'setup') {
-			// Setup page called so make sure user count = 0
-			
-			if (count(Admin::list_users()) != 0) {
-				
-				$this->title = 'Page not found';
-				$this->loadView('partials/header');
-				$this->loadView('partials/footer');
-				exit;
-				
-			}
-			
-		}
-		/*
-		// Comment out the following if statment to see admin sectin, $this->config->admin_users not available in constructor
-		if (in_array($_SESSION['user_id'], $this->config->admin_users) != TRUE) {
-			// User not an admin
-			
-			$this->title = 'Page not found';
-			$this->loadView('partials/header');
-			$this->loadView('partials/footer');
-			exit;
-			
-		}
-		*/
-	}
-	
 	// Show admin dashboard
 	function index() {
 		
@@ -51,7 +19,7 @@ class AdminController extends Application {
 		
 		$this->title = 'Setup';
 		
-		if (isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
+		if (count(Admin::list_users()) == 0 && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
 			// Do setup
 			
 			$user_id = User::add($_POST['email']);
@@ -81,9 +49,13 @@ class AdminController extends Application {
 		} else {
 			// Show setup form
 			
-			Application::flash('info', 'Welcome to Rat! Please enter your details:');
-			$this->loadView('admin/setup');
-			
+			if (count(Admin::list_users()) == 0) {
+				Application::flash('info', 'Welcome to Rat!');
+				$this->loadView('admin/setup');
+			} else {
+				throw new RoutingException($this->uri, "Page not found");
+			}
+
 		}
 		
 	}
