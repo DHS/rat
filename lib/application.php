@@ -53,7 +53,7 @@ class Application {
 			
 			// Helper var to simplify reponding to json
 			$app->json = $app->uri['format'] == 'json';		
-
+			
 			require_once 'lib/filter.php';
 			$app->runFilters();
 			
@@ -63,7 +63,7 @@ class Application {
 			$app->loadAction();
 			
 			unset($_SESSION['flash']);
-						
+			
 		} catch (ValidationException $e) {
 			
 			ob_end_clean();
@@ -74,7 +74,7 @@ class Application {
 		} catch (RoutingException $e) {
 			
 			ob_end_flush();
-
+			
 			// RoutingExceptions only thrown from static context
 			// so must set up new Application before rendering 404
 			$app = new Application;
@@ -84,9 +84,9 @@ class Application {
 		} catch (ApplicationException $e) {
 			
 			ob_end_flush();
-
+			
 			$e->app->loadView('pages/500');
-		
+			
 		}
 		
 	}
