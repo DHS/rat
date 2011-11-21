@@ -36,7 +36,7 @@ class Filter {
 	
 	public function requireAdmin($uri, $actions) {
 		
-		if (in_array($uri['action'], $actions) && !in_array($_SESSION['user_id'], $this->app->config->admin_users)) {
+		if (in_array($uri['action'], $actions) && (!isset($_SESSION['user_id']) || !in_array($_SESSION['user_id'], $this->app->config->admin_users))) {
 			throw new RoutingException($uri, "Page not found");
 		}
 		
