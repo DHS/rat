@@ -37,7 +37,8 @@ class log extends Application {
 		
 		$sql = "SELECT * FROM log ORDER BY id DESC LIMIT 10";
 		$query = mysql_query($sql);
-
+		
+		$entries = array();
 		while ($entry = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$entry['user'] = User::get_by_id($entry['user_id']);
 			$entries[] = $entry;

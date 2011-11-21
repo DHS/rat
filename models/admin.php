@@ -40,6 +40,7 @@ class Admin {
 		$sql = "SELECT `id`, `email`, TIMESTAMPDIFF(DAY, date_added, NOW()) AS days_waiting, (SELECT COUNT(*) FROM `invites` WHERE `email` = users.email) AS invites FROM `users` WHERE `date_joined` IS NULL ORDER BY `date_added` ASC";
 		$waiting_users_query = mysql_query($sql);
 		
+		$waiting_users = array();
 		while ($user = mysql_fetch_array($waiting_users_query, MYSQL_ASSOC)) {
 			$waiting_users[] = $user;
 		}
