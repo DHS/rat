@@ -13,17 +13,17 @@ class Filter {
 			$this->app->redirect_to('sessions', 'add');
 			exit;
 		}
-
+		
 	}
 
 	public function requireLoggedOut($uri, $actions) {
-
+		
 		if (in_array($uri['action'], $actions) && isset($_SESSION['user_id'])) {
 			Application::flash('error', 'You are already logged in!');
 			$this->app->redirect_to('items');
 			exit;
 		}
-
+		
 	}
 	
 	public function requireInvitesEnabled($uri, $actions) {

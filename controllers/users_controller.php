@@ -11,7 +11,7 @@ class UsersController extends Application {
 		if (isset($_POST['email'])) {
 			//User is trying to signup
 			
-			if ($code != NULL){
+			if ($code != NULL) {
 				// User is signing up with a code
 				
 				$this->signup_code();

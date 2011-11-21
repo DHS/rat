@@ -321,7 +321,7 @@ class Application {
 		
 		require_once 'config/routes.php';
 		$routes = new Routes();
-	
+		
 		if ($route = array_search($uri_array, $routes->aliases)){
 			
 			// Routes all preceded by / so snip it as base_dir includes trailing /
@@ -348,7 +348,7 @@ class Application {
 		}
 		
 	}
-
+	
 	public function url_for_route($route, array $params) {
 
 		foreach ($params as $param) {
