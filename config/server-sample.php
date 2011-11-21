@@ -16,6 +16,9 @@ class ServerConfig {
 	// Encryption salt - change to a random six character string, do not change after first use of application
 	public $encryption_salt					= 'hw9e46';
 	
+	// Set timezone
+	public $timezone						= 'Europe/London';
+	
 	// Database
 	public $database = array(	'dev'	=> array(	'host'		=> 'localhost',
 													'username'	=> 'root',

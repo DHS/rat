@@ -56,7 +56,10 @@ class Application {
 
 			require_once 'lib/filter.php';
 			$app->runFilters();
-
+			
+			// Set timezone from config
+			date_default_timezone_set($config->timezone);
+			
 			$app->loadAction();
 			
 			unset($_SESSION['flash']);
