@@ -46,3 +46,5 @@ class LikesController extends Application {
 	}
 	
 }
+
+?>
