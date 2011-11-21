@@ -137,7 +137,7 @@ class Application {
 		return $uri;
 		
 	}
-
+	
 	private static function route() {
 		
 		require_once 'config/routes.php';
@@ -260,7 +260,7 @@ class Application {
 		}
 		
 	}
-
+	
 	private function runFilters() {
 		
 		$uri = $this->uri;
@@ -322,7 +322,7 @@ class Application {
 		require_once 'config/routes.php';
 		$routes = new Routes();
 		
-		if ($route = array_search($uri_array, $routes->aliases)){
+		if ($route = array_search($uri_array, $routes->aliases)) {
 			
 			// Routes all preceded by / so snip it as base_dir includes trailing /
 			if (substr($route, 0, 1) == '/') {
@@ -394,7 +394,7 @@ class Application {
 		echo json_encode($ref);
 	
 	}
-
+	
 }
 
 ?>
