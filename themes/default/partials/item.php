@@ -60,8 +60,15 @@ if (is_array($this->item->likes)) {
 	<?php echo $image; ?>
 	<?php echo $content; ?>
     
+	<?php if ($this->config->private == FALSE) { ?>
+	    <span style="float: right; margin-left: 20px;">
+	      <a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo substr($this->config->url, 0, -1).$this->url_for('items', 'show', $this->item->id); ?>" data-text="<?php echo $this->item->title; ?>" data-count="none">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+	      <iframe src="http://www.facebook.com/plugins/like.php?href=<?php echo substr($this->config->url, 0, -1).$this->url_for('items', 'show', $this->item->id); ?>&amp;layout=button_count&amp;show_faces=true&amp;width=100&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
+	    </span>
+	<?php } ?>
+	
     <!-- Meta -->
-	<p class="item_meta clear">
+	<p class="item_meta">
 	<?php echo $this->link_to($this->item->date, 'items', 'show', $this->item->id);
     
 	if ($this->config->items['comments']['enabled'] == TRUE) {
@@ -82,13 +89,6 @@ if (is_array($this->item->likes)) {
 	}
 ?>
 	</p>
-
-<?php if ($this->config->private == FALSE) { ?>
-    <!--<span style="float: right; margin-left: 20px;">
-      <a href="http://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-      <iframe src="http://www.facebook.com/plugins/like.php?href=<?php echo $this->config->url.substr($_SERVER['REQUEST_URI'], 1); ?>&amp;layout=button_count&amp;show_faces=true&amp;width=100&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
-    </span>-->
-<?php } ?>
 
 <?php if ($this->config->items['likes']['enabled'] == TRUE) { ?>
     <!-- Likes -->
