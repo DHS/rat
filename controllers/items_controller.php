@@ -218,6 +218,10 @@ class ItemsController extends Application {
 		
 		$this->item = Item::get_by_id($id);
 		
+		if ($this->config->items['titles']['enabled'] == TRUE) {
+			$this->head_title = $this->config->name.' - '.$this->item->title;
+		}
+		
 		if ($this->json) {
 			$this->render_json($this->item);
 		} else {
