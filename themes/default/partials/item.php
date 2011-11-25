@@ -77,7 +77,7 @@ if (is_array($this->item->likes)) {
 
 	}
     
-	if ($this->item->user->id == $_SESSION['user_id']) {
+	if (isset($_SESSION['user_id']) && $this->item->user->id == $_SESSION['user_id']) {
 		echo ' &middot; <a onclick="return confirm(\'Are you sure you want to delete this?\')" href="'.$this->url_for('items', 'remove', $this->item->id).'">Delete</a>';
 	}
 ?>
