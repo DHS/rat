@@ -1,6 +1,6 @@
 <?php
 
-$subject = "[{$this->config->name}] Welcome to $this->config->name!";
+$subject = '['.$this->config->name.'] Welcome to '.$this->config->name.'!';
 
 $body = '<p>Hi '.$_POST['username'].',</p>
 <p>Thank you for joining '.$this->config->name.'!</p>
