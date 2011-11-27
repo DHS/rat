@@ -683,6 +683,8 @@ class UsersController extends Application {
 	// Helper function: checks email is valid and available, returns TRUE or error message
 	private function check_email($email) {
 		
+		$return = '';
+		
 		if ($email == '') {
 			$return .= 'Email cannot be left blank.<br />';
 		}
@@ -709,6 +711,8 @@ class UsersController extends Application {
 	
 	// Helper function: checks username is valid and available, returns TRUE or error message
 	private function check_username($username) {
+		
+		$return = '';
 		
 		if ($username == '') {
 			$return .= 'Username cannot be left blank.<br />';
