@@ -23,7 +23,7 @@ if (isset($this->plugins->gravatar)) {
 // Title & content
 if ($this->config->items['titles']['enabled'] == TRUE && $this->item->title != NULL) {
 	$title = '<h4>'.$this->link_to($this->item->title, 'items', 'show', $this->item->id).' <small>by '.$this->link_to($this->item->user->username, 'users', 'show', $this->item->user->id).'</small></h4>';
-	$content = '<p>'.$this->item->content.'</p>';
+	$content = '<p class="clear">'.$this->item->content.'</p>';
 } else {
 	$title = '';
 	if ($this->item->content != NULL) {
