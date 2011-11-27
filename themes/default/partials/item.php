@@ -44,7 +44,7 @@ if (count($this->item->comments) > 0) {
 $i_like = FALSE;
 if (is_array($this->item->likes)) {
 	foreach ($this->item->likes as $value) {
-		if ($value->user->id == $_SESSION['user_id']) {
+		if (isset($_SESSION['user_id']) && $value->user->id == $_SESSION['user_id']) {
 			$i_like = TRUE;
 		}
 	}
