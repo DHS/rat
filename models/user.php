@@ -98,7 +98,7 @@ class User {
 	}
 	
 	// Signup a new user!	
-	public function signup($id, $username, $password, $salt) {
+	public static function signup($id, $username, $password, $salt) {
 		
 		$id = sanitize_input($id);
 		$username = sanitize_input($username);

@@ -346,7 +346,7 @@ class UsersController extends Application {
 		
 		// Check email
 		$_POST['email'] = trim($_POST['email']);
-		$email_check = $this->check_email($_POST['email']);
+		$email_check = $this->check_email($_POST['email'], FALSE);
 		if ($email_check !== TRUE) {
 			$error .= $email_check;
 		}
@@ -681,7 +681,7 @@ class UsersController extends Application {
 	}
 	
 	// Helper function: checks email is valid and available, returns TRUE or error message
-	private function check_email($email) {
+	private function check_email($email, $new = TRUE) {
 		
 		$return = '';
 		
@@ -697,7 +697,7 @@ class UsersController extends Application {
 			$return .= 'Email must contain an @ symbol.<br />';
 		}
 
-		if (User::check_email_available($email) != TRUE) {
+		if (User::check_email_available($email) != TRUE && $new == TRUE) {
 			$return .= 'Email already in the system!<br />';
 		}
 		

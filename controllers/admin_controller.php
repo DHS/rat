@@ -109,8 +109,8 @@ class AdminController extends Application {
 				$this->plugins->log->add($_SESSION['user_id'], 'invite', $id, 'admin_add', $email);
 			}
 			
-			$to			= "{$_POST['username']} <{$email}>";
-			$link		= $this->config->url.'signup.php?code='.$id.'&email='.urlencode($email);
+			$to			= "{$user->username} <{$email}>";
+			$link		= $this->config->url.'users/add/'.$id.'/&email='.urlencode($email);
 			$headers	= "From: {$user->username} <{$user->email}>\r\nContent-type: text/html\r\n";
 			
 			// Load template into $body variable
