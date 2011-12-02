@@ -60,6 +60,15 @@ class Application {
 			// Set timezone from config
 			date_default_timezone_set($config->timezone);
 			
+			// Load twig
+			require_once 'lib/twig/Autoloader.php';
+			Twig_Autoloader::register();
+			$loader = new Twig_Loader_Filesystem('themes/'.$config->theme);
+			$app->twig = new Twig_Environment($loader, array(
+			  'cache' => 'static/template_cache',
+			));
+			
+			// Call relevant function in controller
 			$app->loadAction();
 			
 			unset($_SESSION['flash']);
