@@ -1,0 +1,11 @@
+{% include 'partials/header.html' %}
+
+{% if items %}
+    <ul>
+        {% for item in items %}
+            <li>{{ item.title }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% include 'partials/footer.html' %}

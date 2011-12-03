@@ -27,6 +27,7 @@ class ItemsController extends Application {
 			$this->render_json($this->items);
 		} else {
 			$this->loadView('items/index');
+			//echo $this->twig->render('items/index.html', array('config' => $this->config, 'items' => $this->items, 'session' => $_SESSION));
 		}
 		
 	}
