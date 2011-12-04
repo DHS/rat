@@ -67,7 +67,9 @@ class Application {
 			$app->twig = new Twig_Environment($loader, array(
 			  'cache' => 'static/template_cache',
 			));
-			
+		
+			$app->twig->addFunction('link_to', new Twig_Function_Function('link_to'));
+
 			// Call relevant function in controller
 			$app->loadAction();
 			
@@ -300,19 +302,17 @@ class Application {
 		
 	}
 	
-	protected function loadView($view, $layout = NULL) {
+	protected function loadView($view, $params = NULL, $layout = NULL) {
 		
 		if (is_null($layout)) {
 			$layout = 'default';
 		}
-		
-		include "themes/{$this->config->theme}/layouts/{$layout}.php";
-		
-	}
-	
-	protected function loadPartial($partial) {
-		
-		include "themes/{$this->config->theme}/partials/{$partial}.php";
+
+		$params['view'] = $view;
+		$params['app'] = $this;
+		$params['session'] = $_SESSION;
+
+		echo $this->twig->render("layouts/{$layout}.html", $params);
 		
 	}
 	

@@ -21,13 +21,12 @@ class ItemsController extends Application {
 			$offset = ($this->uri['params']['page'] - 1) * $limit;
 		}
 		
-		$this->items = Item::list_all($limit, $offset);
+		$items = Item::list_all($limit, $offset);
 		
 		if ($this->json) {
-			$this->render_json($this->items);
+			$this->render_json($items);
 		} else {
-			$this->loadView('items/index');
-			//echo $this->twig->render('items/index.html', array('config' => $this->config, 'items' => $this->items, 'session' => $_SESSION));
+			$this->loadView('items/index.html', array('items' => $items));
 		}
 		
 	}

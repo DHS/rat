@@ -4,9 +4,9 @@
 
     <footer>
 
-        <p class="float_right">{{ config.name }} was created using <a href="http://github.com/DHS/rat">Rat</a></p>
+        <p class="float_right"><?php echo $this->config->name; ?> was created using <a href="http://github.com/DHS/rat">Rat</a></p>
         <p>
-			{{ config.name }} &copy; <?php echo date('Y'); ?> &middot;
+			<?php echo $this->config->name; ?> &copy; <?php echo date('Y'); ?> &middot;
 			<?php echo $this->link_to('About', 'pages', 'show', 'about'); ?> &middot;
 			<?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?> &middot;
 			<?php echo $this->link_to('Search', 'search'); ?>
@@ -24,8 +24,8 @@
 
 
   <!-- scripts concatenated and minified via ant build script-->
-  <script src="{{ config.base_dir }}js/plugins.js"></script>
-  <script src="{{ config.base_dir }}js/rat.js"></script>
+  <script src="<?php echo BASE_DIR; ?>js/plugins.js"></script>
+  <script src="<?php echo BASE_DIR; ?>js/rat.js"></script>
   <!-- end scripts-->
 
 

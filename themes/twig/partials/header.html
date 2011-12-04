@@ -1,4 +1,19 @@
-{# Some setting of title vars snipped from here, check default/partials/header.php #}
+<?php
+
+if (!isset($this->head_title)) {
+	if (isset($this->title)) {
+		$this->head_title = $this->config->name.' - '.$this->title;
+	} else {
+		$this->head_title = $this->config->name;
+	}
+}
+
+if (isset($this->title)) {
+	$this->title = '<!-- Page title -->
+  <h1>'.$this->title.'</h1>';
+}
+
+?>
 <!doctype html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
@@ -13,7 +28,7 @@
        More info: h5bp.com/b/378 -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>{% if head_title is defined %} {{ head_title }} {% endif %}</title>
+  <title><?php if (isset($this->head_title)) { echo $this->head_title; } ?></title>
   <meta name="description" content="">
   <meta name="author" content="">
 
@@ -23,9 +38,9 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
   <!-- CSS: implied media=all -->
-  <link rel="stylesheet" href="{{ config.base_dir }}themes/{{ config.theme }}/css/style.css">
+  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>themes/<?php echo $this->config->theme; ?>/css/style.css">
   <!-- Include Twitter Bootstrap http://twitter.github.com/bootstrap/ -->
-  <link rel="stylesheet" href="{{ config.base_dir }}themes/{{ config.theme }}/css/bootstrap-1.1.1.min.css">
+  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>themes/<?php echo $this->config->theme; ?>/css/bootstrap-1.1.1.min.css">
   <!-- end CSS-->
 
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
@@ -33,8 +48,8 @@
   <!-- All JavaScript at the bottom, except for Modernizr / Respond.
        Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
        For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
-  <script src="{{ config.base_dir }}js/libs/modernizr-2.0.6.min.js"></script>
-  <script src="{{ config.base_dir }}js/libs/respond.min.js"></script>
+  <script src="<?php echo BASE_DIR; ?>js/libs/modernizr-2.0.6.min.js"></script>
+  <script src="<?php echo BASE_DIR; ?>js/libs/respond.min.js"></script>
 </head>
 
 
@@ -47,7 +62,7 @@
       <div class="fill">
         <div class="container">
 
-{% if session.user_id is defined %}
+<?php if (isset($_SESSION['user_id'])) { ?>
 
           <h3><?php echo $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
           <ul>
@@ -82,7 +97,7 @@
 			<?php } ?>
           </ul>
 
-{% else %}
+<?php } else { ?>
 
           <h3><?php echo $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
           <ul class="nav secondary-nav">
@@ -91,25 +106,29 @@
             <li<?php if (isset($this->uri['params']['id']) && $this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help') ?></li>
           </ul>
 
-{% endif %}
+<?php } ?>
 
         </div>
       </div>
     </div>
 
-    {% if title is defined %} {{ title }} {% endif %}
+    <?php if (isset($this->title)) { echo $this->title; } ?>
 
-{# The following is untested - can you use multiple depth in arrays? If it works, remove this comment :) #}
-{% if session.flash is defined %}
+<?php
+
+if (isset($_SESSION['flash'])) {
+	echo '
   <!-- Message -->
   <div class="row">
     <div class="span8 columns offset4">
-  	  <div class="alert-message {{ session.flash.category }}">
-        <p>{{ session.flash.message }}</p>
+  	  <div class="alert-message '.$_SESSION['flash']['category'].'">
+        <p>'.$_SESSION['flash']['message'].'</p>
       </div>
     </div>
-  </div>
-{% endif %}
+  </div>';
+}
+
+?>
 
     <div id="main" role="main">
 
