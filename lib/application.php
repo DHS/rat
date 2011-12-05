@@ -3,7 +3,6 @@
 class Application {
 	
 	public $uri, $config;
-	private $plugins = null;
 	
 	private function __construct() {}
 	

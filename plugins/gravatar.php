@@ -51,7 +51,7 @@ class gravatar extends Application {
 			$return = '<a href="'.$params['link'].'">'.$return.'</a>';
 		}
 		
-		return $return;
+		echo $return;
 		
 	}
 	

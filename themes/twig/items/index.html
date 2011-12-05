@@ -1,7 +1,32 @@
-{% if items %}
-    <ul>
-        {% for item in items %}
-            <li>{{ item.title }}</li>
-        {% endfor %}
-    </ul>
+{% if not session['user_id'] %}
+	<h1><small>{{ app.config.tagline }}</small></h1>
+{% endif %}
+
+{# App is private and user not logged in so show beta signup for #}
+{# Shouldn't this be a redirection to users/add ? #}
+
+{% if app.config.private == FALSE or session['user_id'] %}
+
+	{% if items %}
+		<h1>Stream</h1>
+
+		<div class="row">
+			<div class="span8 columns offset3">
+				{% for item in items %}
+					{% include 'partials/item.html' %}
+				{% endfor %}
+
+				{# include 'partials/pagination.html' #}
+			</div>
+			
+			<div class="span4 columns">
+				{# include 'partials/item_add.html' #}
+			</div>
+		</div>
+
+	{% else %}
+
+		<h1>No {{ app.config.items['name_plural'] }} found...</h1>
+
+	{% endif %}
 {% endif %}
