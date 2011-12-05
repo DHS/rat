@@ -68,8 +68,6 @@ class Application {
 			  'cache' => 'static/template_cache',
 			));
 		
-			$app->twig->addFunction('link_to', new Twig_Function_Function('link_to'));
-
 			// Call relevant function in controller
 			$app->loadAction();
 			
@@ -227,8 +225,11 @@ class Application {
 		if (substr($base_dir, -1) != '/') {
 			$base_dir = $base_dir.'/';
 		}
-		
+
 		// Set base_dir constant
+		$this->config->base_dir = $base_dir;
+		
+		// Remove this eventually
 		define('BASE_DIR', $base_dir);
 		
 		// Update config->url
@@ -312,6 +313,12 @@ class Application {
 		$params['app'] = $this;
 		$params['session'] = $_SESSION;
 
+		// Hacks for user menu in header
+		if (class_exists('User')) {
+			$params['user_menu_enabled'] = true;
+			$params['viewer'] = User::get_by_id($_SESSION['user_id']);
+		}
+
 		echo $this->twig->render("layouts/{$layout}.html", $params);
 		
 	}
@@ -357,7 +364,12 @@ class Application {
 		}
 		
 	}
-	
+
+	// url_for wrapper for use with Twig
+	public function echo_url_for($controller, $action = '', $id = '') {
+		echo $this->url_for($controller, $action, $id);
+	}
+
 	public function url_for_route($route, array $params) {
 
 		foreach ($params as $param) {
@@ -370,7 +382,7 @@ class Application {
 	
 	public function link_to($link_text, $controller, $action = '', $id = '') {
 		
-		return '<a href="'.$this->url_for($controller, $action, $id).'">'.$link_text.'</a>';
+		echo '<a href="'.$this->url_for($controller, $action, $id).'">'.$link_text.'</a>';
 		
 	}
 	

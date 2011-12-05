@@ -1,15 +1,13 @@
-
-
     </div> <!--! end of #main -->
 
     <footer>
 
-        <p class="float_right"><?php echo $this->config->name; ?> was created using <a href="http://github.com/DHS/rat">Rat</a></p>
+        <p class="float_right">{{ app.config.name }} was created using <a href="http://github.com/DHS/rat">Rat</a></p>
         <p>
-			<?php echo $this->config->name; ?> &copy; <?php echo date('Y'); ?> &middot;
-			<?php echo $this->link_to('About', 'pages', 'show', 'about'); ?> &middot;
-			<?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?> &middot;
-			<?php echo $this->link_to('Search', 'search'); ?>
+			{{ app.config.name }} &copy; 2011 &middot;
+			{{ app.link_to('About', 'pages', 'show', 'about') }} &middot;
+			{{ app.link_to('Help', 'pages', 'show', 'help') }} &middot;
+			{{ app.link_to('Search', 'search') }}
 		</p>
 
     </footer>
@@ -24,17 +22,14 @@
 
 
   <!-- scripts concatenated and minified via ant build script-->
-  <script src="<?php echo BASE_DIR; ?>js/plugins.js"></script>
-  <script src="<?php echo BASE_DIR; ?>js/rat.js"></script>
+  <script src="{{ app.config.base_dir }}js/plugins.js"></script>
+  <script src="{{ app.config.base_dir }}js/rat.js"></script>
   <!-- end scripts-->
 
 
-  <?php
-  if (isset($this->plugins->analytics)) {
-    $this->plugins->analytics->view();
-  }
-  ?>
-
+  {% if app.plugins.analytics %}
+	{{ app.plugins.analytics.view() }}
+  {% endif %}
 
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->

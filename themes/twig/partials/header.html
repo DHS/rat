@@ -1,19 +1,3 @@
-<?php
-
-if (!isset($this->head_title)) {
-	if (isset($this->title)) {
-		$this->head_title = $this->config->name.' - '.$this->title;
-	} else {
-		$this->head_title = $this->config->name;
-	}
-}
-
-if (isset($this->title)) {
-	$this->title = '<!-- Page title -->
-  <h1>'.$this->title.'</h1>';
-}
-
-?>
 <!doctype html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
@@ -28,7 +12,7 @@ if (isset($this->title)) {
        More info: h5bp.com/b/378 -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title><?php if (isset($this->head_title)) { echo $this->head_title; } ?></title>
+  <title>{{ app.config.name }}</title>
   <meta name="description" content="">
   <meta name="author" content="">
 
@@ -38,9 +22,9 @@ if (isset($this->title)) {
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
   <!-- CSS: implied media=all -->
-  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>themes/<?php echo $this->config->theme; ?>/css/style.css">
+  <link rel="stylesheet" href="{{ app.config.base_dir }}themes/{{ app.config.theme }}/css/style.css">
   <!-- Include Twitter Bootstrap http://twitter.github.com/bootstrap/ -->
-  <link rel="stylesheet" href="<?php echo BASE_DIR; ?>themes/<?php echo $this->config->theme; ?>/css/bootstrap-1.1.1.min.css">
+  <link rel="stylesheet" href="{{ app.config.base_dir }}themes/{{ app.config.theme }}/css/bootstrap-1.1.1.min.css">
   <!-- end CSS-->
 
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
@@ -48,8 +32,8 @@ if (isset($this->title)) {
   <!-- All JavaScript at the bottom, except for Modernizr / Respond.
        Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
        For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
-  <script src="<?php echo BASE_DIR; ?>js/libs/modernizr-2.0.6.min.js"></script>
-  <script src="<?php echo BASE_DIR; ?>js/libs/respond.min.js"></script>
+  <script src="{{ app.config.base_dir }}js/libs/modernizr-2.0.6.min.js"></script>
+  <script src="{{ app.config.base_dir }}js/libs/respond.min.js"></script>
 </head>
 
 
@@ -62,73 +46,72 @@ if (isset($this->title)) {
       <div class="fill">
         <div class="container">
 
-<?php if (isset($_SESSION['user_id'])) { ?>
-
-          <h3><?php echo $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
-          <ul>
-            <li<?php if ($this->uri['controller'] == $this->config->default_controller) { echo ' class="active" '; } ?>><?php echo $this->link_to('Home', $this->config->default_controller); ?></li>
-            <li<?php if ($this->uri['controller'] == 'users') { echo ' class="active" '; } ?>><?php echo $this->link_to('My profile', 'users', 'show', $_SESSION['user_id']); ?></li>
-            <?php if ($this->config->invites['enabled'] == TRUE) { ?>
-            <li<?php if ($this->uri['controller'] == 'invites') { echo ' class="active" '; } ?>><?php echo $this->link_to('Invites', 'invites'); ?></li>
-            <?php } ?>
-            <li<?php if (isset($this->uri['params']['id']) && $this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?></li>
-          </ul>
-          <ul class="nav secondary-nav">
-            <li>
-              <form class="nav secondary-nav" action="<?php echo $this->url_for('search'); ?>/" method="get">
-                <input type="text" name="q" placeholder="Search" value="<?php if (isset($this->uri['params']['q'])) { echo $this->uri['params']['q']; } ?>" />
-              </form>
-            </li>
-
-			<?php if (class_exists("User")) { ?>
-				<li class="menu">
-				<a href="#" class="menu"><?php $viewer = User::get_by_id($_SESSION['user_id']); echo $viewer->username; ?></a>
-				<ul class="menu-dropdown">
-					<li><?php echo $this->link_to('Profile', 'users', 'show', $_SESSION['user_id']); ?></li>
-					<li><?php echo $this->link_to('Settings', 'users', 'update'); ?></li>
-					<?php if (in_array($_SESSION['user_id'], $this->config->admin_users)) { ?>
-					<li class="divider"></li>
-					<li><?php echo $this->link_to('Admin', 'admin'); ?></li>
-					<?php } ?>
-					<li class="divider"></li>
-					<li><?php echo $this->link_to('Logout', 'sessions', 'remove'); ?></li>
-				</ul>
+		{% if session['user_id'] %}
+			<h3>{{ app.link_to(app.config.name, app.config.default_controller) }}</h3>
+			<ul>
+				<li{% if app.uri['controller'] == app.config.default_controller %} class="active"{% endif %}>
+					{{ app.link_to('Home', app.config.default_controller) }}
 				</li>
-			<?php } ?>
-          </ul>
+				<li{% if app.uri['controller'] == 'users' %} class="active"{% endif %}>
+					{{ app.link_to('My profile', 'users', 'show', session['user_id']) }}
+				</li>
+				{% if app.config.invites['enabled'] %}
+				<li{% if app.uri['controller'] == 'invites' %} class="active"{% endif %}>
+					{{ app.link_to('Invites', 'invites') }}
+				</li>
+				{% endif %}
+				<li{% if app.uri['params']['id'] == 'help' %} class="active"{% endif %}>
+					{{ app.link_to('Help', 'pages', 'show', 'help') }}
+				</li>
+			</ul>
 
-<?php } else { ?>
+			<ul class="nav secondary-nav">
+				<li>
+					<form class="nav secondary-nav" action="{{ app.echo_url_for('search') }}/" method="get">
+						<input type="text" name="q" placeholder="Search" value="{{ app.uri['params']['q'] }}" />
+					</form>
+				</li>
 
-          <h3><?php echo $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
-          <ul class="nav secondary-nav">
-            <li<?php if ($this->uri['controller'] == 'users' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php echo $this->link_to('Signup', 'users', 'add') ?></li>
-            <li<?php if ($this->uri['controller'] == 'sessions' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php echo $this->link_to('Login', 'sessions', 'add') ?></li>
-            <li<?php if (isset($this->uri['params']['id']) && $this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help') ?></li>
-          </ul>
+				{% if user_menu_enabled %}
+				<li class="menu">
+					<a href="#" class="menu">{{ viewer.username }}</a>
+					<ul class="menu-dropdown">
+						<li>{{ app.link_to('Profile', 'users', 'show', session['user_id']) }}</li>
+						<li>{{ app.link_to('Settings', 'users', 'update') }}</li>
+						{% if viewer.is_admin(app.config.admin_users) %}
+						<li class="divider"></li>
+						<li>{{ app.link_to('Admin', 'admin') }}</li>
+						{% endif %} 
+						<li class="divider"></li>
+						<li>{{ app.link_to('Logout', 'sessions', 'remove') }}</li>
+					</ul>
+				</li>
+				{% endif %}
+			</ul>
 
-<?php } ?>
+		{% else %} 
+
+			<h3>{{ app.link_to(app.config.name, app.config.default_controller) }}</h3>
+			<ul class="nav secondary-nav">
+				{% block secondary_nav %}{% endblock %}
+			</ul>
+
+		{% endif %}
 
         </div>
       </div>
     </div>
 
-    <?php if (isset($this->title)) { echo $this->title; } ?>
+	{{ app.title }}
 
-<?php
+	{% if session['flash'] %}
+		<div class="row">
+			<div class="span8 columns offset4">
+				<div class="alert-message {{ session['flash']['category'] }}">
+					<p>{{ session['flash']['message'] }}</p>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 
-if (isset($_SESSION['flash'])) {
-	echo '
-  <!-- Message -->
-  <div class="row">
-    <div class="span8 columns offset4">
-  	  <div class="alert-message '.$_SESSION['flash']['category'].'">
-        <p>'.$_SESSION['flash']['message'].'</p>
-      </div>
-    </div>
-  </div>';
-}
-
-?>
-
-    <div id="main" role="main">
-
+	<div id="main" role="main">

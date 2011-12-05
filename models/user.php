@@ -407,6 +407,10 @@ class User {
 		}
 		
 	}
+
+	public function is_admin(array $admin_users = array()) {
+		return in_array($this->id, $admin_users);
+	}
 	
 	// Change password
 	public function update_password($new_password, $salt) {
