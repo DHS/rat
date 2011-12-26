@@ -60,12 +60,27 @@ class Application {
 			date_default_timezone_set($config->timezone);
 			
 			// Load twig
-			require_once 'lib/twig/Autoloader.php';
-			Twig_Autoloader::register();
-			$loader = new Twig_Loader_Filesystem('themes/'.$config->theme);
-			$app->twig = new Twig_Environment($loader, array(
-			  'cache' => 'static/template_cache',
-			));
+			if ($config->theme == 'twig') {
+				
+				$twig_config = array(
+					'cache' => 'static/template_cache'
+				);
+				
+				// If we're in dev mode then force template compiling
+				if (SITE_IDENTIFIER == 'dev') {
+					
+					$twig_config[] = array(
+						'auto_reload'		=> TRUE
+					);
+					
+				}
+				
+				require_once 'lib/twig/Autoloader.php';
+				Twig_Autoloader::register();
+				$loader = new Twig_Loader_Filesystem('themes/'.$config->theme);
+				$app->twig = new Twig_Environment($loader, $twig_config);
+				
+			}
 		
 			// Call relevant function in controller
 			$app->loadAction();
@@ -307,17 +322,19 @@ class Application {
 		if (is_null($layout)) {
 			$layout = 'default';
 		}
-
+		
 		$params['view'] = $view;
 		$params['app'] = $this;
 		$params['session'] = $_SESSION;
-
+		
 		// Hacks for user menu in header
 		if (class_exists('User')) {
 			$params['user_menu_enabled'] = true;
-			$params['viewer'] = User::get_by_id($_SESSION['user_id']);
+			if (isset($_SESSION['user_id'])) {
+				$params['viewer'] = User::get_by_id($_SESSION['user_id']);
+			}
 		}
-
+		
 		echo $this->twig->render("layouts/{$layout}.html", $params);
 		
 	}
