@@ -1,5 +1,5 @@
 {% if not session['user_id'] %}
-	<h1><small>{{ app.config.tagline }}</small></h1>
+	<h1><small>{{ app.config.tagline|raw }}</small></h1>
 {% endif %}
 
 {# App is private and user not logged in so show beta signup for #}
