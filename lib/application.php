@@ -317,19 +317,33 @@ class Application {
 			$layout = 'default';
 		}
 		
-		$params['view'] = $view;
-		$params['app'] = $this;
-		$params['session'] = $_SESSION;
-		
-		// Hacks for user menu in header
-		if (class_exists('User')) {
-			$params['user_menu_enabled'] = true;
-			if (isset($_SESSION['user_id'])) {
-				$params['viewer'] = User::get_by_id($_SESSION['user_id']);
+		if ($this->config->theme == 'twig') {
+			
+			$params['view'] = $view;
+			$params['app'] = $this;
+			$params['session'] = $_SESSION;
+
+			// Hacks for user menu in header
+			if (class_exists('User')) {
+				$params['user_menu_enabled'] = true;
+				if (isset($_SESSION['user_id'])) {
+					$params['viewer'] = User::get_by_id($_SESSION['user_id']);
+				}
 			}
+			
+			echo $this->twig->render("layouts/{$layout}.html", $params);
+			
+		} else {
+			
+			include "themes/{$this->config->theme}/layouts/{$layout}.php";
+			
 		}
 		
-		echo $this->twig->render("layouts/{$layout}.html", $params);
+	}
+
+	protected function loadPartial($partial) {
+		
+		include "themes/{$this->config->theme}/partials/{$partial}.php";
 		
 	}
 	

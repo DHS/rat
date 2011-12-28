@@ -23,10 +23,13 @@ class ItemsController extends Application {
 		
 		$items = Item::list_all($limit, $offset);
 		
+		// old template
+		$this->items = $items;
+		
 		if ($this->json) {
 			$this->render_json($items);
 		} else {
-			$this->loadView('items/index.html', array('items' => $items));
+			$this->loadView('items/index', array('items' => $items));
 		}
 		
 	}

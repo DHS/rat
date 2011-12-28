@@ -59,7 +59,7 @@ class CommentsController extends Application {
 		
 		$item = Item::get_by_id($item_id);
 		$this->json = $item->comments;		
-		$this->loadView('pages/json', 'none');
+		$this->loadView('pages/json', NULL, 'none');
 		
 	}
 	

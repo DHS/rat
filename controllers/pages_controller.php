@@ -80,7 +80,10 @@ class PagesController extends Application {
 			
 		}
 		
-		$this->loadView('pages/'.$name.'.html', array('content' => $content));
+		// old template
+		$this->content = $content;
+		
+		$this->loadView('pages/'.$name, array('content' => $content));
 		
 	}
 	

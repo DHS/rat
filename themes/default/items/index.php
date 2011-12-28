@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
 
 // App is private and user not logged in so show beta signup form
 if ($this->config->private == TRUE && !isset($_SESSION['user_id'])) {
-	$this->loadView('users/add', 'none');
+	$this->loadView('users/add', NULL, 'none');
 }
 
 // App public or user logged in so show items
