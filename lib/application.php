@@ -62,17 +62,11 @@ class Application {
 			// Load twig
 			if ($config->theme == 'twig') {
 				
-				$twig_config = array(
-					'cache' => 'static/template_cache'
-				);
+				$twig_config['cache'] = 'static/template_cache';
 				
 				// If we're in dev mode then force template compiling
 				if (SITE_IDENTIFIER == 'dev') {
-					
-					$twig_config[] = array(
-						'auto_reload'		=> TRUE
-					);
-					
+					$twig_config['auto_reload'] = TRUE;
 				}
 				
 				require_once 'lib/twig/Autoloader.php';
