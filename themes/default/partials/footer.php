@@ -7,9 +7,9 @@
         <p class="float_right"><?php echo $this->config->name; ?> was created using <a href="http://github.com/DHS/rat">Rat</a></p>
         <p>
 			<?php echo $this->config->name; ?> &copy; <?php echo date('Y'); ?> &middot;
-			<?php echo $this->link_to('About', 'pages', 'show', 'about'); ?> &middot;
-			<?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?> &middot;
-			<?php echo $this->link_to('Search', 'search'); ?>
+			<?php $this->link_to('About', 'pages', 'show', 'about'); ?> &middot;
+			<?php $this->link_to('Help', 'pages', 'show', 'help'); ?> &middot;
+			<?php $this->link_to('Search', 'search'); ?>
 		</p>
 
     </footer>

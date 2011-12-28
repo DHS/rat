@@ -7,7 +7,7 @@ if (count($this->item->comments) > 0) {
 	foreach ($this->item->comments as $comment) {
 		
 		echo '<p class="meta">
-		"'.$comment->content.'" - '.$this->link_to($comment->user->username, 'users', 'show', $comment->user->id);
+		"'.$comment->content.'" - '.$this->get_link_to($comment->user->username, 'users', 'show', $comment->user->id);
 		if (isset($_SESSION['user_id']) && $comment->user->id == $_SESSION['user_id']) {
 			echo ' &middot; <span class="small"><a href="#" onclick="comment_remove(\''.BASE_DIR.'\', '.$comment->id.', '.$this->item->id.'); return false;">Delete</a></span>';
 		}

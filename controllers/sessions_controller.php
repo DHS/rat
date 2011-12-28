@@ -39,7 +39,7 @@ class SessionsController extends Application {
 			
 		} else {
 			
-			Application::flash('error', 'You are already logged in! '.$this->link_to('Click here', 'sessions', 'remove').' to logout.');
+			Application::flash('error', 'You are already logged in! '.$this->get_link_to('Click here', 'sessions', 'remove').' to logout.');
 			$this->loadView();
 			
 		}

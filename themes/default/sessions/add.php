@@ -27,6 +27,6 @@
 <div class="row">
   <div class="span3 columns offset6">
     <p class="small">New to <?php echo $this->config->name ?>? <a href="<?php echo $this->url_for('users', 'add'); if(isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to='.$this->uri['params']['redirect_to']; } ?>">Signup</a> now!
-    <br /><?php echo $this->link_to('Forgotten your password', 'users', 'reset'); ?>?</p>
+    <br /><?php $this->link_to('Forgotten your password', 'users', 'reset'); ?>?</p>
   </div>
 </div>

@@ -64,14 +64,14 @@ if (isset($this->title)) {
 
 <?php if (isset($_SESSION['user_id'])) { ?>
 
-          <h3><?php echo $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
+          <h3><?php $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
           <ul>
-            <li<?php if ($this->uri['controller'] == $this->config->default_controller) { echo ' class="active" '; } ?>><?php echo $this->link_to('Home', $this->config->default_controller); ?></li>
-            <li<?php if ($this->uri['controller'] == 'users') { echo ' class="active" '; } ?>><?php echo $this->link_to('My profile', 'users', 'show', $_SESSION['user_id']); ?></li>
+            <li<?php if ($this->uri['controller'] == $this->config->default_controller) { echo ' class="active" '; } ?>><?php $this->link_to('Home', $this->config->default_controller); ?></li>
+            <li<?php if ($this->uri['controller'] == 'users') { echo ' class="active" '; } ?>><?php $this->link_to('My profile', 'users', 'show', $_SESSION['user_id']); ?></li>
             <?php if ($this->config->invites['enabled'] == TRUE) { ?>
-            <li<?php if ($this->uri['controller'] == 'invites') { echo ' class="active" '; } ?>><?php echo $this->link_to('Invites', 'invites'); ?></li>
+            <li<?php if ($this->uri['controller'] == 'invites') { echo ' class="active" '; } ?>><?php $this->link_to('Invites', 'invites'); ?></li>
             <?php } ?>
-            <li<?php if (isset($this->uri['params']['id']) && $this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help'); ?></li>
+            <li<?php if (isset($this->uri['params']['id']) && $this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php $this->link_to('Help', 'pages', 'show', 'help'); ?></li>
           </ul>
           <ul class="nav secondary-nav">
             <li>
@@ -84,14 +84,14 @@ if (isset($this->title)) {
 				<li class="menu">
 				<a href="#" class="menu"><?php $viewer = User::get_by_id($_SESSION['user_id']); echo $viewer->username; ?></a>
 				<ul class="menu-dropdown">
-					<li><?php echo $this->link_to('Profile', 'users', 'show', $_SESSION['user_id']); ?></li>
-					<li><?php echo $this->link_to('Settings', 'users', 'update'); ?></li>
+					<li><?php $this->link_to('Profile', 'users', 'show', $_SESSION['user_id']); ?></li>
+					<li><?php $this->link_to('Settings', 'users', 'update'); ?></li>
 					<?php if (in_array($_SESSION['user_id'], $this->config->admin_users)) { ?>
 					<li class="divider"></li>
-					<li><?php echo $this->link_to('Admin', 'admin'); ?></li>
+					<li><?php $this->link_to('Admin', 'admin'); ?></li>
 					<?php } ?>
 					<li class="divider"></li>
-					<li><?php echo $this->link_to('Logout', 'sessions', 'remove'); ?></li>
+					<li><?php $this->link_to('Logout', 'sessions', 'remove'); ?></li>
 				</ul>
 				</li>
 			<?php } ?>
@@ -99,11 +99,11 @@ if (isset($this->title)) {
 
 <?php } else { ?>
 
-          <h3><?php echo $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
+          <h3><?php $this->link_to($this->config->name, $this->config->default_controller); ?></h3>
           <ul class="nav secondary-nav">
-            <li<?php if ($this->uri['controller'] == 'users' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php echo $this->link_to('Signup', 'users', 'add') ?></li>
-            <li<?php if ($this->uri['controller'] == 'sessions' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php echo $this->link_to('Login', 'sessions', 'add') ?></li>
-            <li<?php if (isset($this->uri['params']['id']) && $this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php echo $this->link_to('Help', 'pages', 'show', 'help') ?></li>
+            <li<?php if ($this->uri['controller'] == 'users' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php $this->link_to('Signup', 'users', 'add') ?></li>
+            <li<?php if ($this->uri['controller'] == 'sessions' && $this->uri['action'] == 'add') { echo ' class="active" '; } ?>><?php $this->link_to('Login', 'sessions', 'add') ?></li>
+            <li<?php if (isset($this->uri['params']['id']) && $this->uri['params']['id'] == 'help') { echo ' class="active" '; } ?>><?php $this->link_to('Help', 'pages', 'show', 'help') ?></li>
           </ul>
 
 <?php } ?>

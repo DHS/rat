@@ -62,7 +62,7 @@ echo '<table class="common-table zebra-striped">
 			foreach ($entries as $entry) {
 				echo '<tr><td>';
 				if ($entry['user']->username != NULL) {
-					echo $this->link_to($entry['user']->username, 'users', 'show', $entry['user']->id);
+					$this->link_to($entry['user']->username, 'users', 'show', $entry['user']->id);
 				}
 				echo '</td><td>';
 				echo $entry['object_type'];

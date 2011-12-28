@@ -15,19 +15,19 @@ if ($this->config->items['uploads']['enabled'] == TRUE && $this->item->image != 
 // Avatar
 if (isset($this->plugins->gravatar)) {
 	$gravatar_pic = $this->plugins->gravatar->show($this->item->user->email, array('size' => 48, 'style' => 'float: left; padding: 0px 10px 5px 0px;'));
-	$gravatar = $this->link_to($gravatar_pic, 'users', 'show', $this->item->user->id).' ';
+	$gravatar = $this->get_link_to($gravatar_pic, 'users', 'show', $this->item->user->id).' ';
 } else {
-	$gravatar = $this->link_to($like->user->username, 'users', 'show', $this->item->user->id).' ';
+	$gravatar = $this->get_link_to($like->user->username, 'users', 'show', $this->item->user->id).' ';
 }
 
 // Title & content
 if ($this->config->items['titles']['enabled'] == TRUE && $this->item->title != NULL) {
-	$title = '<h4>'.$this->link_to($this->item->title, 'items', 'show', $this->item->id).' <small>by '.$this->link_to($this->item->user->username, 'users', 'show', $this->item->user->id).'</small></h4>';
+	$title = '<h4>'.$this->get_link_to($this->item->title, 'items', 'show', $this->item->id).' <small>by '.$this->get_link_to($this->item->user->username, 'users', 'show', $this->item->user->id).'</small></h4>';
 	$content = '<p class="clear">'.$this->item->content.'</p>';
 } else {
 	$title = '';
 	if ($this->item->content != NULL) {
-		$content = '<p><strong>'.$this->link_to($this->item->user->username, 'users', 'show', $this->item->user->id).'</strong> '.$this->item->content.'</p>';
+		$content = '<p><strong>'.$this->get_link_to($this->item->user->username, 'users', 'show', $this->item->user->id).'</strong> '.$this->item->content.'</p>';
 	} else {
 		$content = '';
 	}
@@ -69,7 +69,7 @@ if (is_array($this->item->likes)) {
 	
     <!-- Meta -->
 	<p class="item_meta">
-	<?php echo $this->link_to($this->item->date, 'items', 'show', $this->item->id);
+	<?php $this->link_to($this->item->date, 'items', 'show', $this->item->id);
     
 	if ($this->config->items['comments']['enabled'] == TRUE) {
 		echo ' &middot <a href="#" onclick="document.getElementById(\'comment_form_'.$this->item->id.'\').style.visibility = \'visible\'; document.getElementById(\'comment_form_'.$this->item->id.'\').style.height = \'auto\'; document.getElementById(\'comment_form_'.$this->item->id.'\').content.focus(); return false;">'.$this->config->items['comments']['name'].'</a>';

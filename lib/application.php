@@ -410,6 +410,12 @@ class Application {
 		
 	}
 	
+	public function get_link_to($link_text, $controller, $action = '', $id = '') {
+		
+		return '<a href="'.$this->url_for($controller, $action, $id).'">'.$link_text.'</a>';
+		
+	}
+	
 	public function redirect_to($controller, $action = '', $id = '') {
 		
 		header('Location: ' . $this->url_for($controller, $action, $id));
