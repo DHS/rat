@@ -233,7 +233,7 @@ class Application {
 		if (substr($base_dir, -1) != '/') {
 			$base_dir = $base_dir.'/';
 		}
-
+		
 		// Set base_dir constant
 		$this->config->base_dir = $base_dir;
 		
@@ -340,7 +340,7 @@ class Application {
 		}
 		
 	}
-
+	
 	protected function loadPartial($partial) {
 		
 		include "themes/{$this->config->theme}/partials/{$partial}.php";
