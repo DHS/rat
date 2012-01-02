@@ -23,7 +23,7 @@ class AppConfig extends ServerConfig {
 	public $default_controller				= 'items';
 	
 	// Beta - users can't signup, can only enter their email addresses
-	public $beta							= TRUE;
+	public $beta							= FALSE;
 	
 	// Private app - requires login to view pages (except public_pages), no share buttons
 	public $private							= TRUE;
@@ -75,7 +75,7 @@ class AppConfig extends ServerConfig {
 	public $admin_users						= array(1);
 	
 	// Theme
-	public $theme = 'default';
+	public $theme = 'twig';
 	
 	// Plugins
 	public $plugins = array(	'log'		=> TRUE,
