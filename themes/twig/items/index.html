@@ -5,8 +5,9 @@
 {# App is private and user not logged in so show beta signup for #}
 {# Shouldn't this be a redirection to users/add ? #}
 
-{% if app.config.private == FALSE or session['user_id'] %}
-
+{% if app.config.private and not session['user_id'] %}
+	{% include 'partials/user_add.html' %}
+{% else %}
 	{% if items %}
 		<h1>Stream</h1>
 
