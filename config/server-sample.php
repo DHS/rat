@@ -2,9 +2,9 @@
 
 class ServerConfig {
 	
-	// URLs - must include http:// and a trailing slash
-	public $url								= 'http://example.com/';
-	public $dev_url							= 'http://localhost/';
+	// URLs - must include http:// and no trailing slash
+	public $url								= 'http://example.com';
+	public $dev_url							= 'http://localhost';
 	
 	// Base directory - the directory in which your site resides if not in the server root
 	public $base_dir						= '/';
