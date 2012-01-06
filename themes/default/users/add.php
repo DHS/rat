@@ -40,7 +40,7 @@
 </div>
 
 <div class="row">
-  <div class="span3 columns offset6">
+  <div class="span8 columns offset4 align_center">
     <p class="small">Already got a <?php echo $this->config->name ?> account? <a href="<?php echo $this->url_for('sessions', 'add'); if (isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to='.$this->uri['params']['redirect_to']; } ?>">Login</a> now!</p>
   </div>
 </div>

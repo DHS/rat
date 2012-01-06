@@ -39,7 +39,7 @@
 </div>
 
 <div class="row">
-  <div class="span3 columns offset6">
+  <div class="span8 columns offset4 align_center">
     <p class="small">Already got a {{ app.config.name }} account? 
       <a href="{{ app.url_for('sessions', 'add') }}{% if app.uri['params']['redirect_to'] %}/redirect_to={{ app.uri['params']['redirect_to'] }}{% endif %}">Login</a> now!
 	</p>
