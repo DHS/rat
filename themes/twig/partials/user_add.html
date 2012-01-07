@@ -2,20 +2,20 @@
 
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="{{ app.url_for('users', 'add', code) }}{% if app.uri['params']['redirect_to'] %}/redirect_to={{ app.uri['params']['redirect_to'] }}{% endif %}" method="post">
+    <form action="{{ app.url_for('users', 'add', code) }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">
       <fieldset>
         <legend>Signup</legend>
         {% if code %}<input type="hidden" name="code" value="{{ code }}" />{% endif %}
         <div class="clearfix">
           <label for="email">Email</label>
           <div class="input">
-            <input class="medium" name="email" size="30" type="text" value="{{ app.uri['params']['email'] }}" />
+            <input class="medium" name="email" size="30" type="text" value="{{ app.uri.params.email }}" />
           </div>
         </div> <!-- /clearfix -->
         <div class="clearfix">
           <label for="email">Username</label>
           <div class="input">
-            <input class="medium" name="username" size="30" type="text" value="{{ app.uri['params']['username'] }}" />
+            <input class="medium" name="username" size="30" type="text" value="{{ app.uri.params.username }}" />
           </div>
         </div> <!-- /clearfix -->
         <div class="clearfix">
@@ -41,7 +41,7 @@
 <div class="row">
   <div class="span8 columns offset4 align_center">
     <p class="small">Already got a {{ app.config.name }} account? 
-      <a href="{{ app.url_for('sessions', 'add') }}{% if app.uri['params']['redirect_to'] %}/redirect_to={{ app.uri['params']['redirect_to'] }}{% endif %}">Login</a> now!
+      <a href="{{ app.url_for('sessions', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}">Login</a> now!
 	</p>
   </div>
 </div>
@@ -51,15 +51,15 @@
 <div class="row">
   <div class="span8 columns offset4">
   
-    <form action="{{ app.url_for('users', 'add') }}{% if app.uri['params']['redirect_to'] %}/redirect_to={{ app.uri['params']['redirect_to'] }}{% endif %}" method="post">
+    <form action="{{ app.url_for('users', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">
       <fieldset>
         <legend>Signup for our beta</legend>
-        {% if app.uri['params']['code'] %}<input type="hidden" name="code" value="{{ app.uri['params']['code'] }}" />{% endif %}
-        {% if app.uri['params']['email'] %}<input type="hidden" name="email" value="{{ app.uri['params']['email'] }}" />{% endif %}
+        {% if app.uri.params.code %}<input type="hidden" name="code" value="{{ app.uri.params.code }}" />{% endif %}
+        {% if app.uri.params.email %}<input type="hidden" name="email" value="{{ app.uri.params.email }}" />{% endif %}
         <div class="clearfix">
           <label for="email">Email</label>
           <div class="input">
-            <input class="medium" name="email" size="30" type="text" value="{{ app.uri['params']['email'] }}" />
+            <input class="medium" name="email" size="30" type="text" value="{{ app.uri.params.email }}" />
           </div>
         </div> <!-- /clearfix -->
         <div class="actions">
