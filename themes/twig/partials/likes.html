@@ -1,7 +1,7 @@
 {% if item.likes %}
 <p id="likes_{{ item.id }}" class="meta">
 	
-{{ app.config.items['likes']['past_tense'] }}: 
+{{ app.config.items.likes.past_tense }}: 
 
 {% for likes in item.likes %}
 

@@ -11,9 +11,9 @@
 	
 {% endfor %}
 
-{% if app.config.items['comments']['enabled'] and session.user_id %}
+{% if app.config.items.comments.enabled and session.user_id %}
 <form action="javascript:comment_add('{{ app.config.base_dir }}', {{ item.id }});" id="comment_form_{{ item.id }}" class="meta" style="margin: 0px; visibility: hidden; height: 0px;" method="post">
-  <input type="text" name="content" id="content" size="30" value="" /> <input type="submit" value="{{ app.config.items['comments']['name'] }}" class="btn" />
+  <input type="text" name="content" id="content" size="30" value="" /> <input type="submit" value="{{ app.config.items.comments.name }}" class="btn" />
 </form>
 {% endif %}
 

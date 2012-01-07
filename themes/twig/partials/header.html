@@ -46,22 +46,22 @@
       <div class="fill">
         <div class="container">
 
-		{% if session['user_id'] %}
+		{% if session.user_id %}
 		
 			<h3>{{ app.link_to(app.config.name, app.config.default_controller) }}</h3>
 			<ul>
-				<li{% if app.uri['controller'] == app.config.default_controller %} class="active"{% endif %}>
+				<li{% if app.uri.controller == app.config.default_controller %} class="active"{% endif %}>
 					{{ app.link_to('Home', app.config.default_controller) }}
 				</li>
-				<li{% if app.uri['controller'] == 'users' %} class="active"{% endif %}>
-					{{ app.link_to('My profile', 'users', 'show', session['user_id']) }}
+				<li{% if app.uri.controller == 'users' %} class="active"{% endif %}>
+					{{ app.link_to('My profile', 'users', 'show', session.user_id) }}
 				</li>
-				{% if app.config.invites['enabled'] %}
-				<li{% if app.uri['controller'] == 'invites' %} class="active"{% endif %}>
+				{% if app.config.invites.enabled %}
+				<li{% if app.uri.controller == 'invites' %} class="active"{% endif %}>
 					{{ app.link_to('Invites', 'invites') }}
 				</li>
 				{% endif %}
-				<li{% if app.uri['params']['id'] == 'help' %} class="active"{% endif %}>
+				<li{% if app.url.params.id == 'help' %} class="active"{% endif %}>
 					{{ app.link_to('Help', 'pages', 'show', 'help') }}
 				</li>
 			</ul>
@@ -69,7 +69,7 @@
 			<ul class="nav secondary-nav">
 				<li>
 					<form class="nav secondary-nav" action="{{ app.echo_url_for('search') }}/" method="get">
-						<input type="text" name="q" placeholder="Search" value="{{ app.uri['params']['q'] }}" />
+						<input type="text" name="q" placeholder="Search" value="{{ app.uri.params.q }}" />
 					</form>
 				</li>
 
@@ -77,7 +77,7 @@
 				<li class="menu">
 					<a href="#" class="menu">{{ viewer.username }}</a>
 					<ul class="menu-dropdown">
-						<li>{{ app.link_to('Profile', 'users', 'show', session['user_id']) }}</li>
+						<li>{{ app.link_to('Profile', 'users', 'show', session.user_id) }}</li>
 						<li>{{ app.link_to('Settings', 'users', 'update') }}</li>
 						{% if viewer.is_admin(app.config.admin_users) %}
 						<li class="divider"></li>
@@ -94,9 +94,9 @@
 			
 			<h3>{{ app.link_to(app.config.name, app.config.default_controller) }}</h3>
 			<ul class="nav secondary-nav">
-				<li{% if app.uri['controller'] == 'users' and app.uri['action'] == 'add' %} class="active" {% endif %}>{{ app.link_to('Signup', 'users', 'add') }}</li>
-				<li{% if app.uri['controller'] == 'sessions' and app.uri['action'] == 'add' %} class="active" {% endif %}>{{ app.link_to('Login', 'sessions', 'add') }}</li>
-				<li{% if app.uri['params']['id'] == 'help' %} class="active" {% endif %}>{{ app.link_to('Help', 'pages', 'show', 'help') }}</li>
+				<li{% if app.uri.controller == 'users' and app.uri.action == 'add' %} class="active" {% endif %}>{{ app.link_to('Signup', 'users', 'add') }}</li>
+				<li{% if app.uri.controller == 'sessions' and app.uri.action == 'add' %} class="active" {% endif %}>{{ app.link_to('Login', 'sessions', 'add') }}</li>
+				<li{% if app.uri.params.id == 'help' %} class="active" {% endif %}>{{ app.link_to('Help', 'pages', 'show', 'help') }}</li>
 			</ul>
 			
 		{% endif %}
@@ -107,11 +107,11 @@
 	
     <h1>{{ app.title }}</h1>
 	
-	{% if session['flash'] %}
+	{% if session.flash %}
 		<div class="row">
 			<div class="span8 columns offset4">
-				<div class="alert-message {{ session['flash']['category'] }}">
-					<p>{{ session['flash']['message'] }}</p>
+				<div class="alert-message {{ session.flash.category }}">
+					<p>{{ session.flash.message }}</p>
 				</div>
 			</div>
 		</div>

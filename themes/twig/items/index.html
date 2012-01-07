@@ -1,11 +1,11 @@
-{% if not session['user_id'] %}
+{% if not session.user_id %}
 	<h1><small>{{ app.config.tagline|raw }}</small></h1>
 {% endif %}
 
 {# App is private and user not logged in so show beta signup for #}
 {# Shouldn't this be a redirection to users/add ? #}
 
-{% if app.config.private and not session['user_id'] %}
+{% if app.config.private and not session.user_id %}
 	{% include 'partials/user_add.html' %}
 {% else %}
 	{% if items %}
@@ -27,7 +27,7 @@
 
 	{% else %}
 
-		<h1>No {{ app.config.items['name_plural'] }} found...</h1>
+		<h1>No {{ app.config.items.name_plural }} found...</h1>
 
 	{% endif %}
 {% endif %}
