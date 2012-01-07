@@ -111,7 +111,7 @@
 		<div class="row">
 			<div class="span8 columns offset4">
 				<div class="alert-message {{ session.flash.category }}">
-					<p>{{ session.flash.message }}</p>
+					<p>{{ session.flash.message|raw }}</p>
 				</div>
 			</div>
 		</div>
