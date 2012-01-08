@@ -9,7 +9,7 @@ class AdminController extends Application {
 		
 		$this->title = 'Admin &raquo; Dashboard';
 		$this->users = Admin::list_users();
-		$this->page['users_beta'] = Admin::list_users_beta();
+		$this->users_beta = Admin::list_users_beta();
 		$this->loadView('admin/index', NULL, 'admin');
 		
 	}
