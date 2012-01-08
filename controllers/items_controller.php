@@ -224,7 +224,7 @@ class ItemsController extends Application {
 	function show($id) {
 		
 		$this->item = Item::get_by_id($id);
-		$this->item->content = $this->process_content($this->item->content);
+		$this->item->content = process_content($this->item->content);
 		
 		if ($this->config->items['titles']['enabled'] == TRUE) {
 			$this->head_title = $this->config->name.' - '.$this->item->title;
