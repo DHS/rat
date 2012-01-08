@@ -74,12 +74,12 @@ class UsersController extends Application {
 			$items[$key]->content = process_content($items[$key]->content);
 		}
 		
-		$this->title = $this->user->username;		
+		$this->title = $this->user->username;
 		
 		if ($this->json) {
 			$this->render_json($this->user);
 		} else {
-			$this->loadView('users/show');
+			$this->loadView('users/show', array('user' => $this->user, 'items' => $this->items));
 		}
 	
 	}
