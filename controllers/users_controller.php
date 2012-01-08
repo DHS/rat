@@ -47,11 +47,11 @@ class UsersController extends Application {
 	// Show a user / user page
 	function show($id) {
 		
-		$this->user = User::get_by_id($id);
+		$user = User::get_by_id($id);
 		
 		// id failed so try username (used by routes)
-		if ($this->user == NULL) {
-			$this->user = User::get_by_username($id);
+		if ($user == NULL) {
+			$user = User::get_by_username($id);
 		}
 		
 		// Page zero so overwrite to 1
@@ -68,7 +68,7 @@ class UsersController extends Application {
 			$offset = ($this->uri['params']['page'] - 1) * $limit;
 		}
 		
-		$this->items = $this->user->items($limit, $offset);
+		$items = $user->items($limit, $offset);
 		
 		foreach ($items as $key => $item) {
 			$items[$key]->content = process_content($items[$key]->content);
@@ -76,10 +76,14 @@ class UsersController extends Application {
 		
 		$this->title = $this->user->username;
 		
+		// old template
+		$this->user = $user;
+		$this->items = $items;
+		
 		if ($this->json) {
 			$this->render_json($this->user);
 		} else {
-			$this->loadView('users/show', array('user' => $this->user, 'items' => $this->items));
+			$this->loadView('users/show', array('user' => $user, 'items' => $items));
 		}
 	
 	}
