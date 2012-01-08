@@ -56,6 +56,8 @@ class Application {
 			require_once 'lib/filter.php';
 			$app->runFilters();
 			
+			$app->loadDefaultLibs();
+			
 			// Set timezone from config
 			date_default_timezone_set($config->timezone);
 			
@@ -283,6 +285,12 @@ class Application {
 			$filter = new Filter($this);
 			$filter->$filter_name($uri, $this->$filter_name);
 		}
+		
+	}
+	
+	private function loadDefaultLibs() {
+		
+		require_once 'lib/content.php';
 		
 	}
 	

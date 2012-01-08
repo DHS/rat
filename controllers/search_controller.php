@@ -25,6 +25,10 @@ class SearchController extends Application {
 		
 		$this->items = $search->do_search($q);
 		
+		foreach ($items as $key => $item) {
+			$items[$key]->content = process_content($items[$key]->content);
+		}
+		
 		if (isset($this->plugins->log)) {
 			$result_count = count($this->items);
 			$this->plugins->log->add($_SESSION['user_id'], 'search', NULL, 'new', "Term = $q\nResult_count = $result_count");

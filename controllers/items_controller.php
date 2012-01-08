@@ -23,6 +23,10 @@ class ItemsController extends Application {
 		
 		$items = Item::list_all($limit, $offset);
 		
+		foreach ($items as $key => $item) {
+			$items[$key]->content = process_content($items[$key]->content);
+		}
+		
 		// old template
 		$this->items = $items;
 		
@@ -220,6 +224,7 @@ class ItemsController extends Application {
 	function show($id) {
 		
 		$this->item = Item::get_by_id($id);
+		$this->item->content = $this->process_content($this->item->content);
 		
 		if ($this->config->items['titles']['enabled'] == TRUE) {
 			$this->head_title = $this->config->name.' - '.$this->item->title;
@@ -257,6 +262,11 @@ class ItemsController extends Application {
 			}
 			
 			$this->items = $user->list_feed($limit, $offset);
+			
+			foreach ($items as $key => $item) {
+				$items[$key]->content = process_content($items[$key]->content);
+			}
+			
 			$this->loadView('items/index');
 			
 		} else {

@@ -70,6 +70,10 @@ class UsersController extends Application {
 		
 		$this->items = $this->user->items($limit, $offset);
 		
+		foreach ($items as $key => $item) {
+			$items[$key]->content = process_content($items[$key]->content);
+		}
+		
 		$this->title = $this->user->username;		
 		
 		if ($this->json) {

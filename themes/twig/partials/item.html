@@ -21,13 +21,13 @@
 {% if app.config.items.titles.enabled and item.title %}
 	<h4>{{ app.link_to(item.title, 'items', 'show', item.id) }} <small>by {{ app.link_to(item.user.username, 'users', 'show', item.user.id) }}</small></h4>
 
-	<p class="clear">{{ item.content }}</p>
+	<p class="clear">{{ item.content|raw }}</p>
 {% elseif item.content %}
 		<p>
 			<strong>
 				{{ app.link_to(item.user.username, 'users', 'show', item.user.id) }}
 			</strong>
-			{{ item.content }}
+			{{ item.content|raw }}
 		</p>
 {% endif %}
 
