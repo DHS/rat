@@ -13,15 +13,18 @@ class AdminController extends Application {
 		$this->loadView('admin/index', NULL, 'admin');
 		
 	}
-	
+
 	// Setup your rat installation
 	function setup() {
 		
 		$this->title = 'Setup';
 		
-		if (count(Admin::list_users()) == 0 && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
+		if (! Admin::tables_exist() && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
 			// Do setup
 			
+			// Write config!
+			$this->create_tables();
+
 			$user_id = User::add($_POST['email']);
 			User::signup($user_id, $_POST['username'], $_POST['password'], $this->config->encryption_salt);
 			
@@ -48,14 +51,14 @@ class AdminController extends Application {
 			
 		} else {
 			// Show setup form
-			
-			if (count(Admin::list_users()) == 0) {
+
+			if (! Admin::tables_exist()) {
 				Application::flash('info', 'Welcome to Rat!');
 				$this->loadView('admin/setup');
 			} else {
 				throw new RoutingException($this->uri, "Page not found");
 			}
-
+			
 		}
 		
 	}
