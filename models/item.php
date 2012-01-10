@@ -5,10 +5,12 @@ class Item {
 	// Create an item, returns item id
 	public static function add($user_id, $content, $title = NULL, $image = NULL) {
 		
+		$config = new AppConfig;
+		
 		$user_id = sanitize_input($user_id);
 		$content = sanitize_input($content);
 		
-		$sql = "INSERT INTO `items` SET `user_id` = $user_id, `content` = $content";
+		$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}items` SET `user_id` = $user_id, `content` = $content";
 		
 		if ($title != NULL) {
 			$title = sanitize_input($title);
@@ -31,9 +33,11 @@ class Item {
 	// Get an item by id, returns an Item object
 	public static function get_by_id($id) {
 		
+		$config = new AppConfig;
+		
 		$id = sanitize_input($id);
 		
-		$sql = "SELECT `id`, `user_id`, `title`, `content`, `image`, `date` FROM `items` WHERE `id` = $id ORDER BY `id` DESC";
+		$sql = "SELECT `id`, `user_id`, `title`, `content`, `image`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `id` = $id ORDER BY `id` DESC";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -62,7 +66,9 @@ class Item {
 	// Get recent items, returns array of Item objects
 	public static function list_all($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT `id` FROM `items` ORDER BY `id` DESC";
+		$config = new AppConfig;
+		
+		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` ORDER BY `id` DESC";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -94,7 +100,9 @@ class Item {
 	// Get comments for an item, returns an array of Comment objects
 	public function comments($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT `id` FROM `comments` WHERE `item_id` = $this->id ORDER BY `id` ASC";
+		$config = new AppConfig;
+		
+		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `item_id` = $this->id ORDER BY `id` ASC";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -118,7 +126,9 @@ class Item {
 	// Get likes for an item, returns an array of Like objects
 	public function likes($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT `id` FROM `likes` WHERE `item_id` = $this->id";
+		$config = new AppConfig;
+		
+		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `item_id` = $this->id";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -142,13 +152,15 @@ class Item {
 	// Remove an item, returns item id
 	public function remove() {
 		
+		$config = new AppConfig;
+		
 		// Check item exists
-		$sql_check = "SELECT `id` FROM `items` WHERE `id` = $this->id";
+		$sql_check = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `id` = $this->id";
 		$count_query = mysql_query($sql_check);
 		
 		if (mysql_num_rows($count_query) > 0) {
 			// If item exists, go ahead and delete
-			$sql_delete = "DELETE FROM `items` WHERE `id` = $this->id";
+			$sql_delete = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `id` = $this->id";
 			$query = mysql_query($sql_delete);
 		}
 		

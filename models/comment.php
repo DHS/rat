@@ -5,11 +5,13 @@ class Comment {
 	// Add a comment to an item, returns comment id
 	public static function add($user_id, $item_id, $content) {
 		
+		$config = new AppConfig;
+		
 		$user_id = sanitize_input($user_id);
 		$item_id = sanitize_input($item_id);
 		$content = sanitize_input($content);
 		
-		$sql = "INSERT INTO `comments` SET `user_id` = $user_id, `item_id` = $item_id, `content` = $content";
+		$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}comments` SET `user_id` = $user_id, `item_id` = $item_id, `content` = $content";
 		$query = mysql_query($sql);
 		
 		$id = mysql_insert_id();
@@ -21,9 +23,11 @@ class Comment {
 	// Get a single comment, returns a Comment object
 	public static function get_by_id($id) {
 		
+		$config = new AppConfig;
+		
 		$id = sanitize_input($id);
         
-		$sql = "SELECT `id`, `user_id`, `item_id`, `content`, `date` FROM `comments` WHERE `id` = $id";
+		$sql = "SELECT `id`, `user_id`, `item_id`, `content`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `id` = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 		
@@ -51,7 +55,9 @@ class Comment {
 	// Get all comments, returns an array of Comments objects
 	public static function list_all($limit = 10, $offset = 0) {
 		
-		$sql = "SELECT `id` FROM `comments` ORDER BY `date` DESC";
+		$config = new AppConfig;
+		
+		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` ORDER BY `date` DESC";
 		
 		// Limit string
 		$limit = sanitize_input($limit);
@@ -77,11 +83,13 @@ class Comment {
 	// Remove a comment from an item, returns comment id
 	public function remove() {
 		
-		$count_sql = "SELECT `id` FROM `comments` WHERE `id` = {$this->id}";
+		$config = new AppConfig;
+		
+		$count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `id` = {$this->id}";
 		$count_query = mysql_query($count_sql);
 		
 		if (mysql_num_rows($count_query) > 0) {
-			$sql = "DELETE FROM `comments` WHERE `id` = {$this->id}";
+			$sql = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `id` = {$this->id}";
 			$query = mysql_query($sql);
 		}
 		

@@ -4,6 +4,7 @@ class Admin {
 	
 	// Get all users	
 	public static function list_users() {
+		
 		$config = new AppConfig;
 		
 		$sql = "SELECT * FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `date_joined` IS NOT NULL ORDER BY `date_joined` DESC";
@@ -13,7 +14,7 @@ class Admin {
 		while ($user = mysql_fetch_array($users_query, MYSQL_ASSOC)) {
 			
 			// Find last login
-			$last_login_query = mysql_query("SELECT TIMESTAMPDIFF(DAY, date, NOW()) FROM `log` WHERE `user_id` = '{$user['id']}' AND `action` = 'login' ORDER BY `date` DESC LIMIT 1");
+			$last_login_query = mysql_query("SELECT TIMESTAMPDIFF(DAY, date, NOW()) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}log` WHERE `user_id` = '{$user['id']}' AND `action` = 'login' ORDER BY `date` DESC LIMIT 1");
 			if (mysql_num_rows($last_login_query) > 0) {
 				$last_login = mysql_result($last_login_query, 0);
 				if ($last_login == 0) {
@@ -37,9 +38,10 @@ class Admin {
 	
 	// Get beta signups who are still waiting for an invite
 	public static function list_users_beta() {
+		
 		$config = new AppConfig;
-
-		$sql = "SELECT `id`, `email`, TIMESTAMPDIFF(DAY, date_added, NOW()) AS days_waiting, (SELECT COUNT(*) FROM `invites` WHERE `email` = {$config->database[SITE_IDENTIFIER]['prefix']}users.email) AS invites FROM `{$config->database['SITE_IDENTIFIER']['prefix']}users` WHERE `date_joined` IS NULL ORDER BY `date_added` ASC";
+		
+		$sql = "SELECT `id`, `email`, TIMESTAMPDIFF(DAY, date_added, NOW()) AS days_waiting, (SELECT COUNT(*) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `email` = {$config->database[SITE_IDENTIFIER]['prefix']}users.email) AS invites FROM `{$config->database['SITE_IDENTIFIER']['prefix']}users` WHERE `date_joined` IS NULL ORDER BY `date_added` ASC";
 		$waiting_users_query = mysql_query($sql);
 		
 		$waiting_users = array();
@@ -53,8 +55,9 @@ class Admin {
 	
 	// Grants a given number of invites to all users
 	public static function update_invites($invites) {
+		
 		$config = new AppConfig;
-
+		
 		$invites = sanitize_input($invites);
 		
 		$users = Admin::list_users();
@@ -74,8 +77,9 @@ class Admin {
 	
 	// Updates an item
 	public static function update_item($id, $title = NULL, $byline = NULL, $content = NULL, $status = 1) {
+		
 		$config = new AppConfig;
-
+		
 		$id = sanitize_input($id);
 		
 		$update_string = '';
