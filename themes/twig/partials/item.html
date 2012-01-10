@@ -10,8 +10,7 @@
 
 {# Avatar #}
 {% if app.plugins.gravatar %}
-	{# Need a better way to pass parameters to gravatar.show #}
-	{{ app.plugins.gravatar.show(item.user.email)|raw }}
+	{{ app.plugins.gravatar.show(item.user.email, {'size': 48, 'style': 'float: left; padding: 0px 10px 5px 0px;'})|raw }}
 {% else %}
 	{{ app.link_to(item.user.username, 'users', 'show', item.user.id) }}
 {% endif %}
