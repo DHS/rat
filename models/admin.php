@@ -39,7 +39,7 @@ class Admin {
 	public static function list_users_beta() {
 		$config = new AppConfig;
 
-		$sql = "SELECT `id`, `email`, TIMESTAMPDIFF(DAY, date_added, NOW()) AS days_waiting, (SELECT COUNT(*) FROM `invites` WHERE `email` = users.email) AS invites FROM `{$config->database['SITE_IDENTIFIER']['prefix']}users` WHERE `date_joined` IS NULL ORDER BY `date_added` ASC";
+		$sql = "SELECT `id`, `email`, TIMESTAMPDIFF(DAY, date_added, NOW()) AS days_waiting, (SELECT COUNT(*) FROM `invites` WHERE `email` = {$config->database[SITE_IDENTIFIER]['prefix']}users.email) AS invites FROM `{$config->database['SITE_IDENTIFIER']['prefix']}users` WHERE `date_joined` IS NULL ORDER BY `date_added` ASC";
 		$waiting_users_query = mysql_query($sql);
 		
 		$waiting_users = array();
