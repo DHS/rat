@@ -45,6 +45,7 @@ class Application {
 			}
 			
 			$app->loadConfig($config);
+			$app->loadTwig();
 			$app->loadModels();
 			$app->loadPlugins();
 			
@@ -60,23 +61,6 @@ class Application {
 			
 			// Set timezone from config
 			date_default_timezone_set($config->timezone);
-			
-			// Load twig
-			if ($config->theme == 'twig') {
-				
-				$twig_config['cache'] = 'static/template_cache';
-				
-				// If we're in dev mode then force template compiling
-				if (SITE_IDENTIFIER == 'dev') {
-					$twig_config['auto_reload'] = TRUE;
-				}
-				
-				require_once 'lib/twig/Autoloader.php';
-				Twig_Autoloader::register();
-				$loader = new Twig_Loader_Filesystem('themes/'.$config->theme);
-				$app->twig = new Twig_Environment($loader, $twig_config);
-				
-			}
 		
 			// Call relevant function in controller
 			$app->loadAction();
@@ -250,7 +234,37 @@ class Application {
 		}
 		
 	}
+
+	private function loadTwig() {
 	
+		if ($config->theme == 'twig') {
+			
+			$twig_config['cache'] = 'static/template_cache';
+			
+			// If we're in dev mode then force template compiling
+			if (SITE_IDENTIFIER == 'dev') {
+				$twig_config['auto_reload'] = TRUE;
+			}	
+				
+			require_once 'lib/twig/Autoloader.php';
+			Twig_Autoloader::register();
+			$loader = new Twig_Loader_Filesystem('themes/'.$config->theme);
+			$app->twig = new Twig_Environment($loader, $twig_config);
+				
+		}
+
+	}
+
+	private function createTables() {
+		
+		require_once 'lib/mysql.php';
+		
+		$sql = $this->twig->render(file_get_contents('create_tables.twig'), array('prefix' => $this->config[SITE_IDENTIFIER]['prefix']));
+	
+		mysql_query($sql);	
+		
+	}
+
 	private function loadModels() {
 		
 		require_once 'lib/mysql.php';
