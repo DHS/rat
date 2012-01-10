@@ -23,13 +23,15 @@ class ServerConfig {
 	public $database = array(	'dev'	=> array(	'host'		=> 'localhost',
 													'username'	=> 'root',
 													'password'	=> 'root',
-													'database'	=> 'rat'
+													'database'	=> 'rat',
+													'prefix'	=> ''
 												),
 								
 								'live'	=> array(	'host'		=> 'localhost',
 													'username'	=> 'root',
 													'password'	=> 'root',
-													'database'	=> 'rat'
+													'database'	=> 'rat',
+													'prefix'	=> ''
 												)
 							);
 	

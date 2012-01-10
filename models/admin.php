@@ -4,8 +4,9 @@ class Admin {
 	
 	// Get all users	
 	public static function list_users() {
+		$config = new AppConfig;
 		
-		$sql = "SELECT * FROM `users` WHERE `date_joined` IS NOT NULL ORDER BY `date_joined` DESC";
+		$sql = "SELECT * FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `date_joined` IS NOT NULL ORDER BY `date_joined` DESC";
 		$users_query = mysql_query($sql);
 		
 		$users = array();
@@ -36,8 +37,9 @@ class Admin {
 	
 	// Get beta signups who are still waiting for an invite
 	public static function list_users_beta() {
-		
-		$sql = "SELECT `id`, `email`, TIMESTAMPDIFF(DAY, date_added, NOW()) AS days_waiting, (SELECT COUNT(*) FROM `invites` WHERE `email` = users.email) AS invites FROM `users` WHERE `date_joined` IS NULL ORDER BY `date_added` ASC";
+		$config = new AppConfig;
+
+		$sql = "SELECT `id`, `email`, TIMESTAMPDIFF(DAY, date_added, NOW()) AS days_waiting, (SELECT COUNT(*) FROM `invites` WHERE `email` = users.email) AS invites FROM `{$config->database['SITE_IDENTIFIER']['prefix']}users` WHERE `date_joined` IS NULL ORDER BY `date_added` ASC";
 		$waiting_users_query = mysql_query($sql);
 		
 		$waiting_users = array();
@@ -51,7 +53,8 @@ class Admin {
 	
 	// Grants a given number of invites to all users
 	public static function update_invites($invites) {
-		
+		$config = new AppConfig;
+
 		$invites = sanitize_input($invites);
 		
 		$users = Admin::list_users();
@@ -63,7 +66,7 @@ class Admin {
 			// uncomment the following line to zero invites
 			//$user['invites'] = 0;
 			
-			$query = mysql_query("UPDATE `users` SET `invites` = $new_invites WHERE id = {$user['id']}");
+			$query = mysql_query("UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `invites` = $new_invites WHERE id = {$user['id']}");
 			
 		}
 		
@@ -71,7 +74,8 @@ class Admin {
 	
 	// Updates an item
 	public static function update_item($id, $title = NULL, $byline = NULL, $content = NULL, $status = 1) {
-		
+		$config = new AppConfig;
+
 		$id = sanitize_input($id);
 		
 		$update_string = '';
@@ -89,7 +93,7 @@ class Admin {
 		$status = sanitize_input($status);
 		$update_string .= "status = $status";
 		
-		$query = mysql_query("UPDATE `items` SET $update_string WHERE id = $id");
+		$query = mysql_query("UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}items` SET $update_string WHERE id = $id");
 		
 	}
 	
