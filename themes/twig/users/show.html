@@ -2,63 +2,38 @@
 <div class="row">
   <div class="span8 columns offset3">
 	
-	<?php
-	
-	if (count($this->items) > 0) {
-		
-		if (is_array($this->items)) {
-			
-			foreach ($this->items as $this->item) {
-				$this->loadPartial('item');
-			}
-			
-			$this->loadPartial('pagination');
-		
-		}
-		
-	} else {
-		
-		echo '<p>No '.$this->config->items['name_plural'].' found.</p>';
-		
-	}
-
-	?>
+	{% if items %}
+		{% for item in items %}
+			{% include 'partials/item.html' %}
+		{% endfor %}
+		{% include 'partials/pagination.html' %}
+	{% else %}
+		<p>No {{ app.config.items.name_plural }} found.</p>
+	{% endif %}
 
   </div>
   <div class="span4 columns">
 
-<?php
+{# Friend buton #}
+{% if app.config.friends.enabled %}
+{# include 'partials/friend.html #}
+{% endif %}
 
-// Show follow button
-if ($this->config->friends['enabled'] == TRUE) {
-	$this->loadPartial('friend');
-}
-
-// User pofile
-if (isset($this->user->full_name) || isset($this->user->bio) || isset($this->user->url)) { ?>
+{% if user.full_name or user.bio or user.url %}
 
   <h3>Profile</h3>
   
   <p>
-  <?php if (isset($this->user->full_name)) { ?>
-    <strong>Name</strong> <?php echo $this->user->full_name; ?>
-  <?php } if (isset($this->user->bio)) { ?>
-    <br /><strong>Bio</strong> <?php echo $this->user->bio; ?>
-  <?php } if (isset($this->user->url)) { ?>
-    <br /><strong>URL</strong> <a href="<?php echo $this->user->url; ?>"><?php echo $this->user->url; ?></a>
-  <?php } ?>
+    {% if user.full_name %}<strong>Name</strong> {{ user.full_name }}{% endif %}
+    {% if user.bio %}<br /><strong>Bio</strong> {{ user.bio }}{% endif %}
+    {% if user.url %}<br /><strong>URL</strong> {{ user.url }}{% endif %}
   <p />
 
-<?php
+{% endif %}
 
-}
-
-// Show number of points
-if (isset($this->plugins->points)) {
-	$this->plugins->points->view();
-}
-
-?>
+{% if app.plugins.points %}
+{{ app.plugins.points.view() }}
+{% endif %}
 
   </div>
 </div>

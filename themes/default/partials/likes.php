@@ -8,9 +8,11 @@
 
 		if (isset($this->plugins->gravatar)) {
 			$gravatar = $this->plugins->gravatar->show($like->user->email, array('size' => 20));
-			$this->link_to($gravatar, 'users', 'show', $like->user->id).' ';
+			$this->link_to($gravatar, 'users', 'show', $like->user->id);
+			echo ' ';
 		} else {
-			$this->link_to($like->user->username, 'users', 'show', $like->user->id).' ';
+			$this->link_to($like->user->username, 'users', 'show', $like->user->id);
+			echo ' ';
 		}
 
 	}

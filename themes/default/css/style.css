@@ -226,6 +226,7 @@ footer a, footer a:visited { color: #666666; }
 
 .align_left { text-align: left; }
 .align_right { text-align: right; }
+.align_center { text-align: center; }
 
 .float_left { float: left; }
 .float_right { float: right; }

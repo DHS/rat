@@ -36,7 +36,7 @@ function like_add(base_url, item_id, word_add, word_remove) {
 	
 	ajax_call('POST', url, null, response_destination, null, function(){
 		if (update_element = document.getElementById('like_link_' + item_id)) {
-			update_element.innerHTML = '<a href="#" onclick="like_remove(\'' + base_url + '\', ' + item_id + ', \'' + word_add + '\', \'' + word_remove + '\'); return false;">' + word_remove + '</a>';
+			update_element.innerHTML = '<a href="#" onclick="like_remove(\'' + base_url + '\', ' + item_id + ', \'' + word_add.replace("'", "\\\'") + '\', \'' + word_remove.replace("'", "\\\'") + '\'); return false;">' + word_remove + '</a>';
 		}
 	});
 	
@@ -49,7 +49,7 @@ function like_remove(base_url, item_id, word_add, word_remove) {
 	
 	ajax_call('POST', url, null, response_destination, null, function(){
 		if (update_element = document.getElementById('like_link_' + item_id)) {
-			update_element.innerHTML = '<a href="#" onclick="like_add(\'' + base_url + '\', ' + item_id + ', \'' + word_add + '\', \'' + word_remove + '\'); return false;">' + word_add + '</a>';
+			update_element.innerHTML = '<a href="#" onclick="like_add(\'' + base_url + '\', ' + item_id + ', \'' + word_add.replace("'", "\\\'") + '\', \'' + word_remove.replace("'", "\\\'") + '\'); return false;">' + word_add + '</a>';
 		}
 	});
 	

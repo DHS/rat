@@ -23,6 +23,10 @@ class ItemsController extends Application {
 		
 		$items = Item::list_all($limit, $offset);
 		
+		foreach ($items as $key => $item) {
+			$items[$key]->content = process_content($items[$key]->content);
+		}
+		
 		// old template
 		$this->items = $items;
 		
@@ -219,18 +223,22 @@ class ItemsController extends Application {
 	// Show a single item
 	function show($id) {
 		
-		$this->item = Item::get_by_id($id);
+		$item = Item::get_by_id($id);
+		$item->content = process_content($item->content);
 		
 		if ($this->config->items['titles']['enabled'] == TRUE) {
-			$this->head_title = $this->config->name.' - '.$this->item->title;
+			$this->head_title = $this->config->name.' - '.$item->title;
 		}
 		
+		// old template
+		$this->item = $item;
+		
 		if ($this->json) {
-			$this->render_json($this->item);
+			$this->render_json($item);
 		} else {
-			$this->loadView('items/show');
+			$this->loadView('items/show', array('item' => $item));
 		}
-
+		
 	}
 	
 	// Show feed of friends' new items
@@ -257,6 +265,11 @@ class ItemsController extends Application {
 			}
 			
 			$this->items = $user->list_feed($limit, $offset);
+			
+			foreach ($items as $key => $item) {
+				$items[$key]->content = process_content($items[$key]->content);
+			}
+			
 			$this->loadView('items/index');
 			
 		} else {

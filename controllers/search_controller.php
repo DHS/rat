@@ -2,8 +2,6 @@
 
 class SearchController extends Application {
 	
-	protected $requireLoggedIn = array('index', 'show');
-
 	function index() {
 		
 		if (isset($this->uri['params']['q'])) {
@@ -26,6 +24,10 @@ class SearchController extends Application {
 		$search = new Search;
 		
 		$this->items = $search->do_search($q);
+		
+		foreach ($items as $key => $item) {
+			$items[$key]->content = process_content($items[$key]->content);
+		}
 		
 		if (isset($this->plugins->log)) {
 			$result_count = count($this->items);

@@ -56,6 +56,8 @@ class Application {
 			require_once 'lib/filter.php';
 			$app->runFilters();
 			
+			$app->loadDefaultLibs();
+			
 			// Set timezone from config
 			date_default_timezone_set($config->timezone);
 			
@@ -218,10 +220,10 @@ class Application {
 		$this->config = $config;
 		
 		// Work out the live domain from config
-		$live_domain = substr(substr($this->config->url, 0, -1), 7);
+		$domain = substr($this->config->url, 7);
 		
 		// Determine if site is live or dev, set site_identifier constant and base_dir
-		if ($_SERVER['HTTP_HOST'] == $live_domain || $_SERVER['HTTP_HOST'] == 'www.'.$live_domain) {
+		if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.'.$domain) {
 			define('SITE_IDENTIFIER', 'live');
 			$base_dir = $this->config->base_dir;
 		} else {
@@ -240,20 +242,11 @@ class Application {
 		// Remove this eventually
 		define('BASE_DIR', $base_dir);
 		
-		// Update config->url
+		// Update config->url and append base_dir
 		if (SITE_IDENTIFIER == 'live') {
-			// config->url already setup
-			if (BASE_DIR != '/') {
-				// Append base_dir if needed
-				$this->config->url .= BASE_DIR;
-			}
+			$this->config->url .= $base_dir;
 		} else {
-			if (BASE_DIR != '/') {
-				$this->config->url = $this->config->dev_url . BASE_DIR;
-			} else {
-				// Dev site so set config->url to config->dev_url for use everywhere from now
-				$this->config->url = $this->config->dev_url;
-			}
+			$this->config->url = $this->config->dev_url . $base_dir;
 		}
 		
 	}
@@ -292,6 +285,12 @@ class Application {
 			$filter = new Filter($this);
 			$filter->$filter_name($uri, $this->$filter_name);
 		}
+		
+	}
+	
+	private function loadDefaultLibs() {
+		
+		require_once 'lib/content.php';
 		
 	}
 	

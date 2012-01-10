@@ -1,19 +1,20 @@
-<span id="comments_{{ comment.id }}">
+<span id="comments_{{ item.id }}">
 
-	{% for comment in item.comments %}
-		<p class="meta">
-			{{ comment.content }} - {{ app.link_to(comment.user.usernamem, 'users', 'show', comment.user.id) }}
-
-			{% if comment.user.id == session['user_id'] %}
-				&middot; <span class="small"><a href="#" onclick="comment_remove('{{ app.config.base_dir }}', {{ comment.id }}, {{ item.id }}); return false;">Delete</a></span>
-			{% endif %}
-		</p>
-	{% endfor %}
-
-	{% if app.config.items['comments']['enabled'] and session['user_id'] %}
-		<form action="javascript:comment_add('{{ app.config.base_dir }}', {{ item.id }});" id="comment_form_{{ item.id }}" class="meta" style="margin: 0px; {% if item.comments|length == 0 %}visibility: hidden; height: 0px;{% endif %}" method="post"> 
-			<input type="text" name="content" id="content" size="30" value="" /> <input type="submit" value="{{ app.config.items['comments']['name'] }}" class="btn" />
-		</form>
+{% for comment in item.comments %}
+	
+	<p class="meta">
+	"{{ comment.content }}" - {{ app.link_to(comment.user.username, 'users', 'show', comment.user.id) }}
+	{% if comment.user.id == session.user_id %}
+		&middot; <span class="small"><a href="#" onclick="comment_remove('{{ app.config.base_url }}', {{ comment.id }}, {{ item.id }}); return false;">Delete</a></span>
 	{% endif %}
+	</p>
+	
+{% endfor %}
+
+{% if app.config.items.comments.enabled and session.user_id %}
+<form action="javascript:comment_add('{{ app.config.base_dir }}', {{ item.id }});" id="comment_form_{{ item.id }}" class="meta" style="margin: 0px; visibility: hidden; height: 0px;" method="post">
+  <input type="text" name="content" id="content" size="30" value="" /> <input type="submit" value="{{ app.config.items.comments.name }}" class="btn" />
+</form>
+{% endif %}
 
 </span>
