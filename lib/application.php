@@ -255,16 +255,18 @@ class Application {
 
 	}
 
-	private function createTables() {
+	public function writeConfig($file, $settings = array()) {
 		
-		require_once 'lib/mysql.php';
-		
-		$sql = $this->twig->render(file_get_contents('create_tables.twig'), array('prefix' => $this->config[SITE_IDENTIFIER]['prefix']));
-	
-		mysql_query($sql);	
-		
-	}
+		$twig = new Twig_Environment(new Twig_Loader_String());
 
+		$config_file = $twig->render(file_get_contents("${file}.twig"), $settings);
+		
+		$handle = fopen("{$file}.php", 'w');
+		fwrite($handle, $config_file);
+		fclose($handle);
+
+	}
+	
 	private function loadModels() {
 		
 		require_once 'lib/mysql.php';

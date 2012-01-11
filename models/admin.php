@@ -101,6 +101,14 @@ class Admin {
 		
 	}
 	
+	public static function tables_exist() {
+		
+		$config = new AppConfig;
+		
+		return mysql_query("SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items") !== FALSE;
+				
+	}
+
 }
 
 ?>
