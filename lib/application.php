@@ -236,8 +236,8 @@ class Application {
 	}
 
 	private function loadTwig() {
-	
-		if ($config->theme == 'twig') {
+
+		if ($this->config->theme == 'twig') {
 			
 			$twig_config['cache'] = 'static/template_cache';
 			
@@ -248,8 +248,8 @@ class Application {
 				
 			require_once 'lib/twig/Autoloader.php';
 			Twig_Autoloader::register();
-			$loader = new Twig_Loader_Filesystem('themes/'.$config->theme);
-			$app->twig = new Twig_Environment($loader, $twig_config);
+			$loader = new Twig_Loader_Filesystem('themes/'.$this->config->theme);
+			$this->twig = new Twig_Environment($loader, $twig_config);
 				
 		}
 
