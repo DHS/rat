@@ -1,0 +1,89 @@
+<?php
+
+class AppConfig extends ServerConfig {
+	
+	/*
+	*	Contents
+	*
+	*		1. Basic app variables
+	*		2. Beta
+	*		3. Privacy
+	*		4. Items
+	*		5. Invites
+	*		6. Friends
+	*		7. Admin
+	*		8. Themes
+	*		9. Plugins
+	*		
+	*/
+	
+	// Basic app variables
+	public $name							= '{{ app_name }}';
+	public $tagline							= '{{ app_tagline }}';
+	public $default_controller				= 'items';
+	
+	// Beta - users can't signup, can only enter their email addresses
+	public $beta							= {{ app_beta }};
+	
+	// Private app - requires login to view pages (except public_pages), no share buttons
+	public $private							= {{ app_private }};
+	
+	// Items
+	// Notes about uploads: max-size is in bytes (default: 5MB), directory should contain three subdirectories: originals, thumbnails, stream
+	public $items = array(	'name'			=> '{{ item_name }}',
+							
+							'name_plural'	=> '{{ item_plural }}',
+							
+							'titles'		=> array(	'enabled'		=> {{ item_titles_enabled }},
+														'name'			=> '{{ item_titles_name }}',
+														'name_plural'	=> '{{ item_titles_name_plural }}'
+														),
+														
+							'content'		=> array(	'enabled'		=> {{ item_content_enabled }},
+														'name'			=> '{{ item_content_name }}',
+														'name_plural'	=> '{{ item_content_name_plural }}'
+														),
+
+							// Remember to update the permissions for your upload dir! e.g. chmod -R 777 uploads
+							'uploads'		=> array(	'enabled'		=> {{ item_uploads_enabled }},
+														'name'			=> '{{ item_uploads_name }}',
+														'directory'		=> 'uploads',
+														'max-size'		=> '5242880',
+														'mime-types'	=> array('image/jpeg','image/png', 'image/gif', 'image/pjpeg')
+														),
+														
+							'comments'		=> array(	'enabled'		=> {{ item_comments_enabled }},
+														'name'			=> '{{ item_comments_name }}',
+														'name_plural'	=> '{{ item_comments_name_plural }}'
+														),
+														
+							'likes'			=> array(	'enabled'		=> '{{ item_likes_enabled }},
+														'name'			=> '{{ item_likes_name }}',
+														'name_plural'	=> '{{ item_likes_name_plural }}',
+														'opposite_name'	=> '{{ item_likes_opposite }}',
+														'past_tense'	=> '{{ item_likes_past_tense }}'
+														)
+							);
+	
+	// Invites system
+	public $invites = array('enabled' => {{ invites_enabled }});
+	
+	// Friends - still testing, works with asymmetric set to true... just! (Shows 'Follow' link & generates homepage feed)
+	public $friends = array('enabled' => {{ friends_enabled }}, 'asymmetric' => {{ friends_asymmetric }});
+	
+	// Admin users - array of user IDs who have access to admin area
+	public $admin_users						= array(1);
+	
+	// Theme
+	public $theme = '{{ theme }}';
+	
+	// Plugins
+	public $plugins = array(	'log'		=> {{ plugins_log_enabled }},
+								'gravatar'	=> {{ plugins_gravatar_enabled }},
+								'points'	=> {{ plugins_points_enabled }},
+								'analytics'	=> {{ plugins_analytics_enabled }}
+							);
+	
+}
+
+?>
