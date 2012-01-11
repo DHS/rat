@@ -14,7 +14,7 @@ class Application {
 		$config = new AppConfig;
 
 		try {
-						
+			
 			$uri = Application::fetch_uri($config);
 			
 			$controller = ucfirst($uri['controller']).'Controller';

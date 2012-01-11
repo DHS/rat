@@ -14,49 +14,14 @@ class AdminController extends Application {
 		
 	}
 	
-	// Setup your rat installation
-	function setup() {
+	function config() {
 		
-		$this->title = 'Setup';
+		echo '<!--';
+		print_r($this->config);
+		echo '-->';
 		
-		if (count(Admin::list_users()) == 0 && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
-			// Do setup
-			
-			$user_id = User::add($_POST['email']);
-			User::signup($user_id, $_POST['username'], $_POST['password'], $this->config->encryption_salt);
-			
-			$user = User::get_by_email($_POST['email']);
-			
-			// Update session
-			$_SESSION['user_id'] = $user->id;
-			
-			// Log login
-			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'signup');
-			}
-			
-			Application::flash('success', 'You are now logged in to your app!');
-			
-			// Go forth!
-			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$this->url_for('items', 'add'));
-			} else {
-				header('Location: '.$this->url_for('items', 'add'));
-			}
-			
-			exit();
-			
-		} else {
-			// Show setup form
-			
-			if (count(Admin::list_users()) == 0) {
-				Application::flash('info', 'Welcome to Rat!');
-				$this->loadView('admin/setup');
-			} else {
-				throw new RoutingException($this->uri, "Page not found");
-			}
-
-		}
+		$this->title = 'Admin &raquo; Config';
+		$this->loadView('admin/config', NULL, 'admin');
 		
 	}
 	
@@ -88,6 +53,55 @@ class AdminController extends Application {
 			$this->loadPartial('admin_menu');
 			$this->plugins->log->view();
 			$this->loadPartial('footer');
+			
+		}
+		
+	}
+	
+	// Setup your rat installation
+	function setup() {
+		
+		$this->title = 'Setup';
+		
+		if (! Admin::tables_exist() && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
+			// Do setup
+			
+			// Write config!
+			$this->create_tables();
+
+			$user_id = User::add($_POST['email']);
+			User::signup($user_id, $_POST['username'], $_POST['password'], $this->config->encryption_salt);
+			
+			$user = User::get_by_email($_POST['email']);
+			
+			// Update session
+			$_SESSION['user_id'] = $user->id;
+			
+			// Log login
+			if (isset($this->plugins->log)) {
+				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'signup');
+			}
+			
+			Application::flash('success', 'You are now logged in to your app!');
+			
+			// Go forth!
+			if (SITE_IDENTIFIER == 'live') {
+				header('Location: '.$this->url_for('items', 'add'));
+			} else {
+				header('Location: '.$this->url_for('items', 'add'));
+			}
+			
+			exit();
+			
+		} else {
+			// Show setup form
+
+			if (! Admin::tables_exist()) {
+				Application::flash('info', 'Welcome to Rat!');
+				$this->loadView('admin/setup');
+			} else {
+				throw new RoutingException($this->uri, "Page not found");
+			}
 			
 		}
 		
