@@ -13,7 +13,51 @@ class AdminController extends Application {
 		$this->loadView('admin/index', NULL, 'admin');
 		
 	}
-
+	
+	function config() {
+		
+		echo '<!--';
+		print_r($this->config);
+		echo '-->';
+		
+		$this->title = 'Admin &raquo; Config';
+		$this->loadView('admin/config', NULL, 'admin');
+		
+	}
+	
+	// Show list of beta signups
+	function signups() {
+		
+		$this->title = 'Admin &raquo; Beta signups';	
+		$this->users = Admin::list_users_beta();
+		$this->loadView('admin/signups', NULL, 'admin');
+		
+	}
+	
+	// Show list of users
+	function users() {
+		
+		$this->title = 'Admin &raquo; Users';
+		$this->users = Admin::list_users();
+		$this->loadView('admin/users', NULL, 'admin');
+		
+	}
+	
+	// Show most recent entries in the log (not named log to avoid conflict with native PHP function)
+	function history() {
+		
+		if (isset($this->plugins->log)) {
+			
+			$this->title = 'Admin &raquo; Log';
+			$this->loadPartial('header');
+			$this->loadPartial('admin_menu');
+			$this->plugins->log->view();
+			$this->loadPartial('footer');
+			
+		}
+		
+	}
+	
 	// Setup your rat installation
 	function setup() {
 		
@@ -58,39 +102,6 @@ class AdminController extends Application {
 			} else {
 				throw new RoutingException($this->uri, "Page not found");
 			}
-			
-		}
-		
-	}
-	
-	// Show list of beta signups
-	function signups() {
-		
-		$this->title = 'Admin &raquo; Beta signups';	
-		$this->users = Admin::list_users_beta();
-		$this->loadView('admin/signups', NULL, 'admin');
-		
-	}
-	
-	// Show list of users
-	function users() {
-		
-		$this->title = 'Admin &raquo; Users';
-		$this->users = Admin::list_users();
-		$this->loadView('admin/users', NULL, 'admin');
-		
-	}
-	
-	// Show most recent entries in the log (not named log to avoid conflict with native PHP function)
-	function history() {
-		
-		if (isset($this->plugins->log)) {
-			
-			$this->title = 'Admin &raquo; Log';
-			$this->loadPartial('header');
-			$this->loadPartial('admin_menu');
-			$this->plugins->log->view();
-			$this->loadPartial('footer');
 			
 		}
 		
