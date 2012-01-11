@@ -63,12 +63,9 @@ class AdminController extends Application {
 		
 		$this->title = 'Setup';
 		
-		if (! Admin::tables_exist() && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
+		if (count(Admin::list_users()) == 0 && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
 			// Do setup
 			
-			// Write config!
-			$this->create_tables();
-
 			$user_id = User::add($_POST['email']);
 			User::signup($user_id, $_POST['username'], $_POST['password'], $this->config->encryption_salt);
 			
@@ -96,7 +93,7 @@ class AdminController extends Application {
 		} else {
 			// Show setup form
 
-			if (! Admin::tables_exist()) {
+			if (count(Admin::list_users()) != 0) {
 				Application::flash('info', 'Welcome to Rat!');
 				$this->loadView('admin/setup');
 			} else {
