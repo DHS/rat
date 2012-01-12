@@ -64,7 +64,10 @@ class AppConfig extends ServerConfig {
 														'past_tense'	=> 'Liked by'
 														)
 							);
-	
+
+  // Locale
+  public $timezone = 'Europe/London';
+
 	// Invites system
 	public $invites = array('enabled' => TRUE);
 	
