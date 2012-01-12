@@ -9,8 +9,8 @@ class InvitesController extends Application {
 		
 		$user = User::get_by_id($_SESSION['user_id']);
 		
-		$this->invites_remaining = $user->invites;
-		$this->invites = $user->invites();
+		$invites_remaining = $user->invites;
+		$invites_sent = $user->invites();
 		
 		if (isset($this->invites_remaining) && $this->invites_remaining == 1) {
 			Application::flash('info', 'You have one invite remaining.');
@@ -20,12 +20,15 @@ class InvitesController extends Application {
 			Application::flash('info', 'You have no remaining invites.');
 		}
 		
+		// old template
 		$this->title = 'Invites';
-
+		$this->invites = $invites_sent;
+		$this->invites_remaining = $invites_remaining;
+		
 		if ($this->json) {
 			$this->render_json($this->invites);
 		} else {
-			$this->loadView('invites/index');
+			$this->loadView('invites/index', array('invites_sent' => $invites_sent, 'invites_remaining' => $invites_remaining));
 		}
 	
 	}
