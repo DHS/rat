@@ -23,7 +23,10 @@ class SearchController extends Application {
 		include 'lib/search.php';
 		$search = new Search;
 		
-		$this->items = $search->do_search($q);
+		$items = $search->do_search($q);
+		
+		// old template
+		$this->items = $items;
 		
 		foreach ($items as $key => $item) {
 			$items[$key]->content = process_content($items[$key]->content);
@@ -35,9 +38,9 @@ class SearchController extends Application {
 		}
 		
 		if ($this->json) {
-			$this->render_json($this->items);
+			$this->render_json($items);
 		} else {
-			$this->loadView('search/index');
+			$this->loadView('search/index', array('items' => $items));
 		}
 		
 	}

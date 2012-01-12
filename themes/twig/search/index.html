@@ -1,0 +1,17 @@
+
+<div class="row">
+  <div class="span6 columns">
+
+    {% include 'partials/search.html' %}
+
+  </div>
+  <div class="span8 columns offset1">
+
+{% for item in items %}
+    {% include 'partials/item.html' %}
+{% endfor %}
+
+{% include 'partials/pagination.html' %}
+
+  </div>
+</div>
