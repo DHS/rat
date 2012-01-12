@@ -1,12 +1,3 @@
-{# Image #}
-{% if app.config.items.uploads.enabled and item.image and item.image != '0' %}
-	{% if not item.title %}<div class="clear">{% endif %}
-	<a href="{{ app.echo_url_for('items', 'show', item.id) }}">
-		<img src="{{ app.config.base_dir ~ app.config.items.uploads.directory ~ '/stream/' ~ item.image }}"
-			 style="margin: 0px 0px 10px 0px;" />
-	</a>
-	{% if not item.title %}</div>{% endif %}
-{% endif %}
 
 {# Avatar #}
 {% if app.plugins.gravatar %}
@@ -27,6 +18,16 @@
 			</strong>
 			{{ item.content|raw }}
 		</p>
+{% endif %}
+
+{# Image #}
+{% if app.config.items.uploads.enabled and item.image and item.image != '0' %}
+	{% if not item.title %}<div class="clear">{% endif %}
+	<a href="{{ app.echo_url_for('items', 'show', item.id) }}">
+		<img src="{{ app.config.base_dir ~ app.config.items.uploads.directory ~ '/stream/' ~ item.image }}"
+			 style="margin: 0px 0px 10px 0px;" />
+	</a>
+	{% if not item.title %}</div>{% endif %}
 {% endif %}
 
 {# Share buttons #}
