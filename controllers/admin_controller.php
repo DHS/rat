@@ -7,39 +7,53 @@ class AdminController extends Application {
 	// Show admin dashboard
 	function index() {
 		
+		$users = Admin::list_users();
+		$users_beta = Admin::list_users_beta();
+		
+		// old templates
 		$this->title = 'Admin &raquo; Dashboard';
-		$this->users = Admin::list_users();
-		$this->users_beta = Admin::list_users_beta();
-		$this->loadView('admin/index', NULL, 'admin');
+		$this->users = $users;
+		$this->users_beta = $users_beta;
+		
+		$this->loadView('admin/index', array('users' => $users, 'users_beta' => $users_beta), 'admin');
 		
 	}
 	
-	function config() {
+	// Show app spec
+	function spec() {
 		
 		echo '<!--';
 		print_r($this->config);
 		echo '-->';
 		
 		$this->title = 'Admin &raquo; Config';
-		$this->loadView('admin/config', NULL, 'admin');
+		$this->loadView('admin/spec', array('config' => $this->config), 'admin');
 		
 	}
 	
 	// Show list of beta signups
 	function signups() {
 		
-		$this->title = 'Admin &raquo; Beta signups';	
-		$this->users = Admin::list_users_beta();
-		$this->loadView('admin/signups', NULL, 'admin');
+		$users = Admin::list_users_beta();
+		
+		// old template
+		$this->title = 'Admin &raquo; Beta signups';
+		$this->users = $users;
+		
+		$this->loadView('admin/signups', array('users' => $users), 'admin');
 		
 	}
 	
 	// Show list of users
 	function users() {
 		
+		$users = Admin::list_users();
+		
+		// old template
 		$this->title = 'Admin &raquo; Users';
-		$this->users = Admin::list_users();
-		$this->loadView('admin/users', NULL, 'admin');
+		$this->users = $users;
+		
+		$this->loadView('admin/users', array('users' => $users), 'admin');
 		
 	}
 	

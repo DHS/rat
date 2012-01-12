@@ -1,5 +1,5 @@
 
-    <form action="<?php echo $this->url_for('admin', 'config'); ?>" method="post">
+    <form action="<?php echo $this->url_for('admin', 'spec'); ?>" method="post">
 	  <fieldset>
         <legend>Change your config</legend>
         <div class="clearfix">

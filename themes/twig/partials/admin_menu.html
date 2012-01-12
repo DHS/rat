@@ -1,0 +1,7 @@
+<ul class="tabs">
+  <li{% if app.uri.action == 'index' %} class="active"{% endif %}>{{ app.link_to('Dashboard', 'admin') }}</li>
+  <li{% if app.uri.action == 'spec' %} class="active"{% endif %}>{{ app.link_to('Spec', 'admin', 'spec') }}</li>
+  <li{% if app.uri.action == 'signups' %} class="active"{% endif %}>{{ app.link_to('Signups', 'admin', 'signups') }}</li>
+  <li{% if app.uri.action == 'users' %} class="active"{% endif %}>{{ app.link_to('Users', 'admin', 'users') }}</li>
+  {% if app.plugins.log %}<li{% if app.uri.action == 'history' %} class="active"{% endif %}>{{ app.link_to('Log', 'admin', 'history') }}</li>{% endif %}
+</ul>
