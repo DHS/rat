@@ -1,9 +1,8 @@
-
-<?php if (User::check_password_reset_code($code) != FALSE) { ?>
+{% if valid_code %}
 
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="<?php echo $this->url_for('users', 'reset', $this->code); ?>" method="post">
+    <form action="{{ app.url_for('users', 'reset', code) }}" method="post">
       <fieldset>
         <legend>Set new password</legend>
         <div class="clearfix">
@@ -26,17 +25,17 @@
   </div>
 </div>
 
-<?php } else { ?>
+{% else %}
 
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="<?php echo $this->url_for('users', 'reset'); ?>" method="post">
+    <form action="{{ app.url_for('users', 'reset') }}" method="post">
       <fieldset>
         <legend>Reset password</legend>
         <div class="clearfix">
           <label for="email">Email</label>
           <div class="input">
-            <input class="medium" name="email" size="30" type="text" value="<?php if (isset($this->uri['params']['email'])) { echo $this->uri['params']['email']; } ?>" />
+            <input class="medium" name="email" size="30" type="text" value="{{ app.uri.params.email }}" />
           </div>
         </div> <!-- /clearfix -->
         <div class="actions">
@@ -47,4 +46,4 @@
   </div>
 </div>
 
-<? } ?>
+{% endif %}

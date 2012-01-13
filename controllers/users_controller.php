@@ -176,9 +176,14 @@ class UsersController extends Application {
 				} else {
 					// Show error message
 					
-					if (User::check_password_reset_code($code) != FALSE) {
+					if (User::check_password_reset_code($code) == TRUE) {
+						
+						$valid_code = TRUE;
+						
 						Application::flash('error', $error);
-						$this->loadView('users/reset');
+						
+						$this->loadView('users/reset', array('valid_code' => $valid_code, 'code' => $code));
+						
 					} else {
 						$this->loadView();
 					}
@@ -191,9 +196,13 @@ class UsersController extends Application {
 				if (User::check_password_reset_code($code) == TRUE) {
 					// Invite code valid
 					
+					$valid_code = TRUE;
+					
+					// old template
 					$this->code = $code;
-					$this->loadView('users/reset');
-
+					
+					$this->loadView('users/reset', array('valid_code' => $valid_code, 'code' => $code));
+					
 				} else {
 					
 					$this->title = 'Page not found';
@@ -235,8 +244,8 @@ class UsersController extends Application {
 				Application::flash('info', 'Check your email for instructions about how to reset your password!');
 				
 			}
-				
-			$this->loadView('users/reset');
+			
+			$this->loadView('users/reset', array('valid_code' => $valid_code, 'code' => $code));
 			
 		} else {
 			
