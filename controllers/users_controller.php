@@ -2,7 +2,7 @@
 
 class UsersController extends Application {
 
-	protected $requireLoggedOut = array('add');
+	protected $requireLoggedOut = array('add', 'reset');
 	protected $requireLoggedIn = array('update', 'confirm');
 	
 	// Add a user / signup
@@ -118,14 +118,6 @@ class UsersController extends Application {
 	// Password reset
 	function reset($code) {
 		
-		if (isset($_SESSION['user_id'])) {
-			
-			$this->title = 'Page not found';
-			$this->loadView();
-			exit;
-			
-		}
-		
 		if (isset($code)) {
 			// Process reset
 			
@@ -213,7 +205,7 @@ class UsersController extends Application {
 				
 			}
 			
-		} elseif (!isset($_SESSION['user_id'])) {
+		} else {
 			// No code in URL so show new reset form
 			
 			if ($_POST['email'] != '') {
@@ -246,12 +238,6 @@ class UsersController extends Application {
 			}
 			
 			$this->loadView('users/reset', array('valid_code' => $valid_code, 'code' => $code));
-			
-		} else {
-			
-			$this->title = 'Page not found';
-			$this->loadView();
-			exit;
 			
 		}
 		
