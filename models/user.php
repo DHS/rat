@@ -430,7 +430,7 @@ class User {
 		
 		$friend_user_id = sanitize_input($friend_user_id);
 		
-		$sql = "SELECT COUNT(id) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = $friend_user_id";
+		$sql = "SELECT COUNT(id) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = $friend_user_id AND `friend_user_id` = {$this->id}";
 		$query = mysql_query($sql);
 		$result = mysql_result($query, 0);
 		

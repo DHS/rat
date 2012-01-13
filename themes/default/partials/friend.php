@@ -12,7 +12,7 @@
 
   <?php } else { ?>
   
-    <?php if ($this->viewer->friend_check($this->user->id) == TRUE) { ?>
+    <?php if ($this->user->friend_check($_SESSION['user_id']) == TRUE) { ?>
 
       <a href="#" class="btn" onclick="friend_remove('<?php echo BASE_DIR; ?>', <?php echo $this->user->id; ?>); return false;">
       <?php if ($this->config->friends['asymmetric'] == TRUE) { echo 'Unfollow'; } else { echo 'Remove friend'; } ?>

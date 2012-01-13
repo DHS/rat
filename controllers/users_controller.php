@@ -74,6 +74,10 @@ class UsersController extends Application {
 			$items[$key]->content = process_content($items[$key]->content);
 		}
 		
+		if ($this->config->friends['enabled'] == TRUE) {
+			$friends = $user->friend_check($_SESSION['user_id']);
+		}
+		
 		$this->title = $this->user->username;
 		
 		// old template
@@ -83,7 +87,7 @@ class UsersController extends Application {
 		if ($this->json) {
 			$this->render_json($this->user);
 		} else {
-			$this->loadView('users/show', array('user' => $user, 'items' => $items));
+			$this->loadView('users/show', array('user' => $user, 'items' => $items, 'friends' => $friends));
 		}
 	
 	}

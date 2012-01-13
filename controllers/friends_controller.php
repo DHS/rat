@@ -32,8 +32,16 @@ class FriendsController extends Application {
 			
 		}
 		
+		$session['user_id'] = $_SESSION['user_id'];
+		$friends = TRUE;
+		
 		$this->user = $friend;
-		$this->loadPartial('friend');
+		
+		if ($this->config->theme == 'twig') {
+			echo $this->twig->render("partials/friend.html", array('session' => $session, 'user' => $friend, 'friends' => $friends));
+		} else {
+			$this->loadPartial('friend');
+		}
 		
 	}
 	
@@ -43,7 +51,7 @@ class FriendsController extends Application {
 		$friend = User::get_by_id($friend_id);
 		
 		// Check that frienship is legit
-		if ($user->friend_check($friend_id) == TRUE) {
+		if ($friend->friend_check($_SESSION['user_id']) == TRUE) {
 			
 			// Remove friendship
 			$user->friend_remove($friend_id);
@@ -55,8 +63,16 @@ class FriendsController extends Application {
 			
 		}
 		
+		$session['user_id'] = $_SESSION['user_id'];
+		$friends = FALSE;
+		
 		$this->user = $friend;
-		$this->loadPartial('friend');
+		
+		if ($this->config->theme == 'twig') {
+			echo $this->twig->render("partials/friend.html", array('session' => $session, 'user' => $friend, 'friends' => $friends));
+		} else {
+			$this->loadPartial('friend');
+		}
 		
 	}
 	

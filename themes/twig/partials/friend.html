@@ -1,0 +1,32 @@
+
+{% if user.id != session.id %}
+
+  <span id="friends_{{ user.id }}">
+
+  {% if not session.user_id %}
+
+	<a href="{{ app.url_for('sessions', 'add') }}/?redirect_to=/{{ app.url_for('users', 'show', user.id) }}" class="btn">
+	{% if app.config.friends.asymmetric %}Follow{% else %}Add friend{% endif %}
+	</a>
+
+  {% else %}
+    
+    {% if friends %}
+
+      <a href="#" class="btn" onclick="friend_remove('{{ app.config.base_dir }}', {{ user.id }}); return false;">
+      {% if app.config.friends.asymmetric %}Unfollow{% else %}Remove friend{% endif %}
+      </a>
+
+    {% else %}
+
+      <a href="#" class="btn" onclick="friend_add('{{ app.config.base_dir }}', {{ user.id }}); return false;">
+      {% if app.config.friends.asymmetric %}Follow{% else %}Add friend{% endif %}
+      </a>
+
+    {% endif %}
+
+  {% endif %}
+  
+  </span>
+
+{% endif %}

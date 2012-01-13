@@ -16,7 +16,7 @@
 
 {# Friend buton #}
 {% if app.config.friends.enabled %}
-{# include 'partials/friend.html #}
+{% include 'partials/friend.html' %}
 {% endif %}
 
 {% if user.full_name or user.bio or user.url %}
