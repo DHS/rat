@@ -103,15 +103,19 @@ class UsersController extends Application {
 			
 			if (isset($_POST['full_name']) || isset($_POST['bio']) || isset($_POST['url'])) {
 				$this->update_profile();
+				$user->full_name = $_POST['full_name'];
+				$user->bio = $_POST['bio'];
+				$user->url = $_POST['url'];
 			}
 			
 		}
 		
+		// old template
 		$this->title = 'Settings';
 		$this->page = $page;
-		$this->user = User::get_by_id($_SESSION['user_id']);
+		$this->user = $user;
 		
-		$this->loadView('users/update');
+		$this->loadView('users/update', array('page' => $page, 'user' => $user));
 		
 	}
 	
