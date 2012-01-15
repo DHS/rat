@@ -52,7 +52,9 @@ class FriendsController extends Application {
 			echo $this->twig->render("partials/friend.html", $params);
 
 		} else {
+			
 			$this->loadPartial('friend');
+			
 		}
 		
 	}
@@ -95,7 +97,9 @@ class FriendsController extends Application {
 			echo $this->twig->render("partials/friend.html", $params);
 			
 		} else {
+			
 			$this->loadPartial('friend');
+			
 		}
 		
 	}
