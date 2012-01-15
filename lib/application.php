@@ -234,9 +234,9 @@ class Application {
 		}
 		
 	}
-
+	
 	private function loadTwig() {
-
+		
 		if ($this->config->theme == 'twig') {
 			
 			$twig_config['cache'] = 'static/template_cache';
@@ -244,17 +244,17 @@ class Application {
 			// If we're in dev mode then force template compiling
 			if (SITE_IDENTIFIER == 'dev') {
 				$twig_config['auto_reload'] = TRUE;
-			}	
-				
+			}
+			
 			require_once 'lib/twig/Autoloader.php';
 			Twig_Autoloader::register();
 			$loader = new Twig_Loader_Filesystem('themes/'.$this->config->theme);
 			$this->twig = new Twig_Environment($loader, $twig_config);
-				
+			
 		}
-
+		
 	}
-
+	
 	public function writeConfig($file, $settings = array()) {
 		
 		$twig = new Twig_Environment(new Twig_Loader_String());
