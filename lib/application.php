@@ -334,6 +334,7 @@ class Application {
 		
 		if ($this->config->theme == 'twig') {
 			
+			// Note: the following is hardcoded in ajax methods
 			$params['view'] = $view;
 			$params['app'] = $this;
 			$params['session'] = $_SESSION;
