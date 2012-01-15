@@ -38,7 +38,7 @@ class FriendsController extends Application {
 		$this->user = $friend;
 		
 		if ($this->config->theme == 'twig') {
-			echo $this->twig->render("partials/friend.html", array('session' => $session, 'user' => $friend, 'friends' => $friends));
+			echo $this->twig->render("partials/friend.html", array('app' => $this, 'session' => $session, 'user' => $friend, 'friends' => $friends));
 		} else {
 			$this->loadPartial('friend');
 		}
@@ -69,7 +69,7 @@ class FriendsController extends Application {
 		$this->user = $friend;
 		
 		if ($this->config->theme == 'twig') {
-			echo $this->twig->render("partials/friend.html", array('session' => $session, 'user' => $friend, 'friends' => $friends));
+			echo $this->twig->render("partials/friend.html", array('app' => $this, 'session' => $session, 'user' => $friend, 'friends' => $friends));
 		} else {
 			$this->loadPartial('friend');
 		}
