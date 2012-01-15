@@ -68,9 +68,10 @@ class CommentsController extends Application {
 			echo $this->twig->render("partials/comments.html", $params);
 			
 		} else {
+			
 			$this->loadPartial('comments');
+			
 		}
-		
 		
 	}
 	
