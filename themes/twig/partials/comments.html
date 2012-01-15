@@ -5,7 +5,7 @@
 	<p class="meta">
 	"{{ comment.content }}" - {{ app.link_to(comment.user.username, 'users', 'show', comment.user.id) }}
 	{% if comment.user.id == session.user_id %}
-		&middot; <span class="small"><a href="#" onclick="comment_remove('{{ app.config.base_url }}', {{ comment.id }}, {{ item.id }}); return false;">Delete</a></span>
+		&middot; <span class="small"><a href="#" onclick="comment_remove('{{ app.config.base_dir }}', {{ comment.id }}, {{ item.id }}); return false;">Delete</a></span>
 	{% endif %}
 	</p>
 	
