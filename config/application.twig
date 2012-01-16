@@ -65,8 +65,8 @@ class AppConfig extends ServerConfig {
 														)
 							);
 
-  // Locale
-  public $timezone = 'Europe/London';
+	// Locale
+	public $timezone = 'Europe/London';
 
 	// Invites system
 	public $invites = array('enabled' => TRUE);
