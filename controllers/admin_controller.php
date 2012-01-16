@@ -22,12 +22,17 @@ class AdminController extends Application {
 	// Show app spec
 	function spec() {
 		
-		echo '<!--';
-		print_r($this->config);
-		echo '-->';
+		$conf = get_object_vars($this->config);
+		
+		if ($_POST) {
+			foreach ($_POST as $key => $value) {
+				$conf[$key] = $value;
+			}
+			$this->writeConfig('application', $conf);
+		}
 		
 		$this->title = 'Admin &raquo; Config';
-		$this->loadView('admin/spec', array('config' => $this->config), 'admin');
+		$this->loadView('admin/spec', NULL, 'admin');
 		
 	}
 	

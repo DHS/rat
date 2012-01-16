@@ -257,14 +257,14 @@ class Application {
 	
 	public function writeConfig($file, $settings = array()) {
 		
-		$twig = new Twig_Environment(new Twig_Loader_String());
-
-		$config_file = $twig->render(file_get_contents("${file}.twig"), $settings);
+		$twig = new Twig_Environment(new Twig_Loader_String(), array('auto_reload' => TRUE));
 		
-		$handle = fopen("{$file}.php", 'w');
+		$config_file = $twig->render(file_get_contents("config/$file.twig"), array('app' => array('config' => $settings)));
+		
+		$handle = fopen("config/$file.php", 'w');
 		fwrite($handle, $config_file);
 		fclose($handle);
-
+		
 	}
 	
 	private function loadModels() {

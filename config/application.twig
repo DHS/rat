@@ -18,70 +18,73 @@ class AppConfig extends ServerConfig {
 	*/
 	
 	// Basic app variables
-	public $name							= '{{ app_name }}';
-	public $tagline							= '{{ app_tagline }}';
+	public $name							= '{{ app.config.name }}';
+	public $tagline							= 'Ratter is an app to demonstrate the functionality of <a href="http://github.com/DHS/rat">Rat</a>';
 	public $default_controller				= 'items';
 	
 	// Beta - users can't signup, can only enter their email addresses
-	public $beta							= {{ app_beta }};
+	public $beta							= FALSE;
 	
 	// Private app - requires login to view pages (except public_pages), no share buttons
-	public $private							= {{ app_private }};
+	public $private							= TRUE;
 	
 	// Items
 	// Notes about uploads: max-size is in bytes (default: 5MB), directory should contain three subdirectories: originals, thumbnails, stream
-	public $items = array(	'name'			=> '{{ item_name }}',
+	public $items = array(	'name'			=> 'post',
 							
-							'name_plural'	=> '{{ item_plural }}',
+							'name_plural'	=> 'posts',
 							
-							'titles'		=> array(	'enabled'		=> {{ item_titles_enabled }},
-														'name'			=> '{{ item_titles_name }}',
-														'name_plural'	=> '{{ item_titles_name_plural }}'
+							'titles'		=> array(	'enabled'		=> TRUE,
+														'name'			=> 'Title',
+														'name_plural'	=> 'Titles'
 														),
 														
-							'content'		=> array(	'enabled'		=> {{ item_content_enabled }},
-														'name'			=> '{{ item_content_name }}',
-														'name_plural'	=> '{{ item_content_name_plural }}'
+							'content'		=> array(	'enabled'		=> TRUE,
+														'name'			=> 'Content',
+														'name_plural'	=> 'Contents'
 														),
 
 							// Remember to update the permissions for your upload dir! e.g. chmod -R 777 uploads
-							'uploads'		=> array(	'enabled'		=> {{ item_uploads_enabled }},
-														'name'			=> '{{ item_uploads_name }}',
+							'uploads'		=> array(	'enabled'		=> TRUE,
+														'name'			=> 'Image',
 														'directory'		=> 'uploads',
 														'max-size'		=> '5242880',
 														'mime-types'	=> array('image/jpeg','image/png', 'image/gif', 'image/pjpeg')
 														),
 														
-							'comments'		=> array(	'enabled'		=> {{ item_comments_enabled }},
-														'name'			=> '{{ item_comments_name }}',
-														'name_plural'	=> '{{ item_comments_name_plural }}'
+							'comments'		=> array(	'enabled'		=> TRUE,
+														'name'			=> 'Comment',
+														'name_plural'	=> 'Comments'
 														),
 														
-							'likes'			=> array(	'enabled'		=> '{{ item_likes_enabled }},
-														'name'			=> '{{ item_likes_name }}',
-														'name_plural'	=> '{{ item_likes_name_plural }}',
-														'opposite_name'	=> '{{ item_likes_opposite }}',
-														'past_tense'	=> '{{ item_likes_past_tense }}'
+							'likes'			=> array(	'enabled'		=> TRUE,
+														'name'			=> 'Like',
+														'name_plural'	=> 'Likes',
+														'opposite_name'	=> 'Unlike',
+														'past_tense'	=> 'Liked by'
 														)
 							);
-	
+
+  // Locale
+  public $timezone = 'Europe/London';
+
 	// Invites system
-	public $invites = array('enabled' => {{ invites_enabled }});
+	public $invites = array('enabled' => TRUE);
 	
 	// Friends - still testing, works with asymmetric set to true... just! (Shows 'Follow' link & generates homepage feed)
-	public $friends = array('enabled' => {{ friends_enabled }}, 'asymmetric' => {{ friends_asymmetric }});
+	public $friends = array('enabled' => FALSE, 'asymmetric' => FALSE);
 	
 	// Admin users - array of user IDs who have access to admin area
 	public $admin_users						= array(1);
 	
 	// Theme
-	public $theme = '{{ theme }}';
+	public $theme = 'twig';
 	
 	// Plugins
-	public $plugins = array(	'log'		=> {{ plugins_log_enabled }},
-								'gravatar'	=> {{ plugins_gravatar_enabled }},
-								'points'	=> {{ plugins_points_enabled }},
-								'analytics'	=> {{ plugins_analytics_enabled }}
+	public $plugins = array(	'log'		=> TRUE,
+								'gravatar'	=> TRUE,
+								'points'	=> FALSE,
+								'analytics'	=> FALSE
 							);
 	
 }
