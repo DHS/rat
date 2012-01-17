@@ -19,11 +19,11 @@ class AppConfig extends ServerConfig {
 	
 	// Basic app variables
 	public $name							= '{{ app.config.name }}';
-	public $tagline							= 'Ratter is an app to demonstrate the functionality of <a href="http://github.com/DHS/rat">Rat</a>';
+	public $tagline							= '{{ app.config.tagline }}';
 	public $default_controller				= 'items';
 	
 	// Beta - users can't signup, can only enter their email addresses
-	public $beta							= FALSE;
+	public $beta							= {{ app.config.beta }};
 	
 	// Private app - requires login to view pages (except public_pages), no share buttons
 	public $private							= TRUE;

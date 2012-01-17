@@ -28,7 +28,13 @@ class AdminController extends Application {
 			foreach ($_POST as $key => $value) {
 				$conf[$key] = $value;
 			}
+			if ($conf['beta'] == 'on') {
+				$conf['beta'] = 'TRUE';
+			} else {
+				$conf['beta'] = 'FALSE';
+			}
 			$this->writeConfig('application', $conf);
+			Application::flash('success', 'Config updated. <a href="'.$this->url_for('admin', 'spec').'">Click here</a> to reload.');
 		}
 		
 		$this->title = 'Admin &raquo; Config';
