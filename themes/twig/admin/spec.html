@@ -1,7 +1,7 @@
 
 <form action="{{ app.url_for('admin', 'spec') }}" method="post">
   <fieldset>
-    <legend>Change your config</legend>
+    <legend>Core</legend>
     <div class="clearfix">
       <label for="name">Name</label>
       <div class="input">
@@ -30,6 +30,15 @@
         </label>
         <span class="help-block">Private apps require login to view pages (except public_pages), no share buttons</span>
         </li></ul>
+      </div>
+    </div> <!-- /clearfix -->
+  </fieldset>
+  <fieldset>
+    <legend>Items</legend>
+    <div class="clearfix">
+      <label for="items[name]">Name</label>
+      <div class="input">
+        <input class="medium" name="items[name]" id="items[name]" size="30" type="text" value="{{ app.config.items.name }}" />
       </div>
     </div> <!-- /clearfix -->
 	<div class="actions">

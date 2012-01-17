@@ -30,7 +30,7 @@ class AppConfig extends ServerConfig {
 	
 	// Items
 	// Notes about uploads: max-size is in bytes (default: 5MB), directory should contain three subdirectories: originals, thumbnails, stream
-	public $items = array(	'name'			=> 'post',
+	public $items = array(	'name'			=> '{{ app.config.items.name }}',
 							
 							'name_plural'	=> 'posts',
 							
