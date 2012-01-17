@@ -121,11 +121,7 @@ class AdminController extends Application {
 			Application::flash('success', 'You are now logged in to your app!');
 			
 			// Go forth!
-			if (SITE_IDENTIFIER == 'live') {
-				header('Location: '.$this->url_for('items', 'add'));
-			} else {
-				header('Location: '.$this->url_for('items', 'add'));
-			}
+			header('Location: '.$this->url_for('items', 'add'));
 			
 			exit();
 			

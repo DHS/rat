@@ -122,11 +122,7 @@ class ItemsController extends Application {
 				Application::flash('success', ucfirst($this->config->items['name']).' added!');
 				
 				// Go forth!
-				if (SITE_IDENTIFIER == 'live') {
-					header('Location: '.$this->url_for('users', 'show', $_SESSION['user_id']));
-				} else {
-					header('Location: '.$this->url_for('users', 'show', $_SESSION['user_id']));
-				}
+				header('Location: '.$this->url_for('users', 'show', $_SESSION['user_id']));
 				
 				exit();
 				
