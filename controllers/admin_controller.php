@@ -25,16 +25,30 @@ class AdminController extends Application {
 		$conf = get_object_vars($this->config);
 		
 		if ($_POST) {
+			
+			// Pull post vars into $conf array
+			
 			foreach ($_POST as $key => $value) {
 				$conf[$key] = $value;
 			}
-			if ($conf['beta'] == 'on') {
+			
+			// Overwrite checkbox fields
+			
+			if ($_POST['beta'] == 'on') {
 				$conf['beta'] = 'TRUE';
 			} else {
 				$conf['beta'] = 'FALSE';
 			}
+			
+			if ($_POST['private'] == 'on') {
+				$conf['private'] = 'TRUE';
+			} else {
+				$conf['private'] = 'FALSE';
+			}
+			
 			$this->writeConfig('application', $conf);
-			Application::flash('success', 'Config updated. <a href="'.$this->url_for('admin', 'spec').'">Click here</a> to reload.');
+			Application::flash('success', 'Success! <a href="'.$this->url_for('admin', 'spec').'">Click here</a> to reload with your new config!');
+			
 		}
 		
 		$this->title = 'Admin &raquo; Config';

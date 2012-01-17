@@ -26,7 +26,7 @@ class AppConfig extends ServerConfig {
 	public $beta							= {{ app.config.beta }};
 	
 	// Private app - requires login to view pages (except public_pages), no share buttons
-	public $private							= TRUE;
+	public $private							= {{ app.config.private }};
 	
 	// Items
 	// Notes about uploads: max-size is in bytes (default: 5MB), directory should contain three subdirectories: originals, thumbnails, stream

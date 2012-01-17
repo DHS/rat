@@ -22,6 +22,13 @@
           <span>Beta mode</span>
         </label>
         <span class="help-block">Full signup is disabled in beta mode but users can still enter their emails</span>
+        </li>
+        <li>
+        <label>
+          <input type="checkbox" name="private" id="private" {% if app.config.private %}checked="checked"{% endif %} />
+          <span>Private mode</span>
+        </label>
+        <span class="help-block">Private apps require login to view pages (except public_pages), no share buttons</span>
         </li></ul>
       </div>
     </div> <!-- /clearfix -->
