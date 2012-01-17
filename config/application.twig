@@ -34,34 +34,34 @@ class AppConfig extends ServerConfig {
 							
 							'name_plural'	=> '{{ app.config.items.name_plural }}',
 							
-							'titles'		=> array(	'enabled'		=> TRUE,
-														'name'			=> 'Title',
-														'name_plural'	=> 'Titles'
+							'titles'		=> array(	'enabled'		=> {{ app.config.items.titles.enabled }},
+														'name'			=> '{{ app.config.items.titles.name }}',
+														'name_plural'	=> '{{ app.config.items.titles.name_plural }}'
 														),
 														
-							'content'		=> array(	'enabled'		=> TRUE,
-														'name'			=> 'Content',
-														'name_plural'	=> 'Contents'
+							'content'		=> array(	'enabled'		=> {{ app.config.items.content.enabled }},
+														'name'			=> '{{ app.config.items.content.name }}',
+														'name_plural'	=> '{{ app.config.items.content.name_plural }}'
 														),
 
 							// Remember to update the permissions for your upload dir! e.g. chmod -R 777 uploads
-							'uploads'		=> array(	'enabled'		=> TRUE,
-														'name'			=> 'Image',
+							'uploads'		=> array(	'enabled'		=> {{ app.config.items.uploads.enabled }},
+														'name'			=> '{{ app.config.items.uploads.name }}',
 														'directory'		=> 'uploads',
 														'max-size'		=> '5242880',
 														'mime-types'	=> array('image/jpeg','image/png', 'image/gif', 'image/pjpeg')
 														),
 														
-							'comments'		=> array(	'enabled'		=> TRUE,
-														'name'			=> 'Comment',
-														'name_plural'	=> 'Comments'
+							'comments'		=> array(	'enabled'		=> {{ app.config.items.comments.enabled }},
+														'name'			=> '{{ app.config.items.comments.name }}',
+														'name_plural'	=> '{{ app.config.items.comments.name_plural }}'
 														),
 														
-							'likes'			=> array(	'enabled'		=> TRUE,
-														'name'			=> 'Like',
-														'name_plural'	=> 'Likes',
-														'opposite_name'	=> 'Unlike',
-														'past_tense'	=> 'Liked by'
+							'likes'			=> array(	'enabled'		=> {{ app.config.items.likes.enabled }},
+														'name'			=> '{{ app.config.items.likes.name }}',
+														'name_plural'	=> '{{ app.config.items.likes.name_plural }}',
+														'opposite_name'	=> '{{ app.config.items.likes.opposite_name }}',
+														'past_tense'	=> '{{ app.config.items.likes.past_tense }}'
 														)
 							);
 

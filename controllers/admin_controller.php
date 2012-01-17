@@ -46,6 +46,36 @@ class AdminController extends Application {
 				$conf['private'] = 'FALSE';
 			}
 			
+			if ($_POST['items']['titles']['enabled'] == 'on') {
+				$conf['items']['titles']['enabled'] = 'TRUE';
+			} else {
+				$conf['items']['titles']['enabled'] = 'FALSE';
+			}
+			
+			if ($_POST['items']['content']['enabled'] == 'on') {
+				$conf['items']['content']['enabled'] = 'TRUE';
+			} else {
+				$conf['items']['content']['enabled'] = 'FALSE';
+			}
+			
+			if ($_POST['items']['uploads']['enabled'] == 'on') {
+				$conf['items']['uploads']['enabled'] = 'TRUE';
+			} else {
+				$conf['items']['uploads']['enabled'] = 'FALSE';
+			}
+			
+			if ($_POST['items']['comments']['enabled'] == 'on') {
+				$conf['items']['comments']['enabled'] = 'TRUE';
+			} else {
+				$conf['items']['comments']['enabled'] = 'FALSE';
+			}
+			
+			if ($_POST['items']['likes']['enabled'] == 'on') {
+				$conf['items']['likes']['enabled'] = 'TRUE';
+			} else {
+				$conf['items']['likes']['enabled'] = 'FALSE';
+			}
+			
 			$this->writeConfig('application', $conf);
 			Application::flash('success', 'Success! <a href="'.$this->url_for('admin', 'spec').'">Click here</a> to reload with your new config!');
 			
