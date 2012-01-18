@@ -152,7 +152,7 @@ class Application {
         $request = preg_split("/\?/", $request);
         $request = $request[0];
         $format = preg_split("/\./", $request);
-        $format = $format[0];
+        $format = $format[1];
 
         $routeFound = FALSE;
         
