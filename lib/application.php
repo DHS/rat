@@ -149,9 +149,18 @@ class Application {
         // Get request from server and remove BASE_DIR
         $request = substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10));
 
+        // Remove everything after '?'
         $request = preg_split("/\?/", $request);
         $request = $request[0];
+
+        // Remove trailing slash if present
+        if (substr($request, -1) == '/') {
+            $request = substr($request, 0, -1);
+        }
+
+        // Split at the '.' to obtain the request format
         $format = preg_split("/\./", $request);
+        $request = $format[0];
         $format = $format[1];
 
         $routeFound = FALSE;
