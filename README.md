@@ -68,21 +68,20 @@ Rat URLs will look like this: example.com/users/show/1. This URL calls the 'show
 
 The typical flow through the app for a given request is as follows:
 
-1. The server calls .htaccess
-2. .htaccess calls index.php
-3. Then initializes lib/application.php which does the following:
-4. Initialise config
-5. Parse URL
-6. Initialise appropriate controller
-7. Initialise models
-8. Initialie plugins
-9. Call the appropriate controller action
-10. Controller actions first call the appropriate models
-11. Then handle any application logic
-12. Then load the appropriate view
-13. Views can load re-usable fragments called partials
-14. Views are loaded within layout files which handle common headers, footers, menus
-15. A page is born
+1. The server (using .htaccess) routes all requests to index.php
+2. index.php initializes lib/application.php which does the following:
+3. Initialise config
+4. Parse URL
+5. Initialise appropriate controller
+6. Initialise models
+7. Initialise plugins
+8. Call the appropriate controller action
+9. Controller actions first call the appropriate models
+10. Then handle any application logic
+11. Then load the appropriate view
+12. Views can load re-usable fragments called partials
+13. Views are loaded within layout files which handle common headers, footers, menus
+14. A page is born
 
 Theming Rat
 -----------
