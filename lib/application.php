@@ -148,13 +148,12 @@ class Application {
 		
 		// Get request from server and remove BASE_DIR
 		$request = substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10));
-		
-		// Split at '.' and before '?' to obtain request format
-		$request = preg_split("/\./", $request);
-		$request = $request[0];
-		$format = preg_split("/\?/", $request[1]);
+
+        $request = preg_split("/\?/", $request);
+        $request = $request[0];
+		$format = preg_split("/\./", $request);
 		$format = $format[0];
-		
+
 		$routeFound = FALSE;
 		
 		foreach ($routes->aliases as $k => $v) {

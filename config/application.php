@@ -78,7 +78,7 @@ class AppConfig extends ServerConfig {
 	public $admin_users						= array(1);
 	
 	// Theme
-	public $theme = 'twig';
+	public $theme = 'default';
 	
 	// Plugins
 	public $plugins = array(	'log'		=> TRUE,
