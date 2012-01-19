@@ -58,7 +58,7 @@ class Item {
 			$item->likes = $item->likes();
 			
 		}
-
+		
 		return $item;
 
 	}
