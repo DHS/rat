@@ -72,6 +72,9 @@ class UsersController extends Application {
 		
 		foreach ($items as $item) {
 			$item->content = process_content($item->content);
+			foreach ($item->comments as $comment) {
+				$comment->content = process_content($comment->content);
+			}
 		}
 		
 		if ($this->config->friends['enabled'] == TRUE) {

@@ -30,6 +30,9 @@ class SearchController extends Application {
 		
 		foreach ($items as $item) {
 			$items->content = process_content($item->content);
+			foreach ($item->comments as $comment) {
+				$comment->content = process_content($comment->content);
+			}
 		}
 		
 		if (isset($this->plugins->log)) {
