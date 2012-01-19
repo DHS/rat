@@ -382,7 +382,8 @@ class Application {
         if (!empty($id)) {
             $uri_array['id'] = $id;
         }
-        
+
+        // Begin searching for custom routes to shorten url
         require_once 'config/routes.php';
         $routes = new Routes();
 
@@ -401,23 +402,27 @@ class Application {
         unset($needle['id']);
 
         $custom_routes = array_keys($routes->aliases);
+        // Format of selected route
         $route_format = $custom_routes[array_search($needle, $haystack)];
 
-        $route_format = str_replace("*", $uri_array['id'], $route_format);
+        // Replace each successive occurrence of '*' in route_format with the correct value
+        $route = $route_format;
+        for ($i = 1; $i <= substr_count($route_format, "*"); $i++) {
+            $route = preg_replace('/\*/', $uri_array[array_search("$$i", $routes->aliases[$route_format])], $route, 1);
+        }
 
-        // Render format
+        // End searching for custom routes
 
-        if ($route = array_search($uri_array, $routes->aliases)) {
-            
+        if (array_search($needle, $haystack) !== FALSE) {
             // Routes all preceded by / so snip it as base_dir includes trailing /
             if (substr($route, 0, 1) == '/') {
                 $route = substr($route, 1);
             }
-            
+
             return BASE_DIR . $route;
             
         } else {
-            
+        
             $url = BASE_DIR . $controller;
             
             if (!empty($action)) {
