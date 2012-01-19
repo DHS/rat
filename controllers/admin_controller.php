@@ -178,7 +178,7 @@ class AdminController extends Application {
 			Application::flash('success', 'You are now logged in to your app!');
 			
 			// Go forth!
-			header('Location: '.$this->url_for('items', 'add'));
+			header('Location: '.$this->url_for('admin', 'spec'));
 			
 			exit();
 			
