@@ -32,13 +32,27 @@ class LikesController extends Application {
 	
 	private function show($item_id) {
 		
-		$this->item = Item::get_by_id($item_id);
+		$item = Item::get_by_id($item_id);
 		$item->content = process_content($item->content);
-		foreach ($item->comments as $comment) {
-			$comment->content = process_content($comment->content);
-		}
 		
-		$this->loadPartial('likes');
+		if ($this->config->theme == 'twig') {
+			
+			// Copying the work of loadView
+			$params = array(	'app'		=> $this,
+								'session'	=> $_SESSION
+							);
+			
+			$params['item'] = $item;
+        	
+			echo $this->twig->render("partials/likes.html", $params);
+			
+		} else {
+			
+			// old template
+			$this->item = $item;
+			$this->loadPartial('likes');
+			
+		}
 		
 	}
 	
