@@ -68,7 +68,7 @@ class Search {
 			$items[] = $item;
 			
 		}
-        
+		
 		if (count($items) > 1) {
 			uasort($items, 'search_sort_results');
 		}

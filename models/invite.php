@@ -28,7 +28,7 @@ class Invite {
 		$config = new AppConfig;
 		
 		$id = sanitize_input($id);
-        
+		
 		$sql = "SELECT `id`, `user_id`, `email`, `code`, `result`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `id` = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
@@ -49,7 +49,7 @@ class Invite {
 			$invite->user = User::get_by_id($result['user_id']);
 			
 		}
-        
+		
 		return $invite;
 		
 	}

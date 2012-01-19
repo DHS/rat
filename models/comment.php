@@ -26,7 +26,7 @@ class Comment {
 		$config = new AppConfig;
 		
 		$id = sanitize_input($id);
-        
+		
 		$sql = "SELECT `id`, `user_id`, `item_id`, `content`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `id` = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);

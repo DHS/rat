@@ -604,19 +604,19 @@ class User {
 		$config = new AppConfig;
 		
 		$code = sanitize_input($code);
-        
+		
 		$sql = "SELECT `user_id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users_password_reset` WHERE `reset_code` = $code AND `date` > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY `date` DESC";
 		$query = mysql_query($sql);
 		$count = mysql_num_rows($query);
 		
 		if ($count >= 1) {
-        	
+			
 			return mysql_result($query, 0);
-        	
+			
 		} else {
-        	
+			
 			return FALSE;
-        	
+			
 		}
 		
 	}
