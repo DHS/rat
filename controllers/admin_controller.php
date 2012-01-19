@@ -85,6 +85,24 @@ class AdminController extends Application {
 				$conf['items']['likes']['enabled'] = 'FALSE';
 			}
 			
+			if ($_POST['invites']['enabled'] == 'on') {
+				$conf['invites']['enabled'] = 'TRUE';
+			} else {
+				$conf['invites']['enabled'] = 'FALSE';
+			}
+			
+			if ($_POST['friends']['enabled'] == 'on') {
+				$conf['friends']['enabled'] = 'TRUE';
+			} else {
+				$conf['friends']['enabled'] = 'FALSE';
+			}
+			
+			if ($_POST['friends']['asymmetric'] == 'on') {
+				$conf['friends']['asymmetric'] = 'TRUE';
+			} else {
+				$conf['friends']['asymmetric'] = 'FALSE';
+			}
+			
 			$this->writeConfig('application', $conf);
 			Application::flash('success', 'Success! <a href="'.$this->url_for('admin', 'spec').'">Click here</a> to reload with your new config!');
 			

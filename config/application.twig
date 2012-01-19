@@ -69,10 +69,10 @@ class AppConfig extends ServerConfig {
 	public $timezone = 'Europe/London';
 
 	// Invites system
-	public $invites = array('enabled' => TRUE);
+	public $invites = array('enabled' => {{ app.config.invites.enabled }});
 	
 	// Friends - still testing, works with asymmetric set to true... just! (Shows 'Follow' link & generates homepage feed)
-	public $friends = array('enabled' => FALSE, 'asymmetric' => FALSE);
+	public $friends = array('enabled' => {{ app.config.friends.enabled }}, 'asymmetric' => {{ app.config.friends.asymmetric }});
 	
 	// Admin users - array of user IDs who have access to admin area
 	public $admin_users						= array(1);
