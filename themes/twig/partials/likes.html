@@ -1,17 +1,12 @@
 {% if item.likes %}
-<p id="likes_{{ item.id }}" class="meta">
-	
-{{ app.config.items.likes.past_tense }}: 
-
-{% for likes in item.likes %}
-
-{% if app.plugins.gravatar %}
-	{{ app.link_to(app.plugins.gravatar.show(like.user.email, {'size': 20}), 'users', 'show', like.user.id) }}
-{% else %}
-	{{ app.link_to(like.user.username, 'users', 'show', like.user.id) }}
-{% endif %}
-
-{% endfor %}
-
-</p>
+  <p id="likes_{{ item.id }}" class="meta">
+  {{ app.config.items.likes.past_tense }}: 
+  {% for likes in item.likes %}
+    {% if app.plugins.gravatar %}
+      {{ app.link_to(app.plugins.gravatar.show(like.user.email, {'size': 20}), 'users', 'show', like.user.id) }}
+    {% else %}
+      {{ app.link_to(like.user.username, 'users', 'show', like.user.id) }}
+    {% endif %}
+  {% endfor %}
+  </p>
 {% endif %}
