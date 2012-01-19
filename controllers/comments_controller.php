@@ -50,6 +50,10 @@ class CommentsController extends Application {
 	private function show($item_id) {
 		
 		$item = Item::get_by_id($item_id);
+		$item->content = process_content($item->content);
+		foreach ($item->comments as $comment) {
+			$comment->content = process_content($comment->content);
+		}
 		
 		// old template
 		$this->item = $item;

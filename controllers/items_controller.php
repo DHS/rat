@@ -180,6 +180,10 @@ class ItemsController extends Application {
 	function update($id) {
 		
 		$item = Item::get_by_id($id);
+		$item->content = process_content($item->content);
+		foreach ($item->comments as $comment) {
+			$comment->content = process_content($comment->content);
+		}
 		
 		if ($_POST) {
 			

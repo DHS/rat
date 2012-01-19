@@ -33,6 +33,11 @@ class LikesController extends Application {
 	private function show($item_id) {
 		
 		$this->item = Item::get_by_id($item_id);
+		$item->content = process_content($item->content);
+		foreach ($item->comments as $comment) {
+			$comment->content = process_content($comment->content);
+		}
+		
 		$this->loadPartial('likes');
 		
 	}

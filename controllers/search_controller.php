@@ -25,15 +25,15 @@ class SearchController extends Application {
 		
 		$items = $search->do_search($q);
 		
-		// old template
-		$this->items = $items;
-		
 		foreach ($items as $item) {
 			$items->content = process_content($item->content);
 			foreach ($item->comments as $comment) {
 				$comment->content = process_content($comment->content);
 			}
 		}
+		
+		// old template
+		$this->items = $items;
 		
 		if (isset($this->plugins->log)) {
 			$result_count = count($this->items);
