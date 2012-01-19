@@ -386,9 +386,9 @@ class Application {
         require_once 'config/routes.php';
         $routes = new Routes();
 
-        // Extracting fixed part of route translations
-        $full_routes = array_values($routes->aliases);
-        foreach ($full_routes as &$array) {
+        // Must remove keys with dynamic values ($x) from routes in order to search
+        $haystack = array_values($routes->aliases);
+        foreach ($haystack as &$array) {
             foreach ($array as $k => $v) {
                 if ($v[0] == '$') {
                     unset($array[$k]);
@@ -396,8 +396,15 @@ class Application {
             }
         }
 
-        // Next search for uri_array in new $full_routes
-        // use array_keys($routes->aliases) to find corresponding format
+        // Same again for the needle
+        $needle = $uri_array;
+        unset($needle['id']);
+
+        $custom_routes = array_keys($routes->aliases);
+        $route_format = $custom_routes[array_search($needle, $haystack)];
+
+        $route_format = str_replace("*", $uri_array['id'], $route_format);
+
         // Render format
 
         if ($route = array_search($uri_array, $routes->aliases)) {
