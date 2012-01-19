@@ -23,8 +23,8 @@ class ItemsController extends Application {
 		
 		$items = Item::list_all($limit, $offset);
 		
-		foreach ($items as $key => $item) {
-			$items[$key]->content = process_content($items[$key]->content);
+		foreach ($items as $item) {
+			$item->content = process_content($item->content);
 		}
 		
 		// old template
@@ -304,8 +304,8 @@ class ItemsController extends Application {
 			
 			$this->items = $user->list_feed($limit, $offset);
 			
-			foreach ($items as $key => $item) {
-				$items[$key]->content = process_content($items[$key]->content);
+			foreach ($items as $item) {
+				$item->content = process_content($item->content);
 			}
 			
 			$this->loadView('items/index');

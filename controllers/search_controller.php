@@ -28,8 +28,8 @@ class SearchController extends Application {
 		// old template
 		$this->items = $items;
 		
-		foreach ($items as $key => $item) {
-			$items[$key]->content = process_content($items[$key]->content);
+		foreach ($items as $item) {
+			$items->content = process_content($item->content);
 		}
 		
 		if (isset($this->plugins->log)) {
