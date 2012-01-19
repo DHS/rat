@@ -219,9 +219,19 @@ class AdminController extends Application {
 			// Load template into $body variable
 			include "themes/{$this->config->theme}/emails/invite_admin.php";
 			
+			if ($this->config->theme == 'twig') {
+				
+				$twig = new Twig_Environment(new Twig_Loader_String(), array('auto_reload' => TRUE));
+				
+				$to			= array('name' => $user->username, 'email' => $email);
+				$subject	= '['.$this->config->name.'] '.$user->username.' is now following you on '.$this->config->name.'!';
+				$body = $twig->render(file_get_contents("themes/{$this->config->theme}/follower_new.twig"), array('app' => array('config' => $settings)));
+			
+			}
+			
 			if ($this->config->send_emails == TRUE) {
 				// Email user
-				mail($to, $subject, $body, $headers);
+				send_email($to, $subject, $body, $headers);
 			}
 			
 			Application::flash('success', 'User invited!');

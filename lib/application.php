@@ -306,6 +306,7 @@ class Application {
 	
 	private function loadDefaultLibs() {
 		
+		require_once 'lib/email.php';		
 		require_once 'lib/content.php';
 		
 	}
