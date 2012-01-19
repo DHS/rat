@@ -149,6 +149,69 @@ class ItemsController extends Application {
 		
 	}
 	
+	// Show a single item
+	function show($id) {
+		
+		$item = Item::get_by_id($id);
+		$item->content = process_content($item->content);
+		
+		if ($this->config->items['titles']['enabled'] == TRUE) {
+			$this->head_title = $this->config->name.' - '.$item->title;
+		}
+		
+		// old template
+		$this->item = $item;
+		
+		if ($this->json) {
+			$this->render_json($item);
+		} else {
+			$this->loadView('items/show', array('item' => $item));
+		}
+		
+	}
+	
+	// Update an item
+	function update($id) {
+		
+		$item = Item::get_by_id($id);
+		
+		if ($_POST) {
+			
+			$item->update($_POST['title'], $_POST['content']);
+			
+			Application::flash('success', 'Item updated!');
+			
+			// Get redirected
+			if (isset($this->uri['params']['redirect_to'])) {
+				header('Location: '.$this->uri['params']['redirect_to']);
+				exit();
+			}
+
+			$item = Item::get_by_id($id);
+			$item->content = process_content($item->content);
+
+			if ($this->config->items['titles']['enabled'] == TRUE) {
+				$this->head_title = $this->config->name.' - '.$item->title;
+			}
+
+			// old template
+			$this->item = $item;
+
+			if ($this->json) {
+				$this->render_json($item);
+			} else {
+				$this->loadView('items/show', array('item' => $item));
+			}
+			
+		} else {
+			
+			$this->loadView('items/update', array('item' => $item));
+			
+		}
+
+	}
+	
+	// Remove an item
 	function remove($item_id) {
 		
 		$item = Item::get_by_id($item_id);
@@ -212,27 +275,6 @@ class ItemsController extends Application {
 			
 			exit();
 			
-		}
-		
-	}
-	
-	// Show a single item
-	function show($id) {
-		
-		$item = Item::get_by_id($id);
-		$item->content = process_content($item->content);
-		
-		if ($this->config->items['titles']['enabled'] == TRUE) {
-			$this->head_title = $this->config->name.' - '.$item->title;
-		}
-		
-		// old template
-		$this->item = $item;
-		
-		if ($this->json) {
-			$this->render_json($item);
-		} else {
-			$this->loadView('items/show', array('item' => $item));
 		}
 		
 	}
