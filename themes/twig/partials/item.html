@@ -1,4 +1,6 @@
 
+<!-- Begin item -->
+
 {# Avatar #}
 {% if app.plugins.gravatar %}
 	{{ app.link_to(app.plugins.gravatar.show(item.user.email, {'size': 48, 'style': 'float: left; padding: 0px 10px 5px 0px;'})|raw, 'users', 'show', item.user.id) }}

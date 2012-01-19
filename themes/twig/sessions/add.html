@@ -1,4 +1,3 @@
-
 <div class="row">
   <div class="span8 columns offset4">
     <form action="{{ app.url_for('sessions', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">

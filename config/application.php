@@ -31,7 +31,6 @@ class AppConfig extends ServerConfig {
 	// Items
 	// Notes about uploads: max-size is in bytes (default: 5MB), directory should contain three subdirectories: originals, thumbnails, stream
 	public $items = array(	'name'			=> 'post',
-							
 							'name_plural'	=> 'posts',
 							
 							'titles'		=> array(	'enabled'		=> TRUE,
@@ -43,7 +42,7 @@ class AppConfig extends ServerConfig {
 														'name'			=> 'Content',
 														'name_plural'	=> 'Contents'
 														),
-
+														
 							// Remember to update the permissions for your upload dir! e.g. chmod -R 777 uploads
 							'uploads'		=> array(	'enabled'		=> TRUE,
 														'name'			=> 'Image',
@@ -64,10 +63,10 @@ class AppConfig extends ServerConfig {
 														'past_tense'	=> 'Liked by'
 														)
 							);
-
+	
 	// Locale
 	public $timezone = 'Europe/London';
-
+	
 	// Invites system
 	public $invites = array('enabled' => TRUE);
 	

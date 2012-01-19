@@ -186,17 +186,17 @@ class ItemsController extends Application {
 				header('Location: '.$this->uri['params']['redirect_to']);
 				exit();
 			}
-
+			
 			$item = Item::get_by_id($id);
 			$item->content = process_content($item->content);
-
+			
 			if ($this->config->items['titles']['enabled'] == TRUE) {
 				$this->head_title = $this->config->name.' - '.$item->title;
 			}
-
+			
 			// old template
 			$this->item = $item;
-
+			
 			if ($this->json) {
 				$this->render_json($item);
 			} else {
@@ -208,7 +208,7 @@ class ItemsController extends Application {
 			$this->loadView('items/update', array('item' => $item));
 			
 		}
-
+		
 	}
 	
 	// Remove an item
