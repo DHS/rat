@@ -2,7 +2,6 @@
 
 class Routes {
 	
-	// Simple alias
 	public $aliases = array(
 		
 		// Static pages

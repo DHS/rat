@@ -385,7 +385,21 @@ class Application {
         
         require_once 'config/routes.php';
         $routes = new Routes();
-        
+
+        // Extracting fixed part of route translations
+        $full_routes = array_values($routes->aliases);
+        foreach ($full_routes as &$array) {
+            foreach ($array as $k => $v) {
+                if ($v[0] == '$') {
+                    unset($array[$k]);
+                }
+            }
+        }
+
+        // Next search for uri_array in new $full_routes
+        // use array_keys($routes->aliases) to find corresponding format
+        // Render format
+
         if ($route = array_search($uri_array, $routes->aliases)) {
             
             // Routes all preceded by / so snip it as base_dir includes trailing /
