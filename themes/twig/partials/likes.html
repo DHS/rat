@@ -1,4 +1,4 @@
-<span id="likes_{{ item.id }}" class="meta">
+<p id="likes_{{ item.id }}" class="meta">
   {% if item.likes %}
     {{ app.config.items.likes.past_tense }}: 
     {% for like in item.likes %}
@@ -9,4 +9,4 @@
       {% endif %}
     {% endfor %}
   {% endif %}
-</span>
+</p>
