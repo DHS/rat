@@ -31,7 +31,6 @@ class AppConfig extends ServerConfig {
 	// Items
 	// Notes about uploads: max-size is in bytes (default: 5MB), directory should contain three subdirectories: originals, thumbnails, stream
 	public $items = array(	'name'			=> '{{ app.config.items.name }}',
-							
 							'name_plural'	=> '{{ app.config.items.name_plural }}',
 							
 							'titles'		=> array(	'enabled'		=> {{ app.config.items.titles.enabled }},
@@ -43,7 +42,7 @@ class AppConfig extends ServerConfig {
 														'name'			=> '{{ app.config.items.content.name }}',
 														'name_plural'	=> '{{ app.config.items.content.name_plural }}'
 														),
-
+														
 							// Remember to update the permissions for your upload dir! e.g. chmod -R 777 uploads
 							'uploads'		=> array(	'enabled'		=> {{ app.config.items.uploads.enabled }},
 														'name'			=> '{{ app.config.items.uploads.name }}',
@@ -64,15 +63,15 @@ class AppConfig extends ServerConfig {
 														'past_tense'	=> '{{ app.config.items.likes.past_tense }}'
 														)
 							);
-
+	
 	// Locale
 	public $timezone = 'Europe/London';
-
+	
 	// Invites system
-	public $invites = array('enabled' => TRUE);
+	public $invites = array('enabled' => {{ app.config.invites.enabled }});
 	
 	// Friends - still testing, works with asymmetric set to true... just! (Shows 'Follow' link & generates homepage feed)
-	public $friends = array('enabled' => FALSE, 'asymmetric' => FALSE);
+	public $friends = array('enabled' => {{ app.config.friends.enabled }}, 'asymmetric' => {{ app.config.friends.asymmetric }});
 	
 	// Admin users - array of user IDs who have access to admin area
 	public $admin_users						= array(1);

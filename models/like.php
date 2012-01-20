@@ -30,7 +30,7 @@ class Like {
 		$config = new AppConfig;
 		
 		$id = sanitize_input($id);
-        
+		
 		$sql = "SELECT `id`, `user_id`, `item_id`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $id";
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
@@ -50,7 +50,7 @@ class Like {
 			$like->user = User::get_by_id($result['user_id']);
 			
 		}
-        
+		
 		return $like;
 		
 	}
@@ -62,7 +62,7 @@ class Like {
 		
 		$user_id = sanitize_input($user_id);
 		$item_id = sanitize_input($item_id);
-        
+		
 		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
 		$query = mysql_query($sql);
 		$result = mysql_result($query, 0);

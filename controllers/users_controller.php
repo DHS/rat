@@ -70,8 +70,11 @@ class UsersController extends Application {
 		
 		$items = $user->items($limit, $offset);
 		
-		foreach ($items as $key => $item) {
-			$items[$key]->content = process_content($items[$key]->content);
+		foreach ($items as $item) {
+			$item->content = process_content($item->content);
+			foreach ($item->comments as $comment) {
+				$comment->content = process_content($comment->content);
+			}
 		}
 		
 		if ($this->config->friends['enabled'] == TRUE) {
@@ -304,40 +307,40 @@ class UsersController extends Application {
 		$error = '';
 
 		// Validate URL
-        
+		
 		// Check for empty URL. Default value: http://
 		if ($_POST['url'] == 'http://') {
 			$_POST['url'] = NULL;
 		}
-        
+		
 		// Ensure URL begins with http://
 		if ($_POST['url'] != NULL && (substr($_POST['url'], 0, 7) != 'http://' && substr($_POST['url'], 0, 8) != 'https://')) {
 			$_POST['url'] = 'http://'.$_POST['url'];
 		}
-        
+		
 		// Check for spaces
 		if (User::check_contains_spaces($_POST['url']) == TRUE) {
 			$error .= 'URL cannot contain spaces.';
 		}
-        
+		
 		// End URL validation
-        
+		
 		if ($error == '') {
 			
 			$user = User::get_by_id($_SESSION['user_id']);
 			
 			// Call update_profile in user model
 			$user->update_profile($_POST['full_name'], $_POST['bio'], $_POST['url']);
-        	
+			
 			// Set success message
 			Application::flash('success', 'Profile information updated!');
-        	
+			
 		} else {
-        	
+			
 			Application::flash('error', $error);
-        	
+			
 		}
-        
+		
 	}
 	
 	// Helper function: signup with an invite code
@@ -392,31 +395,31 @@ class UsersController extends Application {
 			
 			// Do signup
 			User::signup($user->id, $_POST['username'], $_POST['password1'], $this->config->encryption_salt);
-            
+			
 			if ($this->config->send_emails == TRUE) {
 				// Send 'thank you for signing up' email
-            	
+				
 				$admin = User::get_by_id($this->config->admin_users[0]);
 				
 				$to			= "{$_POST['username']} <{$_POST['email']}>";
 				$headers	= "From: {$admin->username} <{$admin->email}>\r\nBcc: {$admin->email}\r\nContent-type: text/html\r\n";
-            	
+				
 				// Load subject and body from template
 				include "themes/{$this->config->theme}/emails/signup.php";
-            	
+				
 				// Email user
 				mail($to, $subject, $body, $headers);
-            	
+				
 			}
-            
+			
 			// Log signup
 			if (isset($this->plugins->log)) {
 				$this->plugins->log->add($user->id, 'user', NULL, 'signup');
 			}
-            
+			
 			// Start session
 			$_SESSION['user_id'] = $user->id;
-            
+			
 			// Check invites are enabled
 			if ($this->config->invites['enabled'] == TRUE) {
 				
@@ -451,26 +454,26 @@ class UsersController extends Application {
 					// end foreach
 				}
 				// end if is_array
-            	
+				
 			}
-            
+			
 			// Log login
 			if (isset($this->plugins->log)) {
 				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'login');
 			}
-            
+			
 			// If redirect_to is set then redirect
 			if ($this->uri['params']['redirect_to']) {
 				header('Location: '.$this->uri['params']['redirect_to']);
 				exit();
 			}
-            
+			
 			// Set welcome message
 			Application::flash('success', 'Welcome to '.$this->config->name.'!');
-            
+			
 			// Go forth!
 			header('Location: '.$this->config->url);
-            
+			
 			exit();
 			
 		} else {
@@ -522,15 +525,15 @@ class UsersController extends Application {
 			if (isset($this->plugins->log)) {
 				$this->plugins->log->add($user_id, 'user', NULL, 'beta_signup', $_POST['email']);
 			}
-            
+			
 			// Set thank you & tweet this message
 			Application::flash('success', 'Thanks for signing up!<br />We will be in touch soon...');
-            
+			
 			// Go forth!
 			header('Location: '.$this->config->url);
-            
+			
 			exit();
-            
+			
 		} else {
 			// There was an error
 			
@@ -591,7 +594,7 @@ class UsersController extends Application {
 			
 			// Do signup
 			User::signup($user->id, $_POST['username'], $_POST['password1'], $this->config->encryption_salt);
-            
+			
 			if ($this->config->send_emails == TRUE) {
 				// Send 'thank you for signing up' email
 				
@@ -607,15 +610,15 @@ class UsersController extends Application {
 				mail($to, $subject, $body, $headers);
 				
 			}
-            
+			
 			// Log signup
 			if (isset($this->plugins->log)) {
 				$this->plugins->log->add($user->id, 'user', NULL, 'signup');
 			}
-            
+			
 			// Start session
 			$_SESSION['user_id'] = $user->id;
-            
+			
 			// Check invites are enabled and the code is valid
 			if ($this->config->invites['enabled'] == TRUE && Invite::check_code_valid($_POST['code'], $_POST['email']) == TRUE) {
 				
@@ -650,23 +653,23 @@ class UsersController extends Application {
 					// end foreach
 				}
 				// end if is_array
-            
+			
 			}
-            
+			
 			// Log login
 			if (isset($this->plugins->log)) {
 				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'login');
 			}
-            
+			
 			// If redirect_to is set then redirect
 			if ($this->uri['params']['redirect_to']) {
 				header('Location: '.$this->uri['params']['redirect_to']);
 				exit();
 			}
-            
+			
 			// Set welcome message
 			Application::flash('success', 'Welcome to '.$this->config->name.'!');
-            
+			
 			// Go forth!
 			header('Location: '.$this->config->url);
 			
@@ -728,11 +731,11 @@ class UsersController extends Application {
 		if ($username == '') {
 			$return .= 'Username cannot be left blank.<br />';
 		}
-        
+		
 		if (User::check_alphanumeric($username) != TRUE) {
 			$return .= 'Username must only contain letters and numbers.<br />';
 		}
-        
+		
 		if (User::check_username_available($username) != TRUE) {
 			$return .= 'Username not available.<br />';
 		}

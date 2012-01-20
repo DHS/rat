@@ -11,7 +11,7 @@ class AdminController extends Application {
 		$users_beta = Admin::list_users_beta();
 		
 		// old templates
-		$this->title = 'Admin &raquo; Dashboard';
+		$this->title = 'Admin - Dashboard';
 		$this->users = $users;
 		$this->users_beta = $users_beta;
 		
@@ -85,12 +85,30 @@ class AdminController extends Application {
 				$conf['items']['likes']['enabled'] = 'FALSE';
 			}
 			
+			if ($_POST['invites']['enabled'] == 'on') {
+				$conf['invites']['enabled'] = 'TRUE';
+			} else {
+				$conf['invites']['enabled'] = 'FALSE';
+			}
+			
+			if ($_POST['friends']['enabled'] == 'on') {
+				$conf['friends']['enabled'] = 'TRUE';
+			} else {
+				$conf['friends']['enabled'] = 'FALSE';
+			}
+			
+			if ($_POST['friends']['asymmetric'] == 'on') {
+				$conf['friends']['asymmetric'] = 'TRUE';
+			} else {
+				$conf['friends']['asymmetric'] = 'FALSE';
+			}
+			
 			$this->writeConfig('application', $conf);
 			Application::flash('success', 'Success! <a href="'.$this->url_for('admin', 'spec').'">Click here</a> to reload with your new config!');
 			
 		}
 		
-		$this->title = 'Admin &raquo; Config';
+		$this->title = 'Admin - Config';
 		$this->loadView('admin/spec', NULL, 'admin');
 		
 	}
@@ -101,7 +119,7 @@ class AdminController extends Application {
 		$users = Admin::list_users_beta();
 		
 		// old template
-		$this->title = 'Admin &raquo; Beta signups';
+		$this->title = 'Admin - Beta signups';
 		$this->users = $users;
 		
 		$this->loadView('admin/signups', array('users' => $users), 'admin');
@@ -114,7 +132,7 @@ class AdminController extends Application {
 		$users = Admin::list_users();
 		
 		// old template
-		$this->title = 'Admin &raquo; Users';
+		$this->title = 'Admin - Users';
 		$this->users = $users;
 		
 		$this->loadView('admin/users', array('users' => $users), 'admin');
@@ -126,7 +144,7 @@ class AdminController extends Application {
 		
 		if (isset($this->plugins->log)) {
 			
-			$this->title = 'Admin &raquo; Log';
+			$this->title = 'Admin - Log';
 			$this->loadPartial('header');
 			$this->loadPartial('admin_menu');
 			$this->plugins->log->view();
@@ -160,7 +178,7 @@ class AdminController extends Application {
 			Application::flash('success', 'You are now logged in to your app!');
 			
 			// Go forth!
-			header('Location: '.$this->url_for('items', 'add'));
+			header('Location: '.$this->url_for('admin', 'spec'));
 			
 			exit();
 			
@@ -201,9 +219,19 @@ class AdminController extends Application {
 			// Load template into $body variable
 			include "themes/{$this->config->theme}/emails/invite_admin.php";
 			
+			if ($this->config->theme == 'twig') {
+				
+				$twig = new Twig_Environment(new Twig_Loader_String(), array('auto_reload' => TRUE));
+				
+				$to			= array('name' => $user->username, 'email' => $email);
+				$subject	= '['.$this->config->name.'] '.$user->username.' is now following you on '.$this->config->name.'!';
+				$body = $twig->render(file_get_contents("themes/{$this->config->theme}/follower_new.twig"), array('app' => array('config' => $settings)));
+			
+			}
+			
 			if ($this->config->send_emails == TRUE) {
 				// Email user
-				mail($to, $subject, $body, $headers);
+				send_email($to, $subject, $body, $headers);
 			}
 			
 			Application::flash('success', 'User invited!');

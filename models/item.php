@@ -58,7 +58,7 @@ class Item {
 			$item->likes = $item->likes();
 			
 		}
-
+		
 		return $item;
 
 	}
@@ -87,6 +87,33 @@ class Item {
 		}
 		
 		return $items;
+		
+	}
+	
+	// Update an item
+	public function update($title, $content) {
+		
+		$config = new AppConfig;
+		
+		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}items` SET ";
+		
+		if ($title != '') {
+			$title = sanitize_input($title);
+		} else {
+			$title = 'NULL';
+		}
+		$sql .= "`title` = $title, ";	
+		
+		if ($content != '') {
+			$content = sanitize_input($content);
+		} else {
+			$content = 'NULL';
+		}
+		$sql .= "`content` = $content";
+		
+		$sql .= " WHERE `id` = $this->id";
+		
+		$query = mysql_query($sql);
 		
 	}
 	

@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="span8 columns offset3">
+
+{% if session.user_id %}
+      <form action="{{ app.url_for('items', 'update', item.id) }}" method="post" enctype="multipart/form-data">
+        <fieldset>
+          <legend>Update {{ app.config.items.name }}</legend>
+{% if app.config.items.titles.enabled %}
+            <div class="clearfix">
+              <label for="title">{{ app.config.items.titles.name }}</label>
+              <div class="input">
+                <input class="medium" name="title" size="50" type="text" value="{{ item.title }}" />
+              </div>
+            </div> <!-- /clearfix -->
+{% endif %}
+{% if app.config.items.content.enabled %}
+            <div class="clearfix">
+              <label for="content">{{ app.config.items.content.name }}</label>
+              <div class="input">
+                <textarea name="content" rows="5" cols="50">{{ item.content }}</textarea>
+              </div>
+            </div> <!-- /clearfix -->
+{% endif %}
+{% if app.config.items.uploads.enabled %}
+            <div class="clearfix">
+              <label for="file">{{ app.config.items.uploads.name }}</label>
+              <div class="input">
+                <input type="file" name="file" id="file" />
+              </div>
+            </div> <!-- /clearfix -->
+{% endif %}
+          <div class="actions">
+            <button type="submit" class="btn">Submit</button>
+          </div>
+        </fieldset>
+      </form>
+{% endif %}
+
+  </div>
+</div>

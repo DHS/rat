@@ -18,7 +18,7 @@ function sanitize_input($input) {
 	if (get_magic_quotes_gpc()) {
 		$input = stripslashes($input);
 	}
-    
+		
 	// If not a number, then add quotes
 	if (!is_numeric($input)) {
 		$input = "'".mysql_real_escape_string($input)."'";

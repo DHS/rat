@@ -23,8 +23,11 @@ class ItemsController extends Application {
 		
 		$items = Item::list_all($limit, $offset);
 		
-		foreach ($items as $key => $item) {
-			$items[$key]->content = process_content($items[$key]->content);
+		foreach ($items as $item) {
+			$item->content = process_content($item->content);
+			foreach ($item->comments as $comment) {
+				$comment->content = process_content($comment->content);
+			}
 		}
 		
 		// old template
@@ -149,6 +152,79 @@ class ItemsController extends Application {
 		
 	}
 	
+	// Show a single item
+	function show($id) {
+		
+		$item = Item::get_by_id($id);
+		$item->content = process_content($item->content);
+		foreach ($item->comments as $comment) {
+			$comment->content = process_content($comment->content);
+		}
+		
+		if ($this->config->items['titles']['enabled'] == TRUE) {
+			$this->head_title = $this->config->name.' - '.$item->title;
+		}
+		
+		// old template
+		$this->item = $item;
+		
+		if ($this->json) {
+			$this->render_json($item);
+		} else {
+			$this->loadView('items/show', array('item' => $item));
+		}
+		
+	}
+	
+	// Update an item
+	function update($id) {
+		
+		$item = Item::get_by_id($id);
+		$item->content = process_content($item->content);
+		foreach ($item->comments as $comment) {
+			$comment->content = process_content($comment->content);
+		}
+		
+		if ($_POST) {
+			
+			$item->update($_POST['title'], $_POST['content']);
+			
+			Application::flash('success', 'Item updated!');
+			
+			// Get redirected
+			if (isset($this->uri['params']['redirect_to'])) {
+				header('Location: '.$this->uri['params']['redirect_to']);
+				exit();
+			}
+			
+			$item = Item::get_by_id($id);
+			$item->content = process_content($item->content);
+			foreach ($item->comments as $comment) {
+				$comment->content = process_content($comment->content);
+			}
+			
+			if ($this->config->items['titles']['enabled'] == TRUE) {
+				$this->head_title = $this->config->name.' - '.$item->title;
+			}
+			
+			// old template
+			$this->item = $item;
+			
+			if ($this->json) {
+				$this->render_json($item);
+			} else {
+				$this->loadView('items/show', array('item' => $item));
+			}
+			
+		} else {
+			
+			$this->loadView('items/update', array('item' => $item));
+			
+		}
+		
+	}
+	
+	// Remove an item
 	function remove($item_id) {
 		
 		$item = Item::get_by_id($item_id);
@@ -216,27 +292,6 @@ class ItemsController extends Application {
 		
 	}
 	
-	// Show a single item
-	function show($id) {
-		
-		$item = Item::get_by_id($id);
-		$item->content = process_content($item->content);
-		
-		if ($this->config->items['titles']['enabled'] == TRUE) {
-			$this->head_title = $this->config->name.' - '.$item->title;
-		}
-		
-		// old template
-		$this->item = $item;
-		
-		if ($this->json) {
-			$this->render_json($item);
-		} else {
-			$this->loadView('items/show', array('item' => $item));
-		}
-		
-	}
-	
 	// Show feed of friends' new items
 	function feed() {
 		
@@ -262,8 +317,11 @@ class ItemsController extends Application {
 			
 			$this->items = $user->list_feed($limit, $offset);
 			
-			foreach ($items as $key => $item) {
-				$items[$key]->content = process_content($items[$key]->content);
+			foreach ($items as $item) {
+				$item->content = process_content($item->content);
+				foreach ($item->comments as $comment) {
+					$comment->content = process_content($comment->content);
+				}
 			}
 			
 			$this->loadView('items/index');

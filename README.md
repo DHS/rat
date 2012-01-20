@@ -14,8 +14,7 @@ Getting started
 1. Copy all files to your application directory
 2. Create a MySQL database and run rat.sql in it
 3. Copy config/server-sample.php to config/server.php and update the variables
-4. Change the variables in config/application.php to customise the app
-5. Visit /admin/setup to create your account
+4. Visit /admin/setup to configure your application
 
 Functionality
 -------------
