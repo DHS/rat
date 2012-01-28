@@ -217,7 +217,7 @@ class AdminController extends Application {
 				$this->plugins->log->add($_SESSION['user_id'], 'invite', $id, 'admin_add', $email);
 			}
 			
-			$to			= "{$user->username} <{$email}>";
+			$to			= $email;
 			$link		= $this->config->url.'users/add/'.$id.'/?email='.urlencode($email);
 			$headers	= "From: {$user->username} <{$user->email}>\r\nContent-type: text/html\r\n";
 			
@@ -228,9 +228,9 @@ class AdminController extends Application {
 				
 				$twig = new Twig_Environment(new Twig_Loader_String(), array('auto_reload' => TRUE));
 				
-				$to			= array('name' => $user->username, 'email' => $email);
-				$subject	= '['.$this->config->name.'] '.$user->username.' is now following you on '.$this->config->name.'!';
-				$body = $twig->render(file_get_contents("themes/{$this->config->theme}/follower_new.twig"), array('app' => array('config' => $settings)));
+				$to			= array('email' => $email);
+				$subject	= '['.$this->config->name.'] Your '.$this->config->name.' invite is here!';
+				$body		= $twig->render(file_get_contents("themes/{$this->config->theme}/emails/admin_invite.html"), array('app' => array('config' => $settings)));
 			
 			}
 			
