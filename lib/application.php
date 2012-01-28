@@ -346,7 +346,7 @@ class Application {
 			$params['view'] = $view;
 			$params['app'] = $this;
 			$params['session'] = $_SESSION;
-
+			
 			// Hacks for user menu in header
 			if (class_exists('User')) {
 				$params['user_menu_enabled'] = true;
@@ -382,11 +382,12 @@ class Application {
 		if (!empty($id)) {
 			$uri_array['id'] = $id;
 		}
-
+		
 		// Begin searching for custom routes to shorten url
+		
 		require_once 'config/routes.php';
 		$routes = new Routes();
-
+		
 		// Must remove keys with dynamic values ($x) from routes in order to search
 		$haystack = array_values($routes->aliases);
 		foreach ($haystack as &$array) {
@@ -396,33 +397,34 @@ class Application {
 				}
 			}
 		}
-
+		
 		// Same again for the needle
 		$needle = $uri_array;
 		unset($needle['id']);
-
+		
 		$custom_routes = array_keys($routes->aliases);
 		// Format of selected route
 		$route_format = $custom_routes[array_search($needle, $haystack)];
-
+		
 		// Replace each successive occurrence of '*' in route_format with the correct value
 		$route = $route_format;
 		for ($i = 1; $i <= substr_count($route_format, "*"); $i++) {
 			$route = preg_replace('/\*/', $uri_array[array_search("$$i", $routes->aliases[$route_format])], $route, 1);
 		}
-
+		
 		// End searching for custom routes
-
+		
 		if (array_search($needle, $haystack) !== FALSE) {
+			
 			// Routes all preceded by / so snip it as base_dir includes trailing /
 			if (substr($route, 0, 1) == '/') {
 				$route = substr($route, 1);
 			}
-
+			
 			return BASE_DIR . $route;
 			
 		} else {
-		
+			
 			$url = BASE_DIR . $controller;
 			
 			if (!empty($action)) {
@@ -438,18 +440,20 @@ class Application {
 		}
 		
 	}
-
+	
 	// url_for wrapper for use with Twig
 	public function echo_url_for($controller, $action = '', $id = '') {
+		
 		echo $this->url_for($controller, $action, $id);
+		
 	}
-
+	
 	public function url_for_route($route, array $params) {
-
+		
 		foreach ($params as $param) {
 			$route = implode($param, explode('*', $route, 2));
 		}
-
+		
 		return substr(BASE_DIR, 0, -1) . $route;
 		
 	}
