@@ -86,6 +86,9 @@ class AppConfig extends ServerConfig {
 								'analytics'	=> FALSE
 							);
 	
+	// Send emails from what address?
+	public $send_emails_from = 'support@blah.com';
+	
 }
 
 ?>
