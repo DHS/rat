@@ -231,13 +231,11 @@ class AdminController extends Application {
 				$to			= array('email' => $email);
 				$subject	= '['.$this->config->name.'] Your '.$this->config->name.' invite is here!';
 				$body		= $twig->render(file_get_contents("themes/{$this->config->theme}/emails/admin_invite.html"), array('app' => array('config' => $settings)));
-			
+				
 			}
 			
-			if ($this->config->send_emails == TRUE) {
-				// Email user
-				send_email($to, $subject, $body, $headers);
-			}
+			// Email user
+			send_email($to, $subject, $body, $headers);
 			
 			Application::flash('success', 'User invited!');
 			
