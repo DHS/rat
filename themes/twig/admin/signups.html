@@ -9,7 +9,8 @@
 		<tr><td>{{ user.email }}</td><td>
 		<form action="{{ app.url_for('admin', 'invite') }}" method="post">
 		<input type="hidden" name="email" value="{{ user.email }}">
-		{{ user.days_waiting }} &middot; {{ user.days_waiting }} days ago
+		{# Invite summary missing #}
+		{{ user.days_waiting }} days ago &middot; 
 		<input type="submit" value="Invite" class="btn" />
 		</form>
 		</td></tr>
