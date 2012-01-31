@@ -110,7 +110,7 @@ Missing functionality
 - Search users
 - @ mentions
 - Badges system
-- Pagination/infinite scroll
+- Infinite scroll
 - Tidier date formats
 - Add an additional theme
 - Plugin hooks similar to Wordpress
