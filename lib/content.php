@@ -10,7 +10,7 @@ function process_content($content) {
 	$content = ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]", "<a href=\"\\0\">\\0</a>", $content);
 	
 	// Coming soon here: parse for @mentions in the format @{12345}
-
+	
 	return $content;
 	
 }
