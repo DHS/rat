@@ -3,8 +3,7 @@
 // Helper function to convert raw input to html
 function send_email($to, $subject, $body, $debug = FALSE) {
 	
-	global $config;
-	echo $config->config->name;
+	// struggling to load $app->config here to fetch the new 'send from' email address
 	
 	if ($app->config->send_emails == TRUE) {
 		
