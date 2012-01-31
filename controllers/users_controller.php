@@ -413,10 +413,19 @@ class UsersController extends Application {
 				$headers	= "From: {$admin->username} <{$admin->email}>\r\nBcc: {$admin->email}\r\nContent-type: text/html\r\n";
 				
 				// Load subject and body from template
+				// old template
 				include "themes/{$this->config->theme}/emails/signup.php";
 				
+				if ($this->config->theme == 'twig') {
+
+					$to			= array('name' => $_POST['username'], 'email' => $_POST['email']);
+					$subject	= '['.$this->config->name.'] Your '.$this->config->name.' invite is here!';
+					$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('link' => $link, 'username' => $_POST['username'], 'app' => array('config' => $this->config)));
+
+				}
+				
 				// Email user
-				mail($to, $subject, $body, $headers);
+				$this->email->send_email($to, $subject, $body);
 				
 			}
 			
@@ -612,10 +621,19 @@ class UsersController extends Application {
 				$headers	= "From: {$admin->username} <{$admin->email}>\r\nBcc: {$admin->email}\r\nContent-type: text/html\r\n";
 				
 				// Load subject and body from template
+				// old template
 				include "themes/{$this->config->theme}/emails/signup.php";
 				
+				if ($this->config->theme == 'twig') {
+
+					$to			= array('name' => $_POST['username'], 'email' => $_POST['email']);
+					$subject	= '['.$this->config->name.'] Your '.$this->config->name.' invite is here!';
+					$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('link' => $link, 'username' => $_POST['username'], 'app' => array('config' => $this->config)));
+
+				}
+				
 				// Email user
-				mail($to, $subject, $body, $headers);
+				$this->email->send_email($to, $subject, $body);
 				
 			}
 			
