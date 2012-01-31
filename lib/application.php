@@ -256,8 +256,10 @@ class Application {
 			
 			require_once 'lib/twig/Autoloader.php';
 			Twig_Autoloader::register();
-			$loader = new Twig_Loader_Filesystem('themes/'.$this->config->theme);
-			$this->twig = new Twig_Environment($loader, $twig_config);
+			$this->twig = new Twig_Environment(new Twig_Loader_Filesystem('themes/'.$this->config->theme), $twig_config);
+			
+			// Load a separate instance of twig to handle strings
+			$this->twig_string = new Twig_Environment(new Twig_Loader_String(), $twig_config);
 			
 		}
 		
@@ -265,9 +267,7 @@ class Application {
 	
 	public function writeConfig($file, $settings = array()) {
 		
-		$twig = new Twig_Environment(new Twig_Loader_String(), array('auto_reload' => TRUE));
-		
-		$config_file = $twig->render(file_get_contents("config/$file.twig"), array('app' => array('config' => $settings)));
+		$config_file = $this->twig_string->render(file_get_contents("config/$file.twig"), array('app' => array('config' => $settings)));
 		
 		$handle = fopen("config/$file.php", 'w');
 		fwrite($handle, $config_file);

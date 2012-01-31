@@ -31,9 +31,7 @@ class FriendsController extends Application {
 				
 				$to			= array('email' => $email);
 				$subject	= '['.$this->config->name.'] Your '.$this->config->name.' invite is here!';
-				
-				$twig = new Twig_Environment(new Twig_Loader_String(), array('auto_reload' => TRUE));
-				$body		= $twig->render(file_get_contents("themes/{$this->config->theme}/emails/follower_new.html"), array('app' => array('config' => $this->config)));
+				$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/follower_new.html"), array('app' => array('config' => $this->config)));
 				
 			}
 			
