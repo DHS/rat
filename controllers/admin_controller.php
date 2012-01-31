@@ -232,16 +232,16 @@ class AdminController extends Application {
 			
 			if ($this->config->theme == 'twig') {
 				
-				$twig = new Twig_Environment(new Twig_Loader_String(), array('auto_reload' => TRUE));
-				
 				$to			= array('email' => $email);
 				$subject	= '['.$this->config->name.'] Your '.$this->config->name.' invite is here!';
-				$body		= $twig->render(file_get_contents("themes/{$this->config->theme}/emails/admin_invite.html"), array('app' => array('config' => $settings)));
+				
+				$twig = new Twig_Environment(new Twig_Loader_String(), array('auto_reload' => TRUE));
+				$body		= $twig->render(file_get_contents("themes/{$this->config->theme}/emails/admin_invite.html"), array('link' => $link, 'app' => array('config' => $this->config)));
 				
 			}
 			
 			// Email user
-			send_email($to, $subject, $body, $headers);
+			$this->email->send_email($to, $subject, $body);
 			
 			Application::flash('success', 'User invited!');
 			
