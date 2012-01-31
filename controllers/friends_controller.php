@@ -24,6 +24,7 @@ class FriendsController extends Application {
 			$link		= $this->config->url.'users/show/'.$user->id;
 			
 			// Load subject and body from template
+			// old template
 			include "themes/{$this->config->theme}/emails/follower_new.php";
 			
 			if ($this->config->theme == 'twig') {

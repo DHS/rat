@@ -222,6 +222,7 @@ class AdminController extends Application {
 			$headers	= "From: {$user->username} <{$user->email}>\r\nContent-type: text/html\r\n";
 			
 			// Load template into $body variable
+			// old template
 			include "themes/{$this->config->theme}/emails/invite_admin.php";
 			
 			if ($this->config->theme == 'twig') {
