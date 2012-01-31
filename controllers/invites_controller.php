@@ -12,12 +12,12 @@ class InvitesController extends Application {
 		$invites_remaining = $user->invites;
 		$invites_sent = $user->invites();
 		
-		if (isset($this->invites_remaining) && $this->invites_remaining == 1) {
-			Application::flash('info', 'You have one invite remaining.');
-		} elseif (isset($this->invites_remaining) && $this->invites_remaining > 1) {
-			Application::flash('info', 'You have '.$this->invites_remaining.' invites remaining.');
+		if (isset($invites_remaining) && $invites_remaining == 1) {
+			$message = 'You have one invite remaining.';
+		} elseif (isset($invites_remaining) && $invites_remaining > 1) {
+			$message = 'You have '.$invites_remaining.' invites remaining.';
 		} else {
-			Application::flash('info', 'You have no remaining invites.');
+			$message = 'You have no remaining invites.';
 		}
 		
 		// old template
@@ -28,7 +28,7 @@ class InvitesController extends Application {
 		if ($this->json) {
 			$this->render_json($this->invites);
 		} else {
-			$this->loadView('invites/index', array('invites_sent' => $invites_sent, 'invites_remaining' => $invites_remaining));
+			$this->loadView('invites/index', array('message' => $message, 'invites_sent' => $invites_sent, 'invites_remaining' => $invites_remaining));
 		}
 	
 	}
@@ -94,12 +94,19 @@ class InvitesController extends Application {
 			$headers	= "From: {$user->username} <{$user->email}>\r\nBcc: {$admin->email}\r\nContent-type: text/html\r\n";
 			
 			// Load subject and body from template
+			// old template
 			include "themes/{$this->config->theme}/emails/invite_friend.php";
 			
-			if ($this->config->send_emails == TRUE) {
-				// Email user
-				mail($to, $subject, $body, $headers);
+			if ($this->config->theme == 'twig') {
+				
+				$to			= array('email' => $_POST['email']);
+				$subject	= '['.$this->config->name.'] An invitation from '.$user->username;
+				$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/invite_friend.html"), array('link' => $link, 'user' => $user, 'app' => array('config' => $this->config)));
+				
 			}
+			
+			// Email user
+			$this->email->send_email($to, $subject, $body);
 			
 			Application::flash('success', 'Invite sent!');
 			
