@@ -230,17 +230,25 @@ class UsersController extends Application {
 					// Generate code
 					$code = $user->generate_password_reset_code();
 					
-					$to = $_POST['email'];
-					$link = substr($this->config->url, 0, -1).$this->url_for('users', 'reset', $code);
-					$headers = "From: {$this->config->name} <robot@blah.com>\r\nContent-type: text/html\r\n";
+					$to			= $_POST['email'];
+					$subject	= '['.$this->config->name.'] Password reset';
+					$link		= substr($this->config->url, 0, -1).$this->url_for('users', 'reset', $code);
+					$headers	= "From: {$this->config->name} <robot@blah.com>\r\nContent-type: text/html\r\n";
 					
 					// Load subject and body from template
+					// old template
 					include "themes/{$this->config->theme}/emails/password_reset.php";
 					
-					// Email user
-					if ($this->config->send_emails == TRUE) {
-						mail($to, $subject, $body, $headers);
+					if ($this->config->theme == 'twig') {
+
+						$to			= array('email' => $_POST['email']);
+						$subject	= '['.$this->config->name.'] Password reset';
+						$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/password_reset.html"), array('link' => $link, 'user' => $user, 'app' => array('config' => $this->config)));
+
 					}
+					
+					// Email user
+					$this->email->send_email($to, $subject, $body);
 					
 				}
 				
