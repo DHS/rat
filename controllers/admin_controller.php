@@ -144,11 +144,16 @@ class AdminController extends Application {
 		
 		if (isset($this->plugins->log)) {
 			
+			// Copying the work of loadView
+			$params = array(	'app'		=> $this,
+								'session'	=> $_SESSION
+							);
+        	
 			$this->title = 'Admin - Log';
-			$this->loadPartial('header');
-			$this->loadPartial('admin_menu');
-			$this->plugins->log->view();
-			$this->loadPartial('footer');
+			echo $this->twig->render("partials/header.html", $params);
+			echo $this->twig->render("partials/admin_menu.html", $params);
+			echo $this->plugins->log->view();
+			echo $this->twig->render("partials/footer.html", $params);
 			
 		}
 		

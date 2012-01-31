@@ -45,10 +45,13 @@ class log extends Application {
 		}
 		
 		if (is_array($entries)) {
+			
+			// Debuggage
 			//echo '<pre>';
 			//var_dump($entries);
 			//echo '</pre>';
-echo '<table class="common-table zebra-striped">
+			
+			$return = '<table class="common-table zebra-striped">
   <thead>
     <tr>
       <th>User</th>
@@ -59,23 +62,33 @@ echo '<table class="common-table zebra-striped">
     </tr>
   </thead>
   <tbody>';
+			
 			foreach ($entries as $entry) {
-				echo '<tr><td>';
+				
+				$return .= '<tr><td>';
+				
 				if ($entry['user']->username != NULL) {
-					$this->link_to($entry['user']->username, 'users', 'show', $entry['user']->id);
+					$return .= $this->get_link_to($entry['user']->username, 'users', 'show', $entry['user']->id);
 				}
-				echo '</td><td>';
-				echo $entry['object_type'];
-				echo '</td><td>';
-				echo $entry['action'];
-				echo '</td><td>';
+				
+				$return .= '</td><td>';
+				$return .= $entry['object_type'];
+				$return .= '</td><td>';
+				$return .= $entry['action'];
+				$return .= '</td><td>';
+				
 				if ($entry['params'] != NULL) {
-					echo $entry['params'];
+					$return .= $entry['params'];
 				}
-				echo '</td><td>'.$entry['date'].'</td></tr>';
+				
+				$return .= '</td><td>'.$entry['date'].'</td></tr>';
+				
 			}
-echo '</tbody></table>';
-		
+			
+			$return .= '</tbody></table>';
+			
+			return $return;
+			
 		}
 	
 	}
