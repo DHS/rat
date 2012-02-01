@@ -26,7 +26,7 @@
 <div class="row">
   <div class="span8 columns offset4 align_center">
     <p class="small">New to {{ app.config.name }}? 
-      <a href="{{ app.url_for('users', 'add') }}{% if app.uri.params.redirect_to %}/redirec_to={{ app.uri.params.redirect_to }}{% endif %}">Signup</a> now!
+      <a href="{{ app.url_for('users', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}">Signup</a> now!
       <br />{{ app.link_to('Forgotten your password', 'users', 'reset') }}?
     </p>
   </div>

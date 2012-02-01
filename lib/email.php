@@ -22,6 +22,7 @@ class Email {
 			$headers = "From: {$this->app->config->send_emails_from}\r\nBcc: {$admin->email}\r\nContent-type: text/html\r\n";
 			
 			if ($debug == TRUE) {
+				$to = htmlentities($to);
 				echo "$to<br />$subject<br />$body<br />$headers";
 			} else {
 				mail($to, $subject, $body, $headers);

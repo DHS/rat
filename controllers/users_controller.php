@@ -37,8 +37,10 @@ class UsersController extends Application {
 			
 			// No email submitted so show signup form
 			
+			// old templates
 			$this->code = $code;
-			$this->loadView('users/add');
+			
+			$this->loadView('users/add', array('code' => $code));
 			
 		}
 		
@@ -417,11 +419,11 @@ class UsersController extends Application {
 				include "themes/{$this->config->theme}/emails/signup.php";
 				
 				if ($this->config->theme == 'twig') {
-
+					
 					$to			= array('name' => $_POST['username'], 'email' => $_POST['email']);
 					$subject	= '['.$this->config->name.'] Your '.$this->config->name.' invite is here!';
 					$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('link' => $link, 'username' => $_POST['username'], 'app' => array('config' => $this->config)));
-
+					
 				}
 				
 				// Email user
@@ -506,7 +508,7 @@ class UsersController extends Application {
 			$this->title = 'Signup';
 			
 			// Show signup form
-			$this->loadView('users/add');
+			$this->loadView('users/add', array('code' => $_POST['code']));
 			
 		}
 		
@@ -581,7 +583,7 @@ class UsersController extends Application {
 		if ($email_check !== TRUE) {
 			$error .= $email_check;
 		}
-
+		
 		// Check username
 		$username_check = $this->check_username($_POST['username']);
 		if ($username_check !== TRUE) {
@@ -592,6 +594,7 @@ class UsersController extends Application {
 		if ($_POST['password1'] == '' || $_POST['password2'] == '') {
 			$error .= 'Please enter your password twice.<br />';
 		}
+		
 		if ($_POST['password1'] != $_POST['password2']) {
 			$error .= 'Passwords do not match.<br />';
 		}
@@ -625,15 +628,16 @@ class UsersController extends Application {
 				include "themes/{$this->config->theme}/emails/signup.php";
 				
 				if ($this->config->theme == 'twig') {
-
+					
 					$to			= array('name' => $_POST['username'], 'email' => $_POST['email']);
 					$subject	= '['.$this->config->name.'] Your '.$this->config->name.' invite is here!';
 					$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('link' => $link, 'username' => $_POST['username'], 'app' => array('config' => $this->config)));
-
+					
 				}
 				
 				// Email user
-				$this->email->send_email($to, $subject, $body);
+				$this->email->send_email($to, $subject, $body, TRUE);
+				exit();
 				
 			}
 			
@@ -728,15 +732,15 @@ class UsersController extends Application {
 		if ($email == '') {
 			$return .= 'Email cannot be left blank.<br />';
 		}
-
+		
 		if (User::check_contains_spaces($email) == TRUE) {
 			$return .= 'Email cannot contain spaces.<br />';
 		}
-
+		
 		if (User::check_contains_at($email) != TRUE) {
 			$return .= 'Email must contain an @ symbol.<br />';
 		}
-
+		
 		if (User::check_email_available($email) != TRUE && $new == TRUE) {
 			$return .= 'Email already in the system!<br />';
 		}
