@@ -91,7 +91,6 @@ class InvitesController extends Application {
 			
 			$to			= "{$_POST['email']}";
 			$link		= $this->config->url.'signup/'.$id;
-			$headers	= "From: {$user->username} <{$user->email}>\r\nBcc: {$admin->email}\r\nContent-type: text/html\r\n";
 			
 			// Load subject and body from template
 			// old template

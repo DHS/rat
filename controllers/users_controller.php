@@ -235,7 +235,6 @@ class UsersController extends Application {
 					$to			= $_POST['email'];
 					$subject	= '['.$this->config->name.'] Password reset';
 					$link		= substr($this->config->url, 0, -1).$this->url_for('users', 'reset', $code);
-					$headers	= "From: {$this->config->name} <robot@blah.com>\r\nContent-type: text/html\r\n";
 					
 					// Load subject and body from template
 					// old template
@@ -412,7 +411,6 @@ class UsersController extends Application {
 				$admin = User::get_by_id($this->config->admin_users[0]);
 				
 				$to			= "{$_POST['username']} <{$_POST['email']}>";
-				$headers	= "From: {$admin->username} <{$admin->email}>\r\nBcc: {$admin->email}\r\nContent-type: text/html\r\n";
 				
 				// Load subject and body from template
 				// old template
@@ -621,7 +619,6 @@ class UsersController extends Application {
 				$admin = User::get_by_id($this->config->admin_users[0]);
 				
 				$to = "{$_POST['username']} <{$_POST['email']}>";
-				$headers	= "From: {$admin->username} <{$admin->email}>\r\nBcc: {$admin->email}\r\nContent-type: text/html\r\n";
 				
 				// Load subject and body from template
 				// old template

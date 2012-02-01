@@ -224,7 +224,6 @@ class AdminController extends Application {
 			
 			$to			= $email;
 			$link		= $this->config->url.'users/add/'.$id.'/?email='.urlencode($email);
-			$headers	= "From: {$user->username} <{$user->email}>\r\nContent-type: text/html\r\n";
 			
 			// Load template into $body variable
 			// old template
