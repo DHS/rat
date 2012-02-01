@@ -53,6 +53,7 @@ class Item {
 				$item->$k = $v;
 			}
 			
+			$item->date = date('c',strtotime($item->date));
 			$item->user = $item->user();
 			$item->comments = $item->comments();
 			$item->likes = $item->likes();

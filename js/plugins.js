@@ -27,3 +27,5 @@ $("a.menu").click(function (e) {
   return false;
 });
 
+// Pretty dates
+$('span').humaneDates({'lowercase': true});

@@ -44,7 +44,7 @@
 {# Meta info #}
 <!-- Meta -->
 	<p class="item_meta">
-	{{ app.link_to(item.date, 'items', 'show', item.id) }}
+	{{ app.link_to('<span title="' ~ item.date ~ '">' ~ item.date ~ '</span>', 'items', 'show', item.id) }}
     
 	{% if app.config.items.comments.enabled %}
 		&middot; <a href="#" onclick="document.getElementById('comment_form_{{ item.id }}').style.visibility = 'visible'; document.getElementById('comment_form_{{ item.id }}').style.height = 'auto'; document.getElementById('comment_form_{{ item.id }}').content.focus(); return false;">{{ app.config.items.comments.name }}</a>
