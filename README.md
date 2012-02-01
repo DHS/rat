@@ -96,6 +96,7 @@ Rat uses the following components:
 - [HTML5 Boilerplate](http://html5boilerplate.com/)
 - [Twitter Bootstrap](http://twitter.github.com/bootstrap/)
 - [Twig](http://twig.sensiolabs.org)
+- [Humane Dates](https://github.com/zachleat/Humane-Dates)
 
 License
 -------
