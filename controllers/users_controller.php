@@ -633,7 +633,7 @@ class UsersController extends Application {
 				}
 				
 				// Email user
-				$this->email->send_email($to, $subject, $body, TRUE);
+				$this->email->send_email($to, $subject, $body);
 				exit();
 				
 			}
