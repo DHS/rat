@@ -187,7 +187,7 @@ class AdminController extends Application {
 				header('Location: '.$this->url_for('admin', 'spec'));
 			} else {
 				// old template
-				header('Location: '.$this->url_for('item', 'add'));
+				header('Location: '.$this->url_for('items', 'add'));
 			}
 			
 			exit();
@@ -195,7 +195,7 @@ class AdminController extends Application {
 		} else {
 			// Show setup form
 
-			if (count(Admin::list_users()) != 0) {
+			if (count(Admin::list_users()) == 0) {
 				Application::flash('info', 'Welcome to Rat!');
 				$this->loadView('admin/setup');
 			} else {
