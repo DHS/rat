@@ -372,7 +372,39 @@ class Application {
 		include "themes/{$this->config->theme}/partials/{$partial}.php";
 		
 	}
-	
+
+    public function new_url_for($controller, $action = '', $id = '', $params = array()) {
+        
+        $uri = array('controller' => $controller);
+        if (! empty($action)) $uri['action'] = $action;
+        if (! empty($id)) $uri['id'] = $id;
+        foreach ($params as $k => $v) $uri[$k] = $v;
+
+        require_once 'config/routes.php';
+        $routes = new Routes();
+
+        $targets = array_values($routes->aliases);
+
+        $match = NULL;
+        $size = sizeof($targets);
+        for ($i = 0; $i < $size; $i++) {
+            $param_names = array_diff(array_keys($targets[$i]), array('controller', 'action'));
+
+            if ($targets[$i]['controller'] == $uri['controller'] && $targets[$i]['action'] == $uri['action'] && $param_names == array_keys($params)) {
+                $match = $i;
+            }
+        }
+
+        if (! is_null($match)) {
+            $route_format = array_keys($routes->aliases);
+            $route_format = $route_format[$match];
+
+            // Render fancy routes
+        } else {
+            // Render boring routes
+        }
+    }
+
 	public function url_for($controller, $action = '', $id = '') {
 		
 		$uri_array = array('controller' => $controller);
