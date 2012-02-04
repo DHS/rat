@@ -122,7 +122,7 @@ class Application {
 		} else {
 			$uri['action'] = NULL;
 		}
-		
+	    	
 		$uri['format'] = $format;
 		$uri['params'] = array_map('htmlentities', $_GET);
 		
@@ -321,15 +321,16 @@ class Application {
 	}
 	
 	private function loadAction() {
-		
+	    $param_index = array_keys($this->uri['params']);
+        $param_index = $param_index[0];
 		if (method_exists($this, $this->uri['action'])) {
-			if (isset($this->uri['params']['id'])) {
-				$this->{$this->uri['action']}($this->uri['params']['id']);
+			if (isset($this->uri['params'][$param_index])) {
+				$this->{$this->uri['action']}($this->uri['params'][$param_index]);
 			} else {
 				$this->{$this->uri['action']}();
 			}
 		} elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
-			$this->index($this->uri['params']['id']);
+			$this->index($this->uri['params'][$param_index]);
 		} else {
 			throw new RoutingException($uri, "Page not found");
 		}
@@ -373,39 +374,67 @@ class Application {
 		
 	}
 
-    public function new_url_for($controller, $action = '', $id = '', $params = array()) {
-        
+    public function url_for($controller, $action = '', $id = '', $params = array()) {
+
+        // Create an array, uri, containing controller, action and all other params including id.
         $uri = array('controller' => $controller);
         if (! empty($action)) $uri['action'] = $action;
-        if (! empty($id)) $uri['id'] = $id;
+        if (! empty($id)) $params['id'] = $id;
         foreach ($params as $k => $v) $uri[$k] = $v;
 
         require_once 'config/routes.php';
         $routes = new Routes();
 
+        // Search through all route targets and find the last one to match both the controller,
+        // action and the names of additional parameters
         $targets = array_values($routes->aliases);
-
         $match = NULL;
         $size = sizeof($targets);
         for ($i = 0; $i < $size; $i++) {
+            // Find all the additional parameter names (excluding controller and action)
             $param_names = array_diff(array_keys($targets[$i]), array('controller', 'action'));
 
-            if ($targets[$i]['controller'] == $uri['controller'] && $targets[$i]['action'] == $uri['action'] && $param_names == array_keys($params)) {
+            // If the difference between the additional target params and the additional input params is empty,
+            // then they have the same additional params
+            $diff = array_diff($param_names, array_keys($params));
+            if ((! is_null($uri['controller']) && $targets[$i]['controller'] == $uri['controller'])
+                    && (! is_null($uri['action']) && $targets[$i]['action'] == $uri['action'])
+                    && empty($diff)) {
                 $match = $i;
             }
         }
 
+        // If a matching target is found, the route can be condensed
         if (! is_null($match)) {
+
+            // Find the condensed route, route_format
             $route_format = array_keys($routes->aliases);
             $route_format = $route_format[$match];
+            
+            // Replace each successive occurrence of '*' in the condensed route with the correct value
+            $route = $route_format;
+            $count = substr_count($route_format, "*");
+            for ($i = 1; $i <= $count; $i++) {
+                $route = preg_replace('/\*/', $uri[array_search("$$i", $routes->aliases[$route_format])], $route, 1);
+            }
 
-            // Render fancy routes
+            // Condensed routes all preceded by '/' so remove it
+            if (substr($route, 0, 1) == '/') $route = substr($route, 1);
+            
         } else {
-            // Render boring routes
+
+            // Construct the standard route
+            $route = $controller;
+			if (!empty($action)) $route .= "/$action";
+			if (!empty($id)) $route .= "/$id";
+
         }
+
+        return BASE_DIR . $route;
+    
     }
 
-	public function url_for($controller, $action = '', $id = '') {
+/*	public function url_for($controller, $action = '', $id = '') {
 		
 		$uri_array = array('controller' => $controller);
 		
@@ -443,7 +472,7 @@ class Application {
 		// Replace each successive occurrence of '*' in route_format with the correct value
 		$route = $route_format;
 		for ($i = 1; $i <= substr_count($route_format, "*"); $i++) {
-			$route = preg_replace('/\*/', $uri_array[array_search("$$i", $routes->aliases[$route_format])], $route, 1);
+			$route = preg_replace('/\*//*', $uri_array[array_search("$$i", $routes->aliases[$route_format])], $route, 1);
 		}
 		
 		// End searching for custom routes
@@ -474,11 +503,11 @@ class Application {
 		}
 		
 	}
-	
+*/	
 	// url_for wrapper for use with Twig
-	public function echo_url_for($controller, $action = '', $id = '') {
+	public function echo_url_for($controller, $action = '', $id = '', $params = array()) {
 		
-		echo $this->url_for($controller, $action, $id);
+		echo $this->url_for($controller, $action, $id, $params);
 		
 	}
 	
@@ -492,21 +521,21 @@ class Application {
 		
 	}
 	
-	public function link_to($link_text, $controller, $action = '', $id = '') {
+	public function link_to($link_text, $controller, $action = '', $id = '', $params = array()) {
 		
-		echo '<a href="'.$this->url_for($controller, $action, $id).'">'.$link_text.'</a>';
-		
-	}
-	
-	public function get_link_to($link_text, $controller, $action = '', $id = '') {
-		
-		return '<a href="'.$this->url_for($controller, $action, $id).'">'.$link_text.'</a>';
+		echo '<a href="'.$this->url_for($controller, $action, $id, $params).'">'.$link_text.'</a>';
 		
 	}
 	
-	public function redirect_to($controller, $action = '', $id = '') {
+	public function get_link_to($link_text, $controller, $action = '', $id = '', $params = array()) {
 		
-		header('Location: ' . $this->url_for($controller, $action, $id));
+		return '<a href="'.$this->url_for($controller, $action, $id, $params).'">'.$link_text.'</a>';
+		
+	}
+	
+	public function redirect_to($controller, $action = '', $id = '', $params = array()) {
+		
+		header('Location: ' . $this->url_for($controller, $action, $id, $params));
 		
 	}
 	

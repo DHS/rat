@@ -22,16 +22,17 @@ class Routes {
 		'/feed' => array('controller' => 'items', 'action' => 'feed'),
 		
 		// More complex
-		
+        // Complex routes are bottom-up prioritised, i.e. the lowest route has the highest precedence	
+        
+        '/signup/*' => array('controller' => 'users', 'action' => 'add', 'code' => '$1'),
+
 		// eg. /username
 		'/*' => array('controller' => 'users', 'action' => 'show', 'id' => '$1'),
-		// eg. /username/page
+        // eg. /username/page
 		'/*/*' => array('controller' => 'users', 'action' => 'show', 'id' => '$1', 'page' => '$2'),
-		
-		// Routes like this no longer work. Cannot sandwich controller or action between *
 		// eg. /username/item/item_id
 		'/*/item/*' => array('controller' => 'items', 'action' => 'show', 'username' => '$1', 'id' => '$2')
-		
+
 	);
 	
 }
