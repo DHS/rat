@@ -101,7 +101,8 @@ class Application {
 
     private static function fetch_uri($config) {
 
-        // Get request from server, split into segments, store as controller, view, id and params
+        // Get request from server, split into segments, store as controller,
+		// view, id and params
         $request = substr($_SERVER['REQUEST_URI'], (strlen($_SERVER['PHP_SELF']) - 10));
 
         // Split at '.'
@@ -181,7 +182,8 @@ class Application {
                 $uri['controller'] = $v['controller'];
                 $uri['action'] = $v['action'];
 
-                // Assign components of $uri['params'] based on array in routes class
+                // Assign components of $uri['params'] based on array in
+				// routes class
                 foreach ($v as $k => $v) {
 
                     if ($k != 'controller' && $k != 'action') {
@@ -381,32 +383,54 @@ class Application {
 
     public function url_for($controller, $action = '', $id = '', $params = array()) {
 
-        // Create an array, uri, containing controller, action and all other params including id.
+        // Create an array, uri, containing controller, action and all other
+		// params including id
+
         $uri = array('controller' => $controller);
-        if (! empty($action)) $uri['action'] = $action;
-        if (! empty($id)) $params['id'] = $id;
-        foreach ($params as $k => $v) $uri[$k] = $v;
+
+        if (! empty($action)) {
+			$uri['action'] = $action;
+		}
+
+        if (! empty($id)) {
+			$params['id'] = $id;
+		}
+
+        foreach ($params as $k => $v) {
+			$uri[$k] = $v;
+		}
 
         require_once 'config/routes.php';
         $routes = new Routes();
 
-        // Search through all route targets and find the last one to match both the controller,
-        // action and the names of additional parameters
+        // Search through all route targets and find the last one to match
+		// both the controller, action and the names of additional parameters
         $targets = array_values($routes->aliases);
         $match = NULL;
         $size = sizeof($targets);
+
         for ($i = 0; $i < $size; $i++) {
-            // Find all the additional parameter names (excluding controller and action)
+
+            // Find all the additional parameter names (excluding controller
+			// and action)
             $param_names = array_diff(array_keys($targets[$i]), array('controller', 'action'));
 
-            // If the difference between the additional target params and the additional input params is empty,
-            // then they have the same additional params
+            // If the difference between the additional target params and the
+			// additional input params is empty, then they have the same
+			// additional params
+
             $diff = array_diff($param_names, array_keys($params));
-            if ((! is_null($uri['controller']) && $targets[$i]['controller'] == $uri['controller'])
-                    && (! is_null($uri['action']) && $targets[$i]['action'] == $uri['action'])
-                    && empty($diff)) {
+
+			if ((! is_null($uri['controller'])
+				&& $targets[$i]['controller'] == $uri['controller'])
+				&& (isset($uri['action'])
+				&& $targets[$i]['action'] == $uri['action'])
+				&& empty($diff)) {
+
                 $match = $i;
+
             }
+
         }
 
         // If a matching target is found, the route can be condensed
@@ -416,22 +440,32 @@ class Application {
             $route_format = array_keys($routes->aliases);
             $route_format = $route_format[$match];
 
-            // Replace each successive occurrence of '*' in the condensed route with the correct value
+            // Replace each successive occurrence of '*' in the condensed
+			// route with the correct value
             $route = $route_format;
             $count = substr_count($route_format, "*");
+
             for ($i = 1; $i <= $count; $i++) {
                 $route = preg_replace('/\*/', $uri[array_search("$$i", $routes->aliases[$route_format])], $route, 1);
             }
 
             // Condensed routes all preceded by '/' so remove it
-            if (substr($route, 0, 1) == '/') $route = substr($route, 1);
+            if (substr($route, 0, 1) == '/') {
+				$route = substr($route, 1);
+			}
 
         } else {
 
             // Construct the standard route
             $route = $controller;
-            if (!empty($action)) $route .= "/$action";
-            if (!empty($id)) $route .= "/$id";
+
+            if (!empty($action)) {
+				$route .= "/$action";
+			}
+
+            if (!empty($id)) {
+				$route .= "/$id";
+			}
 
         }
 
@@ -487,11 +521,15 @@ class Application {
     public function render_json($ref) {
 
         if (is_array($ref)) {
+
             foreach ($ref as $r) {
                 unset($r->user);
             }
+
         } else {
+
             unset($ref->user);
+
         }
 
         echo json_encode($ref);
