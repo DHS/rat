@@ -8,6 +8,11 @@ class Application {
 
     public static function initialise() {
 
+		// Check for server config
+		if (!file_exists('config/server.php')) {
+			throw new ApplicationException(null, "Server config doesn't exist yet. Copy config/server-sample.php to config/server.php and update the variables.");
+		}
+
         require_once 'config/server.php';
         require_once 'config/application.php';
 
