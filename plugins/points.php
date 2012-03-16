@@ -4,17 +4,17 @@
 *	A points system for Rat by @DHS
 *
 *	Installation
-*	
+*
 *		Comes installed by default
 *
 *	Usage
-*	
+*
 *		Points are stored in the user object
-*			
+*
 *			$user->points
-*		
+*
 *		To display users's points:
-*		
+*
 *			if (isset($this->plugins->points)) {
 *				echo 'You have '.$user->points.' '.$this->plugins->points['name'];
 *			}
@@ -39,7 +39,7 @@ class points extends Application {
 	}
 
 	function view() {
-		
+
 		if ($id == $_SESSION['user_id']) {
 				echo '<p>You have '.$user['points'].' '.$this->plugins->points['name'].'!</p>';
 			if ($this->plugins->points['leaderboard'] == TRUE) {
@@ -53,18 +53,18 @@ class points extends Application {
 		}
 
 		echo '<p>&nbsp;</p>';
-		
+
 	}
-	
+
 	function view_leaderboard($limit = 10) {
-		
+
 		$query = mysql_query("SELECT id, username, points FROM users WHERE date_joined IS NOT NULL ORDER BY points DESC LIMIT $limit");
 
 		$leaderboard = array();
 		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
 			$leaderboard[] = $result;
 		}
-		
+
 		echo '<table class="common-table zebra-striped">';
 
 		$i = 1;
@@ -82,7 +82,7 @@ class points extends Application {
 		}
 
 		echo '</table>';
-		
+
 	}
 
 }

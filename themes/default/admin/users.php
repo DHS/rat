@@ -18,7 +18,7 @@
   <tbody>
 
 <?php foreach ($this->users as $user) { ?>
-	
+
     <tr><td><a href="/<?php echo $user['username']; ?>"><?php echo $user['username']; ?></a></td><td><?php echo $user['points']; ?></td><td><?php echo $user['last_login']; ?></td></tr>
 
 <?php } ?>

@@ -37,9 +37,9 @@ if ($this->config->private == FALSE || isset($_SESSION['user_id'])) { ?>
 </div>
 
 	<?php } else { ?>
-		
+
 		<h1>No <?php echo $this->config->items['name_plural']; ?> found...</h1>
-		
+
 	<?php } ?>
 
 <?php } ?>

@@ -3,7 +3,7 @@
 <?php if (count($this->item->likes) > 0) {
 
 	echo $this->config->items['likes']['past_tense'].': ';
-	
+
 	foreach ($this->item->likes as $like) {
 
 		if (isset($this->plugins->gravatar)) {

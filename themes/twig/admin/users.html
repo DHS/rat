@@ -6,7 +6,7 @@
 </form>
 
 {% if users %}
-	
+
 	<table class="common-table zebra-striped">
 	  <thead>
 	    <tr>
@@ -16,14 +16,14 @@
 	    </tr>
 	  </thead>
 	  <tbody>
-	
+
 	{% for user in users %}
-		
+
 		<tr><td><a href="/{{ user.username }}; ?>">{{ user.username }}</a></td><td>{{ user.points }}</td><td>{{ user.last_login }}</td></tr>
-		
+
 	{% endfor %}
-	
+
 	</tobdy>
 	</table>
-	
+
 {% endif %}

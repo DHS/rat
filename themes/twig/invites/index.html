@@ -5,9 +5,9 @@
 {% if message %}<p>{{ message }}</p><p>&nbsp;</p>{% endif %}
 
 {% if invites_remaining > 0 %}
-	
+
 	{% include 'partials/invite.html' %}
-	
+
 {% endif %}
 
 <p>&nbsp;</p>
@@ -15,20 +15,20 @@
 {% if invites_sent %}
 
 	<h3>Sent invites</h3>
-	
+
 	{% for invite in invites_sent %}
-	
+
 		{{ invite.email }}
-		
+
 		{% if invite.result > 0 %}
 		   	&middot; <span class="good_news">Accepted</span>
 		{% else %}
 		    &middot; Still waiting
 		{% endif %}
 		<br />
-		
+
 	{% endfor %}
-	
+
 {% endif %}
 
   </div>

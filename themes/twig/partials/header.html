@@ -47,7 +47,7 @@
         <div class="container">
 
 		{% if session.user_id %}
-		
+
 			<h3>{{ app.link_to(app.config.name, app.config.default_controller) }}</h3>
 			<ul>
 				<li{% if app.uri.controller == app.config.default_controller %} class="active"{% endif %}>
@@ -82,31 +82,31 @@
 						{% if viewer.is_admin(app.config.admin_users) %}
 						<li class="divider"></li>
 						<li>{{ app.link_to('Admin', 'admin') }}</li>
-						{% endif %} 
+						{% endif %}
 						<li class="divider"></li>
 						<li>{{ app.link_to('Logout', 'sessions', 'remove') }}</li>
 					</ul>
 				</li>
 				{% endif %}
 			</ul>
-			
-		{% else %} 
-			
+
+		{% else %}
+
 			<h3>{{ app.link_to(app.config.name, app.config.default_controller) }}</h3>
 			<ul class="nav secondary-nav">
 				<li{% if app.uri.controller == 'users' and app.uri.action == 'add' %} class="active" {% endif %}>{{ app.link_to('Signup', 'users', 'add') }}</li>
 				<li{% if app.uri.controller == 'sessions' and app.uri.action == 'add' %} class="active" {% endif %}>{{ app.link_to('Login', 'sessions', 'add') }}</li>
 				<li{% if app.uri.params.id == 'help' %} class="active" {% endif %}>{{ app.link_to('Help', 'pages', 'show', 'help') }}</li>
 			</ul>
-			
+
 		{% endif %}
-		
+
         </div>
       </div>
     </div>
-	
+
     <h1>{{ app.title }}</h1>
-	
+
 	{% if session.flash %}
 		<div class="row">
 			<div class="span8 columns offset4">
@@ -116,5 +116,5 @@
 			</div>
 		</div>
 	{% endif %}
-	
+
 	<div id="main" role="main">

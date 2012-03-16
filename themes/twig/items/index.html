@@ -10,7 +10,7 @@
 {% else %}
   {% if items %}
     <h1>Stream</h1>
-    
+
     <div class="row">
       <div class="span8 columns offset3">
         {% for item in items %}
@@ -19,15 +19,15 @@
 
         {% include 'partials/pagination.html' %}
       </div>
-      
+
       <div class="span4 columns">
         {% include 'partials/item_add.html' %}
       </div>
     </div>
-    
+
   {% else %}
-    
+
     <h1>No {{ app.config.items.name_plural }} found...</h1>
-    
+
   {% endif %}
 {% endif %}

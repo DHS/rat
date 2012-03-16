@@ -2,20 +2,20 @@
 <p>Beta signups: <strong>{{ users|length }}</strong></p>
 
 {% if users %}
-	
+
 	<table class="common-table zebra-striped">
 	{% for user in users %}
-		
+
 		<tr><td>{{ user.email }}</td><td>
 		<form action="{{ app.url_for('admin', 'invite') }}" method="post">
 		<input type="hidden" name="email" value="{{ user.email }}">
 		{# Invite summary missing #}
-		{{ user.days_waiting }} days ago &middot; 
+		{{ user.days_waiting }} days ago &middot;
 		<input type="submit" value="Invite" class="btn" />
 		</form>
 		</td></tr>
-		
+
 	{% endfor %}
 	</table>
-	
+
 {% endif %}

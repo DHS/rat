@@ -8,7 +8,7 @@
     </ul>
 
 <?php if ($this->page == 'password') { ?>
-	
+
 	<form action="<?php echo $this->url_for('users', 'update', 'password'); ?>" method="post">
       <fieldset>
         <legend>Change password</legend>

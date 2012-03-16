@@ -1,4 +1,4 @@
-{% if code or not app.config.beta %} 
+{% if code or not app.config.beta %}
 
 <div class="row">
   <div class="span8 columns offset4">
@@ -40,7 +40,7 @@
 
 <div class="row">
   <div class="span8 columns offset4 align_center">
-    <p class="small">Already got a {{ app.config.name }} account? 
+    <p class="small">Already got a {{ app.config.name }} account?
       <a href="{{ app.url_for('sessions', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}">Login</a> now!
 	</p>
   </div>
@@ -50,7 +50,7 @@
 
 <div class="row">
   <div class="span8 columns offset4">
-  
+
     <form action="{{ app.url_for('users', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">
       <fieldset>
         <legend>Signup for our beta</legend>

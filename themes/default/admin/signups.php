@@ -8,7 +8,7 @@ if (is_array($this->users)) {
 echo '<table class="common-table zebra-striped">';
 
 foreach ($this->users as $user) {
-	
+
 	if ($user['days_waiting'] == 0) {
 		$days_waiting = 'Today!';
 	} elseif ($user['days_waiting']) {
@@ -16,7 +16,7 @@ foreach ($this->users as $user) {
 	} else {
 		$days_waiting = '<span class="bad_news">Error</span>';
 	}
-	
+
 	if ($user['invites'] > 0) {
 		$invite_summary = 'Invited x'.$user['invites'].' &middot;';
 	} else {

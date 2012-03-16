@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="span8 columns offset3">
-	
+
 	{% if items %}
 		{% for item in items %}
 			{% include 'partials/item.html' %}
@@ -22,7 +22,7 @@
 {% if user.full_name or user.bio or user.url %}
 
   <h3>Profile</h3>
-  
+
   <p>
     {% if user.full_name %}<strong>Name</strong> {{ user.full_name }}{% endif %}
     {% if user.bio %}<br /><strong>Bio</strong> {{ user.bio }}{% endif %}
