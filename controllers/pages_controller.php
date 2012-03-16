@@ -88,5 +88,3 @@ class PagesController extends Application {
 	}
 
 }
-
-?>

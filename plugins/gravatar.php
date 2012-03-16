@@ -64,5 +64,3 @@ echo '<h2>Picture</h2>
 	}
 
 }
-
-?>

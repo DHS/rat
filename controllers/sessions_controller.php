@@ -65,5 +65,3 @@ class SessionsController extends Application {
 	}
 
 }
-
-?>

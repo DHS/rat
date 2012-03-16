@@ -16,5 +16,3 @@ require_once 'lib/application.php';
 Application::initialise();
 
 ob_end_flush();
-
-?>

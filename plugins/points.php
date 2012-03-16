@@ -86,5 +86,3 @@ class points extends Application {
 	}
 
 }
-
-?>

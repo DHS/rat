@@ -13,5 +13,3 @@ echo '  </div>
 </div>';
 
 $this->loadPartial('footer');
-
-?>

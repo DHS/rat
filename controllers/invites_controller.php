@@ -122,5 +122,3 @@ class InvitesController extends Application {
 	}
 
 }
-
-?>

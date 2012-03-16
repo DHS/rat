@@ -13,5 +13,3 @@ class ApplicationException extends Exception {
 	}
 
 }
-
-?>

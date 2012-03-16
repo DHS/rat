@@ -8,5 +8,3 @@ $body = '<p>Hi there,</p>
 <p>We value your feedback very highly. Once you\'ve had a play with '.$this->config->name.', please reply to this email with your thoughts!</p>
 <p>Many thanks,</p>
 <p>'.$user->username.', '.$this->config->name.' admin</p>';
-
-?>

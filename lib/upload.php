@@ -54,5 +54,3 @@ function generate_thumbnail($filename, $type, $max_width = 100, $max_height = 10
 	imagedestroy($src);
 
 }
-
-?>

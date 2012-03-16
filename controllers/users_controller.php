@@ -776,5 +776,3 @@ class UsersController extends Application {
 	}
 
 }
-
-?>

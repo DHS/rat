@@ -27,5 +27,3 @@ function sanitize_input($input) {
 	return $input;
 
 }
-
-?>

@@ -14,5 +14,3 @@ function process_content($content) {
 	return $content;
 
 }
-
-?>

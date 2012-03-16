@@ -7,5 +7,3 @@ $body = '<p>Hi there,</p>
 <p>'.$link.'</p>
 <p>Regards,</p>
 <p>'.$user->username.'</p>';
-
-?>

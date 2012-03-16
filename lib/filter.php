@@ -45,5 +45,3 @@ class Filter {
 	// Add your own filters to run before each action is loaded
 
 }
-
-?>

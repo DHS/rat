@@ -90,5 +90,3 @@ class AppConfig extends ServerConfig {
 	public $send_emails_from = 'support@blah.com';
 
 }
-
-?>

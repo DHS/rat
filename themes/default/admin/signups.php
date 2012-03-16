@@ -38,5 +38,3 @@ foreach ($this->users as $user) {
 echo '</table>';
 
 }
-
-?>

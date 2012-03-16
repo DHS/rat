@@ -113,5 +113,3 @@ class FriendsController extends Application {
 	}
 
 }
-
-?>

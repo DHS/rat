@@ -8,5 +8,3 @@ $body = '<p>Hi '.$friend['username'].',</p>
 <p>You should publish another '.$this->config->items['name'].' to celebrate!</p>
 <p>Best regards,</p>
 <p>David Haywood Smith, creator of '.$this->config->name.'</p>';
-
-?>

@@ -337,5 +337,3 @@ class ItemsController extends Application {
 	}
 
 }
-
-?>

@@ -13,5 +13,3 @@ class RoutingException extends Exception {
 	}
 
 }
-
-?>

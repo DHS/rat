@@ -149,5 +149,3 @@ class Invite {
 	}
 
 }
-
-?>

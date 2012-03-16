@@ -263,5 +263,3 @@ class AdminController extends Application {
 	}
 
 }
-
-?>
