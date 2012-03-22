@@ -167,7 +167,11 @@ class Application {
         // Split at the '.' to obtain the request format
         $format = preg_split("/\./", $request);
         $request = $format[0];
-        $format = $format[1];
+        if (isset($format[1])) {
+          $format = $format[1];
+        } else {
+          $format = NULL;
+        }
 
         $routeFound = FALSE;
 
@@ -328,18 +332,30 @@ class Application {
     }
 
     private function loadAction() {
-        $param_index = array_keys($this->uri['params']);
-        $param_index = $param_index[0];
+
+        if (isset($this->uri['params'])) {
+            $param_index = array_keys($this->uri['params']);
+            $param_index = $param_index[0];
+        } else {
+            $param_index = null;
+        }
+
         if (method_exists($this, $this->uri['action'])) {
+
             if (isset($this->uri['params'][$param_index])) {
                 $this->{$this->uri['action']}($this->uri['params'][$param_index]);
             } else {
                 $this->{$this->uri['action']}();
             }
+
         } elseif (empty($this->uri['action']) && method_exists($this, 'index')) {
+
             $this->index($this->uri['params'][$param_index]);
+
         } else {
+
             throw new RoutingException($uri, "Page not found");
+
         }
 
     }

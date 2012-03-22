@@ -2,7 +2,7 @@
 <?php if ((isset($this->code) && $this->code != '') || $this->config->beta != TRUE) { ?>
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="<?php echo $this->url_for('users', 'add', NULL, array('code' => $this->code)); if (isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to='.$this->uri['params']['redirect_to']; } ?>" method="post">
+    <form action="<?php if (isset($this->code)) { echo $this->url_for('users', 'add', NULL, array('code' => $this->code)); } else { echo $this->url_for('users', 'add', NULL); } if (isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to='.$this->uri['params']['redirect_to']; } ?>" method="post">
       <fieldset>
         <legend>Signup</legend>
         <?php if (isset($this->code)) { echo '<input type="hidden" name="code" value="'.$this->code.'" />'; } ?>
