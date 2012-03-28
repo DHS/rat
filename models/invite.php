@@ -11,12 +11,12 @@ class Invite {
 		$email = sanitize_input($email);
 		
 		$insert_sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}invites` SET `user_id` = $user_id, `email` = $email";
-		$insert_query = mysql_query($insert_sql);
+		$insert_query = mysqli_query($insert_sql);
 		
-		$id = mysql_insert_id();
+		$id = mysqli_insert_id();
 		
 		$update_sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}invites` SET `code` = '$id' WHERE `id` = $id";
-		$query = mysql_query($update_sql);
+		$query = mysqli_query($update_sql);
 		
 		return $id;
 		
@@ -30,8 +30,8 @@ class Invite {
 		$id = sanitize_input($id);
 		
 		$sql = "SELECT `id`, `user_id`, `email`, `code`, `result`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `id` = $id";
-		$query = mysql_query($sql);
-		$result = mysql_fetch_array($query, MYSQL_ASSOC);
+		$query = mysqli_query($sql);
+		$result = mysqli_fetch_array($query, mysqli_ASSOC);
 		
 		if (!is_array($result)) {
 			// Invite not found
@@ -71,11 +71,11 @@ class Invite {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 		// Loop through invite ids, fetching objects
 		$invites = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
 			$invites[] = Invite::get_by_id($result['id']);
 		}
 		
@@ -89,14 +89,14 @@ class Invite {
 		$config = new AppConfig;
 		
 		$sql_get = "SELECT `result` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `id` = $this->id";
-		$query_get = mysql_query($sql_get);
-		$old_result = mysql_result($query_get, 0);
+		$query_get = mysqli_query($sql_get);
+		$old_result = mysqli_result($query_get, 0);
 		
 		$new_result = $old_result + 1;
 		
 		// Update database
 		$sql_update = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}invites` SET `result` = $new_result WHERE `id` = $this->id";
-		$query_update = mysql_query($sql_update);
+		$query_update = mysqli_query($sql_update);
 		
 	}
 	
@@ -109,8 +109,8 @@ class Invite {
 		$email = sanitize_input($email);
 		
 		$sql = "SELECT COUNT(id) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `user_id` = $user_id AND `email` = $email";
-		$query = mysql_query($sql);
-		$user_count = mysql_result($query, 0);
+		$query = mysqli_query($sql);
+		$user_count = mysqli_result($query, 0);
 		
 		if ($user_count >= 1) {
 			
@@ -137,8 +137,8 @@ class Invite {
 		$email = sanitize_input($email);
 		
 		$sql = "SELECT `result` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `code` = $code AND `email` = $email";
-		$query = mysql_query($sql);
-		$status = mysql_num_rows($query);
+		$query = mysqli_query($sql);
+		$status = mysqli_num_rows($query);
 		
 		if ($status > 0) {
 			return TRUE;

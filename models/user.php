@@ -10,9 +10,9 @@ class User {
 		$email = sanitize_input($email);
 		
 		$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `email` = $email, `date_added` = NOW()";
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
-		$id = mysql_insert_id();
+		$id = mysqli_insert_id();
 		
 		return $id;
 		
@@ -26,8 +26,8 @@ class User {
 		$id = sanitize_input($id);
 		
 		$sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $id";
-		$query = mysql_query($sql);
-		$result = mysql_fetch_array($query, MYSQL_ASSOC);
+		$query = mysqli_query($sql);
+		$result = mysqli_fetch_array($query, mysqli_ASSOC);
 		
 		if (!is_array($result)) {
 			
@@ -55,8 +55,8 @@ class User {
 		$username = sanitize_input($username);
 		
 		$sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `username` = $username";
-		$query = mysql_query($sql);
-		$result = mysql_fetch_array($query, MYSQL_ASSOC);
+		$query = mysqli_query($sql);
+		$result = mysqli_fetch_array($query, mysqli_ASSOC);
 		
 		if (!is_array($result)) {
 			
@@ -84,8 +84,8 @@ class User {
 		$email = sanitize_input($email);
 		
 		$sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `email` = $email";
-		$query = mysql_query($sql);
-		$result = mysql_fetch_array($query, MYSQL_ASSOC);
+		$query = mysqli_query($sql);
+		$result = mysqli_fetch_array($query, mysqli_ASSOC);
 		
 		if (!is_array($result)) {
 			
@@ -116,7 +116,7 @@ class User {
 		$encrypted_password = md5($password.$salt);
 		
 		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `username` = $username, `password` = '$encrypted_password', `date_joined` = NOW() WHERE `id` = $id";
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 	}
 	
@@ -173,12 +173,12 @@ class User {
 		
 		// Check item exists
 		$sql_check = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $this->id";
-		$count_query = mysql_query($sql_check);
+		$count_query = mysqli_query($sql_check);
 		
-		if (mysql_num_rows($count_query) > 0) {
+		if (mysqli_num_rows($count_query) > 0) {
 			// If user exists, go ahead and delete
 			$sql_delete = "DELETE FROM `user` WHERE `id` = $this->id";
-			$query = mysql_query($sql_delete);
+			$query = mysqli_query($sql_delete);
 		}
 		
 	}
@@ -198,10 +198,10 @@ class User {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 		$items = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
 			$items[] = Item::get_by_id($result['id']);
 		}
 		
@@ -224,10 +224,10 @@ class User {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 		$invites = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
 			$invites[] = Invite::get_by_id($result['id']);
 		}
 		
@@ -250,10 +250,10 @@ class User {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 		$friends = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
 			$friends[$result['id']] = User::get_by_id($result['friend_user_id']);
 		}
 		
@@ -276,10 +276,10 @@ class User {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 		$friends = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
 			$friends[$result['id']] = User::get_by_id($result['user_id']);
 		}
 		
@@ -302,10 +302,10 @@ class User {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 		$items = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
 			$items[] = Item::get_by_id($result['item_id']);
 		}
 		
@@ -328,10 +328,10 @@ class User {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 		$comments = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
 			$comments[] = Comment::get_by_id($result['id']);
 		}
 		
@@ -347,11 +347,11 @@ class User {
 		$friend_user_id = sanitize_input($friend_user_id);
 		
 		$count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = $friend_user_id";
-		$count_query = mysql_query($count_sql);
+		$count_query = mysqli_query($count_sql);
 		
-		if (mysql_num_rows($count_query) < 1) {
+		if (mysqli_num_rows($count_query) < 1) {
 			$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}friends` SET `user_id` = {$this->id}, `friend_user_id` = $friend_user_id";
-			$query = mysql_query($sql);
+			$query = mysqli_query($sql);
 		}
 		
 	}
@@ -365,7 +365,7 @@ class User {
 		$status = sanitize_input($status);
 		
 		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}friends` SET `status` = $status WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 	}
 	
@@ -377,11 +377,11 @@ class User {
 		$friend_user_id = sanitize_input($friend_user_id);
 		
 		$count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
-		$count_query = mysql_query($count_sql);
+		$count_query = mysqli_query($count_sql);
 		
-		if (mysql_num_rows($count_query) > 0) {
+		if (mysqli_num_rows($count_query) > 0) {
 			$sql = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
-			$query = mysql_query($sql);
+			$query = mysqli_query($sql);
 		}
 		
 	}
@@ -411,11 +411,11 @@ class User {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 		// Loop through item ids, fetching objects
 		$items = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
 			$items[] = Item::get_by_id($result['id']);
 		}
 		
@@ -431,8 +431,8 @@ class User {
 		$friend_user_id = sanitize_input($friend_user_id);
 		
 		$sql = "SELECT COUNT(id) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = $friend_user_id AND `friend_user_id` = {$this->id}";
-		$query = mysql_query($sql);
-		$result = mysql_result($query, 0);
+		$query = mysqli_query($sql);
+		$result = mysqli_result($query, 0);
 		
 		if ($result > 0) {
 			return TRUE;
@@ -454,7 +454,7 @@ class User {
 		$encrypted_password = md5($new_password.$salt);
 		
 		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `password` = '{$encrypted_password}' WHERE `id` = $this->id";
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 	}
 	
@@ -488,7 +488,7 @@ class User {
 		
 		$sql .= " WHERE `id` = $this->id";
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 	}
 	
@@ -501,15 +501,15 @@ class User {
 		
 		// Get current # of invites
 		$sql_get = "SELECT `invites` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $this->id";
-		$query = mysql_query($sql_get);
-		$old_invites = mysql_result($query, 0);
+		$query = mysqli_query($sql_get);
+		$old_invites = mysqli_result($query, 0);
 		
 		// Calculate new # of invites
 		$new_invites = $old_invites + $invites;
 		
 		// Update database
 		$sql_update = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `invites` = $new_invites WHERE `id` = $this->id";
-		$query = mysql_query($sql_update);
+		$query = mysqli_query($sql_update);
 		
 	}
 	
@@ -520,8 +520,8 @@ class User {
 		
 		$username = sanitize_input($username);
 		
-		$query = mysql_query("SELECT COUNT(id) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `username` = $username");
-		$count = mysql_result($query, 0);
+		$query = mysqli_query("SELECT COUNT(id) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `username` = $username");
+		$count = mysqli_result($query, 0);
 		
 		if ($count >= 1) {
 			
@@ -542,8 +542,8 @@ class User {
 		
 		$email = sanitize_input($email);
 		
-		$query = mysql_query("SELECT COUNT(id) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `email` = $email");
-		$user_count = mysql_result($query, 0);
+		$query = mysqli_query("SELECT COUNT(id) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `email` = $email");
+		$user_count = mysqli_result($query, 0);
 		
 		if ($user_count >= 1) {
 			
@@ -606,12 +606,12 @@ class User {
 		$code = sanitize_input($code);
 		
 		$sql = "SELECT `user_id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users_password_reset` WHERE `reset_code` = $code AND `date` > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY `date` DESC";
-		$query = mysql_query($sql);
-		$count = mysql_num_rows($query);
+		$query = mysqli_query($sql);
+		$count = mysqli_num_rows($query);
 		
 		if ($count >= 1) {
 			
-			return mysql_result($query, 0);
+			return mysqli_result($query, 0);
 			
 		} else {
 			
@@ -635,7 +635,7 @@ class User {
 		
 		// Write to database
 		$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}users_password_reset` SET `user_id` = $this->id, `reset_code` = '$code'";
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 
 		return $code;
 		

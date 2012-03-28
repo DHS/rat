@@ -22,9 +22,9 @@ class Item {
 			$sql .= ", image = $image";
 		}
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
-		$id = mysql_insert_id();
+		$id = mysqli_insert_id();
 		
 		return $id;
 		
@@ -38,8 +38,8 @@ class Item {
 		$id = sanitize_input($id);
 		
 		$sql = "SELECT `id`, `user_id`, `title`, `content`, `image`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `id` = $id ORDER BY `id` DESC";
-		$query = mysql_query($sql);
-		$result = mysql_fetch_array($query, MYSQL_ASSOC);
+		$query = mysqli_query($sql);
+		$result = mysqli_fetch_array($query, mysqli_ASSOC);
 		
 		if (!is_array($result)) {
 			
@@ -79,11 +79,11 @@ class Item {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 		// Loop through item ids, fetching objects
 		$items = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
 			$items[] = Item::get_by_id($result['id']);
 		}
 		
@@ -114,7 +114,7 @@ class Item {
 		
 		$sql .= " WHERE `id` = $this->id";
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 	}
 	
@@ -140,10 +140,10 @@ class Item {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 		$comments = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
 			$comments[] = Comment::get_by_id($result['id']);
 		}
 		
@@ -166,10 +166,10 @@ class Item {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 		
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 		
 		$likes = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
 			$likes[$result['id']] = Like::get_by_id($result['id']);
 		}
 		
@@ -184,12 +184,12 @@ class Item {
 		
 		// Check item exists
 		$sql_check = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `id` = $this->id";
-		$count_query = mysql_query($sql_check);
+		$count_query = mysqli_query($sql_check);
 		
-		if (mysql_num_rows($count_query) > 0) {
+		if (mysqli_num_rows($count_query) > 0) {
 			// If item exists, go ahead and delete
 			$sql_delete = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `id` = $this->id";
-			$query = mysql_query($sql_delete);
+			$query = mysqli_query($sql_delete);
 		}
 		
 	}
