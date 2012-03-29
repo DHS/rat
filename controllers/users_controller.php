@@ -83,7 +83,9 @@ class UsersController extends Application {
 			$friends = $user->friend_check($_SESSION['user_id']);
 		}
 
-		$this->title = $this->user->username;
+    if (isset($this->user->username)) {
+      		$this->title = $this->user->username;
+    }
 
 		// old template
 		$this->user = $user;
@@ -92,7 +94,11 @@ class UsersController extends Application {
 		if ($this->json) {
 			$this->render_json($this->user);
 		} else {
-			$this->loadView('users/show', array('user' => $user, 'items' => $items, 'friends' => $friends));
+		  $vars = array('user' => $user, 'items' => $items);
+		  if (isset($friends)) {
+		    $vars['friends'] = $friends;
+		  }
+			$this->loadView('users/show', $vars);
 		}
 
 	}
