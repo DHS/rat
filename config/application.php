@@ -64,17 +64,17 @@ class AppConfig extends ServerConfig {
     ),
 
     'comments' => array(
-      'enabled'		=> TRUE,
-      'name'			=> 'Comment',
+      'enabled'		  => TRUE,
+      'name'			  => 'Comment',
       'name_plural'	=> 'Comments'
     ),
 
     'likes' => array(
-      'enabled'		=> TRUE,
-      'name'			=> 'Like',
-      'name_plural'	=> 'Likes',
-      'opposite_name'	=> 'Unlike',
-      'past_tense'	=> 'Liked by'
+      'enabled'       => TRUE,
+      'name'          => 'Like',
+      'name_plural'   => 'Likes',
+      'opposite_name' => 'Unlike',
+      'past_tense'    => 'Liked by'
     )
 
   );
@@ -94,13 +94,14 @@ class AppConfig extends ServerConfig {
 
 	// Theme
 	public $theme = 'default';
+	// try 'twig' for new features
 
 	// Plugins
 	public $plugins = array(
-	  'log'		=> TRUE,
-    'gravatar'	=> TRUE,
-    'points'	=> FALSE,
-    'analytics'	=> FALSE
+	  'log'       => TRUE,
+    'gravatar'  => TRUE,
+    'points'    => FALSE,
+    'analytics' => FALSE
   );
 
 	// Send emails from what address?
