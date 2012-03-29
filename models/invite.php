@@ -31,7 +31,7 @@ class Invite {
 
 		$sql = "SELECT `id`, `user_id`, `email`, `code`, `result`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `id` = $id";
 		$query = mysqli_query($sql);
-		$result = mysqli_fetch_array($query, mysqli_ASSOC);
+		$result = mysqli_fetch_array($query, MYSQLI_ASSOC);
 
 		if (!is_array($result)) {
 			// Invite not found
@@ -75,7 +75,7 @@ class Invite {
 
 		// Loop through invite ids, fetching objects
 		$invites = array();
-		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
 			$invites[] = Invite::get_by_id($result['id']);
 		}
 

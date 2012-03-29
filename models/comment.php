@@ -29,7 +29,7 @@ class Comment {
 
 		$sql = "SELECT `id`, `user_id`, `item_id`, `content`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `id` = $id";
 		$query = mysqli_query($sql);
-		$result = mysqli_fetch_array($query, mysqli_ASSOC);
+		$result = mysqli_fetch_array($query, MYSQLI_ASSOC);
 
 		if (!is_array($result)) {
 			// Comment not found
@@ -72,7 +72,7 @@ class Comment {
 
 		// Loop through comment ids, fetching objects
 		$comments = array();
-		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
 			$comments[] = Comment::get_by_id($result['id']);
 		}
 

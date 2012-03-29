@@ -33,7 +33,7 @@ class Like {
 
 		$sql = "SELECT `id`, `user_id`, `item_id`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $id";
 		$query = mysqli_query($sql);
-		$result = mysqli_fetch_array($query, mysqli_ASSOC);
+		$result = mysqli_fetch_array($query, MYSQLI_ASSOC);
 
 		if (!is_array($result)) {
 
@@ -102,7 +102,7 @@ class Like {
 
 		// Loop through likes, fetching objects
 		$likes = array();
-		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
 			$likes[] = Like::get_by_id($result['id']);
 		}
 
