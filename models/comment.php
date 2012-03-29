@@ -12,9 +12,9 @@ class Comment {
 		$content = sanitize_input($content);
 
 		$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}comments` SET `user_id` = $user_id, `item_id` = $item_id, `content` = $content";
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 
-		$id = mysql_insert_id();
+		$id = mysqli_insert_id();
 
 		return $id;
 
@@ -28,8 +28,8 @@ class Comment {
 		$id = sanitize_input($id);
 
 		$sql = "SELECT `id`, `user_id`, `item_id`, `content`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `id` = $id";
-		$query = mysql_query($sql);
-		$result = mysql_fetch_array($query, MYSQL_ASSOC);
+		$query = mysqli_query($sql);
+		$result = mysqli_fetch_array($query, mysqli_ASSOC);
 
 		if (!is_array($result)) {
 			// Comment not found
@@ -68,11 +68,11 @@ class Comment {
 		$sql .= " OFFSET $offset";
 
 		// Get list of ids
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 
 		// Loop through comment ids, fetching objects
 		$comments = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
 			$comments[] = Comment::get_by_id($result['id']);
 		}
 
@@ -86,11 +86,11 @@ class Comment {
 		$config = new AppConfig;
 
 		$count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `id` = {$this->id}";
-		$count_query = mysql_query($count_sql);
+		$count_query = mysqli_query($count_sql);
 
-		if (mysql_num_rows($count_query) > 0) {
+		if (mysqli_num_rows($count_query) > 0) {
 			$sql = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `id` = {$this->id}";
-			$query = mysql_query($sql);
+			$query = mysqli_query($sql);
 		}
 
 		return $this->id;

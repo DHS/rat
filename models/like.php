@@ -11,14 +11,14 @@ class Like {
 		$item_id = sanitize_input($item_id);
 
 		$count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
-		$count_query = mysql_query($count_sql);
+		$count_query = mysqli_query($count_sql);
 
-		if (mysql_num_rows($count_query) < 1) {
+		if (mysqli_num_rows($count_query) < 1) {
 			$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}likes` SET `user_id` = $user_id, `item_id` = $item_id";
-			$query = mysql_query($sql);
+			$query = mysqli_query($sql);
 		}
 
-		$id = mysql_insert_id();
+		$id = mysqli_insert_id();
 
 		return $id;
 
@@ -32,8 +32,8 @@ class Like {
 		$id = sanitize_input($id);
 
 		$sql = "SELECT `id`, `user_id`, `item_id`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $id";
-		$query = mysql_query($sql);
-		$result = mysql_fetch_array($query, MYSQL_ASSOC);
+		$query = mysqli_query($sql);
+		$result = mysqli_fetch_array($query, mysqli_ASSOC);
 
 		if (!is_array($result)) {
 
@@ -64,8 +64,8 @@ class Like {
 		$item_id = sanitize_input($item_id);
 
 		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
-		$query = mysql_query($sql);
-		$result = mysql_result($query, 0);
+		$query = mysqli_query($sql);
+		$result = mysqli_result($query, 0);
 
 		if ($result == FALSE) {
 
@@ -98,11 +98,11 @@ class Like {
 		$sql .= " OFFSET $offset";
 
 		// Get likes
-		$query = mysql_query($sql);
+		$query = mysqli_query($sql);
 
 		// Loop through likes, fetching objects
 		$likes = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_array($query, mysqli_ASSOC)) {
 			$likes[] = Like::get_by_id($result['id']);
 		}
 
@@ -116,11 +116,11 @@ class Like {
 		$config = new AppConfig;
 
 		$count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $this->id";
-		$count_query = mysql_query($count_sql);
+		$count_query = mysqli_query($count_sql);
 
-		if (mysql_num_rows($count_query) > 0) {
+		if (mysqli_num_rows($count_query) > 0) {
 			$sql = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $this->id";
-			$query = mysql_query($sql);
+			$query = mysqli_query($sql);
 		}
 
 	}
