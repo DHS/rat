@@ -626,21 +626,22 @@ class UsersController extends Application {
 
 				$to = "{$_POST['username']} <{$_POST['email']}>";
 
-				// Load subject and body from template
-				// old template
-				include "themes/{$this->config->theme}/emails/signup.php";
-
 				if ($this->config->theme == 'twig') {
 
-					$to			= array('name' => $_POST['username'], 'email' => $_POST['email']);
-					$subject	= '['.$this->config->name.'] Your '.$this->config->name.' invite is here!';
-					$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('link' => $link, 'username' => $_POST['username'], 'app' => array('config' => $this->config)));
+					$to = array('name' => $_POST['username'], 'email' => $_POST['email']);
+					$subject = '['.$this->config->name.'] Welcome to '.$this->config->name.'!';
+					$body = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('username' => $_POST['username'], 'app' => array('config' => $this->config)));
+
+				} else {
+
+  				// Load subject and body from template
+  				// old template
+				  include "themes/{$this->config->theme}/emails/signup.php";
 
 				}
 
 				// Email user
-				$this->email->send_email($to, $subject, $body);
-				exit();
+				$this->email->send_email($to, $subject, $body, TRUE);
 
 			}
 
@@ -712,9 +713,11 @@ class UsersController extends Application {
 			// There was an error
 
 			// Propagate get vars to be picked up by the form
-			$this->uri['params']['email']		= $_POST['email'];
-			$this->uri['params']['username']	= $_POST['username'];
-			$this->code			= $_POST['code'];
+			$this->uri['params']['email'] = $_POST['email'];
+			$this->uri['params']['username'] = $_POST['username'];
+			if (isset($_POST['code'])) {
+			  $this->code = $_POST['code'];
+			}
 
 			// Show error message
 			Application::flash('error', $error);
