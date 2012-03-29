@@ -437,11 +437,10 @@ class Application {
 
             $diff = array_diff($param_names, array_keys($params));
 
-			if ((! is_null($uri['controller'])
-				&& $targets[$i]['controller'] == $uri['controller'])
-				&& (isset($uri['action'])
-				&& $targets[$i]['action'] == $uri['action'])
-				&& empty($diff)) {
+			if (  ( ! is_null($uri['controller']) && $targets[$i]['controller'] == $uri['controller'] )
+			      && ( isset($uri['action']) && isset($targets[$i]['action'])  && $targets[$i]['action'] == $uri['action'] )
+			      && empty($diff)
+			    ) {
 
                 $match = $i;
 
