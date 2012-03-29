@@ -114,7 +114,6 @@ Missing functionality
 - @ mentions
 - Badges system
 - Infinite scroll
-- Tidier date formats
 - Add an additional theme
 - Plugin hooks similar to Wordpress
 - Connect accounts to Facebook/Twitter
