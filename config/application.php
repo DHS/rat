@@ -87,7 +87,10 @@ class AppConfig extends ServerConfig {
 
 	// Friends - still testing, works with asymmetric set to true... just!
 	// (Shows 'Follow' link & generates homepage feed)
-	public $friends = array('enabled' => FALSE, 'asymmetric' => FALSE);
+	public $friends = array(
+	  'enabled'     => FALSE,
+	  'asymmetric'  => FALSE
+	);
 
 	// Admin users - array of user IDs who have access to admin area
 	public $admin_users = array(1);
