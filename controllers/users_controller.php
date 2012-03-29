@@ -83,8 +83,8 @@ class UsersController extends Application {
 			$friends = $user->friend_check($_SESSION['user_id']);
 		}
 
-    if (isset($this->user->username)) {
-      		$this->title = $this->user->username;
+    if (isset($user->username)) {
+      $this->title = $user->username;
     }
 
 		// old template
