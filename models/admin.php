@@ -11,7 +11,7 @@ class Admin {
 		$users_query = mysqli_query($sql);
 
 		$users = array();
-		while ($user = mysqli_fetch_array($users_query, MYSQLI_ASSOC)) {
+		while ($user = mysqli_fetch_assoc($users_query)) {
 
 			// Find last login
 			$last_login_query = mysqli_query("SELECT TIMESTAMPDIFF(DAY, date, NOW()) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}log` WHERE `user_id` = '{$user['id']}' AND `action` = 'login' ORDER BY `date` DESC LIMIT 1");
@@ -45,7 +45,7 @@ class Admin {
 		$waiting_users_query = mysqli_query($sql);
 
 		$waiting_users = array();
-		while ($user = mysqli_fetch_array($waiting_users_query, MYSQLI_ASSOC)) {
+		while ($user = mysqli_fetch_assoc($waiting_users_query)) {
 			$waiting_users[] = $user;
 		}
 

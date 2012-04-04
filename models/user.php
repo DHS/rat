@@ -27,7 +27,7 @@ class User {
 
 		$sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $id";
 		$query = mysqli_query($sql);
-		$result = mysqli_fetch_array($query, MYSQLI_ASSOC);
+		$result = mysqli_fetch_assoc($query);
 
 		if (!is_array($result)) {
 
@@ -56,7 +56,7 @@ class User {
 
 		$sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `username` = $username";
 		$query = mysqli_query($sql);
-		$result = mysqli_fetch_array($query, MYSQLI_ASSOC);
+		$result = mysqli_fetch_assoc($query);
 
 		if (!is_array($result)) {
 
@@ -85,7 +85,7 @@ class User {
 
 		$sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `email` = $email";
 		$query = mysqli_query($sql);
-		$result = mysqli_fetch_array($query, MYSQLI_ASSOC);
+		$result = mysqli_fetch_assoc($query);
 
 		if (!is_array($result)) {
 
@@ -201,7 +201,7 @@ class User {
 		$query = mysqli_query($sql);
 
 		$items = array();
-		while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+		while ($result = mysqli_fetch_assoc($query)) {
 			$items[] = Item::get_by_id($result['id']);
 		}
 
@@ -227,7 +227,7 @@ class User {
 		$query = mysqli_query($sql);
 
 		$invites = array();
-		while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+		while ($result = mysqli_fetch_assoc($query)) {
 			$invites[] = Invite::get_by_id($result['id']);
 		}
 
@@ -253,7 +253,7 @@ class User {
 		$query = mysqli_query($sql);
 
 		$friends = array();
-		while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+		while ($result = mysqli_fetch_assoc($query)) {
 			$friends[$result['id']] = User::get_by_id($result['friend_user_id']);
 		}
 
@@ -279,7 +279,7 @@ class User {
 		$query = mysqli_query($sql);
 
 		$friends = array();
-		while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+		while ($result = mysqli_fetch_assoc($query)) {
 			$friends[$result['id']] = User::get_by_id($result['user_id']);
 		}
 
@@ -305,7 +305,7 @@ class User {
 		$query = mysqli_query($sql);
 
 		$items = array();
-		while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+		while ($result = mysqli_fetch_assoc($query)) {
 			$items[] = Item::get_by_id($result['item_id']);
 		}
 
@@ -331,7 +331,7 @@ class User {
 		$query = mysqli_query($sql);
 
 		$comments = array();
-		while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+		while ($result = mysqli_fetch_assoc($query)) {
 			$comments[] = Comment::get_by_id($result['id']);
 		}
 
@@ -415,7 +415,7 @@ class User {
 
 		// Loop through item ids, fetching objects
 		$items = array();
-		while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+		while ($result = mysqli_fetch_assoc($query)) {
 			$items[] = Item::get_by_id($result['id']);
 		}
 

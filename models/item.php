@@ -39,7 +39,7 @@ class Item {
 
 		$sql = "SELECT `id`, `user_id`, `title`, `content`, `image`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `id` = $id ORDER BY `id` DESC";
 		$query = mysqli_query($sql);
-		$result = mysqli_fetch_array($query, MYSQLI_ASSOC);
+		$result = mysqli_fetch_assoc($query);
 
 		if (!is_array($result)) {
 
@@ -83,7 +83,7 @@ class Item {
 
 		// Loop through item ids, fetching objects
 		$items = array();
-		while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+		while ($result = mysqli_fetch_assoc($query)) {
 			$items[] = Item::get_by_id($result['id']);
 		}
 
@@ -143,7 +143,7 @@ class Item {
 		$query = mysqli_query($sql);
 
 		$comments = array();
-		while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+		while ($result = mysqli_fetch_assoc($query)) {
 			$comments[] = Comment::get_by_id($result['id']);
 		}
 
@@ -169,7 +169,7 @@ class Item {
 		$query = mysqli_query($sql);
 
 		$likes = array();
-		while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+		while ($result = mysqli_fetch_assoc($query)) {
 			$likes[$result['id']] = Like::get_by_id($result['id']);
 		}
 
