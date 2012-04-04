@@ -26,14 +26,14 @@ class ServerConfig {
       'username'  => 'root',
       'password'	=> 'root',
       'database'	=> 'rat',
-      'prefix'	=> ''
+      'prefix'	  => ''
 		),
-    'live'	=> array(
-        'host'		=> 'localhost',
-        'username'	=> 'root',
-        'password'	=> 'root',
-        'database'	=> 'rat',
-        'prefix'	=> ''
+    'live' => array(
+      'host'	  	=> 'localhost',
+      'username'  => 'root',
+      'password'	=> 'root',
+      'database'	=> 'rat',
+      'prefix'	  => ''
     )
   );
 
