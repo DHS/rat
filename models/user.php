@@ -22,9 +22,7 @@ class User {
 		$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `email` = $email, `date_added` = NOW()";
 		$query = mysql_query($sql);
 
-		$id = mysql_insert_id();
-
-		return $id;
+		return mysql_insert_id();
 
 	}
 

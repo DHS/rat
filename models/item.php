@@ -34,9 +34,7 @@ class Item {
 
 		$query = mysql_query($sql);
 
-		$id = mysql_insert_id();
-
-		return $id;
+		return mysql_insert_id();
 
 	}
 

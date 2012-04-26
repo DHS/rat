@@ -24,9 +24,7 @@ class Comment {
 		$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}comments` SET `user_id` = $user_id, `item_id` = $item_id, `content` = $content";
 		$query = mysql_query($sql);
 
-		$id = mysql_insert_id();
-
-		return $id;
+		return mysql_insert_id();
 
 	}
 
