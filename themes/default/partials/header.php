@@ -1,8 +1,8 @@
 <?php
 
-if (!isset($this->head_title)) {
+if ( ! isset($this->head_title)) {
 	if (isset($this->title)) {
-		$this->head_title = $this->config->name.' - '.$this->title;
+		$this->head_title = $this->config->name . ' - ' . $this->title;
 	} else {
 		$this->head_title = $this->config->name;
 	}
@@ -10,7 +10,7 @@ if (!isset($this->head_title)) {
 
 if (isset($this->title)) {
 	$this->title = '<!-- Page title -->
-  <h1>'.$this->title.'</h1>';
+  <h1>' . $this->title . '</h1>';
 }
 
 ?>
@@ -121,8 +121,8 @@ if (isset($_SESSION['flash'])) {
   <!-- Message -->
   <div class="row">
     <div class="span8 columns offset4">
-  	  <div class="alert-message '.$_SESSION['flash']['category'].'">
-        <p>'.$_SESSION['flash']['message'].'</p>
+  	  <div class="alert-message ' . $_SESSION['flash']['category'].'">
+        <p>' . $_SESSION['flash']['message'].'</p>
       </div>
     </div>
   </div>';

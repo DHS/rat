@@ -113,7 +113,7 @@ class User {
 		$id = sanitize_input($id);
 		$username = sanitize_input($username);
 
-		$encrypted_password = md5($password.$salt);
+		$encrypted_password = md5($password . $salt);
 
 		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `username` = $username, `password` = '$encrypted_password', `date_joined` = NOW() WHERE `id` = $id";
 		$query = mysqli_query($sql);
@@ -123,7 +123,7 @@ class User {
 	// Check user's login details
 	public function authenticate($new_password, $salt) {
 
-		if ($this->password == md5($new_password.$salt)) {
+		if ($this->password == md5($new_password . $salt)) {
 
 			// Update session
 			$_SESSION['user_id'] = $this->id;
@@ -451,7 +451,7 @@ class User {
 
 		$config = new AppConfig;
 
-		$encrypted_password = md5($new_password.$salt);
+		$encrypted_password = md5($new_password . $salt);
 
 		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `password` = '{$encrypted_password}' WHERE `id` = $this->id";
 		$query = mysqli_query($sql);

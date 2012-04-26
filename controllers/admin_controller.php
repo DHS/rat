@@ -104,7 +104,7 @@ class AdminController extends Application {
 			}
 
 			$this->writeConfig('application', $conf);
-			Application::flash('success', 'Success! <a href="'.$this->url_for('admin', 'spec').'">Click here</a> to reload with your new config!');
+			Application::flash('success', 'Success! <a href="' . $this->url_for('admin', 'spec') . '">Click here</a> to reload with your new config!');
 
 		}
 
@@ -185,10 +185,10 @@ class AdminController extends Application {
 
 			// Go forth!
 			if ($this->config->theme == 'twig') {
-				header('Location: '.$this->url_for('admin', 'spec'));
+				header('Location: ' . $this->url_for('admin', 'spec'));
 			} else {
 				// old template
-				header('Location: '.$this->url_for('items', 'add'));
+				header('Location: ' . $this->url_for('items', 'add'));
 			}
 
 			exit();
@@ -224,7 +224,7 @@ class AdminController extends Application {
 			}
 
 			$to			= $email;
-			$link		= $this->config->url.'users/add/'.$id.'/?email='.urlencode($email);
+			$link		= $this->config->url . 'users/add/' . $id . '/?email='.urlencode($email);
 
 			// Load template into $body variable
 			// old template
@@ -233,7 +233,7 @@ class AdminController extends Application {
 			if ($this->config->theme == 'twig') {
 
 				$to			= array('email' => $email);
-				$subject	= '['.$this->config->name.'] Your '.$this->config->name.' invite is here!';
+				$subject	= '[' . $this->config->name . '] Your ' . $this->config->name . ' invite is here!';
 				$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/admin_invite.html"), array('link' => $link, 'app' => array('config' => $this->config)));
 
 			}

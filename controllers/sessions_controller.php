@@ -15,12 +15,12 @@ class SessionsController extends Application {
 
 				// Get redirected
 				if (isset($this->uri['params']['redirect_to'])) {
-					header('Location: '.$this->uri['params']['redirect_to']);
+					header('Location: ' . $this->uri['params']['redirect_to']);
 					exit();
 				}
 
 				// Go forth
-				header('Location: '.$this->config->url);
+				header('Location: ' . $this->config->url);
 
 				exit();
 
@@ -43,7 +43,7 @@ class SessionsController extends Application {
 
 		} else {
 
-			Application::flash('error', 'You are already logged in! '.$this->get_link_to('Click here', 'sessions', 'remove').' to logout.');
+			Application::flash('error', 'You are already logged in! ' . $this->get_link_to('Click here', 'sessions', 'remove').' to logout.');
 			$this->loadView();
 
 		}
