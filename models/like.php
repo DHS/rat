@@ -2,6 +2,16 @@
 
 class Like {
 
+	public function __construct(array $attrs = null) {
+
+		if (is_array($attrs)) {
+			foreach ($attrs as $key => $value) {
+				$this->$key = $value;
+			}
+		}
+
+	}
+
 	// Add a like for an item, returns id
 	public static function add($user_id, $item_id) {
 
@@ -18,9 +28,7 @@ class Like {
 			$query = mysqli_query($sql);
 		}
 
-		$id = mysqli_insert_id();
-
-		return $id;
+		return mysqli_insert_id();
 
 	}
 
@@ -35,23 +43,17 @@ class Like {
 		$query = mysqli_query($sql);
 		$result = mysqli_fetch_assoc($query);
 
-		if (!is_array($result)) {
+		if ( ! is_array($result)) {
 
-			$like = NULL;
+			return null;
 
 		} else {
 
-			$like = new Like;
-
-			foreach ($result as $k => $v) {
-				$like->$k = $v;
-			}
-
+			$like = new Like($result);
 			$like->user = User::get_by_id($result['user_id']);
+			return $like;
 
 		}
-
-		return $like;
 
 	}
 
@@ -69,16 +71,15 @@ class Like {
 
 		if ($result == FALSE) {
 
-			$like = NULL;
+			return $null;
 
 		} else {
 
 			$like = Like::get_by_id($result);
 			$like->user = User::get_by_id($user_id);
+			return $like;
 
 		}
-
-		return $like;
 
 	}
 

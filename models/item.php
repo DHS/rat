@@ -2,6 +2,16 @@
 
 class Item {
 
+	public function __construct(array $attrs = null) {
+
+		if (is_array($attrs)) {
+			foreach ($attrs as $key => $value) {
+				$this->$key = $value;
+			}
+		}
+
+	}
+
 	// Create an item, returns item id
 	public static function add($user_id, $content, $title = NULL, $image = NULL) {
 
@@ -24,9 +34,7 @@ class Item {
 
 		$query = mysqli_query($sql);
 
-		$id = mysqli_insert_id();
-
-		return $id;
+		return mysqli_insert_id();
 
 	}
 
@@ -41,26 +49,22 @@ class Item {
 		$query = mysqli_query($sql);
 		$result = mysqli_fetch_assoc($query);
 
-		if (!is_array($result)) {
+		if ( ! is_array($result)) {
 
-			$item = NULL;
+			return $item;
 
 		} else {
 
-			$item = new Item;
-
-			foreach ($result as $k => $v) {
-				$item->$k = $v;
-			}
+			$item = new Item($result);
 
 			$item->date = date('c',strtotime($item->date));
 			$item->user = $item->user();
 			$item->comments = $item->comments();
 			$item->likes = $item->likes();
 
-		}
+			return $item;
 
-		return $item;
+		}
 
 	}
 

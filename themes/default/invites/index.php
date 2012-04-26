@@ -10,7 +10,7 @@
 
 <p>&nbsp;</p>
 
-<?php if (!empty($this->invites)) { ?>
+<?php if ( ! empty($this->invites)) { ?>
 
 	<h3>Sent invites</h3>
 

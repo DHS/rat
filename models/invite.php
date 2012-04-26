@@ -2,6 +2,16 @@
 
 class Invite {
 
+	public function __construct(array $attrs = null) {
+
+		if (is_array($attrs)) {
+			foreach ($attrs as $key => $value) {
+				$this->$key = $value;
+			}
+		}
+
+	}
+
 	// Add an invite, returns invite id
 	public static function add($user_id, $email) {
 
@@ -33,24 +43,19 @@ class Invite {
 		$query = mysqli_query($sql);
 		$result = mysqli_fetch_assoc($query);
 
-		if (!is_array($result)) {
+		if ( ! is_array($result)) {
 			// Invite not found
 
-			$invite = NULL;
+			return null;
 
 		} else {
 
-			$invite = new Invite;
-
-			foreach ($result as $k => $v) {
-				$invite->$k = $v;
-			}
-
+			$invite = new Invite($result);
 			$invite->user = User::get_by_id($result['user_id']);
 
-		}
+			return $invite;
 
-		return $invite;
+		}
 
 	}
 
@@ -114,11 +119,11 @@ class Invite {
 
 		if ($user_count >= 1) {
 
-			return TRUE;
+			return true;
 
 		} else {
 
-			return FALSE;
+			return false;
 
 		}
 
@@ -130,7 +135,7 @@ class Invite {
 		$config = new AppConfig;
 
 		if ($code == '') {
-			return FALSE;
+			return false;
 		}
 
 		$code = sanitize_input($code);
@@ -141,9 +146,9 @@ class Invite {
 		$status = mysqli_num_rows($query);
 
 		if ($status > 0) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 
 	}

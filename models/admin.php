@@ -22,7 +22,7 @@ class Admin {
 				} else {
 					$last_login = $last_login.' days ago';
 				}
-			}  else {
+			} else {
 				$last_login = 'Never';
 			}
 

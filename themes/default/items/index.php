@@ -1,7 +1,7 @@
 <?php
 
 // User not logged in so show explanation sentence
-if (!isset($_SESSION['user_id'])) {
+if ( ! isset($_SESSION['user_id'])) {
 	echo '<h1><small>' . $this->config->tagline . '</small></h1>';
 }
 

@@ -2,6 +2,16 @@
 
 class Comment {
 
+	public function __construct(array $attrs = null) {
+
+		if (is_array($attrs)) {
+			foreach ($attrs as $key => $value) {
+				$this->$key = $value;
+			}
+		}
+
+	}
+
 	// Add a comment to an item, returns comment id
 	public static function add($user_id, $item_id, $content) {
 
@@ -14,9 +24,7 @@ class Comment {
 		$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}comments` SET `user_id` = $user_id, `item_id` = $item_id, `content` = $content";
 		$query = mysqli_query($sql);
 
-		$id = mysqli_insert_id();
-
-		return $id;
+		return mysqli_insert_id();
 
 	}
 
@@ -31,24 +39,19 @@ class Comment {
 		$query = mysqli_query($sql);
 		$result = mysqli_fetch_assoc($query);
 
-		if (!is_array($result)) {
+		if ( ! is_array($result)) {
 			// Comment not found
 
-			$comment = NULL;
+			return null;
 
 		} else {
 
-			$comment = new Comment;
-
-			foreach ($result as $k => $v) {
-				$comment->$k = $v;
-			}
-
+			$comment = new Comment($result);
 			$comment->user = User::get_by_id($result['user_id']);
 
-		}
+			return $comment;
 
-		return $comment;
+		}
 
 	}
 

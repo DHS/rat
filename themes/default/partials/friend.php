@@ -4,7 +4,7 @@
 
   <span id="friends_<?php echo $this->user->id; ?>">
 
-  <?php if (!isset($_SESSION['user_id'])) { ?>
+  <?php if ( ! isset($_SESSION['user_id'])) { ?>
 
 	<a href="<?php $this->url_for('sessions', 'add'); ?>/?redirect_to=/<?php echo $this->url_for('users', 'show', $this->user->id); ?>" class="btn">
 	<?php if ($this->config->friends['asymmetric'] == TRUE) { echo 'Follow'; } else { echo 'Add friend'; } ?>

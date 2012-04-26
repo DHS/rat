@@ -2,6 +2,16 @@
 
 class User {
 
+	public function __construct(array $attrs = null) {
+
+		if (is_array($attrs)) {
+			foreach ($attrs as $key => $value) {
+				$this->$key = $value;
+			}
+		}
+
+	}
+
 	// Add a user (beta signup)
 	public static function add($email) {
 
@@ -12,9 +22,7 @@ class User {
 		$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `email` = $email, `date_added` = NOW()";
 		$query = mysqli_query($sql);
 
-		$id = mysqli_insert_id();
-
-		return $id;
+		return mysqli_insert_id();
 
 	}
 
@@ -29,21 +37,15 @@ class User {
 		$query = mysqli_query($sql);
 		$result = mysqli_fetch_assoc($query);
 
-		if (!is_array($result)) {
+		if ( ! is_array($result)) {
 
-			$user = NULL;
+			return null;
 
 		} else {
 
-			$user = new User;
-
-			foreach ($result as $k => $v) {
-				$user->$k = $v;
-			}
+			return new User($result);
 
 		}
-
-		return $user;
 
 	}
 
@@ -58,21 +60,15 @@ class User {
 		$query = mysqli_query($sql);
 		$result = mysqli_fetch_assoc($query);
 
-		if (!is_array($result)) {
+		if ( ! is_array($result)) {
 
-			$user = NULL;
+			return null;
 
 		} else {
 
-			$user = new User;
-
-			foreach ($result as $k => $v) {
-				$user->$k = $v;
-			}
+			return new User($result);
 
 		}
-
-		return $user;
 
 	}
 
@@ -87,21 +83,15 @@ class User {
 		$query = mysqli_query($sql);
 		$result = mysqli_fetch_assoc($query);
 
-		if (!is_array($result)) {
+		if ( ! is_array($result)) {
 
-			$user = NULL;
+			return null;
 
 		} else {
 
-			$user = new User;
-
-			foreach ($result as $k => $v) {
-				$user->$k = $v;
-			}
+			return new User($result);
 
 		}
-
-		return $user;
 
 	}
 
@@ -133,11 +123,11 @@ class User {
 				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'login');
 			}
 
-			return TRUE;
+			return true;
 
 		} else {
 
-			return FALSE;
+			return false;
 
 		}
 
@@ -156,11 +146,11 @@ class User {
 				$this->plugins->log->add($this->id, 'user', NULL, 'logout');
 			}
 
-			return TRUE;
+			return true;
 
 		} else {
 
-			return FALSE;
+			return false;
 
 		}
 
@@ -435,9 +425,9 @@ class User {
 		$result = mysqli_result($query, 0);
 
 		if ($result > 0) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 
 	}
@@ -525,11 +515,11 @@ class User {
 
 		if ($count >= 1) {
 
-			return FALSE;
+			return false;
 
 		} else {
 
-			return TRUE;
+			return true;
 
 		}
 
@@ -547,11 +537,11 @@ class User {
 
 		if ($user_count >= 1) {
 
-			return FALSE;
+			return false;
 
 		} else {
 
-			return TRUE;
+			return true;
 
 		}
 
@@ -563,9 +553,9 @@ class User {
 		$array = explode(" ", $string);
 
 		if (count($array) > 1) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 
 	}
@@ -576,9 +566,9 @@ class User {
 		$array = explode("@", $string);
 
 		if (count($array) > 1) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 
 	}
@@ -588,11 +578,11 @@ class User {
 
 		if (ctype_alnum($string)) {
 
-			return TRUE;
+			return true;
 
 		} else {
 
-			return FALSE;
+			return false;
 
 		}
 
