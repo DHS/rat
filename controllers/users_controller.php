@@ -57,7 +57,7 @@ class UsersController extends Application {
 		}
 
 		// Page zero so overwrite to 1
-		if (!isset($this->uri['params']['page'])) {
+		if ( ! isset($this->uri['params']['page'])) {
 			$this->uri['params']['page'] = 1;
 		}
 

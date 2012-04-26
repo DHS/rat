@@ -8,7 +8,7 @@ class ItemsController extends Application {
 	function index() {
 
 		// Page zero so overwrite to 1
-		if (!isset($this->uri['params']['page'])) {
+		if ( ! isset($this->uri['params']['page'])) {
 			$this->uri['params']['page'] = 1;
 		}
 
@@ -60,7 +60,7 @@ class ItemsController extends Application {
 					$error .= 'Error code: '.$_FILES['file']['error'].'<br />';
 				}
 
-				if (!in_array($_FILES['file']['type'], $this->config->items['uploads']['mime-types'])) {
+				if ( ! in_array($_FILES['file']['type'], $this->config->items['uploads']['mime-types'])) {
 					$error .= 'Invalid file type: '.$_FILES['file']['type'].'<br />';
 				}
 
@@ -302,7 +302,7 @@ class ItemsController extends Application {
 			$user = User::get_by_id($_SESSION['user_id']);
 
 			// Page zero so overwrite to 1
-			if (!isset($this->uri['params']['page'])) {
+			if ( ! isset($this->uri['params']['page'])) {
 				$this->uri['params']['page'] = 1;
 			}
 

@@ -37,7 +37,7 @@ class User {
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 
-		if (!is_array($result)) {
+		if ( ! is_array($result)) {
 
 			return null;
 
@@ -60,7 +60,7 @@ class User {
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 
-		if (!is_array($result)) {
+		if ( ! is_array($result)) {
 
 			return null;
 
@@ -83,7 +83,7 @@ class User {
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 
-		if (!is_array($result)) {
+		if ( ! is_array($result)) {
 
 			return null;
 

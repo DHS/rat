@@ -33,7 +33,7 @@ class SessionsController extends Application {
 
 		}
 
-		if (!isset($_SESSION['user_id'])) {
+		if ( ! isset($_SESSION['user_id'])) {
 
             if (isset($email)) {
 			    $this->loadView('sessions/add', array('email' => $email));

@@ -43,7 +43,7 @@ class Invite {
 		$query = mysql_query($sql);
 		$result = mysql_fetch_array($query, MYSQL_ASSOC);
 
-		if (!is_array($result)) {
+		if ( ! is_array($result)) {
 			// Invite not found
 
 			return null;

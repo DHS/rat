@@ -9,7 +9,7 @@ class Application {
     public static function initialise() {
 
 		// Check for server config
-		if (!file_exists('config/server.php')) {
+		if ( ! file_exists('config/server.php')) {
 			throw new ApplicationException(null, "Server config doesn't exist yet. Copy config/server-sample.php to config/server.php and update the variables.");
 		}
 
@@ -212,7 +212,7 @@ class Application {
 
         }
 
-        if (! $routeFound) throw new RoutingException($uri, "Page not found");
+        if ( ! $routeFound) throw new RoutingException($uri, "Page not found");
 
         return $uri;
 
@@ -404,11 +404,11 @@ class Application {
 
         $uri = array('controller' => $controller);
 
-        if (! empty($action)) {
+        if ( ! empty($action)) {
 			$uri['action'] = $action;
 		}
 
-        if (! empty($id)) {
+        if ( ! empty($id)) {
 			$params['id'] = $id;
 		}
 
@@ -449,7 +449,7 @@ class Application {
         }
 
         // If a matching target is found, the route can be condensed
-        if (! is_null($match)) {
+        if ( ! is_null($match)) {
 
             // Find the condensed route, route_format
             $route_format = array_keys($routes->aliases);
@@ -474,11 +474,11 @@ class Application {
             // Construct the standard route
             $route = $controller;
 
-            if (!empty($action)) {
+            if ( ! empty($action)) {
 				$route .= "/$action";
 			}
 
-            if (!empty($id)) {
+            if ( ! empty($id)) {
 				$route .= "/$id";
 			}
 
@@ -525,7 +525,7 @@ class Application {
 
     public static function flash($category, $message) {
 
-        if (! in_array($category, array('error', 'notice', 'success'))) {
+        if ( ! in_array($category, array('error', 'notice', 'success'))) {
             $category = 'success';
         }
 

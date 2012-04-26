@@ -20,7 +20,7 @@ function sanitize_input($input) {
 	}
 
 	// If not a number, then add quotes
-	if (!is_numeric($input)) {
+	if ( ! is_numeric($input)) {
 		$input = "'".mysql_real_escape_string($input)."'";
 	}
 
