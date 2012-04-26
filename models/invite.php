@@ -2,15 +2,15 @@
 
 class Invite {
 
-  public function __construct(array $attrs = null) {
+	public function __construct(array $attrs = null) {
 
-    if (is_array($attrs)) {
-      foreach ($attrs as $key => $value) {
-        $this->$key = $value;
-      }
-    }
+		if (is_array($attrs)) {
+			foreach ($attrs as $key => $value) {
+				$this->$key = $value;
+			}
+		}
 
-  }
+	}
 
 	// Add an invite, returns invite id
 	public static function add($user_id, $email) {

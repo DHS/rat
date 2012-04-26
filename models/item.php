@@ -2,15 +2,15 @@
 
 class Item {
 
-  public function __construct(array $attrs = null) {
+	public function __construct(array $attrs = null) {
 
-    if (is_array($attrs)) {
-      foreach ($attrs as $key => $value) {
-        $this->$key = $value;
-      }
-    }
+		if (is_array($attrs)) {
+			foreach ($attrs as $key => $value) {
+				$this->$key = $value;
+			}
+		}
 
-  }
+	}
 
 	// Create an item, returns item id
 	public static function add($user_id, $content, $title = NULL, $image = NULL) {
