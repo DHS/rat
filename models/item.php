@@ -2,6 +2,16 @@
 
 class Item {
 
+  public function __construct(array $attrs = null) {
+
+    if (is_array($attrs)) {
+      foreach ($attrs as $key => $value) {
+        $this->$key = $value;
+      }
+    }
+
+  }
+
 	// Create an item, returns item id
 	public static function add($user_id, $content, $title = NULL, $image = NULL) {
 
@@ -47,11 +57,7 @@ class Item {
 
 		} else {
 
-			$item = new Item;
-
-			foreach ($result as $k => $v) {
-				$item->$k = $v;
-			}
+			$item = new Item($result);
 
 			$item->date = date('c',strtotime($item->date));
 			$item->user = $item->user();

@@ -2,6 +2,16 @@
 
 class Invite {
 
+  public function __construct(array $attrs = null) {
+
+    if (is_array($attrs)) {
+      foreach ($attrs as $key => $value) {
+        $this->$key = $value;
+      }
+    }
+
+  }
+
 	// Add an invite, returns invite id
 	public static function add($user_id, $email) {
 
@@ -40,11 +50,7 @@ class Invite {
 
 		} else {
 
-			$invite = new Invite;
-
-			foreach ($result as $k => $v) {
-				$invite->$k = $v;
-			}
+			$invite = new Invite($result);
 
 			$invite->user = User::get_by_id($result['user_id']);
 

@@ -2,6 +2,16 @@
 
 class Like {
 
+  public function __construct(array $attrs = null) {
+
+    if (is_array($attrs)) {
+      foreach ($attrs as $key => $value) {
+        $this->$key = $value;
+      }
+    }
+
+  }
+
 	// Add a like for an item, returns id
 	public static function add($user_id, $item_id) {
 
@@ -41,11 +51,7 @@ class Like {
 
 		} else {
 
-			$like = new Like;
-
-			foreach ($result as $k => $v) {
-				$like->$k = $v;
-			}
+			$like = new Like($result);
 
 			$like->user = User::get_by_id($result['user_id']);
 

@@ -2,6 +2,16 @@
 
 class User {
 
+  public function __construct(array $attrs = null) {
+
+    if (is_array($attrs)) {
+      foreach ($attrs as $key => $value) {
+        $this->$key = $value;
+      }
+    }
+
+  }
+
 	// Add a user (beta signup)
 	public static function add($email) {
 
@@ -35,11 +45,7 @@ class User {
 
 		} else {
 
-			$user = new User;
-
-			foreach ($result as $k => $v) {
-				$user->$k = $v;
-			}
+			$user = new User($result);
 
 		}
 
@@ -64,11 +70,7 @@ class User {
 
 		} else {
 
-			$user = new User;
-
-			foreach ($result as $k => $v) {
-				$user->$k = $v;
-			}
+			$user = new User($result);
 
 		}
 
@@ -93,11 +95,7 @@ class User {
 
 		} else {
 
-			$user = new User;
-
-			foreach ($result as $k => $v) {
-				$user->$k = $v;
-			}
+			$user = new User($result);
 
 		}
 

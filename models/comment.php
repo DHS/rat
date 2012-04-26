@@ -2,6 +2,16 @@
 
 class Comment {
 
+  public function __construct(array $attrs = null) {
+
+    if (is_array($attrs)) {
+      foreach ($attrs as $key => $value) {
+        $this->$key = $value;
+      }
+    }
+
+  }
+
 	// Add a comment to an item, returns comment id
 	public static function add($user_id, $item_id, $content) {
 
@@ -38,11 +48,7 @@ class Comment {
 
 		} else {
 
-			$comment = new Comment;
-
-			foreach ($result as $k => $v) {
-				$comment->$k = $v;
-			}
+			$comment = new Comment($result);
 
 			$comment->user = User::get_by_id($result['user_id']);
 
