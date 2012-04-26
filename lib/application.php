@@ -288,6 +288,8 @@ class Application {
 
     private function loadModels() {
 
+		global $mysqli;
+
         require_once 'lib/mysql.php';
 
         $models = glob('models/*.php' );
