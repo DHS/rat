@@ -38,9 +38,10 @@ class LikesController extends Application {
 		if ($this->config->theme == 'twig') {
 
 			// Copying the work of loadView
-			$params = array(	'app'		=> $this,
-								'session'	=> $_SESSION
-							);
+			$params = array(
+				'app'		=> $this,
+				'session'	=> $_SESSION
+			);
 
 			$params['item'] = $item;
 

@@ -48,10 +48,10 @@ class FriendsController extends Application {
 		if ($this->config->theme == 'twig') {
 
 			// Copying the work of loadView
-			$params = array(	'view'		=> $view,
-								'app'		=> $this,
-								'session'	=> $_SESSION
-							);
+			$params = array(
+				'app'		=> $this,
+				'session'	=> $_SESSION
+			);
 
 			$params['session']	= $session;
 			$params['user']		= $friend;
@@ -93,10 +93,10 @@ class FriendsController extends Application {
 		if ($this->config->theme == 'twig') {
 
 			// Copying the work of loadView
-			$params = array(	'view'		=> $view,
-								'app'		=> $this,
-								'session'	=> $_SESSION
-							);
+			$params = array(
+				'app'		=> $this,
+				'session'	=> $_SESSION
+			);
 
 			$params['session']	= $session;
 			$params['user']		= $friend;
