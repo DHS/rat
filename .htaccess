@@ -443,7 +443,7 @@ Options -Indexes
 
 
 # Rat-specific rewrite
-<IfModule mod_headers.c>
+<IfModule mod_rewrite.c>
     RewriteCond $1 !^(js|themes|uploads|static)
     RewriteRule ^(.*)$ index.php
 </IfModule>
