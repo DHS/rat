@@ -45,17 +45,15 @@ class Like {
 
 		if (!is_array($result)) {
 
-			$like = NULL;
+			return null;
 
 		} else {
 
 			$like = new Like($result);
-
 			$like->user = User::get_by_id($result['user_id']);
+			return $like;
 
 		}
-
-		return $like;
 
 	}
 
@@ -73,16 +71,15 @@ class Like {
 
 		if ($result == FALSE) {
 
-			$like = NULL;
+			return $null;
 
 		} else {
 
 			$like = Like::get_by_id($result);
 			$like->user = User::get_by_id($user_id);
+			return $like;
 
 		}
-
-		return $like;
 
 	}
 

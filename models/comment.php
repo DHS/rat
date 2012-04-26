@@ -42,17 +42,16 @@ class Comment {
 		if (!is_array($result)) {
 			// Comment not found
 
-			$comment = NULL;
+			return null;
 
 		} else {
 
 			$comment = new Comment($result);
-
 			$comment->user = User::get_by_id($result['user_id']);
 
-		}
+			return $comment;
 
-		return $comment;
+		}
 
 	}
 

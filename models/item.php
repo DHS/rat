@@ -51,7 +51,7 @@ class Item {
 
 		if (!is_array($result)) {
 
-			$item = NULL;
+			return $item;
 
 		} else {
 
@@ -62,9 +62,9 @@ class Item {
 			$item->comments = $item->comments();
 			$item->likes = $item->likes();
 
-		}
+			return $item;
 
-		return $item;
+		}
 
 	}
 

@@ -39,15 +39,13 @@ class User {
 
 		if (!is_array($result)) {
 
-			$user = NULL;
+			return null;
 
 		} else {
 
-			$user = new User($result);
+			return new User($result);
 
 		}
-
-		return $user;
 
 	}
 
@@ -64,15 +62,13 @@ class User {
 
 		if (!is_array($result)) {
 
-			$user = NULL;
+			return null;
 
 		} else {
 
-			$user = new User($result);
+			return new User($result);
 
 		}
-
-		return $user;
 
 	}
 
@@ -89,15 +85,13 @@ class User {
 
 		if (!is_array($result)) {
 
-			$user = NULL;
+			return null;
 
 		} else {
 
-			$user = new User($result);
+			return new User($result);
 
 		}
-
-		return $user;
 
 	}
 
@@ -129,11 +123,11 @@ class User {
 				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'login');
 			}
 
-			return TRUE;
+			return true;
 
 		} else {
 
-			return FALSE;
+			return false;
 
 		}
 
@@ -152,11 +146,11 @@ class User {
 				$this->plugins->log->add($this->id, 'user', NULL, 'logout');
 			}
 
-			return TRUE;
+			return true;
 
 		} else {
 
-			return FALSE;
+			return false;
 
 		}
 
@@ -431,9 +425,9 @@ class User {
 		$result = mysql_result($query, 0);
 
 		if ($result > 0) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 
 	}
@@ -521,11 +515,11 @@ class User {
 
 		if ($count >= 1) {
 
-			return FALSE;
+			return false;
 
 		} else {
 
-			return TRUE;
+			return true;
 
 		}
 
@@ -543,11 +537,11 @@ class User {
 
 		if ($user_count >= 1) {
 
-			return FALSE;
+			return false;
 
 		} else {
 
-			return TRUE;
+			return true;
 
 		}
 
@@ -559,9 +553,9 @@ class User {
 		$array = explode(" ", $string);
 
 		if (count($array) > 1) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 
 	}
@@ -572,9 +566,9 @@ class User {
 		$array = explode("@", $string);
 
 		if (count($array) > 1) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 
 	}
@@ -584,11 +578,11 @@ class User {
 
 		if (ctype_alnum($string)) {
 
-			return TRUE;
+			return true;
 
 		} else {
 
-			return FALSE;
+			return false;
 
 		}
 

@@ -46,17 +46,16 @@ class Invite {
 		if (!is_array($result)) {
 			// Invite not found
 
-			$invite = NULL;
+			return null;
 
 		} else {
 
 			$invite = new Invite($result);
-
 			$invite->user = User::get_by_id($result['user_id']);
 
-		}
+			return $invite;
 
-		return $invite;
+		}
 
 	}
 
@@ -120,11 +119,11 @@ class Invite {
 
 		if ($user_count >= 1) {
 
-			return TRUE;
+			return true;
 
 		} else {
 
-			return FALSE;
+			return false;
 
 		}
 
@@ -136,7 +135,7 @@ class Invite {
 		$config = new AppConfig;
 
 		if ($code == '') {
-			return FALSE;
+			return false;
 		}
 
 		$code = sanitize_input($code);
@@ -147,9 +146,9 @@ class Invite {
 		$status = mysql_num_rows($query);
 
 		if ($status > 0) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 
 	}
