@@ -15,7 +15,7 @@ class InvitesController extends Application {
 		if (isset($invites_remaining) && $invites_remaining == 1) {
 			$message = 'You have one invite remaining.';
 		} elseif (isset($invites_remaining) && $invites_remaining > 1) {
-			$message = 'You have '.$invites_remaining.' invites remaining.';
+			$message = 'You have ' . $invites_remaining . ' invites remaining.';
 		} else {
 			$message = 'You have no remaining invites.';
 		}
@@ -65,7 +65,7 @@ class InvitesController extends Application {
 
 		// Check if already a user
 		if (is_object(User::get_by_email($_POST['email'])) == TRUE) {
-			$error .= 'This person is already using '.$this->config->name.'!<br />';
+			$error .= 'This person is already using ' . $this->config->name . '!<br />';
 		}
 
 		if ($error == '') {
@@ -90,7 +90,7 @@ class InvitesController extends Application {
 			$admin = User::get_by_id($this->config->admin_users[0]);
 
 			$to			= "{$_POST['email']}";
-			$link		= $this->config->url.'signup/'.$id;
+			$link		= $this->config->url . 'signup/' . $id;
 
 			// Load subject and body from template
 			// old template
@@ -99,7 +99,7 @@ class InvitesController extends Application {
 			if ($this->config->theme == 'twig') {
 
 				$to			= array('email' => $_POST['email']);
-				$subject	= '['.$this->config->name.'] An invitation from '.$user->username;
+				$subject	= '[' . $this->config->name . '] An invitation from ' . $user->username;
 				$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/invite_friend.html"), array('link' => $link, 'user' => $user, 'app' => array('config' => $this->config)));
 
 			}

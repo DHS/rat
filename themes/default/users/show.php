@@ -18,7 +18,7 @@
 
 	} else {
 
-		echo '<p>No '.$this->config->items['name_plural'].' found.</p>';
+		echo '<p>No ' . $this->config->items['name_plural'].' found.</p>';
 
 	}
 

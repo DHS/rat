@@ -15,18 +15,19 @@ class Invite {
 	// Add an invite, returns invite id
 	public static function add($user_id, $email) {
 
+		global $mysqli;
 		$config = new AppConfig;
 
 		$user_id = sanitize_input($user_id);
 		$email = sanitize_input($email);
 
 		$insert_sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}invites` SET `user_id` = $user_id, `email` = $email";
-		$insert_query = mysql_query($insert_sql);
+		$insert_query = mysqli_query($mysqli, $insert_sql);
 
-		$id = mysql_insert_id();
+		$id = mysqli_insert_id();
 
 		$update_sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}invites` SET `code` = '$id' WHERE `id` = $id";
-		$query = mysql_query($update_sql);
+		$query = mysqli_query($mysqli, $update_sql);
 
 		return $id;
 
@@ -35,13 +36,14 @@ class Invite {
 	// Get a single invite, returns an Invite object
 	public static function get_by_id($id) {
 
+		global $mysqli;
 		$config = new AppConfig;
 
 		$id = sanitize_input($id);
 
 		$sql = "SELECT `id`, `user_id`, `email`, `code`, `result`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `id` = $id";
-		$query = mysql_query($sql);
-		$result = mysql_fetch_array($query, MYSQL_ASSOC);
+		$query = mysqli_query($mysqli, $sql);
+		$result = mysqli_fetch_assoc($query);
 
 		if ( ! is_array($result)) {
 			// Invite not found
@@ -62,6 +64,7 @@ class Invite {
 	// Get all invites with a given code, returns an array of Invite objects
 	public static function list_by_code($code, $limit = 10, $offset = 0) {
 
+		global $mysqli;
 		$config = new AppConfig;
 
 		$code = sanitize_input($code);
@@ -76,11 +79,11 @@ class Invite {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 
-		$query = mysql_query($sql);
+		$query = mysqli_query($mysqli, $sql);
 
 		// Loop through invite ids, fetching objects
 		$invites = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($result = mysqli_fetch_assoc($query)) {
 			$invites[] = Invite::get_by_id($result['id']);
 		}
 
@@ -91,31 +94,33 @@ class Invite {
 	// Update an invite
 	public function update() {
 
+		global $mysqli;
 		$config = new AppConfig;
 
 		$sql_get = "SELECT `result` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `id` = $this->id";
-		$query_get = mysql_query($sql_get);
-		$old_result = mysql_result($query_get, 0);
+		$query_get = mysqli_query($mysqli, $sql_get);
+		$old_result = mysqli_result($query_get, 0);
 
 		$new_result = $old_result + 1;
 
 		// Update database
 		$sql_update = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}invites` SET `result` = $new_result WHERE `id` = $this->id";
-		$query_update = mysql_query($sql_update);
+		$query_update = mysqli_query($mysqli, $sql_update);
 
 	}
 
 	// Checks to see if a user is already invited, returns TRUE or FALSE
 	public static function check_invited($user_id, $email) {
 
+		global $mysqli;
 		$config = new AppConfig;
 
 		$user_id = sanitize_input($user_id);
 		$email = sanitize_input($email);
 
 		$sql = "SELECT COUNT(id) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `user_id` = $user_id AND `email` = $email";
-		$query = mysql_query($sql);
-		$user_count = mysql_result($query, 0);
+		$query = mysqli_query($mysqli, $sql);
+		$user_count = mysqli_result($query, 0);
 
 		if ($user_count >= 1) {
 
@@ -132,6 +137,7 @@ class Invite {
 	// Validates an invite code, returns TRUE or FALSE
 	public static function check_code_valid($code, $email) {
 
+		global $mysqli;
 		$config = new AppConfig;
 
 		if ($code == '') {
@@ -142,8 +148,8 @@ class Invite {
 		$email = sanitize_input($email);
 
 		$sql = "SELECT `result` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `code` = $code AND `email` = $email";
-		$query = mysql_query($sql);
-		$status = mysql_num_rows($query);
+		$query = mysqli_query($mysqli, $sql);
+		$status = mysqli_num_rows($query);
 
 		if ($status > 0) {
 			return true;

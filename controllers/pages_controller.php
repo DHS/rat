@@ -16,13 +16,13 @@ class PagesController extends Application {
 				if ($this->config->private != TRUE || isset($_SESSION['user_id'])) {
 					$authors .= $this->get_link_to($author->username, 'users', 'show', $author->id).', ';
 				} else {
-					$authors .= $author->username.', ';
+					$authors .= $author->username . ', ';
 				}
 
 			}
 			$authors = substr($authors, 0, -2);
 
-			$content = '<p>'.$this->config->name.' is a web app created by '.$authors.' based on the <a href="http://github.com/DHS/rat">rat</a> framework. ';
+			$content = '<p>' . $this->config->name . ' is a web app created by ' . $authors.' based on the <a href="http://github.com/DHS/rat">rat</a> framework. ';
 
 			if ($this->config->beta == TRUE) {
 				$content .= 'It is currently in beta.';
@@ -30,7 +30,7 @@ class PagesController extends Application {
 
 			$content .= "</p>\n";
 
-			$content .= '<p>It lets you create '.$this->config->items['name_plural'];
+			$content .= '<p>It lets you create ' . $this->config->items['name_plural'];
 
 			if ($this->config->items['titles']['enabled'] == TRUE) {
 				$content .= ' with '.strtolower($this->config->items['titles']['name_plural']);
@@ -75,7 +75,7 @@ class PagesController extends Application {
 			}
 
 			if (isset($this->plugins->gravatar)) {
-				$content .= '<p>'.$this->config->name.' is <a href="http://gravatar.com/">Gravatar</a>-enabled.</p>'."\n";
+				$content .= '<p>' . $this->config->name . ' is <a href="http://gravatar.com/">Gravatar</a>-enabled.</p>'."\n";
 			}
 
 		}
@@ -83,7 +83,7 @@ class PagesController extends Application {
 		// old template
 		$this->content = $content;
 
-		$this->loadView('pages/'.$name, array('content' => $content));
+		$this->loadView('pages/' . $name, array('content' => $content));
 
 	}
 

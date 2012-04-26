@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="<?php echo $this->url_for('sessions', 'add'); if(isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to='.$this->uri['params']['redirect_to']; } ?>" method="post">
+    <form action="<?php echo $this->url_for('sessions', 'add'); if(isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to=' . $this->uri['params']['redirect_to']; } ?>" method="post">
       <fieldset>
         <legend>Login</legend>
         <div class="clearfix">
@@ -26,7 +26,7 @@
 
 <div class="row">
   <div class="span8 columns offset4 align_center">
-    <p class="small">New to <?php echo $this->config->name ?>? <a href="<?php echo $this->url_for('users', 'add'); if(isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to='.$this->uri['params']['redirect_to']; } ?>">Signup</a> now!
+    <p class="small">New to <?php echo $this->config->name ?>? <a href="<?php echo $this->url_for('users', 'add'); if(isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to=' . $this->uri['params']['redirect_to']; } ?>">Signup</a> now!
     <br /><?php $this->link_to('Forgotten your password', 'users', 'reset'); ?>?</p>
   </div>
 </div>
