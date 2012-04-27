@@ -181,7 +181,7 @@ class Application {
             $k = str_replace("*", "([a-zA-Z0-9]+)", $k);
 
             // Match the request against current route
-            if (preg_match('|^'.$k.'$/?|', $request, $matches)) {
+            if (preg_match('|^' . $k . '$/?|', $request, $matches)) {
 
                 $uri['controller'] = $v['controller'];
                 $uri['action'] = $v['action'];
@@ -226,7 +226,7 @@ class Application {
         $domain = substr($this->config->url, 7);
 
         // Determine if site is live or dev, set site_identifier constant and base_dir
-        if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.'.$domain) {
+        if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.' . $domain) {
             define('SITE_IDENTIFIER', 'live');
             $base_dir = $this->config->base_dir;
         } else {
@@ -267,7 +267,7 @@ class Application {
 
             require_once 'lib/twig/Autoloader.php';
             Twig_Autoloader::register();
-            $this->twig = new Twig_Environment(new Twig_Loader_Filesystem('themes/'.$this->config->theme), $twig_config);
+            $this->twig = new Twig_Environment(new Twig_Loader_Filesystem('themes/' . $this->config->theme), $twig_config);
 
             // Load a separate instance of twig to handle strings
             $this->twig_string = new Twig_Environment(new Twig_Loader_String(), $twig_config);
@@ -287,6 +287,8 @@ class Application {
     }
 
     private function loadModels() {
+
+		global $mysqli;
 
         require_once 'lib/mysql.php';
 
@@ -507,13 +509,13 @@ class Application {
 
     public function link_to($link_text, $controller, $action = '', $id = '', $params = array()) {
 
-        echo '<a href="'.$this->url_for($controller, $action, $id, $params).'">'.$link_text.'</a>';
+        echo '<a href="' . $this->url_for($controller, $action, $id, $params).'">' . $link_text.'</a>';
 
     }
 
     public function get_link_to($link_text, $controller, $action = '', $id = '', $params = array()) {
 
-        return '<a href="'.$this->url_for($controller, $action, $id, $params).'">'.$link_text.'</a>';
+        return '<a href="' . $this->url_for($controller, $action, $id, $params).'">' . $link_text.'</a>';
 
     }
 

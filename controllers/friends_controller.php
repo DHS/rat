@@ -21,7 +21,7 @@ class FriendsController extends Application {
 			$admin = User::get_by_id($this->config->admin_users[0]);
 
 			$to			= array('name' => $friend['username'], 'email' => $friend['email']);
-			$link		= $this->config->url.'users/show/'.$user->id;
+			$link		= $this->config->url . 'users/show/' . $user->id;
 
 			// Load subject and body from template
 			// old template
@@ -30,7 +30,7 @@ class FriendsController extends Application {
 			if ($this->config->theme == 'twig') {
 
 				$to			= array('email' => $email);
-				$subject	= '['.$this->config->name.'] Your '.$this->config->name.' invite is here!';
+				$subject	= '[' . $this->config->name . '] Your ' . $this->config->name . ' invite is here!';
 				$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/follower_new.html"), array('app' => array('config' => $this->config)));
 
 			}
@@ -48,10 +48,10 @@ class FriendsController extends Application {
 		if ($this->config->theme == 'twig') {
 
 			// Copying the work of loadView
-			$params = array(	'view'		=> $view,
-								'app'		=> $this,
-								'session'	=> $_SESSION
-							);
+			$params = array(
+				'app'		=> $this,
+				'session'	=> $_SESSION
+			);
 
 			$params['session']	= $session;
 			$params['user']		= $friend;
@@ -93,10 +93,10 @@ class FriendsController extends Application {
 		if ($this->config->theme == 'twig') {
 
 			// Copying the work of loadView
-			$params = array(	'view'		=> $view,
-								'app'		=> $this,
-								'session'	=> $_SESSION
-							);
+			$params = array(
+				'app'		=> $this,
+				'session'	=> $_SESSION
+			);
 
 			$params['session']	= $session;
 			$params['user']		= $friend;

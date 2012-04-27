@@ -171,16 +171,16 @@ class UsersController extends Application {
 					$user->authenticate($_POST['password1'], $this->config->encryption_salt);
 
 					// Set welcome message
-					Application::flash('success', 'Password updated! Welcome back to '.$this->config->name.'!');
+					Application::flash('success', 'Password updated! Welcome back to ' . $this->config->name . '!');
 
 					// If redirect_to is set then redirect
 					if (isset($this->uri['params']['redirect_to'])) {
-						header('Location: '.$this->uri['params']['redirect_to']);
+						header('Location: ' . $this->uri['params']['redirect_to']);
 						exit();
 					}
 
 					// Go forth!
-					header('Location: '.$this->config->url);
+					header('Location: ' . $this->config->url);
 
 					exit();
 
@@ -239,7 +239,7 @@ class UsersController extends Application {
 					$code = $user->generate_password_reset_code();
 
 					$to			= $_POST['email'];
-					$subject	= '['.$this->config->name.'] Password reset';
+					$subject	= '[' . $this->config->name . '] Password reset';
 					$link		= substr($this->config->url, 0, -1).$this->url_for('users', 'reset', $code);
 
 					// Load subject and body from template
@@ -249,7 +249,7 @@ class UsersController extends Application {
 					if ($this->config->theme == 'twig') {
 
 						$to			= array('email' => $_POST['email']);
-						$subject	= '['.$this->config->name.'] Password reset';
+						$subject	= '[' . $this->config->name . '] Password reset';
 						$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/password_reset.html"), array('link' => $link, 'user' => $user, 'app' => array('config' => $this->config)));
 
 					}
@@ -281,7 +281,7 @@ class UsersController extends Application {
 
 		$user = User::get_by_id($_SESSION['user_id']);
 
-		if (md5($_POST['old_password'].$salt) == $user->password) {
+		if (md5($_POST['old_password'] . $salt) == $user->password) {
 			// Check old passwords match
 
 			if ($_POST['new_password1'] == $_POST['new_password2']) {
@@ -291,7 +291,7 @@ class UsersController extends Application {
 				$user->update_password($_POST['new_password1'], $salt);
 
 				// Update session
-				$user->password = md5($_POST['new_password1'].$salt);
+				$user->password = md5($_POST['new_password1'] . $salt);
 
 				// Log password update
 				if (isset($this->plugins->log)) {
@@ -330,7 +330,7 @@ class UsersController extends Application {
 
 		// Ensure URL begins with http://
 		if ($_POST['url'] != NULL && (substr($_POST['url'], 0, 7) != 'http://' && substr($_POST['url'], 0, 8) != 'https://')) {
-			$_POST['url'] = 'http://'.$_POST['url'];
+			$_POST['url'] = 'http://' . $_POST['url'];
 		}
 
 		// Check for spaces
@@ -425,7 +425,7 @@ class UsersController extends Application {
 				if ($this->config->theme == 'twig') {
 
 					$to			= array('name' => $_POST['username'], 'email' => $_POST['email']);
-					$subject	= '['.$this->config->name.'] Your '.$this->config->name.' invite is here!';
+					$subject	= '[' . $this->config->name . '] Your ' . $this->config->name . ' invite is here!';
 					$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('link' => $link, 'username' => $_POST['username'], 'app' => array('config' => $this->config)));
 
 				}
@@ -468,7 +468,7 @@ class UsersController extends Application {
 
 							// Log points update
 							if (isset($this->plugins->log)) {
-								$this->plugins->log->add($invite->user_id, 'points', NULL, $this->plugins->points['per_invite_accepted'], 'invite_accepted = '.$invite->id);
+								$this->plugins->log->add($invite->user_id, 'points', NULL, $this->plugins->points['per_invite_accepted'], 'invite_accepted = ' . $invite->id);
 							}
 
 						}
@@ -487,15 +487,15 @@ class UsersController extends Application {
 
 			// If redirect_to is set then redirect
 			if ($this->uri['params']['redirect_to']) {
-				header('Location: '.$this->uri['params']['redirect_to']);
+				header('Location: ' . $this->uri['params']['redirect_to']);
 				exit();
 			}
 
 			// Set welcome message
-			Application::flash('success', 'Welcome to '.$this->config->name.'!');
+			Application::flash('success', 'Welcome to ' . $this->config->name . '!');
 
 			// Go forth!
-			header('Location: '.$this->config->url);
+			header('Location: ' . $this->config->url);
 
 			exit();
 
@@ -553,7 +553,7 @@ class UsersController extends Application {
 			Application::flash('success', 'Thanks for signing up!<br />We will be in touch soon...');
 
 			// Go forth!
-			header('Location: '.$this->config->url);
+			header('Location: ' . $this->config->url);
 
 			exit();
 
@@ -629,7 +629,7 @@ class UsersController extends Application {
 				if ($this->config->theme == 'twig') {
 
 					$to = array('name' => $_POST['username'], 'email' => $_POST['email']);
-					$subject = '['.$this->config->name.'] Welcome to '.$this->config->name.'!';
+					$subject = '[' . $this->config->name . '] Welcome to ' . $this->config->name . '!';
 					$body = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('username' => $_POST['username'], 'app' => array('config' => $this->config)));
 
 				} else {
@@ -678,7 +678,7 @@ class UsersController extends Application {
 
 							// Log points update
 							if (isset($this->plugins->log)) {
-								$this->plugins->log->add($invite->user_id, 'points', NULL, $this->plugins->points['per_invite_accepted'], 'invite_accepted = '.$invite->id);
+								$this->plugins->log->add($invite->user_id, 'points', NULL, $this->plugins->points['per_invite_accepted'], 'invite_accepted = ' . $invite->id);
 							}
 
 						}
@@ -697,15 +697,15 @@ class UsersController extends Application {
 
 			// If redirect_to is set then redirect
 			if ($this->uri['params']['redirect_to']) {
-				header('Location: '.$this->uri['params']['redirect_to']);
+				header('Location: ' . $this->uri['params']['redirect_to']);
 				exit();
 			}
 
 			// Set welcome message
-			Application::flash('success', 'Welcome to '.$this->config->name.'!');
+			Application::flash('success', 'Welcome to ' . $this->config->name . '!');
 
 			// Go forth!
-			header('Location: '.$this->config->url);
+			header('Location: ' . $this->config->url);
 
 			exit();
 

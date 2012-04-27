@@ -2,7 +2,7 @@
 
 // User not logged in so show explanation sentence
 if ( ! isset($_SESSION['user_id'])) {
-	echo '<h1><small>'.$this->config->tagline.'</small></h1>';
+	echo '<h1><small>' . $this->config->tagline . '</small></h1>';
 }
 
 // App is private and user not logged in so show beta signup form

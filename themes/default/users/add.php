@@ -2,10 +2,10 @@
 <?php if ((isset($this->code) && $this->code != '') || $this->config->beta != TRUE) { ?>
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="<?php if (isset($this->code)) { echo $this->url_for('users', 'add', NULL, array('code' => $this->code)); } else { echo $this->url_for('users', 'add', NULL); } if (isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to='.$this->uri['params']['redirect_to']; } ?>" method="post">
+    <form action="<?php if (isset($this->code)) { echo $this->url_for('users', 'add', NULL, array('code' => $this->code)); } else { echo $this->url_for('users', 'add', NULL); } if (isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to=' . $this->uri['params']['redirect_to']; } ?>" method="post">
       <fieldset>
         <legend>Signup</legend>
-        <?php if (isset($this->code)) { echo '<input type="hidden" name="code" value="'.$this->code.'" />'; } ?>
+        <?php if (isset($this->code)) { echo '<input type="hidden" name="code" value="' . $this->code . '" />'; } ?>
         <div class="clearfix">
           <label for="email">Email</label>
           <div class="input">
@@ -40,7 +40,7 @@
 
 <div class="row">
   <div class="span8 columns offset4 align_center">
-    <p class="small">Already got a <?php echo $this->config->name ?> account? <a href="<?php echo $this->url_for('sessions', 'add'); if (isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to='.$this->uri['params']['redirect_to']; } ?>">Login</a> now!</p>
+    <p class="small">Already got a <?php echo $this->config->name ?> account? <a href="<?php echo $this->url_for('sessions', 'add'); if (isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to=' . $this->uri['params']['redirect_to']; } ?>">Login</a> now!</p>
   </div>
 </div>
 
@@ -48,11 +48,11 @@
 
 <div class="row">
   <div class="span8 columns offset4">
-    <form action="<?php echo $this->url_for('users', 'add'); if (isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to='.$this->uri['params']['redirect_to']; } ?>" method="post">
+    <form action="<?php echo $this->url_for('users', 'add'); if (isset($this->uri['params']['redirect_to'])) { echo '/?redirect_to=' . $this->uri['params']['redirect_to']; } ?>" method="post">
       <fieldset>
         <legend>Signup for our beta</legend>
-        <?php if (isset($this->uri['params']['code'])) { echo '<input type="hidden" name="code" value="'.$this->uri['params']['code'].'" />'; } ?>
-        <?php if (isset($this->uri['params']['email'])) { echo '<input type="hidden" name="email" value="'.$this->uri['params']['email'].'" />'; } ?>
+        <?php if (isset($this->uri['params']['code'])) { echo '<input type="hidden" name="code" value="' . $this->uri['params']['code'].'" />'; } ?>
+        <?php if (isset($this->uri['params']['email'])) { echo '<input type="hidden" name="email" value="' . $this->uri['params']['email'].'" />'; } ?>
         <div class="clearfix">
           <label for="email">Email</label>
           <div class="input">
