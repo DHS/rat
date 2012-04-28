@@ -77,34 +77,10 @@ class ItemsController extends Application {
 
 				if ($this->config->items['uploads']['enabled'] == TRUE && $_FILES['file']['name'] != '') {
 
-					// Check for file with same name and rename if neccessary
-					if (file_exists("{$this->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}")) {
-
-						// Find filename and extension, works for filenames that include dots and any length extension!
-						$filename = substr($_FILES['file']['name'], 0, strrpos($_FILES['file']['name'], '.'));
-						$extension = substr($_FILES['file']['name'], 0-(strlen($_FILES['file']['name']) - strrpos($_FILES['file']['name'], '.') - 1));
-
-						// Extends clashing filenames as such: for clash.jpg try clash-1.jpg, clash-2.jpg etc
-						$i = 1;
-						do {
-							$_FILES['file']['name'] = "$filename-$i.$extension";
-							$i++;
-						} while (file_exists("{$this->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}"));
-
-					}
-
-					// Grab the file
-					move_uploaded_file($_FILES['file']['tmp_name'], "{$this->config->items['uploads']['directory']}/originals/{$_FILES['file']['name']}");
-
 					include 'lib/upload.php';
+          $filename = upload($_FILES['file'], $this->config->items['uploads']['directory']);
 
-					// Generate thumbnail
-					generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 100, 100, 'thumbnails', $this->config->items['uploads']['directory']);
-
-					// Generate stream image
-					generate_thumbnail($_FILES['file']['name'], $_FILES['file']['type'], 350, 500, 'stream', $this->config->items['uploads']['directory']);
-
-					$item_id = Item::add($_SESSION['user_id'], $_POST['content'], $_POST['title'], $_FILES['file']['name']);
+					$item_id = Item::add($_SESSION['user_id'], $_POST['content'], $_POST['title'], $filename);
 
 				} else {
 
