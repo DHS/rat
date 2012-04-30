@@ -24,7 +24,7 @@ class Invite {
 		$insert_sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}invites` SET `user_id` = $user_id, `email` = $email";
 		$insert_query = mysqli_query($mysqli, $insert_sql);
 
-		$id = mysqli_insert_id();
+		$id = mysqli_insert_id($mysqli);
 
 		$update_sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}invites` SET `code` = '$id' WHERE `id` = $id";
 		$query = mysqli_query($mysqli, $update_sql);

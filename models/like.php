@@ -29,7 +29,7 @@ class Like {
 			$query = mysqli_query($mysqli, $sql);
 		}
 
-		return mysqli_insert_id();
+		return mysqli_insert_id($mysqli);
 
 	}
 
