@@ -90,8 +90,10 @@ class Item {
 
 		// Loop through item ids, fetching objects
 		$items = array();
-		while ($result = mysqli_fetch_assoc($query)) {
-			$items[] = Item::get_by_id($result['id']);
+		if ($query != false) {
+		  while ($result = mysqli_fetch_assoc($query)) {
+  			$items[] = Item::get_by_id($result['id']);
+  		}
 		}
 
 		return $items;
