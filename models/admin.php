@@ -5,17 +5,16 @@ class Admin {
 	// Get all users
 	public static function list_users() {
 
-		global $mysqli;
 		$config = new AppConfig;
 
 		$sql = "SELECT * FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `date_joined` IS NOT NULL ORDER BY `date_joined` DESC";
-		$users_query = mysqli_query($mysqli, $sql);
+		$users_query = mysqli_query(self::getMysqli(), $sql);
 
 		$users = array();
 		while ($user = mysqli_fetch_assoc($users_query)) {
 
 			// Find last login
-			$last_login_query = mysqli_query($mysqli, "SELECT TIMESTAMPDIFF(DAY, date, NOW()) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}log` WHERE `user_id` = '{$user['id']}' AND `action` = 'login' ORDER BY `date` DESC LIMIT 1");
+			$last_login_query = mysqli_query(self::getMysqli(), "SELECT TIMESTAMPDIFF(DAY, date, NOW()) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}log` WHERE `user_id` = '{$user['id']}' AND `action` = 'login' ORDER BY `date` DESC LIMIT 1");
 			if (mysqli_num_rows($last_login_query) > 0) {
 				$last_login = mysqli_result($last_login_query, 0);
 				if ($last_login == 0) {
@@ -40,11 +39,10 @@ class Admin {
 	// Get beta signups who are still waiting for an invite
 	public static function list_users_beta() {
 
-		global $mysqli;
 		$config = new AppConfig;
 
 		$sql = "SELECT `id`, `email`, TIMESTAMPDIFF(DAY, date_added, NOW()) AS days_waiting, (SELECT COUNT(*) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `email` = {$config->database[SITE_IDENTIFIER]['prefix']}users.email) AS invites FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `date_joined` IS NULL ORDER BY `date_added` ASC";
-		$waiting_users_query = mysqli_query($mysqli, $sql);
+		$waiting_users_query = mysqli_query(self::getMysqli(), $sql);
 
 		$waiting_users = array();
 		while ($user = mysqli_fetch_assoc($waiting_users_query)) {
@@ -58,7 +56,6 @@ class Admin {
 	// Grants a given number of invites to all users
 	public static function update_invites($invites) {
 
-		global $mysqli;
 		$config = new AppConfig;
 
 		$invites = sanitize_input($invites);
@@ -72,7 +69,7 @@ class Admin {
 			// uncomment the following line to zero invites
 			//$user['invites'] = 0;
 
-			$query = mysqli_query($mysqli, "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `invites` = $new_invites WHERE id = {$user['id']}");
+			$query = mysqli_query(self::getMysqli(), "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `invites` = $new_invites WHERE id = {$user['id']}");
 
 		}
 
@@ -81,7 +78,6 @@ class Admin {
 	// Updates an item
 	public static function update_item($id, $title = NULL, $byline = NULL, $content = NULL, $status = 1) {
 
-		global $mysqli;
 		$config = new AppConfig;
 
 		$id = sanitize_input($id);
@@ -101,17 +97,23 @@ class Admin {
 		$status = sanitize_input($status);
 		$update_string .= "status = $status";
 
-		$query = mysqli_query($mysqli, "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}items` SET $update_string WHERE id = $id");
+		$query = mysqli_query(self::getMysqli(), "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}items` SET $update_string WHERE id = $id");
 
 	}
 
 	public static function tables_exist() {
 
-		global $mysqli;
 		$config = new AppConfig;
 
-		return mysqli_query($mysqli, "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items") !== FALSE;
+		return mysqli_query(self::getMysqli(), "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items") !== FALSE;
 
+	}
+	
+	protected static function getMysqli(){
+		
+		global $mysqli;
+		return $mysqli;
+		
 	}
 
 }

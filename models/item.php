@@ -1,6 +1,9 @@
 <?php
 
 class Item {
+	
+	protected
+		$mysqli = null;
 
 	public function __construct(array $attrs = null) {
 
@@ -9,13 +12,16 @@ class Item {
 				$this->$key = $value;
 			}
 		}
+		
+		//@TODO: Inject this or create mapper
+		global $mysqli;
+		$this->mysqli = $mysqli;
 
 	}
 
 	// Create an item, returns item id
 	public static function add($user_id, $content, $title = NULL, $image = NULL) {
 
-		global $mysqli;
 		$config = new AppConfig;
 
 		$user_id = sanitize_input($user_id);
@@ -33,7 +39,7 @@ class Item {
 			$sql .= ", image = $image";
 		}
 
-		$query = mysqli_query($mysqli, $sql);
+		$query = mysqli_query($this->mysqli, $sql);
 
 		return mysqli_insert_id();
 
@@ -42,13 +48,12 @@ class Item {
 	// Get an item by id, returns an Item object
 	public static function get_by_id($id) {
 
-		global $mysqli;
 		$config = new AppConfig;
 
 		$id = sanitize_input($id);
 
 		$sql = "SELECT `id`, `user_id`, `title`, `content`, `image`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `id` = $id ORDER BY `id` DESC";
-		$query = mysqli_query($mysqli, $sql);
+		$query = mysqli_query($this->mysqli, $sql);
 		$result = mysqli_fetch_assoc($query);
 
 		if ( ! is_array($result)) {
@@ -73,7 +78,6 @@ class Item {
 	// Get recent items, returns array of Item objects
 	public static function list_all($limit = 10, $offset = 0) {
 
-		global $mysqli;
 		$config = new AppConfig;
 
 		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` ORDER BY `id` DESC";
@@ -86,7 +90,7 @@ class Item {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 
-		$query = mysqli_query($mysqli, $sql);
+		$query = mysqli_query($this->mysqli, $sql);
 
 		// Loop through item ids, fetching objects
 		$items = array();
@@ -101,7 +105,6 @@ class Item {
 	// Update an item
 	public function update($title, $content) {
 
-		global $mysqli;
 		$config = new AppConfig;
 
 		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}items` SET ";
@@ -122,7 +125,7 @@ class Item {
 
 		$sql .= " WHERE `id` = $this->id";
 
-		$query = mysqli_query($mysqli, $sql);
+		$query = mysqli_query($this->mysqli, $sql);
 
 	}
 
@@ -136,7 +139,6 @@ class Item {
 	// Get comments for an item, returns an array of Comment objects
 	public function comments($limit = 10, $offset = 0) {
 
-		global $mysqli;
 		$config = new AppConfig;
 
 		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `item_id` = $this->id ORDER BY `id` ASC";
@@ -149,7 +151,7 @@ class Item {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 
-		$query = mysqli_query($mysqli, $sql);
+		$query = mysqli_query($this->mysqli, $sql);
 
 		$comments = array();
 		while ($result = mysqli_fetch_assoc($query)) {
@@ -163,7 +165,6 @@ class Item {
 	// Get likes for an item, returns an array of Like objects
 	public function likes($limit = 10, $offset = 0) {
 
-		global $mysqli;
 		$config = new AppConfig;
 
 		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `item_id` = $this->id";
@@ -176,7 +177,7 @@ class Item {
 		$offset = sanitize_input($offset);
 		$sql .= " OFFSET $offset";
 
-		$query = mysqli_query($mysqli, $sql);
+		$query = mysqli_query($this->mysqli, $sql);
 
 		$likes = array();
 		while ($result = mysqli_fetch_assoc($query)) {
@@ -190,17 +191,16 @@ class Item {
 	// Remove an item, returns item id
 	public function remove() {
 
-		global $mysqli;
 		$config = new AppConfig;
 
 		// Check item exists
 		$sql_check = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `id` = $this->id";
-		$count_query = mysqli_query($mysqli, $sql_check);
+		$count_query = mysqli_query($this->mysqli, $sql_check);
 
 		if (mysqli_num_rows($count_query) > 0) {
 			// If item exists, go ahead and delete
 			$sql_delete = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `id` = $this->id";
-			$query = mysqli_query($mysqli, $sql_delete);
+			$query = mysqli_query($this->mysqli, $sql_delete);
 		}
 
 	}
