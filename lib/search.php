@@ -11,15 +11,17 @@ class Search {
 
 		$out = array();
 
-		foreach($terms as $term) {
+		foreach ($terms as $term) {
 
 			$term = preg_replace("/\{WHITESPACE-([0-9]+)\}/e", "chr(\$1)", $term);
 			$term = preg_replace("/\{COMMA\}/", ",", $term);
 
 			$out[] = $term;
+
 		}
 
 		return $out;
+
 	}
 
 	function search_transform_term($term) {
@@ -34,7 +36,7 @@ class Search {
 
 	function search_db_escape_terms($terms) {
 		$out = array();
-		foreach($terms as $term) {
+		foreach ($terms as $term) {
 			$out[] = '[[:<:]]'.AddSlashes($this->search_escape_rlike($term)).'[[:>:]]';
 		}
 		return $out;
@@ -49,7 +51,7 @@ class Search {
 		$terms_rx = $this->search_rx_escape_terms($terms);
 
 		$parts = array();
-		foreach($terms_db as $term_db) {
+		foreach ($terms_db as $term_db) {
 			$parts[] = "content RLIKE '$term_db'";
 		}
 		$parts = implode(' AND ', $parts);
@@ -57,13 +59,14 @@ class Search {
 		$sql = "SELECT id FROM items WHERE $parts";
 		$query = mysqli_query($mysqli, $sql);
 
-		while($result = mysqli_fetch_assoc($query)) {
+    $items = array();
+		while ($result = mysqli_fetch_assoc($query)) {
 
 			$item = Item::get_by_id($result['id']);
 			$item->content = process_content($item->content);
 
 			$item->score = 0;
-			foreach($terms_rx as $term_rx) {
+			foreach ($terms_rx as $term_rx) {
 				$item->score += preg_match_all("/$term_rx/i", $item->content, $null);
 			}
 
@@ -72,7 +75,7 @@ class Search {
 		}
 
 		if (count($items) > 1) {
-			uasort($items, 'search_sort_results');
+			uasort($items, array($this, 'search_sort_results'));
 		}
 
 		return $items;
@@ -81,7 +84,7 @@ class Search {
 
 	function search_rx_escape_terms($terms) {
 		$out = array();
-		foreach($terms as $term) {
+		foreach ($terms as $term) {
 			$out[] = '\b'.preg_quote($term, '/').'\b';
 		}
 		return $out;
@@ -100,7 +103,7 @@ class Search {
 	function search_html_escape_terms($terms) {
 		$out = array();
 
-		foreach($terms as $term) {
+		foreach ($terms as $term) {
 			if (preg_match("/\s|,/", $term)) {
 				$out[] = '"'.HtmlSpecialChars($term).'"';
 			}else{

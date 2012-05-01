@@ -7,11 +7,14 @@
   </div>
   <div class="span8 columns offset1">
 
-{% for item in items %}
-    {% include 'partials/item.html' %}
-{% endfor %}
-
-{% include 'partials/pagination.html' %}
+{% if items %}
+	{% for item in items %}
+		{% include 'partials/item.html' %}
+	{% endfor %}
+	{% include 'partials/pagination.html' %}
+{% else %}
+	<p>No {{ app.config.items.name_plural }} found.</p>
+{% endif %}
 
   </div>
 </div>
