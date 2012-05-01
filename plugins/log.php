@@ -22,24 +22,29 @@ class log extends Application {
 	function add($user_id, $object_type = NULL, $object_id = NULL, $action, $params = NULL) {
 		// Add a new entry to the log
 
+    global $mysqli;
+
 		$user_id = sanitize_input($user_id);
 		$object_type = sanitize_input($object_type);
 		$object_id = sanitize_input($object_id);
 		$action = sanitize_input($action);
 		$params = sanitize_input($params);
 
-		$query = mysql_query("INSERT INTO log SET user_id = $user_id, object_type = $object_type, object_id = $object_id, action = $action, params = $params");
+    $sql = "INSERT INTO log SET user_id = $user_id, object_type = $object_type, object_id = $object_id, action = $action, params = $params";
+		$query = mysqli_query($mysqli, $sql);
 
 	}
 
 	function view() {
 		// View the log
 
+    global $mysqli;
+
 		$sql = "SELECT * FROM log ORDER BY id DESC LIMIT 10";
-		$query = mysql_query($sql);
+		$query = mysqli_query($mysqli, $sql);
 
 		$entries = array();
-		while ($entry = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while ($entry = mysqli_fetch_assoc($query)) {
 			$entry['user'] = User::get_by_id($entry['user_id']);
 			$entries[] = $entry;
 		}

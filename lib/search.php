@@ -42,6 +42,8 @@ class Search {
 
 	function do_search($terms) {
 
+    global $mysqli;
+
 		$terms = $this->search_split_terms($terms);
 		$terms_db = $this->search_db_escape_terms($terms);
 		$terms_rx = $this->search_rx_escape_terms($terms);
@@ -53,9 +55,9 @@ class Search {
 		$parts = implode(' AND ', $parts);
 
 		$sql = "SELECT id FROM items WHERE $parts";
-		$query = mysql_query($sql);
+		$query = mysqli_query($mysqli, $sql);
 
-		while($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+		while($result = mysqli_fetch_assoc($query)) {
 
 			$item = Item::get_by_id($result['id']);
 			$item->content = process_content($item->content);

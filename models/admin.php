@@ -15,16 +15,24 @@ class Admin {
 		while ($user = mysqli_fetch_assoc($users_query)) {
 
 			// Find last login
-			$last_login_query = mysqli_query($mysqli, "SELECT TIMESTAMPDIFF(DAY, date, NOW()) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}log` WHERE `user_id` = '{$user['id']}' AND `action` = 'login' ORDER BY `date` DESC LIMIT 1");
+			$sql = "SELECT TIMESTAMPDIFF(DAY, date, NOW()) as `last_login` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}log` WHERE `user_id` = '{$user['id']}' AND `action` = 'login' ORDER BY `date` DESC LIMIT 1";
+			$last_login_query = mysqli_query($mysqli, $sql);
+
 			if (mysqli_num_rows($last_login_query) > 0) {
-				$last_login = mysqli_result($last_login_query, 0);
+
+				$last_login_result = mysqli_fetch_assoc($last_login_query);
+				$last_login = $last_login_result['last_login'];
+
 				if ($last_login == 0) {
 					$last_login = 'Today!';
 				} else {
 					$last_login = $last_login.' days ago';
 				}
+
 			} else {
+
 				$last_login = 'Never';
+
 			}
 
 			$user['last_login'] = $last_login;
@@ -72,7 +80,8 @@ class Admin {
 			// uncomment the following line to zero invites
 			//$user['invites'] = 0;
 
-			$query = mysqli_query($mysqli, "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `invites` = $new_invites WHERE id = {$user['id']}");
+      $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `invites` = $new_invites WHERE id = {$user['id']}";
+			$query = mysqli_query($mysqli, $sql);
 
 		}
 
@@ -101,7 +110,8 @@ class Admin {
 		$status = sanitize_input($status);
 		$update_string .= "status = $status";
 
-		$query = mysqli_query($mysqli, "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}items` SET $update_string WHERE id = $id");
+    $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}items` SET $update_string WHERE id = $id";
+		$query = mysqli_query($mysqli, $sql);
 
 	}
 
@@ -110,7 +120,8 @@ class Admin {
 		global $mysqli;
 		$config = new AppConfig;
 
-		return mysqli_query($mysqli, "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items") !== FALSE;
+    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items";
+		return mysqli_query($mysqli, $sql) !== FALSE;
 
 	}
 

@@ -26,15 +26,20 @@ class points extends Application {
 
 	function update($user_id, $points) {
 
+    global $mysqli;
+
 		// get current # of points
-		$query = mysql_query("SELECT points FROM users WHERE id = $user_id");
-		$old_points = mysql_result($query, 0);
+		$sql = "SELECT points FROM users WHERE id = $user_id";
+		$query = mysqli_query($mysqli, $sql);
+		$result = mysqli_fetch_assoc($query);
+		$old_points = $result['points'];
 
 		// calculate new # of points
 		$new_points = $old_points + $points;
 
 		// update database
-		$query = mysql_query("UPDATE users SET points = $new_points WHERE id = $user_id");
+		$sql = "UPDATE users SET points = $new_points WHERE id = $user_id";
+		$query = mysql_query($mysqli, $sql);
 
 	}
 
