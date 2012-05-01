@@ -26,7 +26,7 @@ class SearchController extends Application {
 		$items = $search->do_search($q);
 
 		foreach ($items as $item) {
-			$items->content = process_content($item->content);
+			$item->content = process_content($item->content);
 			foreach ($item->comments as $comment) {
 				$comment->content = process_content($comment->content);
 			}
