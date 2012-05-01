@@ -28,6 +28,13 @@ class ItemsController extends Application {
 			foreach ($item->comments as $comment) {
 				$comment->content = process_content($comment->content);
 			}
+			foreach ($item->likes as $like) {
+			  if ($like->user_id == $_SESSION['user_id']) {
+			    $item->i_like = true;
+			  } else {
+			    $item->i_like = false;
+			  }
+			}
 		}
 
 		// old template
@@ -298,6 +305,13 @@ class ItemsController extends Application {
 				foreach ($item->comments as $comment) {
 					$comment->content = process_content($comment->content);
 				}
+				foreach ($item->likes as $like) {
+          if ($like->user_id == $_SESSION['user_id']) {
+            $item->i_like = true;
+          } else {
+            $item->i_like = false;
+          }
+  			}
 			}
 
 			$this->loadView('items/index');

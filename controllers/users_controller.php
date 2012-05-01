@@ -77,6 +77,13 @@ class UsersController extends Application {
 			foreach ($item->comments as $comment) {
 				$comment->content = process_content($comment->content);
 			}
+			foreach ($item->likes as $like) {
+			  if ($like->user_id == $_SESSION['user_id']) {
+			    $item->i_like = true;
+			  } else {
+			    $item->i_like = false;
+			  }
+			}
 		}
 
 		if ($this->config->friends['enabled'] == TRUE) {
