@@ -8,38 +8,43 @@ class Admin {
 		global $mysqli;
 		$config = new AppConfig;
 
-		$sql = "SELECT * FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `date_joined` IS NOT NULL ORDER BY `date_joined` DESC";
-		$users_query = mysqli_query($mysqli, $sql);
-
 		$users = array();
-		while ($user = mysqli_fetch_assoc($users_query)) {
 
-			// Find last login
-			$sql = "SELECT TIMESTAMPDIFF(DAY, date, NOW()) as `last_login` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}log` WHERE `user_id` = '{$user['id']}' AND `action` = 'login' ORDER BY `date` DESC LIMIT 1";
-			$last_login_query = mysqli_query($mysqli, $sql);
+		$sql = "SELECT * FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `date_joined` IS NOT NULL ORDER BY `date_joined` DESC";
+		$query = mysqli_query($mysqli, $sql);
 
-			if (mysqli_num_rows($last_login_query) > 0) {
+		if ($query != false) {
 
-				$last_login_result = mysqli_fetch_assoc($last_login_query);
-				$last_login = $last_login_result['last_login'];
+		  while ($user = mysqli_fetch_assoc($query)) {
 
-				if ($last_login == 0) {
-					$last_login = 'Today!';
-				} else {
-					$last_login = $last_login.' days ago';
-				}
+		  	// Find last login
+		  	$sql = "SELECT TIMESTAMPDIFF(DAY, date, NOW()) as `last_login` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}log` WHERE `user_id` = '{$user['id']}' AND `action` = 'login' ORDER BY `date` DESC LIMIT 1";
+		  	$last_login_query = mysqli_query($mysqli, $sql);
 
-			} else {
+		  	if (mysqli_num_rows($last_login_query) > 0) {
 
-				$last_login = 'Never';
+		  		$last_login_result = mysqli_fetch_assoc($last_login_query);
+		  		$last_login = $last_login_result['last_login'];
 
-			}
+		  		if ($last_login == 0) {
+		  			$last_login = 'Today!';
+		  		} else {
+		  			$last_login = $last_login.' days ago';
+		  		}
 
-			$user['last_login'] = $last_login;
+		  	} else {
 
-			$users[] = $user;
+		  		$last_login = 'Never';
 
-		}
+		  	}
+
+		  	$user['last_login'] = $last_login;
+
+		  	$users[] = $user;
+
+		  }
+
+	  }
 
 		return $users;
 
