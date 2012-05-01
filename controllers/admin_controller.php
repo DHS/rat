@@ -55,49 +55,49 @@ class AdminController extends Application {
 				$conf['private'] = 'FALSE';
 			}
 
-			if ($_POST['items']['titles']['enabled'] == 'on') {
+			if (isset($_POST['items']['titles']['enabled']) && $_POST['items']['titles']['enabled'] == 'on') {
 				$conf['items']['titles']['enabled'] = 'TRUE';
 			} else {
 				$conf['items']['titles']['enabled'] = 'FALSE';
 			}
 
-			if ($_POST['items']['content']['enabled'] == 'on') {
+			if (isset($_POST['items']['content']['enabled']) && $_POST['items']['content']['enabled'] == 'on') {
 				$conf['items']['content']['enabled'] = 'TRUE';
 			} else {
 				$conf['items']['content']['enabled'] = 'FALSE';
 			}
 
-			if ($_POST['items']['uploads']['enabled'] == 'on') {
+			if (isset($_POST['items']['uploads']['enabled']) && $_POST['items']['uploads']['enabled'] == 'on') {
 				$conf['items']['uploads']['enabled'] = 'TRUE';
 			} else {
 				$conf['items']['uploads']['enabled'] = 'FALSE';
 			}
 
-			if ($_POST['items']['comments']['enabled'] == 'on') {
+			if (isset($_POST['items']['comments']['enabled']) && $_POST['items']['comments']['enabled'] == 'on') {
 				$conf['items']['comments']['enabled'] = 'TRUE';
 			} else {
 				$conf['items']['comments']['enabled'] = 'FALSE';
 			}
 
-			if ($_POST['items']['likes']['enabled'] == 'on') {
+			if (isset($_POST['items']['likes']['enabled']) && $_POST['items']['likes']['enabled'] == 'on') {
 				$conf['items']['likes']['enabled'] = 'TRUE';
 			} else {
 				$conf['items']['likes']['enabled'] = 'FALSE';
 			}
 
-			if ($_POST['invites']['enabled'] == 'on') {
+			if (isset($_POST['invites']['enabled']) && $_POST['invites']['enabled'] == 'on') {
 				$conf['invites']['enabled'] = 'TRUE';
 			} else {
 				$conf['invites']['enabled'] = 'FALSE';
 			}
 
-			if ($_POST['friends']['enabled'] == 'on') {
+			if (isset($_POST['friends']['enabled']) && $_POST['friends']['enabled'] == 'on') {
 				$conf['friends']['enabled'] = 'TRUE';
 			} else {
 				$conf['friends']['enabled'] = 'FALSE';
 			}
 
-			if ($_POST['friends']['asymmetric'] == 'on') {
+			if (isset($_POST['friends']['asymmetric']) && $_POST['friends']['asymmetric'] == 'on') {
 				$conf['friends']['asymmetric'] = 'TRUE';
 			} else {
 				$conf['friends']['asymmetric'] = 'FALSE';
