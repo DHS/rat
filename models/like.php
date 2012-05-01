@@ -70,7 +70,8 @@ class Like {
 
 		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
 		$query = mysqli_query($mysqli, $sql);
-		$result = mysqli_result($query, 0);
+		$result = mysqli_fetch_assoc($query);
+		$id = $result['id'];
 
 		if ($result == FALSE) {
 
@@ -78,7 +79,7 @@ class Like {
 
 		} else {
 
-			$like = Like::get_by_id($result);
+			$like = Like::get_by_id($id);
 			$like->user = User::get_by_id($user_id);
 			return $like;
 
