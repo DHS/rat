@@ -31,7 +31,7 @@ class SearchController extends Application {
 				$comment->content = process_content($comment->content);
 			}
 			foreach ($item->likes as $like) {
-			  if ($like->user_id == $_SESSION['user_id']) {
+			  if (isset($_SESSION['user_id']) && $like->user_id == $_SESSION['user_id']) {
 			    $item->i_like = true;
 			  } else {
 			    $item->i_like = false;
