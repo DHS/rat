@@ -19,8 +19,8 @@ class AdminController extends Application {
 
 	}
 
-	// Show app spec
-	function spec() {
+	// Show app config
+	function config() {
 
 		$conf = get_object_vars($this->config);
 
@@ -107,16 +107,16 @@ class AdminController extends Application {
 			$this->writeConfig('application', $conf);
 
       // Set flash message
-      Application::flash('success', 'App spec updated!');
+      Application::flash('success', 'App config updated!');
 
       // Force redirect to reload app with new config
-      header('Location: /admin/spec');
+      header('Location: /admin/config');
       exit();
 
 		}
 
 		$this->title = 'Admin - Config';
-		$this->loadView('admin/spec', NULL, 'admin');
+		$this->loadView('admin/config', NULL, 'admin');
 
 	}
 
@@ -192,7 +192,7 @@ class AdminController extends Application {
 
 			// Go forth!
 			if ($this->config->theme == 'twig') {
-				header('Location: ' . $this->url_for('admin', 'spec'));
+				header('Location: ' . $this->url_for('admin', 'config'));
 			} else {
 				// old template
 				header('Location: ' . $this->url_for('items', 'add'));
