@@ -10,7 +10,7 @@ class SessionsController extends Application {
     if (isset($_POST['email']) && isset($_POST['password'])) {
 
       // User trying to sign up but app not configured, error out
-      if (count(Admin::list_users()) == 0) {
+      if (Admin::count_users() == 0) {
 
         Application::flash('error', $this->config->name . ' is not yet configured properly.
           <br />Please contact the creator of this app.');

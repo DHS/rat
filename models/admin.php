@@ -50,6 +50,19 @@ class Admin {
 
 	}
 
+  // Count users
+	public static function count_users() {
+
+		global $mysqli;
+		$config = new AppConfig;
+
+		$sql = "SELECT COUNT(`id`) AS count FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `date_joined` IS NOT NULL";
+		$query = mysqli_query($mysqli, $sql);
+		$result = mysqli_fetch_assoc($query);
+		return $result == null ? 0 : $result['count'];
+
+	}
+
 	// Get beta signups who are still waiting for an invite
 	public static function list_users_beta() {
 
