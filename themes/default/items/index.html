@@ -9,7 +9,6 @@
   {% include 'partials/user_add.html' %}
 {% else %}
   {% if items %}
-    <h1>Stream</h1>
 
     <div class="row">
       <div class="span8 columns offset3">
@@ -27,7 +26,7 @@
 
   {% else %}
 
-    <h1>No {{ app.config.items.name_plural }} found...</h1>
+    <p>No {{ app.config.items.name_plural }} found...</p>
 
     <div class="row">
       <div class="span4 columns offset11">
