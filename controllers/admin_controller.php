@@ -103,8 +103,15 @@ class AdminController extends Application {
 				$conf['friends']['asymmetric'] = 'FALSE';
 			}
 
+      // Update config
 			$this->writeConfig('application', $conf);
-			Application::flash('success', 'Success! <a href="' . $this->url_for('admin', 'spec') . '">Click here</a> to reload with your new config!');
+
+      // Set flash message
+      Application::flash('success', 'App spec updated!');
+
+      // Force redirect to reload app with new config
+      header('Location: /admin/spec');
+      exit();
 
 		}
 
