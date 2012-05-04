@@ -5,43 +5,43 @@ class SessionsController extends Application {
 	protected $requireLoggedIn = array('remove');
 	protected $requireLoggedOut = array('add');
 
-	function add() {
+  function add() {
 
-		if (isset($_POST['email']) && isset($_POST['password'])) {
+    if (isset($_POST['email']) && isset($_POST['password'])) {
 
-			$user = User::get_by_email($_POST['email']);
+      $user = User::get_by_email($_POST['email']);
 
-			if ($user->authenticate($_POST['password'], $this->config->encryption_salt) == TRUE) {
+      if ($user->authenticate($_POST['password'], $this->config->encryption_salt) == TRUE) {
 
-				// Get redirected
-				if (isset($this->uri['params']['redirect_to'])) {
-					header('Location: ' . $this->uri['params']['redirect_to']);
-					exit();
-				}
+        // Get redirected
+        if (isset($this->uri['params']['redirect_to'])) {
+          header('Location: ' . $this->uri['params']['redirect_to']);
+          exit();
+	      }
 
-				// Go forth
-				header('Location: ' . $this->config->url);
+        // Go forth
+        header('Location: ' . $this->config->url);
 
-				exit();
+        exit();
 
-			} else {
+      } else {
 
-				Application::flash('error', 'Something isn\'t quite right. Please try again...');
-				$email = $_POST['email'];
+        Application::flash('error', 'Something isn\'t quite right. Please try again...');
+        $email = $_POST['email'];
 
-			}
+      }
 
-		}
+    }
 
 		if ( ! isset($_SESSION['user_id'])) {
 
-            if (isset($email)) {
-			    $this->loadView('sessions/add', array('email' => $email));
-            } else {
-                $this->loadView('sessions/add');
-            }
+      if (isset($email)) {
+        $this->loadView('sessions/add', array('email' => $email));
+      } else {
+        $this->loadView('sessions/add');
+      }
 
-		} else {
+    } else {
 
 			Application::flash('error', 'You are already logged in! ' . $this->get_link_to('Click here', 'sessions', 'remove').' to logout.');
 			$this->loadView();
