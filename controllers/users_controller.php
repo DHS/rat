@@ -741,8 +741,8 @@ class UsersController extends Application {
 
     // Easily guessable passwords
     $easy_passwords = array(
-      '123', '1234', '12345', '123456', '1234567', '12345678',
-      'password', 'qwerty', 'letmein', 'test', 'blah', 'hello'
+      'password', '123', '1234', '12345', '123456', '1234567', '12345678', 'abc123',
+      'qwerty', 'letmein', 'test', 'blah', 'hello', 'jesus', 'iloveyou', 'monkey', 'princess'
     );
 
 	  if ($password1 == '' || $password2 == '') {
