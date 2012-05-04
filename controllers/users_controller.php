@@ -11,6 +11,16 @@ class UsersController extends Application {
 		if (isset($_POST['email'])) {
 			//User is trying to signup
 
+      // User trying to sign up but app not configured, error out
+      if (count(Admin::list_users()) == 0) {
+
+        Application::flash('error', $this->config->name . ' is not yet configured properly.
+          <br />Please contact the creator of this app.');
+        $this->loadView('items/index');
+        exit();
+
+      }
+
 			if ($code != NULL) {
 				// User is signing up with a code
 

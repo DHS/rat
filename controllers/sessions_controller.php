@@ -9,6 +9,16 @@ class SessionsController extends Application {
 
     if (isset($_POST['email']) && isset($_POST['password'])) {
 
+      // User trying to sign up but app not configured, error out
+      if (count(Admin::list_users()) == 0) {
+
+        Application::flash('error', $this->config->name . ' is not yet configured properly.
+          <br />Please contact the creator of this app.');
+        $this->loadView('items/index');
+        exit();
+
+      }
+
       $user = User::get_by_email($_POST['email']);
 
       if ($user->authenticate($_POST['password'], $this->config->encryption_salt) == TRUE) {
