@@ -154,13 +154,11 @@ class UsersController extends Application {
 
 				$error = '';
 
-				if ($_POST['password1'] == '' || $_POST['password2'] == '') {
-					$error .= 'Please enter your password twice.<br />';
-				}
-
-				if ($_POST['password1'] != $_POST['password2']) {
-					$error .= 'Passwords do not match.<br />';
-				}
+				// Check password
+    		$password_check = $this->check_password($_POST['password1'], $_POST['password2']);
+    		if ($password_check !== TRUE) {
+    			$error .= $password_check;
+    		}
 
 				// Error processing
 				if ($error == '') {
@@ -570,12 +568,9 @@ class UsersController extends Application {
 		}
 
 		// Check password
-		if ($_POST['password1'] == '' || $_POST['password2'] == '') {
-			$error .= 'Please enter your password twice.<br />';
-		}
-
-		if ($_POST['password1'] != $_POST['password2']) {
-			$error .= 'Passwords do not match.<br />';
+		$password_check = $this->check_password($_POST['password1'], $_POST['password2']);
+		if ($password_check !== TRUE) {
+			$error .= $password_check;
 		}
 
 		// Error processing
@@ -696,7 +691,7 @@ class UsersController extends Application {
 	// Helper function: checks email is valid and available, returns TRUE or error message
 	private function check_email($email, $new = TRUE) {
 
-		$return = '';
+    $return = '';
 
 		if ($email == '') {
 			$return .= 'Email cannot be left blank.<br />';
@@ -711,21 +706,17 @@ class UsersController extends Application {
 		}
 
 		if (User::check_email_available($email) != TRUE && $new == TRUE) {
-			$return .= 'Email already in the system!<br />';
+			$return .= 'An account with that email address already exists in the system. ' . $this->get_link_to('Click here', 'sessions', 'add') . ' to login.<br />';
 		}
 
-		if (empty($return)) {
-			$return = TRUE;
-		}
-
-		return $return;
+    return strlen($return) > 0 ? $return : TRUE;
 
 	}
 
 	// Helper function: checks username is valid and available, returns TRUE or error message
 	private function check_username($username) {
 
-		$return = '';
+    $return = '';
 
 		if ($username == '') {
 			$return .= 'Username cannot be left blank.<br />';
@@ -739,11 +730,38 @@ class UsersController extends Application {
 			$return .= 'Username not available.<br />';
 		}
 
-		if (empty($return)) {
-			$return = TRUE;
+    return strlen($return) > 0 ? $return : TRUE;
+
+	}
+
+	// Helper function: checks passwords match and are good, returns TRUE or error message
+	private function check_password($password1, $password2) {
+
+    $return = '';
+
+    // Easily guessable passwords
+    $easy_passwords = array(
+      '123', '1234', '12345', '123456', '1234567', '12345678',
+      'password', 'qwerty', 'letmein', 'test', 'blah', 'hello'
+    );
+
+	  if ($password1 == '' || $password2 == '') {
+			$return .= 'Please enter your password twice.<br />';
 		}
 
-		return $return;
+		if ($password1 != $password2) {
+			$return .= 'Passwords do not match.<br />';
+		}
+
+    if (in_array($password1, $easy_passwords)) {
+			$return .= 'Password must not be easy to guess.<br />';
+		}
+
+		if (strlen($password1) < 3) {
+			$return .= 'Password must be more than two characters long.<br />';
+		}
+
+    return strlen($return) > 0 ? $return : TRUE;
 
 	}
 
