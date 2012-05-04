@@ -97,15 +97,15 @@ class Invite {
 		global $mysqli;
 		$config = new AppConfig;
 
-		$sql_get = "SELECT `result` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `id` = $this->id";
-		$query_get = mysqli_query($mysqli, $sql_get);
-		$old_result = mysqli_result($query_get, 0);
+		$sql = "SELECT `result` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `id` = $this->id";
+		$query = mysqli_query($mysqli, $sql);
+		$invites = mysql_fetch_assoc($query);
 
-		$new_result = $old_result + 1;
+		$invites['result']++;
 
 		// Update database
-		$sql_update = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}invites` SET `result` = $new_result WHERE `id` = $this->id";
-		$query_update = mysqli_query($mysqli, $sql_update);
+		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}invites` SET `result` = {$invites['result']} WHERE `id` = $this->id";
+		$query = mysqli_query($mysqli, $sql);
 
 	}
 
@@ -118,11 +118,11 @@ class Invite {
 		$user_id = sanitize_input($user_id);
 		$email = sanitize_input($email);
 
-		$sql = "SELECT COUNT(id) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `user_id` = $user_id AND `email` = $email";
+		$sql = "SELECT COUNT(id) AS count FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `user_id` = $user_id AND `email` = $email";
 		$query = mysqli_query($mysqli, $sql);
-		$user_count = mysqli_result($query, 0);
+		$user = mysqli_fetch_assoc($query);
 
-		if ($user_count >= 1) {
+		if ($user['count'] >= 1) {
 
 			return true;
 

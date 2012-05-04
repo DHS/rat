@@ -429,25 +429,21 @@ class User {
 
 	}
 
-	// Check whether two users are friends, returns TRUE or FALSE
-	public function friend_check($friend_user_id) {
+  // Check whether two users are friends, returns TRUE or FALSE
+  public function friend_check($friend_user_id) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$friend_user_id = sanitize_input($friend_user_id);
+    $friend_user_id = sanitize_input($friend_user_id);
 
-		$sql = "SELECT COUNT(id) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = $friend_user_id AND `friend_user_id` = {$this->id}";
-		$query = mysqli_query($mysqli, $sql);
-		$result = mysqli_result($query, 0);
+    $sql = "SELECT COUNT(id) AS count FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = $friend_user_id AND `friend_user_id` = {$this->id}";
+    $query = mysqli_query($mysqli, $sql);
+    $result = mysqli_fetch_assoc($query);
 
-		if ($result > 0) {
-			return true;
-		} else {
-			return false;
-		}
+    return $result['count'] > 0 ? true : false;
 
-	}
+  }
 
 	public function is_admin(array $admin_users = array()) {
 		return in_array($this->id, $admin_users);
@@ -510,16 +506,16 @@ class User {
 		$invites = sanitize_input($invites);
 
 		// Get current # of invites
-		$sql_get = "SELECT `invites` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $this->id";
-		$query = mysqli_query($mysqli, $sql_get);
-		$old_invites = mysqli_result($query, 0);
+		$sql = "SELECT `invites` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $this->id";
+		$query = mysqli_query($mysqli, $sql);
+		$user = mysql_fetch_assoc($query);
 
 		// Calculate new # of invites
-		$new_invites = $old_invites + $invites;
+		$user['invites'] = $user['invites'] + $invites;
 
 		// Update database
-		$sql_update = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `invites` = $new_invites WHERE `id` = $this->id";
-		$query = mysqli_query($mysqli, $sql_update);
+		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `invites` = {$user['invites']} WHERE `id` = $this->id";
+		$query = mysqli_query($mysqli, $sql);
 
 	}
 
@@ -531,18 +527,10 @@ class User {
 
 		$username = sanitize_input($username);
 
-		$query = mysqli_query($mysqli, "SELECT COUNT(id) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `username` = $username");
-		$count = mysqli_result($query, 0);
+		$query = mysqli_query($mysqli, "SELECT COUNT(id) AS count FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `username` = $username");
+		$user = mysqli_fetch_assoc($query);
 
-		if ($count >= 1) {
-
-			return false;
-
-		} else {
-
-			return true;
-
-		}
+    return $user['count'] >= 1 ? false : true;
 
 	}
 
@@ -554,10 +542,11 @@ class User {
 
 		$email = sanitize_input($email);
 
-		$query = mysqli_query($mysqli, "SELECT COUNT(id) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `email` = $email");
-		$user_count = mysqli_result($query, 0);
+    $sql = "SELECT COUNT(id) AS count FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `email` = $email";
+		$query = mysqli_query($mysqli, $sql);
+		$users = mysqli_fetch_assoc($query);
 
-		if ($user_count >= 1) {
+		if ($users['count'] >= 1) {
 
 			return false;
 
@@ -610,7 +599,7 @@ class User {
 
 	}
 
-	// Check if a password reset token is valid (ie. <24hrs old), returns user_id
+	// Check if a password reset token is valid (ie. <24hrs old), returns user_id or false
 	public static function check_password_reset_code($code) {
 
 		global $mysqli;
@@ -618,19 +607,11 @@ class User {
 
 		$code = sanitize_input($code);
 
-		$sql = "SELECT `user_id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users_password_reset` WHERE `reset_code` = $code AND `date` > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY `date` DESC";
+		$sql = "SELECT `user_id` AS id FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users_password_reset` WHERE `reset_code` = $code AND `date` > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY `date` DESC";
 		$query = mysqli_query($mysqli, $sql);
-		$count = mysqli_num_rows($query);
+		$user = mysqli_fetch_assoc($query);
 
-		if ($count >= 1) {
-
-			return mysqli_result($query, 0);
-
-		} else {
-
-			return FALSE;
-
-		}
+		return isset($user['id']) ? $user['id'] : FALSE;
 
 	}
 
