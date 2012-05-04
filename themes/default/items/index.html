@@ -29,5 +29,11 @@
 
     <h1>No {{ app.config.items.name_plural }} found...</h1>
 
+    <div class="row">
+      <div class="span4 columns offset11">
+    		  {% include 'partials/item_add.html' %}
+			</div>
+		</div>
+
   {% endif %}
 {% endif %}
