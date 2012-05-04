@@ -55,26 +55,15 @@ class CommentsController extends Application {
 			$comment->content = process_content($comment->content);
 		}
 
-		if ($this->config->theme == 'twig') {
+		// Copying the work of loadView
+		$params = array(
+			'app'		=> $this,
+			'session'	=> $_SESSION
+		);
 
-			// Copying the work of loadView
-			$params = array(
-				'app'		=> $this,
-				'session'	=> $_SESSION
-			);
+		$params['item'] = $item;
 
-			$params['item'] = $item;
-
-			echo $this->twig->render("partials/comments.html", $params);
-
-		} else {
-
-			// old template
-			$this->item = $item;
-			$this->show_comment_form = TRUE;
-			$this->loadPartial('comments');
-
-		}
+		echo $this->twig->render("partials/comments.html", $params);
 
 	}
 

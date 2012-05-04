@@ -256,23 +256,19 @@ class Application {
 
     private function loadTwig() {
 
-        if ($this->config->theme == 'twig') {
+        $twig_config['cache'] = 'static/template_cache';
 
-            $twig_config['cache'] = 'static/template_cache';
-
-            // If we're in dev mode then force template compiling
-            if (SITE_IDENTIFIER == 'dev') {
-                $twig_config['auto_reload'] = TRUE;
-            }
-
-            require_once 'lib/twig/Autoloader.php';
-            Twig_Autoloader::register();
-            $this->twig = new Twig_Environment(new Twig_Loader_Filesystem('themes/' . $this->config->theme), $twig_config);
-
-            // Load a separate instance of twig to handle strings
-            $this->twig_string = new Twig_Environment(new Twig_Loader_String(), $twig_config);
-
+        // If we're in dev mode then force template compiling
+        if (SITE_IDENTIFIER == 'dev') {
+            $twig_config['auto_reload'] = TRUE;
         }
+
+        require_once 'lib/twig/Autoloader.php';
+        Twig_Autoloader::register();
+        $this->twig = new Twig_Environment(new Twig_Loader_Filesystem('themes/' . $this->config->theme), $twig_config);
+
+        // Load a separate instance of twig to handle strings
+        $this->twig_string = new Twig_Environment(new Twig_Loader_String(), $twig_config);
 
     }
 
@@ -368,28 +364,20 @@ class Application {
             $layout = 'default';
         }
 
-        if ($this->config->theme == 'twig') {
+        // Note: the following is hardcoded in ajax methods
+        $params['view'] = $view;
+        $params['app'] = $this;
+        $params['session'] = $_SESSION;
 
-            // Note: the following is hardcoded in ajax methods
-            $params['view'] = $view;
-            $params['app'] = $this;
-            $params['session'] = $_SESSION;
-
-            // Hacks for user menu in header
-            if (class_exists('User')) {
-                $params['user_menu_enabled'] = true;
-                if (isset($_SESSION['user_id'])) {
-                    $params['viewer'] = User::get_by_id($_SESSION['user_id']);
-                }
+        // Hacks for user menu in header
+        if (class_exists('User')) {
+            $params['user_menu_enabled'] = true;
+            if (isset($_SESSION['user_id'])) {
+                $params['viewer'] = User::get_by_id($_SESSION['user_id']);
             }
-
-            echo $this->twig->render("layouts/{$layout}.html", $params);
-
-        } else {
-
-            include "themes/{$this->config->theme}/layouts/{$layout}.php";
-
         }
+
+        echo $this->twig->render("layouts/{$layout}.html", $params);
 
     }
 

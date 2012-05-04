@@ -97,7 +97,6 @@ class AppConfig extends ServerConfig {
 
 	// Theme
 	public $theme = 'default';
-	// try 'twig' for new features
 
 	// Plugins
 	public $plugins = array(

@@ -20,11 +20,6 @@ class InvitesController extends Application {
 			$message = 'You have no remaining invites.';
 		}
 
-		// old template
-		$this->title = 'Invites';
-		$this->invites = $invites_sent;
-		$this->invites_remaining = $invites_remaining;
-
 		if ($this->json) {
 			$this->render_json($this->invites);
 		} else {
@@ -89,20 +84,11 @@ class InvitesController extends Application {
 
 			$admin = User::get_by_id($this->config->admin_users[0]);
 
-			$to			= "{$_POST['email']}";
 			$link		= $this->config->url . 'signup/' . $id;
 
-			// Load subject and body from template
-			// old template
-			include "themes/{$this->config->theme}/emails/invite_friend.php";
-
-			if ($this->config->theme == 'twig') {
-
-				$to			= array('email' => $_POST['email']);
-				$subject	= '[' . $this->config->name . '] An invitation from ' . $user->username;
-				$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/invite_friend.html"), array('link' => $link, 'user' => $user, 'app' => array('config' => $this->config)));
-
-			}
+			$to			= array('email' => $_POST['email']);
+			$subject	= '[' . $this->config->name . '] An invitation from ' . $user->username;
+			$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/invite_friend.html"), array('link' => $link, 'user' => $user, 'app' => array('config' => $this->config)));
 
 			// Email user
 			$this->email->send_email($to, $subject, $body);

@@ -10,11 +10,6 @@ class AdminController extends Application {
 		$users = Admin::list_users();
 		$users_beta = Admin::list_users_beta();
 
-		// old templates
-		$this->title = 'Admin - Dashboard';
-		$this->users = $users;
-		$this->users_beta = $users_beta;
-
 		$this->loadView('admin/index', array('users' => $users, 'users_beta' => $users_beta), 'admin');
 
 	}
@@ -125,10 +120,6 @@ class AdminController extends Application {
 
 		$users = Admin::list_users_beta();
 
-		// old template
-		$this->title = 'Admin - Beta signups';
-		$this->users = $users;
-
 		$this->loadView('admin/signups', array('users' => $users), 'admin');
 
 	}
@@ -137,10 +128,6 @@ class AdminController extends Application {
 	function users() {
 
 		$users = Admin::list_users();
-
-		// old template
-		$this->title = 'Admin - Users';
-		$this->users = $users;
 
 		$this->loadView('admin/users', array('users' => $users), 'admin');
 
@@ -191,12 +178,7 @@ class AdminController extends Application {
 			Application::flash('success', 'You are now logged in to your app!');
 
 			// Go forth!
-			if ($this->config->theme == 'twig') {
-				header('Location: ' . $this->url_for('admin', 'config'));
-			} else {
-				// old template
-				header('Location: ' . $this->url_for('items', 'add'));
-			}
+			header('Location: ' . $this->url_for('admin', 'config'));
 
 			exit();
 
@@ -234,16 +216,9 @@ class AdminController extends Application {
 			$link		= $this->config->url . 'users/add/' . $id . '/?email='.urlencode($email);
 
 			// Load template into $body variable
-			// old template
-			include "themes/{$this->config->theme}/emails/invite_admin.php";
-
-			if ($this->config->theme == 'twig') {
-
-				$to			= array('email' => $email);
-				$subject	= '[' . $this->config->name . '] Your ' . $this->config->name . ' invite is here!';
-				$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/admin_invite.html"), array('link' => $link, 'app' => array('config' => $this->config)));
-
-			}
+			$to			= array('email' => $email);
+			$subject	= '[' . $this->config->name . '] Your ' . $this->config->name . ' invite is here!';
+			$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/admin_invite.html"), array('link' => $link, 'app' => array('config' => $this->config)));
 
 			// Email user
 			$this->email->send_email($to, $subject, $body);

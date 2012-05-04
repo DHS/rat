@@ -20,20 +20,10 @@ class FriendsController extends Application {
 
 			$admin = User::get_by_id($this->config->admin_users[0]);
 
-			$to			= array('name' => $friend['username'], 'email' => $friend['email']);
+			$to			= array('email' => $email, 'friend' => $friend);
 			$link		= $this->config->url . 'users/show/' . $user->id;
-
-			// Load subject and body from template
-			// old template
-			include "themes/{$this->config->theme}/emails/follower_new.php";
-
-			if ($this->config->theme == 'twig') {
-
-				$to			= array('email' => $email);
-				$subject	= '[' . $this->config->name . '] Your ' . $this->config->name . ' invite is here!';
-				$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/follower_new.html"), array('app' => array('config' => $this->config)));
-
-			}
+			$subject	= '[' . $this->config->name . '] Your ' . $this->config->name . ' invite is here!';
+			$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/follower_new.html"), array('link' => $link, 'app' => array('config' => $this->config)));
 
 			// Email user
 			$this->email->send_email($to, $subject, $body);
@@ -45,25 +35,17 @@ class FriendsController extends Application {
 
 		$this->user = $friend;
 
-		if ($this->config->theme == 'twig') {
+		// Copying the work of loadView
+		$params = array(
+			'app'		=> $this,
+			'session'	=> $_SESSION
+		);
 
-			// Copying the work of loadView
-			$params = array(
-				'app'		=> $this,
-				'session'	=> $_SESSION
-			);
+		$params['session']	= $session;
+		$params['user']		= $friend;
+		$params['friends']	= $friends;
 
-			$params['session']	= $session;
-			$params['user']		= $friend;
-			$params['friends']	= $friends;
-
-			echo $this->twig->render("partials/friend.html", $params);
-
-		} else {
-
-			$this->loadPartial('friend');
-
-		}
+		echo $this->twig->render("partials/friend.html", $params);
 
 	}
 
@@ -90,25 +72,17 @@ class FriendsController extends Application {
 
 		$this->user = $friend;
 
-		if ($this->config->theme == 'twig') {
+		// Copying the work of loadView
+		$params = array(
+			'app'		=> $this,
+			'session'	=> $_SESSION
+		);
 
-			// Copying the work of loadView
-			$params = array(
-				'app'		=> $this,
-				'session'	=> $_SESSION
-			);
+		$params['session']	= $session;
+		$params['user']		= $friend;
+		$params['friends']	= $friends;
 
-			$params['session']	= $session;
-			$params['user']		= $friend;
-			$params['friends']	= $friends;
-
-			echo $this->twig->render("partials/friend.html", $params);
-
-		} else {
-
-			$this->loadPartial('friend');
-
-		}
+		echo $this->twig->render("partials/friend.html", $params);
 
 	}
 

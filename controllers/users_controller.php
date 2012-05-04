@@ -47,9 +47,6 @@ class UsersController extends Application {
 
 			// No email submitted so show signup form
 
-			// old templates
-			$this->code = $code;
-
 			$this->loadView('users/add', array('code' => $code));
 
 		}
@@ -104,10 +101,6 @@ class UsersController extends Application {
       $this->title = $user->username;
     }
 
-		// old template
-		$this->user = $user;
-		$this->items = $items;
-
 		if ($this->json) {
 			$this->render_json($this->user);
 		} else {
@@ -141,11 +134,6 @@ class UsersController extends Application {
 			}
 
 		}
-
-		// old template
-		$this->title = 'Settings';
-		$this->page = $page;
-		$this->user = $user;
 
 		$this->loadView('users/update', array('page' => $page, 'user' => $user));
 
@@ -226,9 +214,6 @@ class UsersController extends Application {
 
 					$valid_code = TRUE;
 
-					// old template
-					$this->code = $code;
-
 					$this->loadView('users/reset', array('valid_code' => $valid_code, 'code' => $code));
 
 				} else {
@@ -255,21 +240,10 @@ class UsersController extends Application {
 					// Generate code
 					$code = $user->generate_password_reset_code();
 
-					$to			= $_POST['email'];
-					$subject	= '[' . $this->config->name . '] Password reset';
-					$link		= substr($this->config->url, 0, -1).$this->url_for('users', 'reset', $code);
-
-					// Load subject and body from template
-					// old template
-					include "themes/{$this->config->theme}/emails/password_reset.php";
-
-					if ($this->config->theme == 'twig') {
-
-						$to			= array('email' => $_POST['email']);
-						$subject	= '[' . $this->config->name . '] Password reset';
-						$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/password_reset.html"), array('link' => $link, 'user' => $user, 'app' => array('config' => $this->config)));
-
-					}
+					$to       = array('email' => $_POST['email']);
+					$link		  = substr($this->config->url, 0, -1).$this->url_for('users', 'reset', $code);
+					$subject  = '[' . $this->config->name . '] Password reset';
+					$body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/password_reset.html"), array('link' => $link, 'user' => $user, 'app' => array('config' => $this->config)));
 
 					// Email user
 					$this->email->send_email($to, $subject, $body);
@@ -428,29 +402,13 @@ class UsersController extends Application {
 			// Do signup
 			User::signup($user->id, $_POST['username'], $_POST['password1'], $this->config->encryption_salt);
 
-			if ($this->config->send_emails == TRUE) {
-				// Send 'thank you for signing up' email
+			$admin = User::get_by_id($this->config->admin_users[0]);
 
-				$admin = User::get_by_id($this->config->admin_users[0]);
+			$to       = array('name' => $_POST['username'], 'email' => $_POST['email']);
+			$subject  = '[' . $this->config->name . '] Your ' . $this->config->name . ' invite is here!';
+			$body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('username' => $_POST['username'], 'app' => array('config' => $this->config)));
 
-				$to			= "{$_POST['username']} <{$_POST['email']}>";
-
-				// Load subject and body from template
-				// old template
-				include "themes/{$this->config->theme}/emails/signup.php";
-
-				if ($this->config->theme == 'twig') {
-
-					$to			= array('name' => $_POST['username'], 'email' => $_POST['email']);
-					$subject	= '[' . $this->config->name . '] Your ' . $this->config->name . ' invite is here!';
-					$body		= $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('link' => $link, 'username' => $_POST['username'], 'app' => array('config' => $this->config)));
-
-				}
-
-				// Email user
-				$this->email->send_email($to, $subject, $body);
-
-			}
+			$this->email->send_email($to, $subject, $body);
 
 			// Log signup
 			if (isset($this->plugins->log)) {
@@ -641,21 +599,9 @@ class UsersController extends Application {
 
 				$admin = User::get_by_id($this->config->admin_users[0]);
 
-				$to = "{$_POST['username']} <{$_POST['email']}>";
-
-				if ($this->config->theme == 'twig') {
-
-					$to = array('name' => $_POST['username'], 'email' => $_POST['email']);
-					$subject = '[' . $this->config->name . '] Welcome to ' . $this->config->name . '!';
-					$body = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('username' => $_POST['username'], 'app' => array('config' => $this->config)));
-
-				} else {
-
-  				// Load subject and body from template
-  				// old template
-				  include "themes/{$this->config->theme}/emails/signup.php";
-
-				}
+				$to = array('name' => $_POST['username'], 'email' => $_POST['email']);
+				$subject = '[' . $this->config->name . '] Welcome to ' . $this->config->name . '!';
+				$body = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('username' => $_POST['username'], 'app' => array('config' => $this->config)));
 
 				// Email user
 				$this->email->send_email($to, $subject, $body, TRUE);

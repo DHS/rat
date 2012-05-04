@@ -37,9 +37,6 @@ class ItemsController extends Application {
 			}
 		}
 
-		// old template
-		$this->items = $items;
-
 		if ($this->json) {
 			$this->render_json($items);
 		} else {
@@ -148,9 +145,6 @@ class ItemsController extends Application {
 			$this->head_title = $this->config->name . ' - ' . $item->title;
 		}
 
-		// old template
-		$this->item = $item;
-
 		if ($this->json) {
 			$this->render_json($item);
 		} else {
@@ -189,9 +183,6 @@ class ItemsController extends Application {
 			if ($this->config->items['titles']['enabled'] == TRUE) {
 				$this->head_title = $this->config->name . ' - ' . $item->title;
 			}
-
-			// old template
-			$this->item = $item;
 
 			if ($this->json) {
 				$this->render_json($item);
