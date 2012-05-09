@@ -10,6 +10,7 @@ class Routes {
         '/about' => array('controller' => 'pages', 'action' => 'show', 'id' => 'about'),
         '/contact' => array('controller' => 'pages', 'action' => 'show', 'id' => 'contact'),
         '/help' => array('controller' => 'pages', 'action' => 'show', 'id' => 'help'),
+        '/api' => array('controller' => 'pages', 'action' => 'show', 'id' => 'api'),
 
         // User functions
 
