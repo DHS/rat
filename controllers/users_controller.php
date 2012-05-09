@@ -59,8 +59,13 @@ class UsersController extends Application {
 		$user = User::get_by_id($id);
 
 		// id failed so try username (used by routes)
-		if ($user == NULL) {
+		if ($user == null) {
 			$user = User::get_by_username($id);
+		}
+
+		// username failed so error out
+		if ($user == null) {
+			throw new RoutingException($this->uri, "User not found");
 		}
 
 		// Page zero so overwrite to 1
@@ -102,7 +107,7 @@ class UsersController extends Application {
     }
 
 		if ($this->json) {
-			$this->render_json($this->user);
+			$this->render_json($user);
 		} else {
 		  $vars = array('user' => $user, 'items' => $items);
 		  if (isset($friends)) {

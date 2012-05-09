@@ -21,7 +21,7 @@ class InvitesController extends Application {
 		}
 
 		if ($this->json) {
-			$this->render_json($this->invites);
+			$this->render_json($user->invites());
 		} else {
 			$this->loadView('invites/index', array('message' => $message, 'invites_sent' => $invites_sent, 'invites_remaining' => $invites_remaining));
 		}
