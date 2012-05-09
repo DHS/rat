@@ -275,38 +275,42 @@ class UsersController extends Application {
 
 		$user = User::get_by_id($_SESSION['user_id']);
 
-		if (md5($_POST['old_password'] . $salt) == $user->password) {
-			// Check old passwords match
+    $error = '';
 
-			if ($_POST['new_password1'] == $_POST['new_password2']) {
-				// New passwords match
-
-				// Call update_password in user model
-				$user->update_password($_POST['new_password1'], $salt);
-
-				// Update session
-				$user->password = md5($_POST['new_password1'] . $salt);
-
-				// Log password update
-				if (isset($this->plugins->log)) {
-					$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'change_password');
-				}
-
-				Application::flash('success', 'Password updated!');
-
-			} else {
-				// New passwords don't match
-
-				Application::flash('error', 'There was a problem, please try again.');
-
-			}
-
-		} else {
+		if (md5($_POST['old_password'] . $salt) != $user->password) {
 			// Old passwords don't match
 
-			Application::flash('error', 'There was a problem, please try again.');
+			$error .= 'Incorrect existing password.<br />';
 
 		}
+
+    // Check password
+  	$password_check = $this->check_password($_POST['new_password1'], $_POST['new_password2']);
+  	if ($password_check !== TRUE) {
+  		$error .= $password_check;
+  	}
+
+    if ($error == '') {
+
+			// Call update_password in user model
+			$user->update_password($_POST['new_password1'], $salt);
+
+			// Update session
+			$user->password = md5($_POST['new_password1'] . $salt);
+
+			// Log password update
+			if (isset($this->plugins->log)) {
+				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'change_password');
+			}
+
+			Application::flash('success', 'Password updated!');
+
+    } else {
+
+      // Show error message
+  		Application::flash('error', $error);
+
+    }
 
 	}
 
@@ -381,11 +385,9 @@ class UsersController extends Application {
 		}
 
 		// Check password
-		if ($_POST['password1'] == '' || $_POST['password2'] == '') {
-			$error .= 'Please enter your password twice.<br />';
-		}
-		if ($_POST['password1'] != $_POST['password2']) {
-			$error .= 'Passwords do not match.<br />';
+		$password_check = $this->check_password($_POST['password1'], $_POST['password2']);
+		if ($password_check !== TRUE) {
+			$error .= $password_check;
 		}
 
 		// Error processing
@@ -755,7 +757,7 @@ class UsersController extends Application {
 		}
 
 		if ($password1 != $password2) {
-			$return .= 'Passwords do not match.<br />';
+			$return .= 'New passwords do not match.<br />';
 		}
 
     if (in_array($password1, $easy_passwords)) {
