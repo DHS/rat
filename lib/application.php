@@ -263,7 +263,7 @@ class Application {
             $twig_config['auto_reload'] = TRUE;
         }
 
-        require_once 'lib/twig/Autoloader.php';
+        require_once 'lib/Twig/Autoloader.php';
         Twig_Autoloader::register();
         $this->twig = new Twig_Environment(new Twig_Loader_Filesystem('themes/' . $this->config->theme), $twig_config);
 
