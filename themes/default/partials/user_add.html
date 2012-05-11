@@ -1,72 +1,86 @@
 {% if code or not app.config.beta %}
 
 <div class="row">
-  <div class="span8 columns offset4">
-    <form action="{{ app.url_for('users', 'add', code) }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">
+  <div class="span4 offset3">
+
+    <h2>Signup</h2>
+
+    <p>&nbsp;</p>
+
+    <form class="form-horizontal" action="{{ app.url_for('users', 'add', code) }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">
       <fieldset>
-        <legend>Signup</legend>
+
         {% if code %}<input type="hidden" name="code" value="{{ code }}" />{% endif %}
-        <div class="clearfix">
-          <label for="email">Email</label>
-          <div class="input">
-            <input class="medium" name="email" size="30" type="text" value="{{ app.uri.params.email }}" />
+
+        <div class="control-group">
+          <label class="control-label" for="email">Email</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" name="email" id="email">
           </div>
-        </div> <!-- /clearfix -->
-        <div class="clearfix">
-          <label for="email">Username</label>
-          <div class="input">
-            <input class="medium" name="username" size="30" type="text" value="{{ app.uri.params.username }}" />
-          </div>
-        </div> <!-- /clearfix -->
-        <div class="clearfix">
-          <label for="email">Password</label>
-          <div class="input">
-            <input class="medium" name="password1" size="30" type="password" value="" />
-          </div>
-        </div> <!-- /clearfix -->
-        <div class="clearfix">
-          <label for="email">Confirm password</label>
-          <div class="input">
-            <input class="medium" name="password2" size="30" type="password" value="" />
-          </div>
-        </div> <!-- /clearfix -->
-        <div class="actions">
-          <button type="submit" class="btn primary">Signup</button>
         </div>
+
+        <div class="control-group">
+          <label class="control-label" for="username">Username</label>
+          <div class="controls">
+            <input type="password" class="input-xlarge" name="username" id="username">
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="password1">Password</label>
+          <div class="controls">
+            <input type="password" class="input-xlarge" name="password1" id="password1">
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="password2">Confirm password</label>
+          <div class="controls">
+            <input type="password" class="input-xlarge" name="password2" id="password2">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Signup</button>
+        </div>
+
       </fieldset>
     </form>
-  </div>
-</div>
 
-<div class="row">
-  <div class="span8 columns offset4 align_center">
-    <p class="small">Already got a {{ app.config.name }} account?
-      <a href="{{ app.url_for('sessions', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}">Login</a> now!
-	</p>
+    <p class="align_center">Already have a {{ app.config.name }} account? <a href="{{ app.url_for('sessions', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}">Login</a> now!</p>
+
   </div>
 </div>
 
 {% else %}
 
 <div class="row">
-  <div class="span8 columns offset4">
+  <div class="span4 offset3">
 
-    <form action="{{ app.url_for('users', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">
+    <h2>Signup for our beta</h2>
+
+    <p>&nbsp;</p>
+
+    <form class="form-horizontal" action="{{ app.url_for('users', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">
       <fieldset>
-        <legend>Signup for our beta</legend>
+
         {% if app.uri.params.code %}<input type="hidden" name="code" value="{{ app.uri.params.code }}" />{% endif %}
         {% if app.uri.params.email %}<input type="hidden" name="email" value="{{ app.uri.params.email }}" />{% endif %}
-        <div class="clearfix">
-          <label for="email">Email</label>
-          <div class="input">
-            <input class="medium" name="email" size="30" type="text" value="{{ app.uri.params.email }}" />
+
+        <div class="control-group">
+          <label class="control-label" for="email">Email</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" name="email" id="email" value="{{ app.uri.params.email }}" />
           </div>
-        </div> <!-- /clearfix -->
-        <div class="actions">
-          <button type="submit" class="btn primary">Win</button>
         </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Win</button>
+        </div>
+
       </fieldset>
     </form>
+
   </div>
 </div>
 

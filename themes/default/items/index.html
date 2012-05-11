@@ -1,5 +1,5 @@
 {% if not session.user_id %}
-  <h1><small>{{ app.config.tagline|raw }}</small></h1>
+  <p class="lead">{{ app.config.tagline|raw }}</p>
 {% endif %}
 
 {# App is private and user not logged in so show beta signup for #}
@@ -11,7 +11,8 @@
   {% if items %}
 
     <div class="row">
-      <div class="span8 columns offset3">
+
+      <div class="span5 offset3">
         {% for item in items %}
           {% include 'partials/item.html' %}
         {% endfor %}
@@ -19,9 +20,10 @@
         {% include 'partials/pagination.html' %}
       </div>
 
-      <div class="span4 columns">
+      <div class="span2">
         {% include 'partials/item_add.html' %}
       </div>
+
     </div>
 
   {% else %}
@@ -29,8 +31,10 @@
     <p>No {{ app.config.items.name_plural }} found...</p>
 
     <div class="row">
-      <div class="span4 columns offset11">
+      <div class="span4 offset11">
+
     		  {% include 'partials/item_add.html' %}
+
 			</div>
 		</div>
 
