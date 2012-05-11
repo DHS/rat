@@ -31,10 +31,10 @@ class analytics extends Application {
 
 			return <<<HTML
 <script>
-  window._gaq = [['_setAccount','{$this->analytics_id}'],['_trackPageview'],['_trackPageLoadTime']];
-  Modernizr.load({
-    load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
-  });
+  var _gaq=[['_setAccount','{$this->analytics_id}'],['_trackPageview']];
+  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+  s.parentNode.insertBefore(g,s)}(document,'script'));
 </script>
 
 HTML;

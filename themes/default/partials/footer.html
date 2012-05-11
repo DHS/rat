@@ -1,44 +1,25 @@
-    </div> <!--! end of #main -->
-
-    <footer>
-
-        <p class="float_right">{{ app.config.name }} was created using <a href="http://github.com/DHS/rat">Rat</a></p>
-        <p>
-			{{ app.config.name }} &copy; 2011 &middot;
-			{{ app.link_to('About', 'pages', 'show', 'about') }} &middot;
-			{{ app.link_to('Help', 'pages', 'show', 'help') }} &middot;
-			{{ app.link_to('Search', 'search') }} &middot;
-			{{ app.link_to('API', 'pages', 'show', 'api') }}
-		</p>
-
-    </footer>
-  </div> <!--! end of #container -->
+  </div> <!--! end of #main -->
+  <footer>
+      <p class="float_right">{{ app.config.name }} was created using <a href="http://github.com/DHS/rat">Rat</a></p>
+      <p>
+        {{ app.config.name }} &copy; 2011 &middot;
+        {{ app.link_to('About', 'pages', 'show', 'about') }} &middot;
+        {{ app.link_to('Help', 'pages', 'show', 'help') }} &middot;
+        {{ app.link_to('Search', 'search') }} &middot;
+        {{ app.link_to('API', 'pages', 'show', 'api') }}
+      </p>
+  </footer>
 
 
-  <!-- JavaScript at the bottom for fast page loading -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
 
-  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="/js/libs/jquery-1.6.2.min.js"><\/script>')</script>
-
-
-  <!-- scripts concatenated and minified via ant build script-->
   <script src="{{ app.config.base_dir }}js/libs/humane.js"></script>
   <script src="{{ app.config.base_dir }}js/plugins.js"></script>
   <script src="{{ app.config.base_dir }}js/rat.js"></script>
-  <!-- end scripts-->
-
 
   {% if app.plugins.analytics %}
 	{{ app.plugins.analytics.view() }}
   {% endif %}
-
-  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
-       chromium.org/developers/how-tos/chrome-frame-getting-started -->
-  <!--[if lt IE 7 ]>
-    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
-    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
-  <![endif]-->
-
 </body>
 </html>
