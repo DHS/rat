@@ -64,6 +64,13 @@ td { vertical-align: top; }
 
 .chromeframe { margin: 0.2em 0; background: #ccc; color: black; padding: 0.2em 0; }
 
+/* Twitter bootstrap CSS */
+
+body {
+  padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
+/* End Twitter bootstrap CSS */
 
 /* Rat CSS */
 
