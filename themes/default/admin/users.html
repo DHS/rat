@@ -2,28 +2,28 @@
 <p>Users: <strong>{{ users|length }}</strong></p>
 
 <form action="{{ app.url_for('admin', 'grant_invites') }}" method="get">
-	Grant invites: <input type="text" name="count" value="1" /> <input type="submit" value="Send" class="btn" />
+  Grant invites: <input type="text" name="count" value="1" /> <input type="submit" value="Send" class="btn" />
 </form>
 
 {% if users %}
 
-	<table class="common-table zebra-striped">
-	  <thead>
-	    <tr>
-	      <th>Username</th>
-	      <th>Credits</th>
-	      <th>Last login</th>
-	    </tr>
-	  </thead>
-	  <tbody>
+  <table class="common-table zebra-striped">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Credits</th>
+        <th>Last login</th>
+      </tr>
+    </thead>
+    <tbody>
 
-	{% for user in users %}
+  {% for user in users %}
 
-		<tr><td><a href="/{{ user.username }}; ?>">{{ user.username }}</a></td><td>{{ user.points }}</td><td>{{ user.last_login }}</td></tr>
+    <tr><td><a href="/{{ user.username }}; ?>">{{ user.username }}</a></td><td>{{ user.points }}</td><td>{{ user.last_login }}</td></tr>
 
-	{% endfor %}
+  {% endfor %}
 
-	</tobdy>
-	</table>
+  </tobdy>
+  </table>
 
 {% endif %}

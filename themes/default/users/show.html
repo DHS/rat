@@ -2,14 +2,14 @@
 <div class="row">
   <div class="span5 offset3">
 
-	{% if items %}
-		{% for item in items %}
-			{% include 'partials/item.html' %}
-		{% endfor %}
-		{% include 'partials/pagination.html' %}
-	{% else %}
-		<p>No {{ app.config.items.name_plural }} found.</p>
-	{% endif %}
+  {% if items %}
+    {% for item in items %}
+      {% include 'partials/item.html' %}
+    {% endfor %}
+    {% include 'partials/pagination.html' %}
+  {% else %}
+    <p>No {{ app.config.items.name_plural }} found.</p>
+  {% endif %}
 
   </div>
   <div class="span4">

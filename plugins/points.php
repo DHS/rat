@@ -1,93 +1,93 @@
 <?php
 
 /*
-*	A points system for Rat by @DHS
+*  A points system for Rat by @DHS
 *
-*	Installation
+*  Installation
 *
-*		Comes installed by default
+*    Comes installed by default
 *
-*	Usage
+*  Usage
 *
-*		Points are stored in the user object
+*    Points are stored in the user object
 *
-*			$user->points
+*      $user->points
 *
-*		To display users's points:
+*    To display users's points:
 *
-*			if (isset($this->plugins->points)) {
-*				echo 'You have ' . $user->points.' ' . $this->plugins->points['name'];
-*			}
+*      if (isset($this->plugins->points)) {
+*        echo 'You have ' . $user->points.' ' . $this->plugins->points['name'];
+*      }
 *
 */
 
 
 class points extends Application {
 
-	function update($user_id, $points) {
+  function update($user_id, $points) {
 
     global $mysqli;
 
-		// get current # of points
-		$sql = "SELECT points FROM users WHERE id = $user_id";
-		$query = mysqli_query($mysqli, $sql);
-		$result = mysqli_fetch_assoc($query);
-		$old_points = $result['points'];
+    // get current # of points
+    $sql = "SELECT points FROM users WHERE id = $user_id";
+    $query = mysqli_query($mysqli, $sql);
+    $result = mysqli_fetch_assoc($query);
+    $old_points = $result['points'];
 
-		// calculate new # of points
-		$new_points = $old_points + $points;
+    // calculate new # of points
+    $new_points = $old_points + $points;
 
-		// update database
-		$sql = "UPDATE users SET points = $new_points WHERE id = $user_id";
-		$query = mysql_query($mysqli, $sql);
+    // update database
+    $sql = "UPDATE users SET points = $new_points WHERE id = $user_id";
+    $query = mysql_query($mysqli, $sql);
 
-	}
+  }
 
-	function view() {
+  function view() {
 
-		if ($id == $_SESSION['user_id']) {
-				echo '<p>You have ' . $user['points'].' ' . $this->plugins->points['name'].'!</p>';
-			if ($this->plugins->points['leaderboard'] == TRUE) {
-				echo '<p class="small">Where do you rank on the <a href="leaderboard.php">leaderboard</a>?</p>';
-			}
-		} else {
-			echo '<p>' . $user['username'].' has ' . $user['points'].' ' . $this->plugins->points['name'].'!</p>';
-			if ($this->plugins->points['leaderboard'] == TRUE) {
-				echo '<p class="small">See where they rank on the <a href="leaderboard.php">leaderboard</a>.</p>';
-			}
-		}
+    if ($id == $_SESSION['user_id']) {
+        echo '<p>You have ' . $user['points'].' ' . $this->plugins->points['name'].'!</p>';
+      if ($this->plugins->points['leaderboard'] == TRUE) {
+        echo '<p class="small">Where do you rank on the <a href="leaderboard.php">leaderboard</a>?</p>';
+      }
+    } else {
+      echo '<p>' . $user['username'].' has ' . $user['points'].' ' . $this->plugins->points['name'].'!</p>';
+      if ($this->plugins->points['leaderboard'] == TRUE) {
+        echo '<p class="small">See where they rank on the <a href="leaderboard.php">leaderboard</a>.</p>';
+      }
+    }
 
-		echo '<p>&nbsp;</p>';
+    echo '<p>&nbsp;</p>';
 
-	}
+  }
 
-	function view_leaderboard($limit = 10) {
+  function view_leaderboard($limit = 10) {
 
-		$query = mysql_query("SELECT id, username, points FROM users WHERE date_joined IS NOT NULL ORDER BY points DESC LIMIT $limit");
+    $query = mysql_query("SELECT id, username, points FROM users WHERE date_joined IS NOT NULL ORDER BY points DESC LIMIT $limit");
 
-		$leaderboard = array();
-		while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
-			$leaderboard[] = $result;
-		}
+    $leaderboard = array();
+    while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+      $leaderboard[] = $result;
+    }
 
-		echo '<table class="common-table zebra-striped">';
+    echo '<table class="common-table zebra-striped">';
 
-		$i = 1;
+    $i = 1;
 
-		foreach ($this->page['leaderboard'] as $row) {
+    foreach ($this->page['leaderboard'] as $row) {
 
-			echo '<tr>
-				<td>' . $i.'.</td>
-				<td><a href="/' . $row['username'].'">' . $row['username'].'</a></td>
-				<td>' . $row['points'].'</td>
-			</tr>';
+      echo '<tr>
+        <td>' . $i.'.</td>
+        <td><a href="/' . $row['username'].'">' . $row['username'].'</a></td>
+        <td>' . $row['points'].'</td>
+      </tr>';
 
-			$i++;
+      $i++;
 
-		}
+    }
 
-		echo '</table>';
+    echo '</table>';
 
-	}
+  }
 
 }

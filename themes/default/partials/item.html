@@ -3,39 +3,39 @@
 
 {# Avatar #}
 {% if app.plugins.gravatar %}
-	{{ app.link_to(app.plugins.gravatar.show(item.user.email, {'size': 48, 'style': 'float: left; padding: 0px 10px 5px 0px;'})|raw, 'users', 'show', item.user.id) }}
+  {{ app.link_to(app.plugins.gravatar.show(item.user.email, {'size': 48, 'style': 'float: left; padding: 0px 10px 5px 0px;'})|raw, 'users', 'show', item.user.id) }}
 {% else %}
-	{{ app.link_to(item.user.username, 'users', 'show', item.user.id) }}
+  {{ app.link_to(item.user.username, 'users', 'show', item.user.id) }}
 {% endif %}
 
 {# Title & content #}
 {% if app.config.items.titles.enabled and item.title %}
-	<h4>{{ app.link_to(item.title, 'items', 'show', item.id) }} <small>by {{ app.link_to(item.user.username, 'users', 'show', item.user.id) }}</small></h4>
+  <h4>{{ app.link_to(item.title, 'items', 'show', item.id) }} <small>by {{ app.link_to(item.user.username, 'users', 'show', item.user.id) }}</small></h4>
 
-	<p class="clear">{{ item.content|raw }}</p>
+  <p class="clear">{{ item.content|raw }}</p>
 {% elseif item.content %}
-		<p>
-			<strong>
-				{{ app.link_to(item.user.username, 'users', 'show', item.user.id) }}
-			</strong>
-			{{ item.content|raw }}
-		</p>
+    <p>
+      <strong>
+        {{ app.link_to(item.user.username, 'users', 'show', item.user.id) }}
+      </strong>
+      {{ item.content|raw }}
+    </p>
 {% endif %}
 
 {# Image #}
 {% if app.config.items.uploads.enabled and item.image and item.image != '0' %}
-	{% if item.title %}<div class="clear">{% endif %}
-	<a href="{{ app.echo_url_for('items', 'show', item.id) }}">
-		<img src="{{ app.config.base_dir ~ app.config.items.uploads.directory ~ '/stream/' ~ item.image }}"
-			 style="margin: 0px 0px 10px 0px;" />
-	</a>
-	{% if item.title %}</div>{% endif %}
+  {% if item.title %}<div class="clear">{% endif %}
+  <a href="{{ app.echo_url_for('items', 'show', item.id) }}">
+    <img src="{{ app.config.base_dir ~ app.config.items.uploads.directory ~ '/stream/' ~ item.image }}"
+       style="margin: 0px 0px 10px 0px;" />
+  </a>
+  {% if item.title %}</div>{% endif %}
 {% endif %}
 
 {# Share buttons #}
 <!-- Share buttons -->
 {% if not app.config.private %}
-	<span style="float: right; margin-left: 20px;">
+  <span style="float: right; margin-left: 20px;">
       <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ app.url_for('items', 'show', this.item.id) }}" data-text="{{ this.item.title }}" data-count="none">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
       <iframe src="http://www.facebook.com/plugins/like.php?href={{ app.url_for('items', 'show', this.item.id) }}&amp;layout=button_count&amp;show_faces=true&amp;width=100&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
     </span>
@@ -43,43 +43,43 @@
 
 {# Meta info #}
 <!-- Meta -->
-	<p class="item_meta">
-	{{ app.link_to('<span title="' ~ item.date ~ '">' ~ item.date ~ '</span>', 'items', 'show', item.id) }}
+  <p class="item_meta">
+  {{ app.link_to('<span title="' ~ item.date ~ '">' ~ item.date ~ '</span>', 'items', 'show', item.id) }}
 
-	{% if app.config.items.comments.enabled %}
-		&middot; <a href="#" onclick="document.getElementById('comment_form_{{ item.id }}').style.visibility = 'visible'; document.getElementById('comment_form_{{ item.id }}').style.height = 'auto'; document.getElementById('comment_form_{{ item.id }}').content.focus(); return false;">{{ app.config.items.comments.name }}</a>
-	{% endif %}
+  {% if app.config.items.comments.enabled %}
+    &middot; <a href="#" onclick="document.getElementById('comment_form_{{ item.id }}').style.visibility = 'visible'; document.getElementById('comment_form_{{ item.id }}').style.height = 'auto'; document.getElementById('comment_form_{{ item.id }}').content.focus(); return false;">{{ app.config.items.comments.name }}</a>
+  {% endif %}
 
-	{% if app.config.items.likes.enabled %}
-		&middot; <span id="like_link_{{ item.id }}">
-		{% if item.i_like %}
-			<a href="#" onclick="like_remove('{{ app.config.base_dir }}', {{ item.id }}, '{{ app.config.items.likes.name|escape('js') }}', '{{ app.config.items.likes.opposite_name|escape('js') }}'); return false;">{{ app.config.items.likes.opposite_name }}</a>
-		{% else %}
-			<a href="#" onclick="like_add('{{ app.config.base_dir }}', {{ item.id }}, '{{ app.config.items.likes.name|escape('js') }}', '{{ app.config.items.likes.opposite_name|escape('js') }}'); return false;">{{ app.config.items.likes.name }}</a>
-		{% endif %}
-		</span>
+  {% if app.config.items.likes.enabled %}
+    &middot; <span id="like_link_{{ item.id }}">
+    {% if item.i_like %}
+      <a href="#" onclick="like_remove('{{ app.config.base_dir }}', {{ item.id }}, '{{ app.config.items.likes.name|escape('js') }}', '{{ app.config.items.likes.opposite_name|escape('js') }}'); return false;">{{ app.config.items.likes.opposite_name }}</a>
+    {% else %}
+      <a href="#" onclick="like_add('{{ app.config.base_dir }}', {{ item.id }}, '{{ app.config.items.likes.name|escape('js') }}', '{{ app.config.items.likes.opposite_name|escape('js') }}'); return false;">{{ app.config.items.likes.name }}</a>
+    {% endif %}
+    </span>
 
-	{% endif %}
+  {% endif %}
 
-	{% if item.user.id == session.user_id %}
-		&middot; <a href="{{ app.url_for('items', 'update', item.id) }}">Edit</a>
-	{% endif %}
+  {% if item.user.id == session.user_id %}
+    &middot; <a href="{{ app.url_for('items', 'update', item.id) }}">Edit</a>
+  {% endif %}
 
-	{% if item.user.id == session.user_id %}
-		&middot; <a onclick="return confirm('Are you sure you want to delete this?')" href="{{ app.url_for('items', 'remove', item.id) }}">Delete</a>
-	{% endif %}
-	</p>
+  {% if item.user.id == session.user_id %}
+    &middot; <a onclick="return confirm('Are you sure you want to delete this?')" href="{{ app.url_for('items', 'remove', item.id) }}">Delete</a>
+  {% endif %}
+  </p>
 
 {# Likes #}
 {% if app.config.items.likes.enabled %}
-	<!-- Likes -->
-	{% include 'partials/likes.html' %}
+  <!-- Likes -->
+  {% include 'partials/likes.html' %}
 {% endif %}
 
 {# Comments #}
 {% if app.config.items.comments.enabled %}
-	<!-- Comments -->
-	{% include 'partials/comments.html' %}
+  <!-- Comments -->
+  {% include 'partials/comments.html' %}
 {% endif %}
 
 {# Spacer #}

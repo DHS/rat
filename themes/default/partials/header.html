@@ -30,28 +30,28 @@
         </a>
         <a class="brand" href="{{ app.url_for(app.config.default_controller) }}">{{ app.config.name }}</a>
 
-		  {% if session.user_id %}
+      {% if session.user_id %}
 
         <div class="nav-collapse">
-		  	  <ul class="nav">
-		  	    <li{% if app.uri.controller == app.config.default_controller %} class="active"{% endif %}>
-		  	    	{{ app.link_to('Home', app.config.default_controller) }}
-		  	    </li>
-		  	    <li{% if app.uri.controller == 'users' %} class="active"{% endif %}>
-		  	    	{{ app.link_to('My profile', 'users', 'show', session.user_id) }}
-		  	    </li>
-		  	    {% if app.config.invites.enabled %}
-		  	    <li{% if app.uri.controller == 'invites' %} class="active"{% endif %}>
-		  	    	{{ app.link_to('Invites', 'invites') }}
-		  	    </li>
-		  	    {% endif %}
-		  	    <li{% if app.url.params.id == 'help' %} class="active"{% endif %}>
-		  	    	{{ app.link_to('Help', 'pages', 'show', 'help') }}
-		  	    </li>
-	  	    </ul>
-		  	</div>
+          <ul class="nav">
+            <li{% if app.uri.controller == app.config.default_controller %} class="active"{% endif %}>
+              {{ app.link_to('Home', app.config.default_controller) }}
+            </li>
+            <li{% if app.uri.controller == 'users' %} class="active"{% endif %}>
+              {{ app.link_to('My profile', 'users', 'show', session.user_id) }}
+            </li>
+            {% if app.config.invites.enabled %}
+            <li{% if app.uri.controller == 'invites' %} class="active"{% endif %}>
+              {{ app.link_to('Invites', 'invites') }}
+            </li>
+            {% endif %}
+            <li{% if app.url.params.id == 'help' %} class="active"{% endif %}>
+              {{ app.link_to('Help', 'pages', 'show', 'help') }}
+            </li>
+          </ul>
+        </div>
 
-  	    {% if user_menu_enabled %}
+        {% if user_menu_enabled %}
         <ul class="nav pull-right">
           <li id="fat-menu" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -60,33 +60,33 @@
             </a>
             <ul class="dropdown-menu">
               <li>{{ app.link_to('Profile', 'users', 'show', session.user_id) }}</li>
-  	  		  	<li>{{ app.link_to('Settings', 'users', 'update') }}</li>
-  	  		  	{% if viewer.is_admin(app.config.admin_users) %}
-  	  		  	<li class="divider"></li>
-  	  		  	<li>{{ app.link_to('Admin', 'admin') }}</li>
-  	  		  	{% endif %}
-  	  		  	<li class="divider"></li>
-  	  		  	<li>{{ app.link_to('Logout', 'sessions', 'remove') }}</li>
+              <li>{{ app.link_to('Settings', 'users', 'update') }}</li>
+              {% if viewer.is_admin(app.config.admin_users) %}
+              <li class="divider"></li>
+              <li>{{ app.link_to('Admin', 'admin') }}</li>
+              {% endif %}
+              <li class="divider"></li>
+              <li>{{ app.link_to('Logout', 'sessions', 'remove') }}</li>
             </ul>
           </li>
         </ul>
-  	  	{% endif %}
+        {% endif %}
 
-  	  	<form class="navbar-search pull-right" action="{{ app.echo_url_for('search') }}/" method="get">
+        <form class="navbar-search pull-right" action="{{ app.echo_url_for('search') }}/" method="get">
           <input type="text" class="search-query span2" name="q" placeholder="Search" value="{{ app.uri.params.q }}" />
         </form>
 
-		  {% else %}
+      {% else %}
 
         <div class="nav-collapse">
-		  	  <ul class="nav">
-		  	  	<li{% if app.uri.controller == 'users' and app.uri.action == 'add' %} class="active" {% endif %}>{{ app.link_to('Signup', 'users', 'add') }}</li>
-		  	  	<li{% if app.uri.controller == 'sessions' and app.uri.action == 'add' %} class="active" {% endif %}>{{ app.link_to('Login', 'sessions', 'add') }}</li>
-		  	  	<li{% if app.uri.params.id == 'help' %} class="active" {% endif %}>{{ app.link_to('Help', 'pages', 'show', 'help') }}</li>
-		  	  </ul>
-		  	</div><!--/.nav-collapse -->
+          <ul class="nav">
+            <li{% if app.uri.controller == 'users' and app.uri.action == 'add' %} class="active" {% endif %}>{{ app.link_to('Signup', 'users', 'add') }}</li>
+            <li{% if app.uri.controller == 'sessions' and app.uri.action == 'add' %} class="active" {% endif %}>{{ app.link_to('Login', 'sessions', 'add') }}</li>
+            <li{% if app.uri.params.id == 'help' %} class="active" {% endif %}>{{ app.link_to('Help', 'pages', 'show', 'help') }}</li>
+          </ul>
+        </div><!--/.nav-collapse -->
 
-		  {% endif %}
+      {% endif %}
 
       </div>
     </div>
@@ -98,14 +98,14 @@
     <h1>{{ app.title }}</h1>
   {% endif %}
 
-	{% if session.flash %}
-		<div class="row">
-			<div class="span6 offset3">
-				<div class="alert-message {{ session.flash.category }}">
-					<p>{{ session.flash.message|raw }}</p>
-				</div>
-			</div>
-		</div>
-	{% endif %}
+  {% if session.flash %}
+    <div class="row">
+      <div class="span6 offset3">
+        <div class="alert-message {{ session.flash.category }}">
+          <p>{{ session.flash.message|raw }}</p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
 
-	  <div role="main">
+    <div role="main">

@@ -2,14 +2,14 @@
 
 class RoutingException extends Exception {
 
-	public $uri;
+  public $uri;
 
-	public function __construct($uri, $message, $code = 0, Exception $previous = null) {
+  public function __construct($uri, $message, $code = 0, Exception $previous = null) {
 
-		parent::__construct($message, $code);
+    parent::__construct($message, $code);
 
-		$this->uri = $uri;
+    $this->uri = $uri;
 
-	}
+  }
 
 }

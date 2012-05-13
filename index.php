@@ -8,7 +8,7 @@ session_start();
 // Load exceptions
 $exceptions = glob('lib/exceptions/*.php' );
 foreach ($exceptions as $exception) {
-	include $exception;
+  include $exception;
 }
 
 require_once 'lib/application.php';

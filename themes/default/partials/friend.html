@@ -4,9 +4,9 @@
 
   {% if not session.user_id %}
 
-	<a href="{{ app.url_for('sessions', 'add') }}/?redirect_to=/{{ app.url_for('users', 'show', user.id) }}" class="btn">
-	{% if app.config.friends.asymmetric %}Follow{% else %}Add friend{% endif %}
-	</a>
+  <a href="{{ app.url_for('sessions', 'add') }}/?redirect_to=/{{ app.url_for('users', 'show', user.id) }}" class="btn">
+  {% if app.config.friends.asymmetric %}Follow{% else %}Add friend{% endif %}
+  </a>
 
   {% else %}
 

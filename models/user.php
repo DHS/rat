@@ -2,432 +2,432 @@
 
 class User {
 
-	public function __construct(array $attrs = null) {
+  public function __construct(array $attrs = null) {
 
-		if (is_array($attrs)) {
-			foreach ($attrs as $key => $value) {
-				$this->$key = $value;
-			}
-		}
+    if (is_array($attrs)) {
+      foreach ($attrs as $key => $value) {
+        $this->$key = $value;
+      }
+    }
 
-	}
+  }
 
-	// Add a user (beta signup)
-	public static function add($email) {
+  // Add a user (beta signup)
+  public static function add($email) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$email = sanitize_input($email);
+    $email = sanitize_input($email);
 
-		$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `email` = $email, `date_added` = NOW()";
-		$query = mysqli_query($mysqli, $sql);
+    $sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `email` = $email, `date_added` = NOW()";
+    $query = mysqli_query($mysqli, $sql);
 
-		return mysqli_insert_id($mysqli);
+    return mysqli_insert_id($mysqli);
 
-	}
+  }
 
-	// Fetch a user's info given a user_id
-	public static function get_by_id($id) {
+  // Fetch a user's info given a user_id
+  public static function get_by_id($id) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$id = sanitize_input($id);
+    $id = sanitize_input($id);
 
-		$sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $id";
-		$query = mysqli_query($mysqli, $sql);
-		$result = mysqli_fetch_assoc($query);
+    $sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $id";
+    $query = mysqli_query($mysqli, $sql);
+    $result = mysqli_fetch_assoc($query);
 
-		if ( ! is_array($result)) {
+    if ( ! is_array($result)) {
 
-			return null;
+      return null;
 
-		} else {
+    } else {
 
-			return new User($result);
+      return new User($result);
 
-		}
+    }
 
-	}
+  }
 
-	// Fetch a user's info given an email
-	public static function get_by_username($username) {
+  // Fetch a user's info given an email
+  public static function get_by_username($username) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$username = sanitize_input($username);
+    $username = sanitize_input($username);
 
-		$sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `username` = $username";
-		$query = mysqli_query($mysqli, $sql);
-		$result = mysqli_fetch_assoc($query);
+    $sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `username` = $username";
+    $query = mysqli_query($mysqli, $sql);
+    $result = mysqli_fetch_assoc($query);
 
-		if ( ! is_array($result)) {
+    if ( ! is_array($result)) {
 
-			return null;
+      return null;
 
-		} else {
+    } else {
 
-			return new User($result);
+      return new User($result);
 
-		}
+    }
 
-	}
+  }
 
-	// Fetch a user's info given an email
-	public static function get_by_email($email) {
+  // Fetch a user's info given an email
+  public static function get_by_email($email) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$email = sanitize_input($email);
+    $email = sanitize_input($email);
 
-		$sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `email` = $email";
-		$query = mysqli_query($mysqli, $sql);
-		$result = mysqli_fetch_assoc($query);
+    $sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `email` = $email";
+    $query = mysqli_query($mysqli, $sql);
+    $result = mysqli_fetch_assoc($query);
 
-		if ( ! is_array($result)) {
+    if ( ! is_array($result)) {
 
-			return null;
+      return null;
 
-		} else {
+    } else {
 
-			return new User($result);
+      return new User($result);
 
-		}
+    }
 
-	}
+  }
 
-	// Signup a new user!
-	public static function signup($id, $username, $password, $salt) {
+  // Signup a new user!
+  public static function signup($id, $username, $password, $salt) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$id = sanitize_input($id);
-		$username = sanitize_input($username);
+    $id = sanitize_input($id);
+    $username = sanitize_input($username);
 
-		$encrypted_password = md5($password . $salt);
+    $encrypted_password = md5($password . $salt);
 
-		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `username` = $username, `password` = '$encrypted_password', `date_joined` = NOW() WHERE `id` = $id";
-		$query = mysqli_query($mysqli, $sql);
+    $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `username` = $username, `password` = '$encrypted_password', `date_joined` = NOW() WHERE `id` = $id";
+    $query = mysqli_query($mysqli, $sql);
 
-	}
+  }
 
-	// Check user's login details
-	public function authenticate($new_password, $salt) {
+  // Check user's login details
+  public function authenticate($new_password, $salt) {
 
-		if ($this->password == md5($new_password . $salt)) {
+    if ($this->password == md5($new_password . $salt)) {
 
-			// Update session
-			$_SESSION['user_id'] = $this->id;
+      // Update session
+      $_SESSION['user_id'] = $this->id;
 
-			// Log login
-			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'login');
-			}
+      // Log login
+      if (isset($this->plugins->log)) {
+        $this->plugins->log->add($_SESSION['user_id'], 'user', NULL, 'login');
+      }
 
-			return true;
+      return true;
 
-		} else {
+    } else {
 
-			return false;
+      return false;
 
-		}
+    }
 
-	}
+  }
 
-	// Log a user out
-	public function deauthenticate() {
+  // Log a user out
+  public function deauthenticate() {
 
-		if (isset($_SESSION['user_id'])) {
+    if (isset($_SESSION['user_id'])) {
 
-			session_unset();
-			session_destroy();
+      session_unset();
+      session_destroy();
 
-			// Log logout
-			if (isset($this->plugins->log)) {
-				$this->plugins->log->add($this->id, 'user', NULL, 'logout');
-			}
+      // Log logout
+      if (isset($this->plugins->log)) {
+        $this->plugins->log->add($this->id, 'user', NULL, 'logout');
+      }
 
-			return true;
+      return true;
 
-		} else {
+    } else {
 
-			return false;
+      return false;
 
-		}
+    }
 
-	}
+  }
 
-	// Remove a user. WTF?
-	public static function remove() {
+  // Remove a user. WTF?
+  public static function remove() {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		// Check item exists
-		$sql_check = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $this->id";
-		$count_query = mysqli_query($mysqli, $sql_check);
+    // Check item exists
+    $sql_check = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $this->id";
+    $count_query = mysqli_query($mysqli, $sql_check);
 
-		if (mysqli_num_rows($count_query) > 0) {
-			// If user exists, go ahead and delete
-			$sql_delete = "DELETE FROM `user` WHERE `id` = $this->id";
-			$query = mysqli_query($mysqli, $sql_delete);
-		}
+    if (mysqli_num_rows($count_query) > 0) {
+      // If user exists, go ahead and delete
+      $sql_delete = "DELETE FROM `user` WHERE `id` = $this->id";
+      $query = mysqli_query($mysqli, $sql_delete);
+    }
 
-	}
+  }
 
-	// Get a user's items, returns array of Item objects
-	public function items($limit = 10, $offset = 0) {
+  // Get a user's items, returns array of Item objects
+  public function items($limit = 10, $offset = 0) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `user_id` = $this->id ORDER BY `id` DESC";
+    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `user_id` = $this->id ORDER BY `id` DESC";
 
-		// Limit string
-		$limit = sanitize_input($limit);
-		$sql .= " LIMIT $limit";
+    // Limit string
+    $limit = sanitize_input($limit);
+    $sql .= " LIMIT $limit";
 
-		// Offset string
-		$offset = sanitize_input($offset);
-		$sql .= " OFFSET $offset";
+    // Offset string
+    $offset = sanitize_input($offset);
+    $sql .= " OFFSET $offset";
 
-		$query = mysqli_query($mysqli, $sql);
+    $query = mysqli_query($mysqli, $sql);
 
-		$items = array();
-		while ($result = mysqli_fetch_assoc($query)) {
-			$items[] = Item::get_by_id($result['id']);
-		}
+    $items = array();
+    while ($result = mysqli_fetch_assoc($query)) {
+      $items[] = Item::get_by_id($result['id']);
+    }
 
-		return $items;
+    return $items;
 
-	}
+  }
 
-	// Get all invites sent by a user, returns an array of Invite objects
-	public function invites($limit = 10, $offset = 0) {
+  // Get all invites sent by a user, returns an array of Invite objects
+  public function invites($limit = 10, $offset = 0) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `user_id` = $this->id ORDER BY `id` DESC";
+    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `user_id` = $this->id ORDER BY `id` DESC";
 
-		// Limit string
-		$limit = sanitize_input($limit);
-		$sql .= " LIMIT $limit";
+    // Limit string
+    $limit = sanitize_input($limit);
+    $sql .= " LIMIT $limit";
 
-		// Offset string
-		$offset = sanitize_input($offset);
-		$sql .= " OFFSET $offset";
+    // Offset string
+    $offset = sanitize_input($offset);
+    $sql .= " OFFSET $offset";
 
-		$query = mysqli_query($mysqli, $sql);
+    $query = mysqli_query($mysqli, $sql);
 
-		$invites = array();
-		while ($result = mysqli_fetch_assoc($query)) {
-			$invites[] = Invite::get_by_id($result['id']);
-		}
+    $invites = array();
+    while ($result = mysqli_fetch_assoc($query)) {
+      $invites[] = Invite::get_by_id($result['id']);
+    }
 
-		return $invites;
+    return $invites;
 
-	}
+  }
 
-	// Get a users's friends, returns a list of User items
-	public function friends($limit = 10, $offset = 0) {
+  // Get a users's friends, returns a list of User items
+  public function friends($limit = 10, $offset = 0) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$sql = "SELECT `id`, `friend_user_id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = $this->id";
+    $sql = "SELECT `id`, `friend_user_id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = $this->id";
 
-		// Limit string
-		$limit = sanitize_input($limit);
-		$sql .= " LIMIT $limit";
+    // Limit string
+    $limit = sanitize_input($limit);
+    $sql .= " LIMIT $limit";
 
-		// Offset string
-		$offset = sanitize_input($offset);
-		$sql .= " OFFSET $offset";
+    // Offset string
+    $offset = sanitize_input($offset);
+    $sql .= " OFFSET $offset";
 
-		$query = mysqli_query($mysqli, $sql);
+    $query = mysqli_query($mysqli, $sql);
 
-		$friends = array();
-		while ($result = mysqli_fetch_assoc($query)) {
-			$friends[$result['id']] = User::get_by_id($result['friend_user_id']);
-		}
+    $friends = array();
+    while ($result = mysqli_fetch_assoc($query)) {
+      $friends[$result['id']] = User::get_by_id($result['friend_user_id']);
+    }
 
-		return $friends;
+    return $friends;
 
-	}
+  }
 
-	// Get a users's followers, returns a list of Friend items
-	public function followers($limit = 10, $offset = 0) {
+  // Get a users's followers, returns a list of Friend items
+  public function followers($limit = 10, $offset = 0) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$sql = "SELECT `id`, `friend_user_id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `friend_user_id` = $this->id";
+    $sql = "SELECT `id`, `friend_user_id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `friend_user_id` = $this->id";
 
-		// Limit string
-		$limit = sanitize_input($limit);
-		$sql .= " LIMIT $limit";
+    // Limit string
+    $limit = sanitize_input($limit);
+    $sql .= " LIMIT $limit";
 
-		// Offset string
-		$offset = sanitize_input($offset);
-		$sql .= " OFFSET $offset";
+    // Offset string
+    $offset = sanitize_input($offset);
+    $sql .= " OFFSET $offset";
 
-		$query = mysqli_query($mysqli, $sql);
+    $query = mysqli_query($mysqli, $sql);
 
-		$friends = array();
-		while ($result = mysqli_fetch_assoc($query)) {
-			$friends[$result['id']] = User::get_by_id($result['user_id']);
-		}
+    $friends = array();
+    while ($result = mysqli_fetch_assoc($query)) {
+      $friends[$result['id']] = User::get_by_id($result['user_id']);
+    }
 
-		return $friends;
+    return $friends;
 
-	}
+  }
 
-	// Get items liked by a user, returns array of Item objects
-	public function likes($limit = 10, $offset = 0) {
+  // Get items liked by a user, returns array of Item objects
+  public function likes($limit = 10, $offset = 0) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$sql = "SELECT `item_id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `user_id` = $this->id ORDER BY `date` DESC";
+    $sql = "SELECT `item_id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `user_id` = $this->id ORDER BY `date` DESC";
 
-		// Limit string
-		$limit = sanitize_input($limit);
-		$sql .= " LIMIT $limit";
+    // Limit string
+    $limit = sanitize_input($limit);
+    $sql .= " LIMIT $limit";
 
-		// Offset string
-		$offset = sanitize_input($offset);
-		$sql .= " OFFSET $offset";
+    // Offset string
+    $offset = sanitize_input($offset);
+    $sql .= " OFFSET $offset";
 
-		$query = mysqli_query($mysqli, $sql);
+    $query = mysqli_query($mysqli, $sql);
 
-		$items = array();
-		while ($result = mysqli_fetch_assoc($query)) {
-			$items[] = Item::get_by_id($result['item_id']);
-		}
+    $items = array();
+    while ($result = mysqli_fetch_assoc($query)) {
+      $items[] = Item::get_by_id($result['item_id']);
+    }
 
-		return $items;
+    return $items;
 
-	}
+  }
 
-	// Get comments made by a user, returns an array of Comment objects
-	public function comments($limit = 10, $offset = 0) {
+  // Get comments made by a user, returns an array of Comment objects
+  public function comments($limit = 10, $offset = 0) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `user_id` = $this->id ORDER BY `id` ASC";
+    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `user_id` = $this->id ORDER BY `id` ASC";
 
-		// Limit string
-		$limit = sanitize_input($limit);
-		$sql .= " LIMIT $limit";
+    // Limit string
+    $limit = sanitize_input($limit);
+    $sql .= " LIMIT $limit";
 
-		// Offset string
-		$offset = sanitize_input($offset);
-		$sql .= " OFFSET $offset";
+    // Offset string
+    $offset = sanitize_input($offset);
+    $sql .= " OFFSET $offset";
 
-		$query = mysqli_query($mysqli, $sql);
+    $query = mysqli_query($mysqli, $sql);
 
-		$comments = array();
-		while ($result = mysqli_fetch_assoc($query)) {
-			$comments[] = Comment::get_by_id($result['id']);
-		}
+    $comments = array();
+    while ($result = mysqli_fetch_assoc($query)) {
+      $comments[] = Comment::get_by_id($result['id']);
+    }
 
-		return $comments;
+    return $comments;
 
-	}
+  }
 
-	// Add a friend, returns friendship id
-	public function friend_add($friend_user_id) {
+  // Add a friend, returns friendship id
+  public function friend_add($friend_user_id) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$friend_user_id = sanitize_input($friend_user_id);
+    $friend_user_id = sanitize_input($friend_user_id);
 
-		$count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = $friend_user_id";
-		$count_query = mysqli_query($mysqli, $count_sql);
+    $count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = $friend_user_id";
+    $count_query = mysqli_query($mysqli, $count_sql);
 
-		if (mysqli_num_rows($count_query) < 1) {
-			$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}friends` SET `user_id` = {$this->id}, `friend_user_id` = $friend_user_id";
-			$query = mysqli_query($mysqli, $sql);
-		}
+    if (mysqli_num_rows($count_query) < 1) {
+      $sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}friends` SET `user_id` = {$this->id}, `friend_user_id` = $friend_user_id";
+      $query = mysqli_query($mysqli, $sql);
+    }
 
-	}
+  }
 
-	// Update a friendship status
-	public function friend_update($friend_user_id, $status) {
+  // Update a friendship status
+  public function friend_update($friend_user_id, $status) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$friend_user_id = sanitize_input($friend_user_id);
-		$status = sanitize_input($status);
+    $friend_user_id = sanitize_input($friend_user_id);
+    $status = sanitize_input($status);
 
-		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}friends` SET `status` = $status WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
-		$query = mysqli_query($mysqli, $sql);
+    $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}friends` SET `status` = $status WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
+    $query = mysqli_query($mysqli, $sql);
 
-	}
+  }
 
-	// Unfriend! Returns friendship id
-	public function friend_remove($friend_user_id) {
+  // Unfriend! Returns friendship id
+  public function friend_remove($friend_user_id) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$friend_user_id = sanitize_input($friend_user_id);
+    $friend_user_id = sanitize_input($friend_user_id);
 
-		$count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
-		$count_query = mysqli_query($mysqli, $count_sql);
+    $count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
+    $count_query = mysqli_query($mysqli, $count_sql);
 
-		if (mysqli_num_rows($count_query) > 0) {
-			$sql = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
-			$query = mysqli_query($mysqli, $sql);
-		}
+    if (mysqli_num_rows($count_query) > 0) {
+      $sql = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
+      $query = mysqli_query($mysqli, $sql);
+    }
 
-	}
+  }
 
-	// Get a feed of a friend's activity, returns array of Item objects
-	public function list_feed($limit = 10, $offset = 0) {
+  // Get a feed of a friend's activity, returns array of Item objects
+  public function list_feed($limit = 10, $offset = 0) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		// Start by adding the viewer to the query string
-		$friends_string = "`user_id` = {$this->id}";
+    // Start by adding the viewer to the query string
+    $friends_string = "`user_id` = {$this->id}";
 
-		$friends = $this->friends();
+    $friends = $this->friends();
 
-		// Loop through friends adding them to the query string
-		foreach ($friends as $friend) {
-			$friends_string .= " OR `user_id` = {$friend['friend_user_id']}";
-		}
+    // Loop through friends adding them to the query string
+    foreach ($friends as $friend) {
+      $friends_string .= " OR `user_id` = {$friend['friend_user_id']}";
+    }
 
-		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE $friends_string ORDER BY `id` DESC";
+    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE $friends_string ORDER BY `id` DESC";
 
-		// Limit string
-		$limit = sanitize_input($limit);
-		$sql .= " LIMIT $limit";
+    // Limit string
+    $limit = sanitize_input($limit);
+    $sql .= " LIMIT $limit";
 
-		// Offset string
-		$offset = sanitize_input($offset);
-		$sql .= " OFFSET $offset";
+    // Offset string
+    $offset = sanitize_input($offset);
+    $sql .= " OFFSET $offset";
 
-		$query = mysqli_query($mysqli, $sql);
+    $query = mysqli_query($mysqli, $sql);
 
-		// Loop through item ids, fetching objects
-		$items = array();
-		while ($result = mysqli_fetch_assoc($query)) {
-			$items[] = Item::get_by_id($result['id']);
-		}
+    // Loop through item ids, fetching objects
+    $items = array();
+    while ($result = mysqli_fetch_assoc($query)) {
+      $items[] = Item::get_by_id($result['id']);
+    }
 
-		return $items;
+    return $items;
 
-	}
+  }
 
   // Check whether two users are friends, returns TRUE or FALSE
   public function friend_check($friend_user_id) {
@@ -445,195 +445,195 @@ class User {
 
   }
 
-	public function is_admin(array $admin_users = array()) {
-		return in_array($this->id, $admin_users);
-	}
+  public function is_admin(array $admin_users = array()) {
+    return in_array($this->id, $admin_users);
+  }
 
-	// Change password
-	public function update_password($new_password, $salt) {
+  // Change password
+  public function update_password($new_password, $salt) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$encrypted_password = md5($new_password . $salt);
+    $encrypted_password = md5($new_password . $salt);
 
-		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `password` = '{$encrypted_password}' WHERE `id` = $this->id";
-		$query = mysqli_query($mysqli, $sql);
+    $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `password` = '{$encrypted_password}' WHERE `id` = $this->id";
+    $query = mysqli_query($mysqli, $sql);
 
-	}
+  }
 
-	// Update profile info
-	public function update_profile($name = NULL, $bio = NULL, $url = NULL) {
+  // Update profile info
+  public function update_profile($name = NULL, $bio = NULL, $url = NULL) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET ";
+    $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET ";
 
-		if ($name != '') {
-			$name = sanitize_input($name);
-		} else {
-			$name = 'NULL';
-		}
-		$sql .= "`full_name` = $name, ";
+    if ($name != '') {
+      $name = sanitize_input($name);
+    } else {
+      $name = 'NULL';
+    }
+    $sql .= "`full_name` = $name, ";
 
-		if ($bio != '') {
-			$bio = sanitize_input($bio);
-		} else {
-			$bio = 'NULL';
-		}
-		$sql .= "`bio` = $bio, ";
+    if ($bio != '') {
+      $bio = sanitize_input($bio);
+    } else {
+      $bio = 'NULL';
+    }
+    $sql .= "`bio` = $bio, ";
 
-		if ($url != '') {
-			$url = sanitize_input($url);
-		} else {
-			$url = 'NULL';
-		}
-		$sql .= "`url` = $url";
+    if ($url != '') {
+      $url = sanitize_input($url);
+    } else {
+      $url = 'NULL';
+    }
+    $sql .= "`url` = $url";
 
-		$sql .= " WHERE `id` = $this->id";
+    $sql .= " WHERE `id` = $this->id";
 
-		$query = mysqli_query($mysqli, $sql);
+    $query = mysqli_query($mysqli, $sql);
 
-	}
+  }
 
-	// Update a user's number of invites
-	public function update_invites($invites) {
+  // Update a user's number of invites
+  public function update_invites($invites) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$invites = sanitize_input($invites);
+    $invites = sanitize_input($invites);
 
-		// Get current # of invites
-		$sql = "SELECT `invites` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $this->id";
-		$query = mysqli_query($mysqli, $sql);
-		$user = mysql_fetch_assoc($query);
+    // Get current # of invites
+    $sql = "SELECT `invites` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $this->id";
+    $query = mysqli_query($mysqli, $sql);
+    $user = mysql_fetch_assoc($query);
 
-		// Calculate new # of invites
-		$user['invites'] = $user['invites'] + $invites;
+    // Calculate new # of invites
+    $user['invites'] = $user['invites'] + $invites;
 
-		// Update database
-		$sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `invites` = {$user['invites']} WHERE `id` = $this->id";
-		$query = mysqli_query($mysqli, $sql);
+    // Update database
+    $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `invites` = {$user['invites']} WHERE `id` = $this->id";
+    $query = mysqli_query($mysqli, $sql);
 
-	}
+  }
 
-	// Check if a username is available
-	public static function check_username_available($username) {
+  // Check if a username is available
+  public static function check_username_available($username) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$username = sanitize_input($username);
+    $username = sanitize_input($username);
 
-		$query = mysqli_query($mysqli, "SELECT COUNT(id) AS count FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `username` = $username");
-		$user = mysqli_fetch_assoc($query);
+    $query = mysqli_query($mysqli, "SELECT COUNT(id) AS count FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `username` = $username");
+    $user = mysqli_fetch_assoc($query);
 
     return $user['count'] >= 1 ? false : true;
 
-	}
+  }
 
-	// Check if a given email already exists in the system
-	public static function check_email_available($email) {
+  // Check if a given email already exists in the system
+  public static function check_email_available($email) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$email = sanitize_input($email);
+    $email = sanitize_input($email);
 
     $sql = "SELECT COUNT(id) AS count FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `email` = $email";
-		$query = mysqli_query($mysqli, $sql);
-		$users = mysqli_fetch_assoc($query);
+    $query = mysqli_query($mysqli, $sql);
+    $users = mysqli_fetch_assoc($query);
 
-		if ($users['count'] >= 1) {
+    if ($users['count'] >= 1) {
 
-			return false;
+      return false;
 
-		} else {
+    } else {
 
-			return true;
+      return true;
 
-		}
+    }
 
-	}
+  }
 
-	// Check if a string (usually username) contains spaces
-	public static function check_contains_spaces($string) {
+  // Check if a string (usually username) contains spaces
+  public static function check_contains_spaces($string) {
 
-		$array = explode(" ", $string);
+    $array = explode(" ", $string);
 
-		if (count($array) > 1) {
-			return true;
-		} else {
-			return false;
-		}
+    if (count($array) > 1) {
+      return true;
+    } else {
+      return false;
+    }
 
-	}
+  }
 
-	// Check if a string (usually email) contains an @ symbol
-	public static function check_contains_at($string) {
+  // Check if a string (usually email) contains an @ symbol
+  public static function check_contains_at($string) {
 
-		$array = explode("@", $string);
+    $array = explode("@", $string);
 
-		if (count($array) > 1) {
-			return true;
-		} else {
-			return false;
-		}
+    if (count($array) > 1) {
+      return true;
+    } else {
+      return false;
+    }
 
-	}
+  }
 
-	// Check if a string (usually username) only contains only alphanumeric characters
-	public static function check_alphanumeric($string) {
+  // Check if a string (usually username) only contains only alphanumeric characters
+  public static function check_alphanumeric($string) {
 
-		if (ctype_alnum($string)) {
+    if (ctype_alnum($string)) {
 
-			return true;
+      return true;
 
-		} else {
+    } else {
 
-			return false;
+      return false;
 
-		}
+    }
 
-	}
+  }
 
-	// Check if a password reset token is valid (ie. <24hrs old), returns user_id or false
-	public static function check_password_reset_code($code) {
+  // Check if a password reset token is valid (ie. <24hrs old), returns user_id or false
+  public static function check_password_reset_code($code) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$code = sanitize_input($code);
+    $code = sanitize_input($code);
 
-		$sql = "SELECT `user_id` AS id FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users_password_reset` WHERE `reset_code` = $code AND `date` > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY `date` DESC";
-		$query = mysqli_query($mysqli, $sql);
-		$user = mysqli_fetch_assoc($query);
+    $sql = "SELECT `user_id` AS id FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users_password_reset` WHERE `reset_code` = $code AND `date` > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY `date` DESC";
+    $query = mysqli_query($mysqli, $sql);
+    $user = mysqli_fetch_assoc($query);
 
-		return isset($user['id']) ? $user['id'] : FALSE;
+    return isset($user['id']) ? $user['id'] : FALSE;
 
-	}
+  }
 
-	// Generate a random password reset code
-	public function generate_password_reset_code() {
+  // Generate a random password reset code
+  public function generate_password_reset_code() {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		// Generate code
-		$code = '';
-		$source = 'abcdefghijklmnpqrstuvwxyz123456789';
-		while (strlen($code) < 6) {
-			$code .= $source[rand(0, strlen($source))];
-		}
+    // Generate code
+    $code = '';
+    $source = 'abcdefghijklmnpqrstuvwxyz123456789';
+    while (strlen($code) < 6) {
+      $code .= $source[rand(0, strlen($source))];
+    }
 
-		// Write to database
-		$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}users_password_reset` SET `user_id` = $this->id, `reset_code` = '$code'";
-		$query = mysqli_query($mysqli, $sql);
+    // Write to database
+    $sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}users_password_reset` SET `user_id` = $this->id, `reset_code` = '$code'";
+    $query = mysqli_query($mysqli, $sql);
 
-		return $code;
+    return $code;
 
-	}
+  }
 
 }

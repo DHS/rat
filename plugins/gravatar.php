@@ -1,66 +1,66 @@
 <?php
 
 /*
-*	A gravatar plugin for Rat by @DHS
+*  A gravatar plugin for Rat by @DHS
 *
-*	Installation
+*  Installation
 *
-*		Comes installed by default
+*    Comes installed by default
 *
-*	Usage
+*  Usage
 *
-*		To display a users's gravatar:
+*    To display a users's gravatar:
 *
-*			if (isset($this->plugins->gravatar)) {
-*				echo $this->plugins->gravatar->show($email, array('user_id' => $_SESSION['user_id'], 'size' => 20, 'style' => "margin: 10px;"));
-*			}
+*      if (isset($this->plugins->gravatar)) {
+*        echo $this->plugins->gravatar->show($email, array('user_id' => $_SESSION['user_id'], 'size' => 20, 'style' => "margin: 10px;"));
+*      }
 *
 */
 
 class gravatar extends Application {
 
-	function format_email($email) {
+  function format_email($email) {
 
-		return md5(strtolower(trim($email)));
+    return md5(strtolower(trim($email)));
 
-	}
+  }
 
-	function show($email, $params = array()) {
+  function show($email, $params = array()) {
 
-		$email = $this->format_email($email);
+    $email = $this->format_email($email);
 
-		// start the gravatar string
-		$return = '<img src="http://www.gravatar.com/avatar/' . $email;
+    // start the gravatar string
+    $return = '<img src="http://www.gravatar.com/avatar/' . $email;
 
-		// if size is set, add it in
-		if (isset($params['size'])) {
-			$return .= '?s=' . $params['size'];
-		}
+    // if size is set, add it in
+    if (isset($params['size'])) {
+      $return .= '?s=' . $params['size'];
+    }
 
-		$return .= '"';
+    $return .= '"';
 
-		// if style is set, add it in
-		if (isset($params['style'])) {
-			$return .= ' style="' . $params['style'].'"';
-		}
+    // if style is set, add it in
+    if (isset($params['style'])) {
+      $return .= ' style="' . $params['style'].'"';
+    }
 
-		$return .= ' />';
+    $return .= ' />';
 
-		// if user_id is set, make it a link
-		if (isset($params['link'])) {
-			$return = '<a href="' . $params['link'].'">' . $return.'</a>';
-		}
+    // if user_id is set, make it a link
+    if (isset($params['link'])) {
+      $return = '<a href="' . $params['link'].'">' . $return.'</a>';
+    }
 
-		return $return;
+    return $return;
 
-	}
+  }
 
-	function show_settings($email) {
+  function show_settings($email) {
 
 echo '<h2>Picture</h2>
 ' . $this->show($email).'
 <p>Visit <a href="http://gravatar.com/">Gravatar.com</a> to change your picture.</p>';
 
-	}
+  }
 
 }

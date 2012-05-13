@@ -2,55 +2,55 @@
 
 class AppConfig extends ServerConfig {
 
-	/*
-	*	Contents
-	*
-	*		1. Basic app variables
-	*		2. Beta
-	*		3. Privacy
-	*		4. Items
-	*		5. Invites
-	*		6. Friends
-	*		7. Admin
-	*		8. Themes
-	*		9. Plugins
-	*
-	*/
+  /*
+  *  Contents
+  *
+  *   1. Basic app variables
+  *   2. Beta
+  *   3. Privacy
+  *   4. Items
+  *   5. Invites
+  *   6. Friends
+  *   7. Admin
+  *   8. Themes
+  *   9. Plugins
+  *
+  */
 
-	// Basic app variables
-	public $name                = '{{ app.config.name }}';
-	public $tagline             = '{{ app.config.tagline }}';
-	public $default_controller  = 'items';
+  // Basic app variables
+  public $name                = '{{ app.config.name }}';
+  public $tagline             = '{{ app.config.tagline }}';
+  public $default_controller  = 'items';
 
-	// Beta - users can't signup, can only enter their email addresses
-	public $beta = {{ app.config.beta }};
+  // Beta - users can't signup, can only enter their email addresses
+  public $beta = {{ app.config.beta }};
 
-	// Private app - requires login to view pages (except public_pages)
-	// no share buttons
-	public $private = {{ app.config.private }};
+  // Private app - requires login to view pages (except public_pages)
+  // no share buttons
+  public $private = {{ app.config.private }};
 
-	// Items
-	// Notes about uploads: max-size is in bytes (default: 5MB), directory
-	// should contain three subdirectories: originals, thumbnails, stream
-	public $items = array(
+  // Items
+  // Notes about uploads: max-size is in bytes (default: 5MB), directory
+  // should contain three subdirectories: originals, thumbnails, stream
+  public $items = array(
     'name'        => '{{ app.config.items.name }}',
     'name_plural' => '{{ app.config.items.name_plural }}',
 
     'titles' => array(
       'enabled'     => {{ app.config.items.titles.enabled }},
       'name'        => '{{ app.config.items.titles.name }}',
-      'name_plural'	=> '{{ app.config.items.titles.name_plural }}'
+      'name_plural'  => '{{ app.config.items.titles.name_plural }}'
     ),
 
     'content' => array(
       'enabled'     => {{ app.config.items.content.enabled }},
       'name'        => '{{ app.config.items.content.name }}',
       'name_plural' => '{{ app.config.items.content.name_plural }}'
-	  ),
+    ),
 
-		// Remember to update the permissions for your
-		// upload dir e.g. chmod -R 777 uploads
-		'uploads'       => array(
+    // Remember to update the permissions for your
+    // upload dir e.g. chmod -R 777 uploads
+    'uploads'       => array(
       'enabled'     => {{ app.config.items.uploads.enabled }},
       'name'        => '{{ app.config.items.uploads.name }}',
       'directory'   => 'uploads',
@@ -79,34 +79,34 @@ class AppConfig extends ServerConfig {
 
   );
 
-	// Locale
-	public $timezone = 'Europe/London';
+  // Locale
+  public $timezone = 'Europe/London';
 
-	// Invites system
-	public $invites = array('enabled' => {{ app.config.invites.enabled }});
+  // Invites system
+  public $invites = array('enabled' => {{ app.config.invites.enabled }});
 
-	// Friends - still testing, works with asymmetric set to true... just!
-	// (Shows 'Follow' link & generates homepage feed)
-	public $friends = array(
-	  'enabled'     => {{ app.config.friends.enabled }},
+  // Friends - still testing, works with asymmetric set to true... just!
+  // (Shows 'Follow' link & generates homepage feed)
+  public $friends = array(
+    'enabled'     => {{ app.config.friends.enabled }},
     'asymmetric'  => {{ app.config.friends.asymmetric }}
   );
 
-	// Admin users - array of user IDs who have access to admin area
-	public $admin_users = array(1);
+  // Admin users - array of user IDs who have access to admin area
+  public $admin_users = array(1);
 
-	// Theme
-	public $theme = 'default';
+  // Theme
+  public $theme = 'default';
 
-	// Plugins
-	public $plugins = array(
-	  'log'       => TRUE,
+  // Plugins
+  public $plugins = array(
+    'log'       => TRUE,
     'gravatar'  => TRUE,
     'points'    => FALSE,
     'analytics' => FALSE
   );
 
-	// Send emails from what address?
-	public $send_emails_from = 'support@blah.com';
+  // Send emails from what address?
+  public $send_emails_from = 'support@blah.com';
 
 }

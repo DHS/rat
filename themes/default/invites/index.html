@@ -6,7 +6,7 @@
 
 {% if invites_remaining > 0 %}
 
-	{% include 'partials/invite.html' %}
+  {% include 'partials/invite.html' %}
 
 {% endif %}
 
@@ -14,20 +14,20 @@
 
 {% if invites_sent %}
 
-	<h3>Sent invites</h3>
+  <h3>Sent invites</h3>
 
-	{% for invite in invites_sent %}
+  {% for invite in invites_sent %}
 
-		{{ invite.email }}
+    {{ invite.email }}
 
-		{% if invite.result > 0 %}
-		   	&middot; <span class="good_news">Accepted</span>
-		{% else %}
-		    &middot; Still waiting
-		{% endif %}
-		<br />
+    {% if invite.result > 0 %}
+      &middot; <span class="good_news">Accepted</span>
+    {% else %}
+      &middot; Still waiting
+    {% endif %}
+    <br />
 
-	{% endfor %}
+  {% endfor %}
 
 {% endif %}
 

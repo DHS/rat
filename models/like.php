@@ -2,134 +2,134 @@
 
 class Like {
 
-	public function __construct(array $attrs = null) {
+  public function __construct(array $attrs = null) {
 
-		if (is_array($attrs)) {
-			foreach ($attrs as $key => $value) {
-				$this->$key = $value;
-			}
-		}
+    if (is_array($attrs)) {
+      foreach ($attrs as $key => $value) {
+        $this->$key = $value;
+      }
+    }
 
-	}
+  }
 
-	// Add a like for an item, returns id
-	public static function add($user_id, $item_id) {
+  // Add a like for an item, returns id
+  public static function add($user_id, $item_id) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$user_id = sanitize_input($user_id);
-		$item_id = sanitize_input($item_id);
+    $user_id = sanitize_input($user_id);
+    $item_id = sanitize_input($item_id);
 
-		$count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
-		$count_query = mysqli_query($mysqli, $count_sql);
+    $count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
+    $count_query = mysqli_query($mysqli, $count_sql);
 
-		if (mysqli_num_rows($count_query) < 1) {
-			$sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}likes` SET `user_id` = $user_id, `item_id` = $item_id";
-			$query = mysqli_query($mysqli, $sql);
-		}
+    if (mysqli_num_rows($count_query) < 1) {
+      $sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}likes` SET `user_id` = $user_id, `item_id` = $item_id";
+      $query = mysqli_query($mysqli, $sql);
+    }
 
-		return mysqli_insert_id($mysqli);
+    return mysqli_insert_id($mysqli);
 
-	}
+  }
 
-	// Get a single like, returns a Like object
-	public static function get_by_id($id) {
+  // Get a single like, returns a Like object
+  public static function get_by_id($id) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$id = sanitize_input($id);
+    $id = sanitize_input($id);
 
-		$sql = "SELECT `id`, `user_id`, `item_id`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $id";
-		$query = mysqli_query($mysqli, $sql);
-		$result = mysqli_fetch_assoc($query);
+    $sql = "SELECT `id`, `user_id`, `item_id`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $id";
+    $query = mysqli_query($mysqli, $sql);
+    $result = mysqli_fetch_assoc($query);
 
-		if ( ! is_array($result)) {
+    if ( ! is_array($result)) {
 
-			return null;
+      return null;
 
-		} else {
+    } else {
 
-			$like = new Like($result);
-			$like->user = User::get_by_id($result['user_id']);
-			return $like;
+      $like = new Like($result);
+      $like->user = User::get_by_id($result['user_id']);
+      return $like;
 
-		}
+    }
 
-	}
+  }
 
-	// Get a single like, returns a Like object
-	public static function get_by_user_item($user_id, $item_id) {
+  // Get a single like, returns a Like object
+  public static function get_by_user_item($user_id, $item_id) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$user_id = sanitize_input($user_id);
-		$item_id = sanitize_input($item_id);
+    $user_id = sanitize_input($user_id);
+    $item_id = sanitize_input($item_id);
 
-		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
-		$query = mysqli_query($mysqli, $sql);
-		$result = mysqli_fetch_assoc($query);
-		$id = $result['id'];
+    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
+    $query = mysqli_query($mysqli, $sql);
+    $result = mysqli_fetch_assoc($query);
+    $id = $result['id'];
 
-		if ($result == FALSE) {
+    if ($result == FALSE) {
 
-			return $null;
+      return $null;
 
-		} else {
+    } else {
 
-			$like = Like::get_by_id($id);
-			$like->user = User::get_by_id($user_id);
-			return $like;
+      $like = Like::get_by_id($id);
+      $like->user = User::get_by_id($user_id);
+      return $like;
 
-		}
+    }
 
-	}
+  }
 
-	// Get all liked items, returns an array of Like objects
-	public static function list_all($limit = 10, $offset = 0) {
+  // Get all liked items, returns an array of Like objects
+  public static function list_all($limit = 10, $offset = 0) {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` ORDER BY `date` DESC";
+    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` ORDER BY `date` DESC";
 
-		// Limit string
-		$limit = sanitize_input($limit);
-		$sql .= " LIMIT $limit";
+    // Limit string
+    $limit = sanitize_input($limit);
+    $sql .= " LIMIT $limit";
 
-		// Offset string
-		$offset = sanitize_input($offset);
-		$sql .= " OFFSET $offset";
+    // Offset string
+    $offset = sanitize_input($offset);
+    $sql .= " OFFSET $offset";
 
-		// Get likes
-		$query = mysqli_query($mysqli, $sql);
+    // Get likes
+    $query = mysqli_query($mysqli, $sql);
 
-		// Loop through likes, fetching objects
-		$likes = array();
-		while ($result = mysqli_fetch_assoc($query)) {
-			$likes[] = Like::get_by_id($result['id']);
-		}
+    // Loop through likes, fetching objects
+    $likes = array();
+    while ($result = mysqli_fetch_assoc($query)) {
+      $likes[] = Like::get_by_id($result['id']);
+    }
 
-		return $likes;
+    return $likes;
 
-	}
+  }
 
-	// Unlike an item, returns like id
-	public function remove() {
+  // Unlike an item, returns like id
+  public function remove() {
 
-		global $mysqli;
-		$config = new AppConfig;
+    global $mysqli;
+    $config = new AppConfig;
 
-		$count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $this->id";
-		$count_query = mysqli_query($mysqli, $count_sql);
+    $count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $this->id";
+    $count_query = mysqli_query($mysqli, $count_sql);
 
-		if (mysqli_num_rows($count_query) > 0) {
-			$sql = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $this->id";
-			$query = mysqli_query($mysqli, $sql);
-		}
+    if (mysqli_num_rows($count_query) > 0) {
+      $sql = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $this->id";
+      $query = mysqli_query($mysqli, $sql);
+    }
 
-	}
+  }
 
 }

@@ -1,35 +1,35 @@
 <?php
 
 /*
-*	A Google Analytics plugin for Rat by @DHS
+*  A Google Analytics plugin for Rat by @DHS
 *
-*	Installation
+*  Installation
 *
-*		Comes installed by default
+*    Comes installed by default
 *
-*	Usage
+*  Usage
 *
-*		To include Google Analytics tracking code:
+*    To include Google Analytics tracking code:
 *
-*			if (isset($this->plugins->analytics)) {
-*				echo $this->plugins->analytics->show();
-*			}
+*      if (isset($this->plugins->analytics)) {
+*        echo $this->plugins->analytics->show();
+*      }
 *
 */
 
 class analytics extends Application {
 
-	function __construct($analytics_id) {
+  function __construct($analytics_id) {
 
-		$this->analytics_id = $analytics_id;
+    $this->analytics_id = $analytics_id;
 
-	}
+  }
 
-	function view() {
+  function view() {
 
-		if ($this->analytics_id != NULL && SITE_IDENTIFIER == 'live') {
+    if ($this->analytics_id != NULL && SITE_IDENTIFIER == 'live') {
 
-			return <<<HTML
+      return <<<HTML
 <script>
   var _gaq=[['_setAccount','{$this->analytics_id}'],['_trackPageview']];
   (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
@@ -39,12 +39,12 @@ class analytics extends Application {
 
 HTML;
 
-		} else {
+    } else {
 
-			return NULL;
+      return NULL;
 
-		}
+    }
 
-	}
+  }
 
 }

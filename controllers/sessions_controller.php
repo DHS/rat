@@ -2,8 +2,8 @@
 
 class SessionsController extends Application {
 
-	protected $requireLoggedIn = array('remove');
-	protected $requireLoggedOut = array('add');
+  protected $requireLoggedIn = array('remove');
+  protected $requireLoggedOut = array('add');
 
   function add() {
 
@@ -27,7 +27,7 @@ class SessionsController extends Application {
         if (isset($this->uri['params']['redirect_to'])) {
           header('Location: ' . $this->uri['params']['redirect_to']);
           exit();
-	      }
+        }
 
         // Go forth
         header('Location: ' . $this->config->url);
@@ -43,7 +43,7 @@ class SessionsController extends Application {
 
     }
 
-		if ( ! isset($_SESSION['user_id'])) {
+    if ( ! isset($_SESSION['user_id'])) {
 
       if (isset($email)) {
         $this->loadView('sessions/add', array('email' => $email));
@@ -53,29 +53,29 @@ class SessionsController extends Application {
 
     } else {
 
-			Application::flash('error', 'You are already logged in! ' . $this->get_link_to('Click here', 'sessions', 'remove').' to logout.');
-			$this->loadView();
+      Application::flash('error', 'You are already logged in! ' . $this->get_link_to('Click here', 'sessions', 'remove').' to logout.');
+      $this->loadView();
 
-		}
+    }
 
-	}
+  }
 
-	function remove() {
+  function remove() {
 
-		$user = User::get_by_id($_SESSION['user_id']);
+    $user = User::get_by_id($_SESSION['user_id']);
 
-		if ($user->deauthenticate() == TRUE) {
+    if ($user->deauthenticate() == TRUE) {
 
-			Application::flash('info', 'You are now logged out.');
-			Application::redirect_to($this->config->default_controller);
+      Application::flash('info', 'You are now logged out.');
+      Application::redirect_to($this->config->default_controller);
 
-		} else {
+    } else {
 
-			Application::flash('info', 'Nothing to see here.');
-			$this->loadView();
+      Application::flash('info', 'Nothing to see here.');
+      $this->loadView();
 
-		}
+    }
 
-	}
+  }
 
 }
