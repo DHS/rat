@@ -1,9 +1,13 @@
-<div class="row">
-  <div class="span4 offset3">
+<div id="popup_login" class="modal hide fade">
 
-    <h2>Login</h2>
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">&times;</button>
+    <h3>Login required</h3>
+  </div>
 
-    <p>&nbsp;</p>
+  <div class="modal-body">
+
+    <p>Please login to do that:</p>
 
     {% include 'partials/sessions_add.html' %}
 
@@ -13,4 +17,5 @@
     </p>
 
   </div>
+
 </div>

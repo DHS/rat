@@ -1,0 +1,23 @@
+<form class="form-horizontal" action="{{ app.url_for('sessions', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">
+  <fieldset>
+
+    <div class="control-group">
+      <label class="control-label" for="email">Email</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" name="email" id="email" value="{{ email }}" />
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="password">Password</label>
+      <div class="controls">
+        <input type="password" class="input-xlarge" name="password" id="password" />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+
+  </fieldset>
+</form>
