@@ -2,7 +2,7 @@
 <div class="row">
   <div class="span6 offset3">
 
-    <ul class="tabs">
+    <ul class="nav nav-tabs">
       <li{% if page == 'profile' %} class="active"{% endif %}>{{ app.link_to('Profile', 'settings', 'profile') }}</li>
       <li{% if page == 'password' %} class="active"{% endif %}>{{ app.link_to('Password', 'settings', 'password') }}</li>
     </ul>

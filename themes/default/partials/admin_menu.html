@@ -1,4 +1,4 @@
-<ul class="tabs">
+<ul class="nav nav-tabs">
   <li{% if app.uri.action == 'index' %} class="active"{% endif %}>{{ app.link_to('Dashboard', 'admin') }}</li>
   <li{% if app.uri.action == 'config' %} class="active"{% endif %}>{{ app.link_to('Config', 'admin', 'config') }}</li>
   <li{% if app.uri.action == 'signups' %} class="active"{% endif %}>{{ app.link_to('Signups', 'admin', 'signups') }}</li>
