@@ -101,9 +101,12 @@
   {% if session.flash %}
     <div class="row">
       <div class="span6 offset3">
-        <div class="alert-message {{ session.flash.category }}">
-          <p>{{ session.flash.message|raw }}</p>
+
+        <div class="alert alert-{{ session.flash.category }}">
+          <a class="close" data-dismiss="alert" href="#">×</a>
+          {{ session.flash.message|raw }}
         </div>
+
       </div>
     </div>
   {% endif %}
