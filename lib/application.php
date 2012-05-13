@@ -366,9 +366,15 @@ class Application {
       }
 
       // Note: the following is hardcoded in ajax methods
-      $params['view'] = $view;
-      $params['app'] = $this;
-      $params['session'] = $_SESSION;
+      $params = array(
+        'view'    => $view,
+        'app'     => $this,
+        'session' => $_SESSION
+      );
+
+      if ($layout == 'admin') {
+        $params['title'] = 'Admin';
+      }
 
       // Hacks for user menu in header
       if (class_exists('User')) {

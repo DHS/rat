@@ -4,8 +4,6 @@ class PagesController extends Application {
 
   function show($name) {
 
-    $this->title = ucfirst($name);
-
     $content = '';
 
     if ($name == 'about') {
@@ -80,7 +78,7 @@ class PagesController extends Application {
 
     }
 
-    $this->loadView('pages/' . $name, array('content' => $content));
+    $this->loadView('pages/' . $name, array('title' => ucfirst($name), 'content' => $content));
 
   }
 

@@ -102,18 +102,23 @@ class UsersController extends Application {
       $friends = $user->friend_check($_SESSION['user_id']);
     }
 
-    if (isset($user->username)) {
-      $this->title = $user->username;
-    }
-
     if ($this->json) {
+
       $this->render_json($user);
+
     } else {
+
       $vars = array('user' => $user, 'items' => $items);
       if (isset($friends)) {
         $vars['friends'] = $friends;
       }
+
+      if (isset($user->username)) {
+        $vars['title'] = $user->username;
+      }
+
       $this->loadView('users/show', $vars);
+
     }
 
   }
@@ -221,9 +226,7 @@ class UsersController extends Application {
 
         } else {
 
-          $this->title = 'Page not found';
-          $this->loadView();
-          exit;
+          throw new RoutingException($uri, "Page not found");
 
         }
 
@@ -483,16 +486,15 @@ class UsersController extends Application {
       // There was an error
 
       // Propagate get vars to be picked up by the form
-      $this->uri['params']['email']    = $_POST['email'];
+      $this->uri['params']['email']     = $_POST['email'];
       $this->uri['params']['username']  = $_POST['username'];
-      $this->code      = $_POST['code'];
+      $this->code                       = $_POST['code'];
 
       // Show error message
       Application::flash('error', $error);
-      $this->title = 'Signup';
 
       // Show signup form
-      $this->loadView('users/add', array('code' => $_POST['code']));
+      $this->loadView('users/add', array('title' => 'Signup', 'code' => $_POST['code']));
 
     }
 
@@ -547,10 +549,9 @@ class UsersController extends Application {
 
       // Show error message
       Application::flash('error', $error);
-      $this->title = 'Beta signup';
 
       // Show signup form
-      $this->loadView('users/add');
+      $this->loadView('users/add', array('title' => 'Beta signup'));
 
     }
 
@@ -686,10 +687,9 @@ class UsersController extends Application {
 
       // Show error message
       Application::flash('error', $error);
-      $this->title = 'Signup';
 
       // Show signup form
-      $this->loadView('users/add');
+      $this->loadView('users/add', array('title' => 'Signup'));
 
     }
 

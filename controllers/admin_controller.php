@@ -110,8 +110,7 @@ class AdminController extends Application {
 
     }
 
-    $this->title = 'Admin - Config';
-    $this->loadView('admin/config', NULL, 'admin');
+    $this->loadView('admin/config', null, 'admin');
 
   }
 
@@ -140,11 +139,11 @@ class AdminController extends Application {
 
       // Copying the work of loadView
       $params = array(
-        'app'    => $this,
-        'session'  => $_SESSION
+        'app'     => $this,
+        'session' => $_SESSION,
+        'title'   => 'Admin'
       );
 
-      $this->title = 'Admin - Log';
       echo $this->twig->render("partials/header.html", $params);
       echo $this->twig->render("partials/admin_menu.html", $params);
       echo $this->plugins->log->view();
@@ -156,8 +155,6 @@ class AdminController extends Application {
 
   // Setup your rat installation
   function setup() {
-
-    $this->title = 'Setup';
 
     if (count(Admin::list_users()) == 0 && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
       // Do setup
