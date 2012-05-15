@@ -28,10 +28,12 @@
 
   {% else %}
 
-    <p>No {{ app.config.items.name_plural }} found...</p>
+    <div class="span5 offset3">
+      <p>No {{ app.config.items.name_plural }} found...</p>
+    </div>
 
     <div class="row">
-      <div class="span4 offset11">
+      <div class="span2 offset7">
 
           {% include 'partials/item_add.html' %}
 

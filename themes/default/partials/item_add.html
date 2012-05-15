@@ -1,34 +1,36 @@
+
+<h2>New {{ app.config.items.name }}</h2>
+
 {% if session.user_id %}
-      <form action="{{ app.url_for('items', 'add') }}" method="post" enctype="multipart/form-data">
-        <fieldset>
-          <legend>New {{ app.config.items.name }}</legend>
+<form class="form-horizontal" action="{{ app.url_for('sessions', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">
+  <fieldset>
 {% if app.config.items.titles.enabled %}
-            <div class="clearfix">
-              <label for="title">{{ app.config.items.titles.name }}</label>
-              <div class="input">
-                <input class="medium" name="title" size="50" type="text" value="{{ app.uri.params.title }}" />
-              </div>
-            </div> <!-- /clearfix -->
+    <div class="control-group">
+      <label class="control-label" for="title">{{ app.config.items.titles.name }}</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" name="title" id="title" value="{{ app.uri.params.title }}" />
+      </div>
+    </div>
 {% endif %}
 {% if app.config.items.content.enabled %}
-            <div class="clearfix">
-              <label for="content">{{ app.config.items.content.name }}</label>
-              <div class="input">
-                <textarea name="content" rows="5" cols="50">{{ app.uri.params.content }}</textarea>
-              </div>
-            </div> <!-- /clearfix -->
+    <div class="control-group">
+      <label class="control-label" for="content">{{ app.config.items.content.name }}</label>
+      <div class="controls">
+        <textarea name="content" id="content" rows="5" cols="50">{{ app.uri.params.content }}</textarea>
+      </div>
+    </div>
 {% endif %}
 {% if app.config.items.uploads.enabled %}
-            <div class="clearfix">
-              <label for="file">{{ app.config.items.uploads.name }}</label>
-              <div class="input">
-                <input type="file" name="file" id="file" />
-              </div>
-            </div> <!-- /clearfix -->
+    <div class="control-group">
+      <label class="control-label" for="content">{{ app.config.items.uploads.name }}</label>
+      <div class="controls">
+        <input type="file" name="file" id="file" />
+      </div>
+    </div>
 {% endif %}
-          <div class="actions">
-            <button type="submit" class="btn">Submit</button>
-          </div>
-        </fieldset>
-      </form>
+<div class="form-actions">
+  <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+  </fieldset>
+</form>
 {% endif %}
