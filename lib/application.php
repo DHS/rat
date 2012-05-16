@@ -359,18 +359,16 @@ class Application {
 
     }
 
-    protected function loadView($view, $params = NULL, $layout = NULL) {
+    protected function loadView($view, $params = array(), $layout = NULL) {
 
       if (is_null($layout)) {
         $layout = 'default';
       }
 
       // Note: the following is hardcoded in ajax methods
-      $params = array(
-        'view'    => $view,
-        'app'     => $this,
-        'session' => $_SESSION
-      );
+      $params['view'] = $view;
+      $params['app'] = $this;
+      $params['session'] = $_SESSION;
 
       if ($layout == 'admin') {
         $params['title'] = 'Admin';
