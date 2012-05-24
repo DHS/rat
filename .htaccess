@@ -467,7 +467,7 @@ AddCharset utf-8 .css .js .xml .json .rss .atom
 
 # Rat-specific rewrite
 <IfModule mod_rewrite.c>
-    RewriteCond $1 !^(js|themes|uploads|static)
+    RewriteCond $1 !^(js|themes|uploads|favicon|static)
     RewriteRule ^(.*)$ index.php
 </IfModule>
 
