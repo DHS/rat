@@ -156,7 +156,7 @@ class AdminController extends Application {
   // Setup your rat installation
   function setup() {
 
-    if (count(Admin::list_users()) == 0 && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
+    if (Admin::count_users() == 0 && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
       // Do setup
 
       $user_id = User::add($_POST['email']);
@@ -182,7 +182,7 @@ class AdminController extends Application {
     } else {
       // Show setup form
 
-      if (count(Admin::list_users()) == 0) {
+      if (Admin::count_users() == 0) {
         Application::flash('info', 'Welcome to Rat!');
         $this->loadView('admin/setup');
       } else {
