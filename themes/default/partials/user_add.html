@@ -3,12 +3,10 @@
 <div class="row">
   <div class="span4 offset3">
 
-    <h2>Signup</h2>
-
-    <p>&nbsp;</p>
-
     <form class="form-horizontal" action="{{ app.url_for('users', 'add', code) }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">
       <fieldset>
+
+        <legend>Signup</legend>
 
         {% if code %}<input type="hidden" name="code" value="{{ code }}" />{% endif %}
 
@@ -57,12 +55,10 @@
 <div class="row">
   <div class="span4 offset3">
 
-    <h2>Signup for our beta</h2>
-
-    <p>&nbsp;</p>
-
     <form class="form-horizontal" action="{{ app.url_for('users', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">
       <fieldset>
+
+        <legend>Signup for our beta</legend>
 
         {% if app.uri.params.code %}<input type="hidden" name="code" value="{{ app.uri.params.code }}" />{% endif %}
         {% if app.uri.params.email %}<input type="hidden" name="email" value="{{ app.uri.params.email }}" />{% endif %}

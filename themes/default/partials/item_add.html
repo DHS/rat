@@ -1,10 +1,11 @@
 
 {% if session.user_id %}
 
-<h2>New {{ app.config.items.name }}</h2>
-
 <form class="form-horizontal" action="{{ app.url_for('items', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">
   <fieldset>
+
+    <legend>New {{ app.config.items.name }}</legend>
+
 {% if app.config.items.titles.enabled %}
     <div class="control-group">
       <label class="control-label" for="title">{{ app.config.items.titles.name }}</label>
@@ -13,6 +14,7 @@
       </div>
     </div>
 {% endif %}
+
 {% if app.config.items.content.enabled %}
     <div class="control-group">
       <label class="control-label" for="content">{{ app.config.items.content.name }}</label>
@@ -21,6 +23,7 @@
       </div>
     </div>
 {% endif %}
+
 {% if app.config.items.uploads.enabled %}
     <div class="control-group">
       <label class="control-label" for="content">{{ app.config.items.uploads.name }}</label>
@@ -29,9 +32,11 @@
       </div>
     </div>
 {% endif %}
+
     <div class="form-actions">
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
+
   </fieldset>
 </form>
 

@@ -9,12 +9,10 @@
 
 {% if page == 'password' %}
 
-    <h2>Change password</h2>
-
-    <p>&nbsp;</p>
-
     <form class="form-horizontal" action="{{ app.url_for('users', 'update', 'password') }}" method="post">
       <fieldset>
+
+        <legend>Change password</legend>
 
         <div class="control-group">
           <label class="control-label" for="old_password">Old password</label>
@@ -46,12 +44,10 @@
 
 {% elseif page == 'profile'  %}
 
-    <h2>Update profile</h2>
-
-    <p>&nbsp;</p>
-
     <form class="form-horizontal" action="{{ app.url_for('users', 'update', 'profile') }}" method="post">
       <fieldset>
+
+        <legend>Update profile</legend>
 
         <div class="control-group">
           <label class="control-label" for="full_name">Full name</label>

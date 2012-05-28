@@ -3,12 +3,10 @@
 <div class="row">
   <div class="span4 offset3">
 
-    <h2>Set new password</h2>
-
-    <p>&nbsp;</p>
-
     <form class="form-horizontal" action="{{ app.url_for('users', 'reset', code) }}" method="post">
       <fieldset>
+
+        <legend>Set new password</legend>
 
         <div class="control-group">
           <label class="control-label" for="password1">Password</label>
@@ -39,12 +37,10 @@
 <div class="row">
   <div class="span4 offset3">
 
-    <h2>Reset password</h2>
-
-    <p>&nbsp;</p>
-
     <form class="form-horizontal" action="{{ app.url_for('users', 'reset') }}" method="post">
       <fieldset>
+        
+        <legend>Reset password</legend>
 
         <div class="control-group">
           <label class="control-label" for="email">Email</label>

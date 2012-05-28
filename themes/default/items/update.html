@@ -3,12 +3,10 @@
 
     {% if session.user_id %}
 
-    <h2>Update {{ app.config.items.name }}</h2>
-
-    <p>&nbsp;</p>
-
     <form class="form-horizontal" action="{{ app.url_for('items', 'update', item.id) }}" method="post" enctype="multipart/form-data">
       <fieldset>
+
+      <legend>Update {{ app.config.items.name }}</legend>
 
       {% if app.config.items.titles.enabled %}
         <div class="control-group">
