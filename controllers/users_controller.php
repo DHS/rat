@@ -150,9 +150,9 @@ class UsersController extends Application {
   }
 
   // Password reset
-  function reset($code) {
+  function reset($code = null) {
 
-    if (isset($code)) {
+    if ($code != null) {
       // Process reset
 
       // If two passwords submitted then check, otherwise show form
@@ -202,14 +202,14 @@ class UsersController extends Application {
 
           if (User::check_password_reset_code($code) == TRUE) {
 
-            $valid_code = TRUE;
-
             Application::flash('error', $error);
 
-            $this->loadView('users/reset', array('valid_code' => $valid_code, 'code' => $code));
+            $this->loadView('users/reset', array('valid_code' => TRUE, 'code' => $code));
 
           } else {
+
             $this->loadView();
+
           }
 
         }
@@ -220,9 +220,7 @@ class UsersController extends Application {
         if (User::check_password_reset_code($code) == TRUE) {
           // Invite code valid
 
-          $valid_code = TRUE;
-
-          $this->loadView('users/reset', array('valid_code' => $valid_code, 'code' => $code));
+          $this->loadView('users/reset', array('valid_code' => TRUE, 'code' => $code));
 
         } else {
 
@@ -235,7 +233,7 @@ class UsersController extends Application {
     } else {
       // No code in URL so show new reset form
 
-      if ($_POST['email'] != '') {
+      if (isset($_POST['email'])) {
         // Email submitted so send password reset email
 
         $user = User::get_by_email($_POST['email']);
@@ -260,7 +258,7 @@ class UsersController extends Application {
 
       }
 
-      $this->loadView('users/reset', array('valid_code' => $valid_code, 'code' => $code));
+      $this->loadView('users/reset', array('valid_code' => FALSE, 'code' => $code));
 
     }
 
