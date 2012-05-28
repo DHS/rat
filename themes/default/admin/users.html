@@ -1,8 +1,13 @@
 
-<p>Users: <strong>{{ users|length }}</strong></p>
+<legend>Users ({{ users|length }})</legend>
 
-<form action="{{ app.url_for('admin', 'grant_invites') }}" method="get">
-  Grant invites: <input type="text" name="count" value="1" /> <input type="submit" value="Send" class="btn" />
+<form class="form-horizontal" action="{{ app.url_for('admin', 'grant_invites') }}" method="get">
+  <div class="control-group">
+    <label class="control-label" for="count">Grant all users invites:</label>
+      <div class="controls">
+        <input type="text" name="count" id="count" class="input-xlarge" value="1" /> <input type="submit" value="Send" class="btn" />
+      </div>
+  </div>
 </form>
 
 {% if users %}
