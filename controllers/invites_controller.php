@@ -13,17 +13,19 @@ class InvitesController extends Application {
     $invites_sent = $user->invites();
 
     if (isset($invites_remaining) && $invites_remaining == 1) {
-      $message = 'You have one invite remaining.';
+      Application::flash('success', 'You have one invite remaining.');
     } elseif (isset($invites_remaining) && $invites_remaining > 1) {
-      $message = 'You have ' . $invites_remaining . ' invites remaining.';
+      Application::flash('success', 'You have ' . $invites_remaining . ' invites remaining.');
     } else {
-      $message = 'You have no remaining invites.';
+      Application::flash('error', 'You have no remaining invites.');
     }
+
+
 
     if ($this->json) {
       $this->render_json($user->invites());
     } else {
-      $this->loadView('invites/index', array('message' => $message, 'invites_sent' => $invites_sent, 'invites_remaining' => $invites_remaining));
+      $this->loadView('invites/index', array('invites_sent' => $invites_sent, 'invites_remaining' => $invites_remaining));
     }
 
   }

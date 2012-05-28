@@ -10,24 +10,38 @@
 
 {% endif %}
 
-<p>&nbsp;</p>
-
 {% if invites_sent %}
 
-  <h3>Sent invites</h3>
+  <h2>Sent invites</h2>
 
-  {% for invite in invites_sent %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Email adress</th>
+        <th>Response</th>
+      </tr>
+    </thead>
+    <tbody>
 
-    {{ invite.email }}
+    {% for invite in invites_sent %}
 
-    {% if invite.result > 0 %}
-      &middot; <span class="good_news">Accepted</span>
-    {% else %}
-      &middot; Still waiting
-    {% endif %}
-    <br />
+      <tr>
+        <td>{{ invite.email }}</td>
+        <td>
 
-  {% endfor %}
+          {% if invite.result > 0 %}
+            <span class="good_news">Accepted</span>
+          {% else %}
+            Still waiting
+          {% endif %}
+
+        </td>
+      </tr>
+
+    {% endfor %}
+
+    </tbody>
+  </table>
 
 {% endif %}
 

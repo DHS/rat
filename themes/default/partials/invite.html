@@ -1,12 +1,20 @@
-<form action="{{ app.url_for('invites', 'add') }}" method="post">
+<h2>Invite a friend</h2>
+
+<p>&nbsp;</p>
+
+<form class="form-horizontal" action="{{ app.url_for('invites', 'add') }}" method="post">
   <fieldset>
-    <legend>Send an invite</legend>
-    <label for="email">Email</label>
-    <div class="input">
-      <input class="medium" name="email" size="50" type="text" value="{{ app.uri.params.email }}" />
+
+    <div class="control-group">
+      <label class="control-label" for="email">Email</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" name="email" id="email" value="{{ app.uri.params.email }}" />
+      </div>
     </div>
-    <div class="actions">
-      <button type="submit" class="btn">Invite</button>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Invite</button>
     </div>
+
   </fieldset>
 </form>
