@@ -1,210 +1,235 @@
 
-<form action="{{ app.url_for('admin', 'config') }}" method="post">
+<form class="form-horizontal" action="{{ app.url_for('admin', 'config') }}" method="post">
   <fieldset>
-    <div class="clearfix">
-      <label for="name">Name</label>
-      <div class="input">
-        <input class="medium" name="name" id="name" size="30" type="text" value="{{ app.config.name }}" />
+
+    <legend>General</legend>
+
+    <div class="control-group">
+      <label class="control-label" for="name">Name</label>
+      <div class="controls">
+        <input class="input-xlarge" name="name" id="name" size="30" type="text" value="{{ app.config.name }}" />
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <label for="name">Tagline</label>
-      <div class="input">
-        <input class="medium" name="tagline" id="tagline" size="30" type="text" value="{{ app.config.tagline|e }}" />
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="name">Tagline</label>
+      <div class="controls">
+        <input class="input-xlarge" name="tagline" id="tagline" size="30" type="text" value="{{ app.config.tagline|e }}" />
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <div class="input">
-        <ul class="inputs-list"><li>
-        <label>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <label class="checkbox">
           <input type="checkbox" name="beta" id="beta" {% if app.config.beta %}checked="checked"{% endif %}/>
-          <span>Beta mode</span>
+          Beta mode
         </label>
-        <span class="help-block">Full signup is disabled in beta mode but users can still enter their emails</span>
-        </li>
-        <li>
-        <label>
+        <p class="help-block">Full signup is disabled in beta mode but users can still enter their emails</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <label class="checkbox">
           <input type="checkbox" name="private" id="private" {% if app.config.private %}checked="checked"{% endif %}/>
-          <span>Private mode</span>
+          Private mode
         </label>
-        <span class="help-block">Private apps require login to view pages (except explicitly defined public pages) and no share buttons</span>
-        </li></ul>
+        <p class="help-block">Private apps require login to view pages (except explicitly defined public pages) and no share buttons</p>
       </div>
-    </div> <!-- /clearfix -->
+    </div>
+
   </fieldset>
+
   <fieldset>
+
     <legend>Items</legend>
-    <div class="clearfix">
-      <label for="items[name]">Name</label>
-      <div class="input">
-        <input class="medium" name="items[name]" id="items[name]" size="30" type="text" value="{{ app.config.items.name }}" />
-        <span class="help-block">What are the items that your users will create in your application?</span>
+
+    <div class="control-group">
+      <label class="control-label" for="items[name]">Name</label>
+      <div class="controls">
+        <input class="input-xlarge" name="items[name]" id="items[name]" size="30" type="text" value="{{ app.config.items.name }}" />
+        <p class="help-block">What are the items that your users will create in your application?</span>
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <label for="items[name_plural]">Plural name</label>
-      <div class="input">
-        <input class="medium" name="items[name_plural]" id="items[name_plural]" size="30" type="text" value="{{ app.config.items.name_plural }}" />
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="items[name_plural]">Plural name</label>
+      <div class="controls">
+        <input class="input-xlarge" name="items[name_plural]" id="items[name_plural]" size="30" type="text" value="{{ app.config.items.name_plural }}" />
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <div class="input">
-        <ul class="inputs-list"><li>
-        <label>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <label class="checkbox">
           <input type="checkbox" name="items[titles][enabled]" id="items[titles][enabled]" {% if app.config.items.titles.enabled %}checked="checked"{% endif %}/>
-          <span>Item titles</span>
+          Item titles
         </label>
-        <span class="help-block">Do items have a 'title' field?</span>
-        </li></ul>
+        <p class="help-block">Do items have a 'title' field?</span>
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <label for="items[name]">Name for item titles</label>
-      <div class="input">
-        <input class="medium" name="items[titles][name]" id="items[titles][name]" size="30" type="text" value="{{ app.config.items.titles.name }}" />
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="items[name]">Name for item titles</label>
+      <div class="controls">
+        <input class="input-xlarge" name="items[titles][name]" id="items[titles][name]" size="30" type="text" value="{{ app.config.items.titles.name }}" />
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <label for="items[name_plural]">Plural for item titles</label>
-      <div class="input">
-        <input class="medium" name="items[titles][name_plural]" id="items[titles][name_plural]" size="30" type="text" value="{{ app.config.items.titles.name_plural }}" />
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="items[name_plural]">Plural for item titles</label>
+      <div class="controls">
+        <input class="input-xlarge" name="items[titles][name_plural]" id="items[titles][name_plural]" size="30" type="text" value="{{ app.config.items.titles.name_plural }}" />
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <div class="input">
-        <ul class="inputs-list"><li>
-        <label>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <label class="checkbox">
           <input type="checkbox" name="items[content][enabled]" id="items[content][enabled]" {% if app.config.items.content.enabled %}checked="checked"{% endif %}/>
-          <span>Item content</span>
+          Item content
         </label>
-        <span class="help-block">Do items have a 'content' field?</span>
-        </li></ul>
+        <p class="help-block">Do items have a 'content' field?</span>
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <label for="items[name]">Name for item content</label>
-      <div class="input">
-        <input class="medium" name="items[content][name]" id="items[content][name]" size="30" type="text" value="{{ app.config.items.content.name }}" />
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="items[name]">Name for item content</label>
+      <div class="controls">
+        <input class="input-xlarge" name="items[content][name]" id="items[content][name]" size="30" type="text" value="{{ app.config.items.content.name }}" />
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <label for="items[name_plural]">Plural for item content</label>
-      <div class="input">
-        <input class="medium" name="items[content][name_plural]" id="items[content][name_plural]" size="30" type="text" value="{{ app.config.items.content.name_plural }}" />
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="items[name_plural]">Plural for item content</label>
+      <div class="controls">
+        <input class="input-xlarge" name="items[content][name_plural]" id="items[content][name_plural]" size="30" type="text" value="{{ app.config.items.content.name_plural }}" />
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <div class="input">
-        <ul class="inputs-list"><li>
-        <label>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <label class="content" for="items[uploads][enabled]">
           <input type="checkbox" name="items[uploads][enabled]" id="items[uploads][enabled]" {% if app.config.items.uploads.enabled %}checked="checked"{% endif %}/>
-          <span>Item uploads</span>
+          Item uploads
         </label>
-        <span class="help-block">Should items include an image upload option?</span>
-        </li></ul>
+        <p class="help-block">Should items include an image upload option?</span>
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <label for="items[uploads][name]">Name for uploads</label>
-      <div class="input">
-        <input class="medium" name="items[uploads][name]" id="items[uploads][name]" size="30" type="text" value="{{ app.config.items.uploads.name }}" />
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="items[uploads][name]">Name for uploads</label>
+      <div class="controls">
+        <input class="input-xlarge" name="items[uploads][name]" id="items[uploads][name]" size="30" type="text" value="{{ app.config.items.uploads.name }}" />
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <div class="input">
-        <ul class="inputs-list"><li>
-        <label>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <label class="checkbox" for="items[comments][enabled]">
           <input type="checkbox" name="items[comments][enabled]" id="items[comments][enabled]" {% if app.config.items.comments.enabled %}checked="checked"{% endif %}/>
-          <span>Item comments</span>
+          Item comments
         </label>
-        <span class="help-block">Enable item comments</span>
-        </li></ul>
+        <p class="help-block">Enable item comments</span>
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <label for="items[name]">Name for comments</label>
-      <div class="input">
-        <input class="medium" name="items[comments][name]" id="items[comments][name]" size="30" type="text" value="{{ app.config.items.comments.name }}" />
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="items[name]">Name for comments</label>
+      <div class="controls">
+        <input class="input-xlarge" name="items[comments][name]" id="items[comments][name]" size="30" type="text" value="{{ app.config.items.comments.name }}" />
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <label for="items[name_plural]">Plural for comments</label>
-      <div class="input">
-        <input class="medium" name="items[comments][name_plural]" id="items[comments][name_plural]" size="30" type="text" value="{{ app.config.items.comments.name_plural }}" />
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="items[name_plural]">Plural for comments</label>
+      <div class="controls">
+        <input class="input-xlarge" name="items[comments][name_plural]" id="items[comments][name_plural]" size="30" type="text" value="{{ app.config.items.comments.name_plural }}" />
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <div class="input">
-        <ul class="inputs-list"><li>
-        <label>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <label class="checkbox" for="items[likes][enabled]">
           <input type="checkbox" name="items[likes][enabled]" id="items[likes][enabled]" {% if app.config.items.likes.enabled %}checked="checked"{% endif %}/>
-          <span>Item likes</span>
+          Item likes
         </label>
-        <span class="help-block">Enable item likes</span>
-        </li></ul>
+        <p class="help-block">Enable item likes</span>
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <label for="items[likes][name]">Name for likes</label>
-      <div class="input">
-        <input class="medium" name="items[likes][name]" id="items[likes][name]" size="30" type="text" value="{{ app.config.items.likes.name }}" />
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="items[likes][name]">Name for likes</label>
+      <div class="controls">
+        <input class="input-xlarge" name="items[likes][name]" id="items[likes][name]" size="30" type="text" value="{{ app.config.items.likes.name }}" />
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <label for="items[likes][name_plural]">Plural for likes</label>
-      <div class="input">
-        <input class="medium" name="items[likes][name_plural]" id="items[likes][name_plural]" size="30" type="text" value="{{ app.config.items.likes.name_plural }}" />
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="items[likes][name_plural]">Plural for likes</label>
+      <div class="controls">
+        <input class="input-xlarge" name="items[likes][name_plural]" id="items[likes][name_plural]" size="30" type="text" value="{{ app.config.items.likes.name_plural }}" />
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <label for="items[likes][opposite_name]">Opposite of like</label>
-      <div class="input">
-        <input class="medium" name="items[likes][opposite_name]" id="items[likes][opposite_name]" size="30" type="text" value="{{ app.config.items.likes.opposite_name }}" />
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="items[likes][opposite_name]">Opposite of like</label>
+      <div class="controls">
+        <input class="input-xlarge" name="items[likes][opposite_name]" id="items[likes][opposite_name]" size="30" type="text" value="{{ app.config.items.likes.opposite_name }}" />
       </div>
-    </div> <!-- /clearfix -->
-    <div class="clearfix">
-      <label for="items[likes][past_tense]">Past tense for likes</label>
-      <div class="input">
-        <input class="medium" name="items[likes][past_tense]" id="items[likes][past_tense]" size="30" type="text" value="{{ app.config.items.likes.past_tense }}" />
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="items[likes][past_tense]">Past tense for likes</label>
+      <div class="controls">
+        <input class="input-xlarge" name="items[likes][past_tense]" id="items[likes][past_tense]" size="30" type="text" value="{{ app.config.items.likes.past_tense }}" />
       </div>
-    </div> <!-- /clearfix -->
+    </div>
+
   </fieldset>
+
   <fieldset>
+
     <legend>Invites</legend>
-    <div class="clearfix">
-      <div class="input">
-        <ul class="inputs-list"><li>
-        <label>
+
+    <div class="control-group">
+      <div class="controls">
+        <label class="checkbox" for="invites[enabled]">
           <input type="checkbox" name="invites[enabled]" id="invites[enabled]" {% if app.config.invites.enabled %}checked="checked"{% endif %}/>
-          <span>Enabled</span>
+          Enabled
         </label>
-        <span class="help-block">Allow users to invite their friends</span>
-        </li></ul>
+        <p class="help-block">Allow users to invite their friends</span>
       </div>
-    </div> <!-- /clearfix -->
+    </div>
+
   </fieldset>
+
   <fieldset>
+
     <legend>Friends</legend>
-    <div class="clearfix">
-      <div class="input">
-        <ul class="inputs-list"><li>
-        <label>
+
+    <div class="control-group">
+      <div class="controls">
+        <label class="checkbox" for="friends[enabled]">
           <input type="checkbox" name="friends[enabled]" id="friends[enabled]" {% if app.config.friends.asymmetric %}checked="checked"{% endif %}/>
-          <span>Enabled</span>
+          Enabled
         </label>
-        <span class="help-block">Allow users to add friends</span>
-        </li>
-        <li>
+        <p class="help-block">Allow users to add friends</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
         <label>
           <input type="checkbox" name="friends[asymmetric]" id="friends[asymmetric]" {% if app.config.friends.asymmetric %}checked="checked"{% endif %}/>
           <span>Asymmetric friending</span>
         </label>
-        <span class="help-block">Use 'following' rather than friending</span>
-        </li></ul>
+        <p class="help-block">Use 'following' rather than friending</span>
       </div>
-    </div> <!-- /clearfix -->
-    <div class="actions">
-      <button type="submit" class="btn primary">Update</button>
     </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+
   </fieldset>
 </form>
