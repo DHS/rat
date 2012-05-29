@@ -38,13 +38,13 @@ class AdminController extends Application {
       //  }
       //}
 
-      if ($_POST['beta'] == 'on') {
+      if (isset($_POST['beta']) && $_POST['beta'] == 'on') {
         $conf['beta'] = 'TRUE';
       } else {
         $conf['beta'] = 'FALSE';
       }
 
-      if ($_POST['private'] == 'on') {
+      if (isset($_POST['private']) && $_POST['private'] == 'on') {
         $conf['private'] = 'TRUE';
       } else {
         $conf['private'] = 'FALSE';
