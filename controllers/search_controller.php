@@ -40,7 +40,7 @@ class SearchController extends Application {
     }
 
     if (isset($this->plugins->log)) {
-      $result_count = count($this->items);
+      $result_count = count($items);
       $this->plugins->log->add($_SESSION['user_id'], 'search', NULL, 'new', "Term = $q\nResult_count = $result_count");
     }
 
