@@ -97,6 +97,7 @@ Rat uses the following components:
 - [Twitter Bootstrap](http://twitter.github.com/bootstrap/)
 - [Twig](http://twig.sensiolabs.org)
 - [Humane Dates](https://github.com/zachleat/Humane-Dates)
+- [TinyMCE](http://www.tinymce.com/)
 
 License
 -------
