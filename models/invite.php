@@ -55,6 +55,8 @@ class Invite {
       $invite = new Invite($result);
       $invite->user = User::get_by_id($result['user_id']);
 
+      unset($invite->user->password);
+
       return $invite;
 
     }

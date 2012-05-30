@@ -64,6 +64,8 @@ class Item {
       $item->comments = $item->comments();
       $item->likes = $item->likes();
 
+      unset($item->user->password);
+
       return $item;
 
     }

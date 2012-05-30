@@ -254,6 +254,7 @@ class User {
     $friends = array();
     while ($result = mysqli_fetch_assoc($query)) {
       $friends[$result['id']] = User::get_by_id($result['friend_user_id']);
+      unset($friends[$result['id']]->password);
     }
 
     return $friends;
@@ -281,6 +282,7 @@ class User {
     $friends = array();
     while ($result = mysqli_fetch_assoc($query)) {
       $friends[$result['id']] = User::get_by_id($result['user_id']);
+      unset($friends[$result['id']]->password);
     }
 
     return $friends;

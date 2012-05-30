@@ -51,6 +51,8 @@ class Comment {
       $comment = new Comment($result);
       $comment->user = User::get_by_id($result['user_id']);
 
+      unset($comment->user->password);
+
       return $comment;
 
     }

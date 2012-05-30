@@ -53,6 +53,9 @@ class Like {
 
       $like = new Like($result);
       $like->user = User::get_by_id($result['user_id']);
+
+      unset($like->user->password);
+
       return $like;
 
     }
@@ -81,6 +84,9 @@ class Like {
 
       $like = Like::get_by_id($id);
       $like->user = User::get_by_id($user_id);
+
+      unset($like->user->password);
+
       return $like;
 
     }
