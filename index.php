@@ -6,7 +6,7 @@ ob_start();
 session_start();
 
 // Load exceptions
-$exceptions = glob('lib/exceptions/*.php' );
+$exceptions = glob('lib/exceptions/*.php');
 foreach ($exceptions as $exception) {
   include $exception;
 }
