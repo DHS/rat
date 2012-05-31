@@ -56,7 +56,7 @@ class log extends Application {
       //var_dump($entries);
       //echo '</pre>';
 
-      $return = '<table class="table zebra-striped">
+      $return = '<table class="table table-striped">
   <thead>
     <tr>
       <th>User</th>

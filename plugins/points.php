@@ -70,7 +70,7 @@ class points extends Application {
       $leaderboard[] = $result;
     }
 
-    echo '<table class="table zebra-striped">';
+    echo '<table class="table table-striped">';
 
     $i = 1;
 
