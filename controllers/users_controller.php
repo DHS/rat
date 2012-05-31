@@ -104,7 +104,6 @@ class UsersController extends Application {
 
     if ($this->json) {
 
-      unset($user->password);
       $this->render_json($user);
 
     } else {
