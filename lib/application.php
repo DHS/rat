@@ -359,11 +359,7 @@ class Application {
 
     }
 
-    protected function loadView($view, $params = array(), $layout = NULL) {
-
-      if (is_null($layout)) {
-        $layout = 'default';
-      }
+    protected function loadView($view, $params = array(), $layout = 'default') {
 
       // Note: the following is hardcoded in ajax methods
       $params['view'] = $view;
