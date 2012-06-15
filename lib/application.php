@@ -386,12 +386,6 @@ class Application {
 
     }
 
-    protected function loadPartial($partial) {
-
-      include "themes/{$this->config->theme}/partials/{$partial}.php";
-
-    }
-
     public function url_for($controller, $action = '', $id = '', $params = array()) {
 
       // Create an array, uri, containing controller, action and all other
