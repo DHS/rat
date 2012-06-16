@@ -20,6 +20,7 @@ class Routes {
     '/settings' => array('controller' => 'users', 'action' => 'update'),
     '/settings/profile' => array('controller' => 'users', 'action' => 'update', 'id' => 'profile'),
     '/settings/password' => array('controller' => 'users', 'action' => 'update', 'id' => 'password'),
+    '/settings/emails' => array('controller' => 'users', 'action' => 'update', 'id' => 'emails'),
     '/feed' => array('controller' => 'items', 'action' => 'feed'),
 
     // More complex

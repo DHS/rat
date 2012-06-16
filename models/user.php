@@ -45,7 +45,11 @@ class User {
 
     } else {
 
-      return new User($result);
+      $user = new User($result);
+
+      $user->email_notifications = $user->email_notifications();
+
+      return $user;
 
     }
 
@@ -343,6 +347,25 @@ class User {
 
   }
 
+  // Get email notification settings
+  public function email_notifications() {
+
+    global $mysqli;
+    $config = new AppConfig;
+
+    $sql = "SELECT `notification`, `value` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users_email_notifications` WHERE `user_id` = $this->id";
+
+    $query = mysqli_query($mysqli, $sql);
+
+    $emails = array();
+    while ($result = mysqli_fetch_assoc($query)) {
+      $emails[$result['notification']] = $result['value'];
+    }
+
+    return $emails;
+
+  }
+
   // Add a friend, returns friendship id
   public function friend_add($friend_user_id) {
 
@@ -496,6 +519,22 @@ class User {
     $sql .= " WHERE `id` = $this->id";
 
     $query = mysqli_query($mysqli, $sql);
+
+  }
+
+  // Update email notification settings
+  public function update_email_notifications(array $emails = null) {
+
+    global $mysqli;
+    $config = new AppConfig;
+
+    foreach ($emails as $key => $value) {
+
+      $sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}users_email_notifications` (user_id, notification, value) VALUES ($this->id, '$key', $value) ON DUPLICATE KEY UPDATE `value` = $value;";
+
+      $query = mysqli_query($mysqli, $sql);
+
+    }
 
   }
 

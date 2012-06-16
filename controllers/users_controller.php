@@ -143,6 +143,12 @@ class UsersController extends Application {
         $user->url = $_POST['url'];
       }
 
+    } elseif ($page == 'emails') {
+
+      if (isset($_POST['submit'])) {
+        $user->email_notifications = $this->update_email_notifications();
+      }
+
     }
 
     $this->loadView('users/update', array('page' => $page, 'user' => $user));
@@ -354,6 +360,51 @@ class UsersController extends Application {
       Application::flash('error', $error);
 
     }
+
+  }
+
+  //  Helper function: update profile
+  private function update_email_notifications() {
+
+    if (isset($_POST['submit'])) {
+
+      $user = User::get_by_id($_SESSION['user_id']);
+
+      // Find new email settings, first unset submit var
+      unset($_POST['submit']);
+
+      // Then loop through post vars fetching new email settings
+      foreach ($_POST as $key => $value) {
+
+        if ($value == 'on') {
+          $emails[$key] = 1;
+        }
+
+      }
+      
+      // Check for existing settings in order to update
+      // with negative values
+      foreach ($user->email_notifications as $key => $value) {
+
+        if ( ! isset($_POST[$key])) {
+          $emails[$key] = 0;
+        }
+
+      }
+
+      // Call update_emails in user model
+      $user->update_email_notifications($emails);
+
+      // Set success message
+      Application::flash('success', 'Email settings updated!');
+
+    } else {
+
+      Application::flash('error', 'Email settings not updated.');
+
+    }
+
+    return $emails;
 
   }
 

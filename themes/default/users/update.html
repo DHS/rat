@@ -5,6 +5,7 @@
     <ul class="nav nav-tabs">
       <li{% if page == 'profile' %} class="active"{% endif %}>{{ app.link_to('Profile', 'settings', 'profile') }}</li>
       <li{% if page == 'password' %} class="active"{% endif %}>{{ app.link_to('Password', 'settings', 'password') }}</li>
+      <li{% if page == 'emails' %} class="active"{% endif %}>{{ app.link_to('Emails', 'settings', 'emails') }}</li>
     </ul>
 
 {% if page == 'password' %}
@@ -67,6 +68,41 @@
           <label class="control-label" for="url">URL</label>
           <div class="controls">
             <input type="text" class="input-xlarge" name="url" id="url" value="{{ user.url }}{% if user.url is empty %}http://{% endif %}" />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+
+      </fieldset>
+    </form>
+
+{% elseif page == 'emails'  %}
+
+    <form class="form-horizontal" action="{{ app.url_for('users', 'update', 'emails') }}" method="post">
+
+      <input type="hidden" name="submit" value="true" />
+
+      <fieldset>
+
+        <legend>Update email settings</legend>
+
+        <div class="control-group">
+          <div class="controls">
+            <label class="checkbox">
+              <input type="checkbox" name="item_like" id="item_like" {% if user.emails.item_like %}checked="checked"{% endif %}/>
+              Email me when someone likes one of my {{ app.config.items.name_plural }}
+            </label>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="controls">
+            <label class="checkbox">
+              <input type="checkbox" name="item_comment" id="item_comment" {% if user.emails.item_comment %}checked="checked"{% endif %}/>
+              Email me when someone comments on one of my {{ app.config.items.name_plural }}
+            </label>
           </div>
         </div>
 

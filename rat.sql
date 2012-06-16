@@ -19,6 +19,13 @@ CREATE TABLE `users_password_reset` (
   `date` timestamp NOT NULL default CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+CREATE TABLE `users_email_notifications` (
+  `user_id` int(11) unsigned NOT NULL,
+  `notification` varchar(255) DEFAULT NULL,
+  `value` tinyint(1) NOT NULL,
+  PRIMARY KEY (`user_id`, `notification`)
+) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 CREATE TABLE `items` (
   `id` int(10) NOT NULL auto_increment,
   `user_id` bigint(15) NOT NULL default '0',
