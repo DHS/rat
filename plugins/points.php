@@ -39,7 +39,7 @@ class points extends Application {
 
     // update database
     $sql = "UPDATE users SET points = $new_points WHERE id = $user_id";
-    $query = mysql_query($mysqli, $sql);
+    $query = mysqli_query($mysqli, $sql);
 
   }
 
@@ -63,10 +63,12 @@ class points extends Application {
 
   function view_leaderboard($limit = 10) {
 
-    $query = mysql_query("SELECT id, username, points FROM users WHERE date_joined IS NOT NULL ORDER BY points DESC LIMIT $limit");
+    $sql = "SELECT id, username, points FROM users WHERE date_joined IS NOT NULL ORDER BY points DESC LIMIT $limit";
+
+    $query = mysqli_query($mysqli, $sql);
 
     $leaderboard = array();
-    while ($result = mysql_fetch_array($query, MYSQL_ASSOC)) {
+    while ($result = mysqli_fetch_assoc($query)) {
       $leaderboard[] = $result;
     }
 

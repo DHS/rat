@@ -101,7 +101,7 @@ class Invite {
 
     $sql = "SELECT `result` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `id` = $this->id";
     $query = mysqli_query($mysqli, $sql);
-    $invites = mysql_fetch_assoc($query);
+    $invites = mysqli_fetch_assoc($query);
 
     $invites['result']++;
 

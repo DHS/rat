@@ -549,7 +549,7 @@ class User {
     // Get current # of invites
     $sql = "SELECT `invites` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $this->id";
     $query = mysqli_query($mysqli, $sql);
-    $user = mysql_fetch_assoc($query);
+    $user = mysqli_fetch_assoc($query);
 
     // Calculate new # of invites
     $user['invites'] = $user['invites'] + $invites;
