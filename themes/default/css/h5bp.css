@@ -64,46 +64,12 @@ td { vertical-align: top; }
 
 .chromeframe { margin: 0.2em 0; background: #ccc; color: black; padding: 0.2em 0; }
 
-/* Twitter bootstrap CSS */
 
-body {
-  padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-}
 
-/* End Twitter bootstrap CSS */
 
-/* Rat CSS */
 
-body { font-family: Verdana, Arial, Helvetica, sans-serif; }
 
-h1 { font-size: 140%; text-align: center; }
-h2 { font-size: 100%; font-weight: bold; }
-h4 { line-height: 140% !important; }
 
-a:link { color: #000066; }
-a:active { color: #999999; }
-a:visited { color: #000000; }
-a:hover { color: #0033FF; }
-
-footer a, footer a:visited { color: #666666; }
-
-.align_left { text-align: left; }
-.align_right { text-align: right; }
-.align_center { text-align: center; }
-
-.float_left { float: left; }
-.float_right { float: right; }
-
-.small { font-size: 75%; }
-
-.good_news { color: green; }
-.bad_news { color: red; }
-
-.item_meta { font-size: 75%; color: gray; }
-
-.clear { clear: both; }
-
-/* End Rat CSS */
 
 
 @media only screen and (min-width: 35em) {
