@@ -114,7 +114,7 @@ class Like {
 
     // Loop through likes, fetching objects
     $likes = array();
-    while ($result = mysqli_fetch_assoc($query)) {
+    while ($query && $result = mysqli_fetch_assoc($query)) {
       $likes[] = Like::get_by_id($result['id']);
     }
 

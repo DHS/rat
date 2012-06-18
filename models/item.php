@@ -93,7 +93,7 @@ class Item {
     // Loop through item ids, fetching objects
     $items = array();
     if ($query != false) {
-      while ($result = mysqli_fetch_assoc($query)) {
+      while ($query && $result = mysqli_fetch_assoc($query)) {
         $items[] = Item::get_by_id($result['id']);
       }
     }
@@ -156,7 +156,7 @@ class Item {
     $query = mysqli_query($mysqli, $sql);
 
     $comments = array();
-    while ($result = mysqli_fetch_assoc($query)) {
+    while ($query && $result = mysqli_fetch_assoc($query)) {
       $comments[] = Comment::get_by_id($result['id']);
     }
 
@@ -183,7 +183,7 @@ class Item {
     $query = mysqli_query($mysqli, $sql);
 
     $likes = array();
-    while ($result = mysqli_fetch_assoc($query)) {
+    while ($query && $result = mysqli_fetch_assoc($query)) {
       $likes[$result['id']] = Like::get_by_id($result['id']);
     }
 

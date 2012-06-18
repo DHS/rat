@@ -202,7 +202,7 @@ class User {
     $query = mysqli_query($mysqli, $sql);
 
     $items = array();
-    while ($result = mysqli_fetch_assoc($query)) {
+    while ($query && $result = mysqli_fetch_assoc($query)) {
       $items[] = Item::get_by_id($result['id']);
     }
 
@@ -229,7 +229,7 @@ class User {
     $query = mysqli_query($mysqli, $sql);
 
     $invites = array();
-    while ($result = mysqli_fetch_assoc($query)) {
+    while ($query && $result = mysqli_fetch_assoc($query)) {
       $invites[] = Invite::get_by_id($result['id']);
     }
 
@@ -256,7 +256,7 @@ class User {
     $query = mysqli_query($mysqli, $sql);
 
     $friends = array();
-    while ($result = mysqli_fetch_assoc($query)) {
+    while ($query && $result = mysqli_fetch_assoc($query)) {
       $friends[$result['id']] = User::get_by_id($result['friend_user_id']);
       unset($friends[$result['id']]->password);
     }
@@ -284,7 +284,7 @@ class User {
     $query = mysqli_query($mysqli, $sql);
 
     $friends = array();
-    while ($result = mysqli_fetch_assoc($query)) {
+    while ($query && $result = mysqli_fetch_assoc($query)) {
       $friends[$result['id']] = User::get_by_id($result['user_id']);
       unset($friends[$result['id']]->password);
     }
@@ -312,7 +312,7 @@ class User {
     $query = mysqli_query($mysqli, $sql);
 
     $items = array();
-    while ($result = mysqli_fetch_assoc($query)) {
+    while ($query && $result = mysqli_fetch_assoc($query)) {
       $items[] = Item::get_by_id($result['item_id']);
     }
 
@@ -339,7 +339,7 @@ class User {
     $query = mysqli_query($mysqli, $sql);
 
     $comments = array();
-    while ($result = mysqli_fetch_assoc($query)) {
+    while ($query && $result = mysqli_fetch_assoc($query)) {
       $comments[] = Comment::get_by_id($result['id']);
     }
 
@@ -358,7 +358,7 @@ class User {
     $query = mysqli_query($mysqli, $sql);
 
     $emails = array();
-    while ($result = mysqli_fetch_assoc($query)) {
+    while ($query && $result = mysqli_fetch_assoc($query)) {
       $emails[$result['notification']] = $result['value'];
     }
 
@@ -446,7 +446,7 @@ class User {
 
     // Loop through item ids, fetching objects
     $items = array();
-    while ($result = mysqli_fetch_assoc($query)) {
+    while ($query && $result = mysqli_fetch_assoc($query)) {
       $items[] = Item::get_by_id($result['id']);
     }
 

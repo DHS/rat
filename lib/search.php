@@ -65,7 +65,7 @@ class Search {
     $query = mysqli_query($mysqli, $sql);
 
     $items = array();
-    while ($result = mysqli_fetch_assoc($query)) {
+    while ($query && $result = mysqli_fetch_assoc($query)) {
 
       $item = Item::get_by_id($result['id']);
       $item->content = process_content($item->content);

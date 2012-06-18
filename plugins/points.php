@@ -68,7 +68,7 @@ class points extends Application {
     $query = mysqli_query($mysqli, $sql);
 
     $leaderboard = array();
-    while ($result = mysqli_fetch_assoc($query)) {
+    while ($query && $result = mysqli_fetch_assoc($query)) {
       $leaderboard[] = $result;
     }
 
