@@ -1,7 +1,7 @@
 
 {% if session.user_id %}
 
-<form class="form-horizontal" action="{{ app.url_for('items', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post">
+<form class="form-horizontal" action="{{ app.url_for('items', 'add') }}{% if app.uri.params.redirect_to %}/redirect_to={{ app.uri.params.redirect_to }}{% endif %}" method="post" enctype="multipart/form-data">
   <fieldset>
 
     <legend>New {{ app.config.items.name }}</legend>
