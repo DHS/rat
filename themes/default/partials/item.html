@@ -35,7 +35,7 @@
 {# Share buttons #}
 <!-- Share buttons -->
 {% if not app.config.private %}
-  <span style="float: right; margin-left: 20px;">
+  <span style="float: right; text-align: right; margin: -20px 0 0 0;">
       <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ app.url_for('items', 'show', this.item.id) }}" data-text="{{ this.item.title }}" data-count="none">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
       <iframe src="http://www.facebook.com/plugins/like.php?href={{ app.url_for('items', 'show', this.item.id) }}&amp;layout=button_count&amp;show_faces=true&amp;width=100&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
     </span>
@@ -44,42 +44,42 @@
 {# Meta info #}
 <!-- Meta -->
 
-  {% include 'partials/popup_login.html' %}
+{% include 'partials/popup_login.html' %}
 
-  <p class="item_meta">
-  {{ app.link_to('<span title="' ~ item.date ~ '">' ~ item.date ~ '</span>', 'items', 'show', item.id) }}
+<p class="item_meta" style="clear: right;">
+{{ app.link_to('<span title="' ~ item.date ~ '">' ~ item.date ~ '</span>', 'items', 'show', item.id) }}
 
-  {% if app.config.items.comments.enabled %}
-    &middot;
-    {% if session.user_id %}
-      <a href="#" onclick="document.getElementById('comment_form_{{ item.id }}').style.visibility = 'visible'; document.getElementById('comment_form_{{ item.id }}').style.height = 'auto'; document.getElementById('comment_form_{{ item.id }}').content.focus(); return false;">{{ app.config.items.comments.name }}</a>
+{% if app.config.items.comments.enabled %}
+  &middot;
+  {% if session.user_id %}
+    <a href="#" onclick="document.getElementById('comment_form_{{ item.id }}').style.visibility = 'visible'; document.getElementById('comment_form_{{ item.id }}').style.height = 'auto'; document.getElementById('comment_form_{{ item.id }}').content.focus(); return false;">{{ app.config.items.comments.name }}</a>
+  {% else %}
+    <a data-toggle="modal" href="#popup_login">{{ app.config.items.comments.name }}</a>
+  {% endif %}
+{% endif %}
+
+{% if app.config.items.likes.enabled %}
+  &middot; <span id="like_link_{{ item.id }}">
+  {% if session.user_id %}
+    {% if item.i_like %}
+      <a href="#" onclick="like_remove('{{ app.config.base_dir }}', {{ item.id }}, '{{ app.config.items.likes.name|escape('js') }}', '{{ app.config.items.likes.opposite_name|escape('js') }}'); return false;">{{ app.config.items.likes.opposite_name }}</a>
     {% else %}
-      <a data-toggle="modal" href="#popup_login">{{ app.config.items.comments.name }}</a>
+      <a href="#" onclick="like_add('{{ app.config.base_dir }}', {{ item.id }}, '{{ app.config.items.likes.name|escape('js') }}', '{{ app.config.items.likes.opposite_name|escape('js') }}'); return false;">{{ app.config.items.likes.name }}</a>
     {% endif %}
+  {% else %}
+    <a data-toggle="modal" href="#popup_login">{{ app.config.items.likes.name }}</a>
   {% endif %}
+  </span>
+{% endif %}
 
-  {% if app.config.items.likes.enabled %}
-    &middot; <span id="like_link_{{ item.id }}">
-    {% if session.user_id %}
-      {% if item.i_like %}
-        <a href="#" onclick="like_remove('{{ app.config.base_dir }}', {{ item.id }}, '{{ app.config.items.likes.name|escape('js') }}', '{{ app.config.items.likes.opposite_name|escape('js') }}'); return false;">{{ app.config.items.likes.opposite_name }}</a>
-      {% else %}
-        <a href="#" onclick="like_add('{{ app.config.base_dir }}', {{ item.id }}, '{{ app.config.items.likes.name|escape('js') }}', '{{ app.config.items.likes.opposite_name|escape('js') }}'); return false;">{{ app.config.items.likes.name }}</a>
-      {% endif %}
-    {% else %}
-      <a data-toggle="modal" href="#popup_login">{{ app.config.items.likes.name }}</a>
-    {% endif %}
-    </span>
-  {% endif %}
+{% if item.user.id == session.user_id %}
+  &middot; <a href="{{ app.url_for('items', 'update', item.id) }}">Edit</a>
+{% endif %}
 
-  {% if item.user.id == session.user_id %}
-    &middot; <a href="{{ app.url_for('items', 'update', item.id) }}">Edit</a>
-  {% endif %}
-
-  {% if item.user.id == session.user_id %}
-    &middot; <a onclick="return confirm('Are you sure you want to delete this?')" href="{{ app.url_for('items', 'remove', item.id) }}">Delete</a>
-  {% endif %}
-  </p>
+{% if item.user.id == session.user_id %}
+  &middot; <a onclick="return confirm('Are you sure you want to delete this?')" href="{{ app.url_for('items', 'remove', item.id) }}">Delete</a>
+{% endif %}
+</p>
 
 {# Likes #}
 {% if app.config.items.likes.enabled %}
