@@ -10,7 +10,7 @@ class LikesController extends Application {
 
     $item = Item::get_by_id($item_id);
 
-    if ($item->user->email_notifications['item_like']) {
+    if (isset($item->user->email_notifications['item_like'])) {
 
       $to       = array('name' => $item->user->username, 'email' => $item->user->email);
       $subject  = '[' . $this->config->name . '] Someone clicked ' . strtolower($this->config->items['likes']['name']) . ' on your ' . strtolower($this->config->items['name']) . ' on ' . $this->config->name . '!';
