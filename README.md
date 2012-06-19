@@ -1,7 +1,7 @@
 Rat
 ===
 
-Rat is a boilerplate web application written for PHP and MySQL.
+Rat is a boilerplate web application written for PHP and MySQL. It provides you with a starting point for a stream-based social web application. You can see a vanilla installation of Rat in action [here](http://pleasebuildthis.com/).
 
 History
 -------
@@ -103,23 +103,3 @@ License
 -------
 
 See [LICENSE](https://github.com/DHS/rat-private/blob/master/LICENSE)
-
-Missing functionality
----------------------
-
-- Symmetrical friending (send request, request must be accepted)
-- Confirm email address
-- Delete user accounts
-- Native avatars
-- Search users
-- @ mentions
-- Badges system
-- Infinite scroll
-- Add an additional theme
-- Plugin hooks similar to Wordpress
-- Connect accounts to Facebook/Twitter
-- Signup using Facebook/Twitter
-- Option to post new item to Facebook/Twitter
-- Option in Settings to auto-post to Facebook/Twitter
-- Find friends on Facebook/Twitter
-- OAuth API and developer section
