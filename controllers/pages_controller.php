@@ -12,7 +12,7 @@ class PagesController extends Application {
       foreach ($this->config->admin_users as $value) {
         $author = User::get_by_id($value);
         if ($this->config->private != TRUE || isset($_SESSION['user_id'])) {
-          $authors .= $this->get_link_to($author->username, 'users', 'show', $author->id).', ';
+          $authors .= $this->get_link_to($author->username, 'users', 'show', $author->id) . ', ';
         } else {
           $authors .= $author->username . ', ';
         }
@@ -20,7 +20,7 @@ class PagesController extends Application {
       }
       $authors = substr($authors, 0, -2);
 
-      $content = '<p>' . $this->config->name . ' is a web app created by ' . $authors.' based on the <a href="http://github.com/DHS/rat">rat</a> framework. ';
+      $content = '<p>' . $this->config->name . ' is a web app created by ' . $authors . ' based on the <a href="http://github.com/DHS/rat">rat</a> framework. ';
 
       if ($this->config->beta == TRUE) {
         $content .= 'It is currently in beta.';
@@ -31,7 +31,7 @@ class PagesController extends Application {
       $content .= '<p>It lets you create ' . $this->config->items['name_plural'];
 
       if ($this->config->items['titles']['enabled'] == TRUE) {
-        $content .= ' with '.strtolower($this->config->items['titles']['name_plural']);
+        $content .= ' with ' . strtolower($this->config->items['titles']['name_plural']);
       }
 
       if ($this->config->items['comments']['enabled'] == TRUE || $this->config->items['likes']['enabled'] == TRUE) {
@@ -39,7 +39,7 @@ class PagesController extends Application {
         $content .= ' and then ';
 
         if ($this->config->items['comments']['enabled'] == TRUE) {
-          $content .= ' add '.strtolower($this->config->items['comments']['name_plural']).' ';
+          $content .= ' add ' . strtolower($this->config->items['comments']['name_plural']) . ' ';
         }
 
         if ($this->config->items['comments']['enabled'] == TRUE && $this->config->items['likes']['enabled'] == TRUE) {
@@ -47,7 +47,7 @@ class PagesController extends Application {
         }
 
         if ($this->config->items['likes']['enabled'] == TRUE) {
-          $content .= ' \''.strtolower($this->config->items['likes']['name']).'\' ';
+          $content .= " '" . strtolower($this->config->items['likes']['name']) . "' ";
         }
 
         $content .= 'them';
@@ -73,7 +73,7 @@ class PagesController extends Application {
       }
 
       if (isset($this->plugins->gravatar)) {
-        $content .= '<p>' . $this->config->name . ' is <a href="http://gravatar.com/">Gravatar</a>-enabled.</p>'."\n";
+        $content .= '<p>' . $this->config->name . ' is <a href="http://gravatar.com/">Gravatar</a>-enabled.</p>' . "\n";
       }
 
     }

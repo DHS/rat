@@ -210,7 +210,7 @@ class AdminController extends Application {
       }
 
       $to      = $email;
-      $link    = $this->config->url . 'users/add/' . $id . '/?email='.urlencode($email);
+      $link    = $this->config->url . 'users/add/' . $id . '/?email=' . urlencode($email);
 
       // Load template into $body variable
       $to      = array('email' => $email);

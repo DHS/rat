@@ -248,7 +248,7 @@ class ItemsController extends Application {
       }
 
       // Set message
-      Application::flash('success', ucfirst($this->config->items['name']).' removed!');
+      Application::flash('success', ucfirst($this->config->items['name']) . ' removed!');
 
       // Return from whence you came
       header('Location: ' . $_SERVER['HTTP_REFERER']);

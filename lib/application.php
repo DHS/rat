@@ -23,7 +23,7 @@ class Application {
 
       $uri = Routing::fetch_uri($config);
 
-      $controller = ucfirst($uri['controller']).'Controller';
+      $controller = ucfirst($uri['controller']) . 'Controller';
       @include "controllers/{$uri['controller']}_controller.php";
 
       if (substr($uri['action'], 0, 1) == '?') {
@@ -43,7 +43,7 @@ class Application {
 
         $uri = Routing::route();
 
-        $controller = ucfirst($uri['controller']).'Controller';
+        $controller = ucfirst($uri['controller']) . 'Controller';
         @include "controllers/{$uri['controller']}_controller.php";
 
         $app = new $controller;
@@ -286,11 +286,11 @@ class Application {
   }
 
   public function link_to($link_text, $controller, $action = '', $id = '', $params = array()) {
-    echo '<a href="' . $this->url_for($controller, $action, $id, $params).'">' . $link_text.'</a>';
+    echo '<a href="' . $this->url_for($controller, $action, $id, $params) . '">' . $link_text . '</a>';
   }
 
   public function get_link_to($link_text, $controller, $action = '', $id = '', $params = array()) {
-    return '<a href="' . $this->url_for($controller, $action, $id, $params).'">' . $link_text.'</a>';
+    return '<a href="' . $this->url_for($controller, $action, $id, $params) . '">' . $link_text . '</a>';
   }
 
   public function redirect_to($controller, $action = '', $id = '', $params = array()) {

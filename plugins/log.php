@@ -86,7 +86,7 @@ class log extends Application {
           $return .= $entry['params'];
         }
 
-        $return .= '</td><td>' . $entry['date'].'</td></tr>';
+        $return .= '</td><td>' . $entry['date'] . '</td></tr>';
 
       }
 

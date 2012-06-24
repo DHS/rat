@@ -29,7 +29,7 @@ class Admin {
           if ($last_login == 0) {
             $last_login = 'Today!';
           } else {
-            $last_login = $last_login.' days ago';
+            $last_login = $last_login . ' days ago';
           }
 
         } else {
