@@ -332,6 +332,7 @@ class Application {
 
   private function loadAction() {
 
+    // Check for params
     if (isset($this->uri['params'])) {
       $param_index = array_keys($this->uri['params']);
       $param_index = $param_index[0];
@@ -339,6 +340,7 @@ class Application {
       $param_index = null;
     }
 
+    // Check that action method exists
     if (method_exists($this, $this->uri['action'])) {
 
       if (isset($this->uri['params'][$param_index])) {
@@ -384,7 +386,7 @@ class Application {
 
   public function url_for($controller, $action = '', $id = '', $params = array()) {
 
-    // Create an array, uri, containing controller, action and all other
+    // Create $uri array containing controller, action and all other
     // params including id
 
     $uri = array('controller' => $controller);
@@ -408,7 +410,7 @@ class Application {
     // both the controller, action and the names of additional parameters
     $targets = array_values($routes->aliases);
     $match = NULL;
-    $size = sizeof($targets);
+    $size = count($targets);
 
     for ($i = 0; $i < $size; $i++) {
 

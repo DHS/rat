@@ -1,6 +1,6 @@
 <div class="pagination">
   <ul>
-{% if this.uri.controller == 'items' %}
+{% if app.uri.controller == 'items' %}
     <li class="prev"><a href="{{ app.url_for(app.uri.controller, app.uri.action) }}/?page={{ app.uri.params.page - 1 }}">&larr; Previous</a></li>
     <li class="prev"><a href="{{ app.url_for(app.uri.controller, app.uri.action) }}/?page={{ app.uri.params.page + 1 }}">Next &rarr;</a></li>
 {% else %}
