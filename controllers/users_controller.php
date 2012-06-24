@@ -126,32 +126,29 @@ class UsersController extends Application {
   // Update user: change passsword, update profile
   function update($page = 'profile') {
 
-    $user = User::get_by_id($_SESSION['user_id']);
+    $this->user = User::get_by_id($_SESSION['user_id']);
 
     if ($page == 'password') {
 
       if (isset($_POST['old_password']) && $_POST['old_password'] != '' && isset($_POST['new_password1']) && $_POST['new_password1'] != '' && isset($_POST['new_password2']) && $_POST['new_password2'] != '') {
-        $this->update_password($this->config->encryption_salt);
+        $this->update_password();
       }
 
     } elseif ($page == 'profile') {
 
       if (isset($_POST['full_name']) || isset($_POST['bio']) || isset($_POST['url'])) {
         $this->update_profile();
-        $user->full_name = $_POST['full_name'];
-        $user->bio = $_POST['bio'];
-        $user->url = $_POST['url'];
       }
 
     } elseif ($page == 'emails') {
 
       if (isset($_POST['submit'])) {
-        $user->email_notifications = $this->update_email_notifications();
+        $this->update_email_notifications();
       }
 
     }
 
-    $this->loadView('users/update', array('page' => $page, 'user' => $user));
+    $this->loadView('users/update', array('page' => $page, 'user' => $this->user));
 
   }
 
@@ -278,13 +275,13 @@ class UsersController extends Application {
   }
 
   // Helper function: update password
-  private function update_password($salt) {
+  private function update_password() {
 
-    $user = User::get_by_id($_SESSION['user_id']);
+    $this->user = User::get_by_id($_SESSION['user_id']);
 
     $error = '';
 
-    if (md5($_POST['old_password'] . $salt) != $user->password) {
+    if (md5($_POST['old_password'] . $this->config->encryption_salt) != $this->user->password) {
       // Old passwords don't match
 
       $error .= 'Incorrect existing password.<br />';
@@ -300,10 +297,10 @@ class UsersController extends Application {
     if ($error == '') {
 
       // Call update_password in user model
-      $user->update_password($_POST['new_password1'], $salt);
+      $this->user->update_password($_POST['new_password1'], $this->config->encryption_salt);
 
       // Update session
-      $user->password = md5($_POST['new_password1'] . $salt);
+      $this->user->password = md5($_POST['new_password1'] . $this->config->encryption_salt);
 
       // Log password update
       if (isset($this->plugins->log)) {
@@ -347,10 +344,12 @@ class UsersController extends Application {
 
     if ($error == '') {
 
-      $user = User::get_by_id($_SESSION['user_id']);
-
       // Call update_profile in user model
-      $user->update_profile($_POST['full_name'], $_POST['bio'], $_POST['url']);
+      $this->user->update_profile($_POST['full_name'], $_POST['bio'], $_POST['url']);
+
+      $this->user->full_name = $_POST['full_name'];
+      $this->user->bio = $_POST['bio'];
+      $this->user->url = $_POST['url'];
 
       // Set success message
       Application::flash('success', 'Profile information updated!');
@@ -366,45 +365,36 @@ class UsersController extends Application {
   //  Helper function: update profile
   private function update_email_notifications() {
 
-    if (isset($_POST['submit'])) {
+    // Unset submit var
+    unset($_POST['submit']);
 
-      $user = User::get_by_id($_SESSION['user_id']);
+    // Loop through remainig post vars fetching new email settings
+    foreach ($_POST as $key => $value) {
 
-      // Find new email settings, first unset submit var
-      unset($_POST['submit']);
-
-      // Then loop through post vars fetching new email settings
-      foreach ($_POST as $key => $value) {
-
-        if ($value == 'on') {
-          $emails[$key] = 1;
-        }
-
+      if ($value == 'on') {
+        $emails[$key] = 1;
       }
-      
-      // Check for existing settings in order to update
-      // with negative values
-      foreach ($user->email_notifications as $key => $value) {
-
-        if ( ! isset($_POST[$key])) {
-          $emails[$key] = 0;
-        }
-
-      }
-
-      // Call update_emails in user model
-      $user->update_email_notifications($emails);
-
-      // Set success message
-      Application::flash('success', 'Email settings updated!');
-
-    } else {
-
-      Application::flash('error', 'Email settings not updated.');
 
     }
 
-    return $emails;
+    // Check for existing settings in order to update
+    // with negative values
+    foreach ($this->user->email_notifications as $key => $value) {
+
+      if ( ! isset($_POST[$key])) {
+        $emails[$key] = 0;
+      }
+
+    }
+
+    // Call update_emails in user model
+    $this->user->update_email_notifications($emails);
+
+    // Update the current user
+    $this->user->email_notifications = $emails;
+
+    // Set success message
+    Application::flash('success', 'Email settings updated!');
 
   }
 
