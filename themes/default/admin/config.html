@@ -38,6 +38,16 @@
       </div>
     </div>
 
+    <div class="control-group">
+      <div class="controls">
+        <label class="checkbox">
+          <input type="checkbox" name="signup_email_notifications" id="signup_email_notifications" {% if app.config.signup_email_notifications %}checked="checked"{% endif %}/>
+          Sign up email notifications
+        </label>
+        <p class="help-block">Receive an email each time someone signs up to {{ app.config.name }}</p>
+      </div>
+    </div>
+
   </fieldset>
 
   <fieldset>

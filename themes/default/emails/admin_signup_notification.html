@@ -1,0 +1,13 @@
+<p>Hey,</p>
+<p>Someone just signed up for {{ app.config.name }}!</p>
+{% if app.config.beta %}
+<p>Click here to grant them access:
+<br />{{ link }}</p>
+{% else %}
+<p>Click here to check out their profile:
+<br />{{ link }}</p>
+{% endif %}
+<p>Regards,
+<br />The {{ app.config.name }} Robot</p>
+<p>&nbsp;</p>
+<p>NB. <a href="{{ app.url_for('admin', 'config') }}">Click here</a> to switch off this email alert.</p>

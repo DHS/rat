@@ -28,6 +28,7 @@ class AppConfig extends ServerConfig {
   // Private app - requires login to view pages (except public_pages)
   // no share buttons
   public $private = TRUE;
+  public $signup_email_notifications = TRUE;
 
   // Items
   // Notes about uploads: max-size is in bytes (default: 5MB), directory

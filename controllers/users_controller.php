@@ -570,6 +570,21 @@ class UsersController extends Application {
         $this->plugins->log->add($user_id, 'user', NULL, 'beta_signup', $_POST['email']);
       }
 
+      // Admin alert email
+      if ($this->config->send_emails && $this->config->signup_email_notifications == TRUE) {
+
+        $admin = User::get_by_id($this->config->admin_users[0]);
+
+        $to       = array('name' => $admin->username, 'email' => $admin->email);
+        $subject  = '[' . $this->config->name . '] New signup on ' . $this->config->name . '!';
+        $link     = substr($this->config->url, 0, -1) . $this->url_for('admin', 'signups');
+        $body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/admin_signup_notification.html"), array('link' => $link, 'app' => $this));
+
+        // Email user
+        $this->email->send_email($to, $subject, $body);
+
+      }
+
       // Set thank you & tweet this message
       Application::flash('success', 'Thanks for signing up!<br />We will be in touch soon...');
 
@@ -653,6 +668,21 @@ class UsersController extends Application {
       // Log signup
       if (isset($this->plugins->log)) {
         $this->plugins->log->add($user->id, 'user', NULL, 'signup');
+      }
+
+      // Admin alert email
+      if ($this->config->send_emails && $this->config->signup_email_notifications == TRUE) {
+
+        $admin = User::get_by_id($this->config->admin_users[0]);
+
+        $to       = array('name' => $admin->username, 'email' => $admin->email);
+        $subject  = '[' . $this->config->name . '] New signup on ' . $this->config->name . '!';
+        $link     = substr($this->config->url, 0, -1) . $this->url_for('users', 'show', $user->id);
+        $body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/admin_signup_notification.html"), array('link' => $link, 'app' => $this));
+
+        // Email user
+        $this->email->send_email($to, $subject, $body);
+
       }
 
       // Start session
