@@ -18,13 +18,12 @@ class CommentsController extends Application {
 
         $to       = array('name' => $item->user->username, 'email' => $item->user->email);
         $subject  = '[' . $this->config->name . '] Someone left a ' . strtolower($this->config->items['comments']['name']) . ' on your ' . strtolower($this->config->items['titles']['name']) . ' on ' . $this->config->name . '!';
-        $body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/item_comment.html"), array('link' => substr($this->config->url, 0, -1) . $this->url_for('items', 'show', $item->id), 'app' => array('config' => $this->config), 'user' => $item->user));
+        $link     = substr($this->config->url, 0, -1) . $this->url_for('items', 'show', $item->id);
+        $body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/item_comment.html"), array('link' => $link, 'app' => $this, 'user' => $item->user));
 
         // Email user
         $this->email->send_email($to, $subject, $body);
 
-      } else {
-        ECHO 'NO';
       }
 
       // Log new comment

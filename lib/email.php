@@ -24,6 +24,7 @@ class Email {
       if ($debug == TRUE) {
         $to = htmlentities($to);
         echo "$to<br />$subject<br />$body<br />$headers";
+        exit;
       } else {
         mail($to, $subject, $body, $headers);
       }

@@ -86,11 +86,10 @@ class InvitesController extends Application {
 
       $admin = User::get_by_id($this->config->admin_users[0]);
 
-      $link    = $this->config->url . 'signup/' . $id;
-
-      $to      = array('email' => $_POST['email']);
+      $to       = array('email' => $_POST['email']);
       $subject  = '[' . $this->config->name . '] An invitation from ' . $user->username;
-      $body    = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/invite_friend.html"), array('link' => $link, 'user' => $user, 'app' => array('config' => $this->config)));
+      $link     = $this->config->url . 'signup/' . $id;
+      $body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/invite_friend.html"), array('user' => $user, 'link' => $link, 'app' => $this));
 
       // Email user
       $this->email->send_email($to, $subject, $body);

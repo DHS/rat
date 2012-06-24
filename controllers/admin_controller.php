@@ -201,13 +201,11 @@ class AdminController extends Application {
         $this->plugins->log->add($_SESSION['user_id'], 'invite', $id, 'admin_add', $email);
       }
 
-      $to      = $email;
-      $link    = $this->config->url . 'users/add/' . $id . '/?email=' . urlencode($email);
-
       // Load template into $body variable
       $to      = array('email' => $email);
       $subject  = '[' . $this->config->name . '] Your ' . $this->config->name . ' invite is here!';
-      $body    = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/admin_invite.html"), array('link' => $link, 'app' => array('config' => $this->config)));
+      $link    = $this->config->url . 'users/add/' . $id . '/?email=' . urlencode($email);
+      $body    = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/admin_invite.html"), array('link' => $link, 'app' => $this));
 
       // Email user
       $this->email->send_email($to, $subject, $body);

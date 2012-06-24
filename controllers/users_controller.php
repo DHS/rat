@@ -250,7 +250,7 @@ class UsersController extends Application {
           $to       = array('email' => $_POST['email']);
           $link      = substr($this->config->url, 0, -1).$this->url_for('users', 'reset', $code);
           $subject  = '[' . $this->config->name . '] Password reset';
-          $body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/password_reset.html"), array('link' => $link, 'user' => $user, 'app' => array('config' => $this->config)));
+          $body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/password_reset.html"), array('user' => $user, 'link' => $link, 'app' => $this));
 
           // Email user
           $this->email->send_email($to, $subject, $body);
@@ -453,7 +453,7 @@ class UsersController extends Application {
 
       $to       = array('name' => $_POST['username'], 'email' => $_POST['email']);
       $subject  = '[' . $this->config->name . '] Your ' . $this->config->name . ' invite is here!';
-      $body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('username' => $_POST['username'], 'app' => array('config' => $this->config)));
+      $body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('username' => $_POST['username'], 'app' => $this));
 
       $this->email->send_email($to, $subject, $body);
 
@@ -582,9 +582,9 @@ class UsersController extends Application {
       // There was an error
 
       // Propagate get vars to be picked up by the form
-      $this->uri['params']['email']    = $_POST['email'];
-      $this->uri['params']['username']  = $_POST['username'];
-      $this->code      = $_POST['code'];
+      $this->uri['params']['email'] = $_POST['email'];
+      $this->uri['params']['username'] = $_POST['username'];
+      $this->code = $_POST['code'];
 
       // Show error message
       Application::flash('error', $error);
@@ -641,9 +641,9 @@ class UsersController extends Application {
 
         $admin = User::get_by_id($this->config->admin_users[0]);
 
-        $to = array('name' => $_POST['username'], 'email' => $_POST['email']);
-        $subject = '[' . $this->config->name . '] Welcome to ' . $this->config->name . '!';
-        $body = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('username' => $_POST['username'], 'app' => array('config' => $this->config)));
+        $to       = array('name' => $_POST['username'], 'email' => $_POST['email']);
+        $subject  = '[' . $this->config->name . '] Welcome to ' . $this->config->name . '!';
+        $body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('username' => $_POST['username'], 'app' => $this));
 
         // Email user
         $this->email->send_email($to, $subject, $body, TRUE);
