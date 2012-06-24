@@ -63,6 +63,8 @@ class points extends Application {
 
   function view_leaderboard($limit = 10) {
 
+    global $mysqli;
+
     $sql = "SELECT id, username, points FROM users WHERE date_joined IS NOT NULL ORDER BY points DESC LIMIT $limit";
 
     $query = mysqli_query($mysqli, $sql);
