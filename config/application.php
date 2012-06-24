@@ -23,7 +23,7 @@ class AppConfig extends ServerConfig {
   public $default_controller  = 'items';
 
   // Beta - users can't signup, can only enter their email addresses
-  public $beta = FALSE;
+  public $beta = TRUE;
 
   // Private app - requires login to view pages (except public_pages)
   // no share buttons
@@ -46,7 +46,7 @@ class AppConfig extends ServerConfig {
     'content' => array(
       'enabled'     => TRUE,
       'name'        => 'Content',
-      'name_plural'  => 'Contents'
+      'name_plural' => 'Contents'
     ),
 
     // Remember to update the permissions for your
@@ -65,9 +65,9 @@ class AppConfig extends ServerConfig {
     ),
 
     'comments' => array(
-      'enabled'      => TRUE,
+      'enabled'     => TRUE,
       'name'        => 'Comment',
-      'name_plural'  => 'Comments'
+      'name_plural' => 'Comments'
     ),
 
     'likes' => array(

@@ -661,7 +661,7 @@ class UsersController extends Application {
         $body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/signup.html"), array('username' => $_POST['username'], 'app' => $this));
 
         // Email user
-        $this->email->send_email($to, $subject, $body, TRUE);
+        $this->email->send_email($to, $subject, $body);
 
       }
 
