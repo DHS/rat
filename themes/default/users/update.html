@@ -91,7 +91,7 @@
         <div class="control-group">
           <div class="controls">
             <label class="checkbox">
-              <input type="checkbox" name="item_like" id="item_like" {% if user.emails.item_like %}checked="checked"{% endif %}/>
+              <input type="checkbox" name="item_like" id="item_like" {% if user.email_notifications.item_like %}checked="checked"{% endif %}/>
               Email me when someone likes one of my {{ app.config.items.name_plural }}
             </label>
           </div>
@@ -100,7 +100,7 @@
         <div class="control-group">
           <div class="controls">
             <label class="checkbox">
-              <input type="checkbox" name="item_comment" id="item_comment" {% if user.emails.item_comment %}checked="checked"{% endif %}/>
+              <input type="checkbox" name="item_comment" id="item_comment" {% if user.email_notifications.item_comment %}checked="checked"{% endif %}/>
               Email me when someone comments on one of my {{ app.config.items.name_plural }}
             </label>
           </div>
