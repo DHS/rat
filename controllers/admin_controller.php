@@ -27,27 +27,19 @@ class AdminController extends Application {
         $conf[$key] = $value;
       }
 
-      //// Overwrite checkbox fields
+      // Overwrite checkbox fields
       //$checkboxes = array('beta', 'private', 'items\'][\'titles\'][\'enabled', 'items["content"]["enabled"]', 'items["uploads"]["enabled"]', 'items["comments"]["enabled"]', 'items["likes"]["enabled"]');
-      //
-      //foreach ($checkboxes as $key => $checkbox) {
-      //  if ($_POST[$checkbox] == 'on') {
-      //    $conf[$checkbox] = 'TRUE';
-      //  } else {
-      //    $conf[$checkbox] = 'FALSE';
-      //  }
-      //}
+      $checkboxes = array(
+        'beta', 'private'
+      );
 
-      if (isset($_POST['beta']) && $_POST['beta'] == 'on') {
-        $conf['beta'] = 'TRUE';
-      } else {
-        $conf['beta'] = 'FALSE';
-      }
+      foreach ($checkboxes as $key => $checkbox) {
 
-      if (isset($_POST['private']) && $_POST['private'] == 'on') {
-        $conf['private'] = 'TRUE';
-      } else {
-        $conf['private'] = 'FALSE';
+        if ($_POST[$checkbox] == 'on') {
+          $conf[$checkbox] = 'TRUE';
+        } else {
+          $conf[$checkbox] = 'FALSE';
+        }
       }
 
       if (isset($_POST['items']['titles']['enabled']) && $_POST['items']['titles']['enabled'] == 'on') {
