@@ -343,9 +343,11 @@ class Application {
     // Check that action method exists
     if (method_exists($this, $this->uri['action'])) {
 
-      if (isset($this->uri['params'][$param_index])) {
-        $this->{$this->uri['action']}($this->uri['params'][$param_index]);
+      if (isset($this->uri['params']['id'])) {
+        // Call the action method passing in id
+        $this->{$this->uri['action']}($this->uri['params']['id']);
       } else {
+        // Call the action method without params
         $this->{$this->uri['action']}();
       }
 
@@ -416,17 +418,29 @@ class Application {
 
       // Find all the additional parameter names (excluding controller
       // and action)
-      $param_names = array_diff(array_keys($targets[$i]), array('controller', 'action'));
+      $additional_param_names = array_diff(array_keys($targets[$i]), array('controller', 'action'));
 
       // If the difference between the additional target params and the
       // additional input params is empty, then they have the same
       // additional params
 
-      $diff = array_diff($param_names, array_keys($params));
+      $diff = array_diff($additional_param_names, array_keys($params));
 
-      if (  ( ! is_null($uri['controller']) && $targets[$i]['controller'] == $uri['controller'] )
-        && ( isset($uri['action']) && isset($targets[$i]['action'])  && $targets[$i]['action'] == $uri['action'] )
-        && empty($diff)
+      $param_values_match = TRUE;
+      if (empty($diff)) {
+        // Same params set so check that values match
+        foreach ($additional_param_names as $key => $value) {
+          if ($uri[$value] != $targets[$i][$value]) {
+            $param_values_match = FALSE;
+          }
+        }
+      }
+
+      if (
+        (isset($uri['controller']) && $targets[$i]['controller'] == $uri['controller']) // controllers match
+        && (isset($uri['action']) && isset($targets[$i]['action']) && $uri['action'] == $targets[$i]['action'] ) // actions match
+        && empty($diff) // remaining params match (diff is empty)
+        && $param_values_match
       ) {
 
         $match = $i;
