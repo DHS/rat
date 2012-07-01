@@ -25,13 +25,13 @@ class SessionsController extends Application {
 
         // Get redirected
         if (isset($this->uri['params']['redirect_to'])) {
-          header('Location: ' . $this->uri['params']['redirect_to']);
-          exit();
+          $redirect_url = $this->uri['params']['redirect_to']);
+        } else {
+          $redirect_url = $this->config->url;
         }
 
         // Go forth
-        header('Location: ' . $this->config->url);
-
+        header('Location: ' . $redirect_url);
         exit();
 
       } else {

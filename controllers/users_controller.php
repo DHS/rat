@@ -189,15 +189,15 @@ class UsersController extends Application {
           // Set welcome message
           Application::flash('success', 'Password updated! Welcome back to ' . $this->config->name . '!');
 
-          // If redirect_to is set then redirect
+          // Get redirected
           if (isset($this->uri['params']['redirect_to'])) {
-            header('Location: ' . $this->uri['params']['redirect_to']);
-            exit();
+            $redirect_url = $this->uri['params']['redirect_to']);
+          } else {
+            $redirect_url = $this->config->url;
           }
 
-          // Go forth!
-          header('Location: ' . $this->config->url);
-
+          // Go forth
+          header('Location: ' . $redirect_url);
           exit();
 
         } else {
