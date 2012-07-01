@@ -159,7 +159,7 @@ class UsersController extends Application {
       // Process reset
 
       // If two passwords submitted then check, otherwise show form
-      if ($_POST['password1'] != '' && $_POST['password2'] != '') {
+      if (isset($_POST['password1']) && $_POST['password1'] != '' && isset($_POST['password2']) && $_POST['password2'] != '') {
 
         if (User::check_password_reset_code($code) == FALSE) {
           exit();
