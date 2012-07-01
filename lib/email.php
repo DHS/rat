@@ -13,9 +13,9 @@ class Email {
 
       $admin = User::get_by_id($this->app->config->admin_users[0]);
 
-      if ($to['name']) {
+      if (isset($to['name'])) {
         $to = "{$to['name']} <{$to['email']}>";
-      } elseif ($to['email']) {
+      } elseif (isset($to['email'])) {
         $to = $to['email'];
       }
 
