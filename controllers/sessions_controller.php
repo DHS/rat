@@ -25,7 +25,7 @@ class SessionsController extends Application {
 
         // Get redirected
         if (isset($this->uri['params']['redirect_to'])) {
-          $redirect_url = $this->uri['params']['redirect_to']);
+          $redirect_url = $this->uri['params']['redirect_to'];
         } else {
           $redirect_url = $this->config->url;
         }
