@@ -8,29 +8,30 @@
   {{ app.link_to(item.user.username, 'users', 'show', item.user.id) }}
 {% endif %}
 
-{# Title & content #}
+{# Title #}
 {% if app.config.items.titles.enabled and item.title %}
   <h4>{{ app.link_to(item.title, 'items', 'show', item.id) }} <small>by {{ app.link_to(item.user.username, 'users', 'show', item.user.id) }}</small></h4>
-
-  <p class="clear">{{ item.content|raw }}</p>
-{% elseif item.content %}
-    <p>
-      <strong>
-        {{ app.link_to(item.user.username, 'users', 'show', item.user.id) }}
-      </strong>
-      {{ item.content|raw }}
-    </p>
+  <p>
+{% else %}
+    <p><strong>
+      {{ app.link_to(item.user.username, 'users', 'show', item.user.id) }}
+    </strong>
 {% endif %}
 
 {# Image #}
 {% if app.config.items.uploads.enabled and item.image and item.image != '0' %}
-  {% if item.title %}<div class="clear">{% endif %}
+  <br class="clear" />
   <a href="{{ app.echo_url_for('items', 'show', item.id) }}">
     <img src="{{ app.config.base_dir ~ app.config.items.uploads.directory ~ '/stream/' ~ item.image }}"
        style="margin: 0px 0px 10px 0px;" />
   </a>
-  {% if item.title %}</div>{% endif %}
+  <br class="clear" />
 {% endif %}
+
+{# Content #}
+  {{ item.content|raw }}
+</p>
+
 
 {# Share buttons #}
 <!-- Share buttons -->
