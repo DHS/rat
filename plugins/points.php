@@ -46,15 +46,21 @@ class points extends Application {
   function view() {
 
     if ($id == $_SESSION['user_id']) {
-        echo '<p>You have ' . $user['points'] . ' ' . $this->plugins->points['name'] . '!</p>';
+      
+      echo '<p>You have ' . $user['points'] . ' ' . $this->plugins->points['name'] . '!</p>';
+      
       if ($this->plugins->points['leaderboard'] == TRUE) {
         echo '<p class="small">Where do you rank on the <a href="leaderboard.php">leaderboard</a>?</p>';
       }
+      
     } else {
+      
       echo '<p>' . $user['username'] . ' has ' . $user['points'] . ' ' . $this->plugins->points['name'] . '!</p>';
+      
       if ($this->plugins->points['leaderboard'] == TRUE) {
         echo '<p class="small">See where they rank on the <a href="leaderboard.php">leaderboard</a>.</p>';
       }
+      
     }
 
     echo '<p>&nbsp;</p>';
