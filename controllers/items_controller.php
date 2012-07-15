@@ -162,7 +162,15 @@ class ItemsController extends Application {
       $comment->content = process_content($comment->content);
     }
 
-    if ($_POST) {
+    if (isset($_POST['title']) || isset($_POST['content'])) {
+
+      if ( ! isset($_POST['title'])) {
+        $_POST['title'] = null;
+      }
+
+      if ( ! isset($_POST['content'])) {
+        $_POST['content'] = null;
+      }
 
       $item->update($_POST['title'], $_POST['content']);
 
