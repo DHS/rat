@@ -19,7 +19,7 @@ class AppConfig extends ServerConfig {
 
   // Basic app variables
   public $name                = '{{ app.config.name }}';
-  public $tagline             = '{{ app.config.tagline }}';
+  public $tagline             = '{{ app.config.tagline | raw }}';
   public $default_controller  = 'items';
 
   // Beta - users can't signup, can only enter their email addresses
