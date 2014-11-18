@@ -100,7 +100,7 @@ class AdminController extends Application {
       Application::flash('success', 'App config updated!');
 
       // Force redirect to reload app with new config
-      header('Location: /admin/config');
+      header('Location: ' . $_SERVER['HTTP_REFERER']);
       exit();
 
     }
