@@ -155,7 +155,10 @@ class Application {
 
   public function writeConfig($file, $settings = array()) {
 
-    $config_file = $this->twig_string->render(file_get_contents("config/$file.twig"), array('app' => array('config' => $settings)));
+    $config_file = $this->twig_string->render(
+      file_get_contents("config/$file.twig"),
+      array('app' => array('config' => $settings))
+    );
 
     $handle = fopen("config/$file.php", 'w');
     fwrite($handle, $config_file);
