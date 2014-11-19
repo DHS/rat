@@ -1,0 +1,63 @@
+{
+  "name": "Ratter",
+  "tagline": "Ratter is an app to demonstrate the functionality of <a href=\"http://github.com/DHS/rat\">Rat</a>",
+  "default_controller": "items",
+  "beta": 1,
+  "private": 1,
+  "signup_email_notifications": 0,
+  "items": {
+    "name": "post",
+    "name_plural": "posts",
+    "titles": {
+      "enabled"     : 1,
+      "name"        : "Title",
+      "name_plural" : "Titles"
+    },
+    "content": {
+      "enabled"     : 1,
+      "name"        : "Content",
+      "name_plural" : "Contents"
+    },
+    "uploads": {
+      "enabled"     : 1,
+      "name"        : "Image",
+      "directory"   : "uploads",
+      "max-size"    : "5242880",
+      "mime-types"  : [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/pjpeg"
+      ]
+    },
+    "comments" : {
+      "enabled"     : 1,
+      "name"        : "Comment",
+      "name_plural" : "Comments"
+    },
+    "likes" : {
+      "enabled"       : 1,
+      "name"          : "Like",
+      "name_plural"   : "Likes",
+      "opposite_name" : "Unlike",
+      "past_tense"    : "Liked by"
+    }
+  },
+  "timezone": "Europe/London",
+  "invites": {
+    "enabled": 1
+  },
+  "friends": {
+    "enabled"     : 0,
+    "asymmetric"  : 0
+  },
+  "admin_users": [1],
+  "theme": "default",
+  "plugins": {
+    "log"       : 1,
+    "gravatar"  : 1,
+    "points"    : 0,
+    "analytics" : 0
+  },
+  "send_emails_from": "support@blah.com"
+}
