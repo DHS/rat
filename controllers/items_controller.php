@@ -48,7 +48,19 @@ class ItemsController extends Application {
   // Add an item
   function add() {
 
-    if ((isset($_POST['content']) && $_POST['content'] != '') || ($this->config->items['titles']['enabled'] == TRUE && isset($_POST['title']) && $_POST['title'] != '') || ($this->config->items['uploads']['enabled'] == TRUE && isset($_FILES['file']['name']) && $_FILES['file']['name'] != '')) {
+    if (
+      (isset($_POST['content'])
+        && $_POST['content'] != '')
+      || (
+        $this->config->items->titles->enabled == TRUE
+        && isset($_POST['title'])
+        && $_POST['title'] != ''
+      )
+      || (
+        $this->config->items->uploads->enabled == TRUE
+        && isset($_FILES['file']['name'])
+        && $_FILES['file']['name'] != '')
+      ) {
 
       $error = '';
 
