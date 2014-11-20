@@ -16,16 +16,16 @@ class Like {
   public static function add($user_id, $item_id) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $user_id = sanitize_input($user_id);
     $item_id = sanitize_input($item_id);
 
-    $count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
+    $count_sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
     $count_query = mysqli_query($mysqli, $count_sql);
 
     if (mysqli_num_rows($count_query) < 1) {
-      $sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}likes` SET `user_id` = $user_id, `item_id` = $item_id";
+      $sql = "INSERT INTO `{$config->database->{$config->site_identifier}->prefix}likes` SET `user_id` = $user_id, `item_id` = $item_id";
       $query = mysqli_query($mysqli, $sql);
     }
 
@@ -37,11 +37,11 @@ class Like {
   public static function get_by_id($id) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $id = sanitize_input($id);
 
-    $sql = "SELECT `id`, `user_id`, `item_id`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $id";
+    $sql = "SELECT `id`, `user_id`, `item_id`, `date` FROM `{$config->database->{$config->site_identifier}->prefix}likes` WHERE `id` = $id";
     $query = mysqli_query($mysqli, $sql);
     $result = mysqli_fetch_assoc($query);
 
@@ -66,12 +66,12 @@ class Like {
   public static function get_by_user_item($user_id, $item_id) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $user_id = sanitize_input($user_id);
     $item_id = sanitize_input($item_id);
 
-    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
+    $sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}likes` WHERE `user_id` = $user_id AND `item_id` = $item_id";
     $query = mysqli_query($mysqli, $sql);
     $result = mysqli_fetch_assoc($query);
     $id = $result['id'];
@@ -97,9 +97,9 @@ class Like {
   public static function list_all($limit = 10, $offset = 0) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` ORDER BY `date` DESC";
+    $sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}likes` ORDER BY `date` DESC";
 
     // Limit string
     $limit = sanitize_input($limit);
@@ -126,13 +126,13 @@ class Like {
   public function remove() {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $this->id";
+    $count_sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}likes` WHERE `id` = $this->id";
     $count_query = mysqli_query($mysqli, $count_sql);
 
     if (mysqli_num_rows($count_query) > 0) {
-      $sql = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `id` = $this->id";
+      $sql = "DELETE FROM `{$config->database->{$config->site_identifier}->prefix}likes` WHERE `id` = $this->id";
       $query = mysqli_query($mysqli, $sql);
     }
 

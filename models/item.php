@@ -1,5 +1,7 @@
 <?php
 
+require_once 'lib/config.php';
+
 class Item {
 
   public function __construct(array $attrs = null) {
@@ -16,12 +18,12 @@ class Item {
   public static function add($user_id, $content, $title = NULL, $image = NULL) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $user_id = sanitize_input($user_id);
     $content = sanitize_input($content);
 
-    $sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}items` SET `user_id` = $user_id, `content` = $content";
+    $sql = "INSERT INTO `{$config->database->{$config->site_identifier}->prefix}items` SET `user_id` = $user_id, `content` = $content";
 
     if ($title != NULL) {
       $title = sanitize_input($title);
@@ -43,11 +45,11 @@ class Item {
   public static function get_by_id($id) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $id = sanitize_input($id);
 
-    $sql = "SELECT `id`, `user_id`, `title`, `content`, `image`, `date` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `id` = $id ORDER BY `id` DESC";
+    $sql = "SELECT `id`, `user_id`, `title`, `content`, `image`, `date` FROM `{$config->database->{$config->site_identifier}->prefix}items` WHERE `id` = $id ORDER BY `id` DESC";
     $query = mysqli_query($mysqli, $sql);
     $result = mysqli_fetch_assoc($query);
 
@@ -76,9 +78,9 @@ class Item {
   public static function list_all($limit = 10, $offset = 0) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` ORDER BY `id` DESC";
+    $sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}items` ORDER BY `id` DESC";
 
     // Limit string
     $limit = sanitize_input($limit);
@@ -106,9 +108,9 @@ class Item {
   public function update($title, $content) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}items` SET ";
+    $sql = "UPDATE `{$config->database->{$config->site_identifier}->prefix}items` SET ";
 
     if ($title != '') {
       $title = sanitize_input($title);
@@ -141,9 +143,9 @@ class Item {
   public function comments($limit = 10, $offset = 0) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `item_id` = $this->id ORDER BY `id` ASC";
+    $sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}comments` WHERE `item_id` = $this->id ORDER BY `id` ASC";
 
     // Limit string
     $limit = sanitize_input($limit);
@@ -168,9 +170,9 @@ class Item {
   public function likes($limit = 10, $offset = 0) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `item_id` = $this->id";
+    $sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}likes` WHERE `item_id` = $this->id";
 
     // Limit string
     $limit = sanitize_input($limit);
@@ -195,15 +197,15 @@ class Item {
   public function remove() {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     // Check item exists
-    $sql_check = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `id` = $this->id";
+    $sql_check = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}items` WHERE `id` = $this->id";
     $count_query = mysqli_query($mysqli, $sql_check);
 
     if (mysqli_num_rows($count_query) > 0) {
       // If item exists, go ahead and delete
-      $sql_delete = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `id` = $this->id";
+      $sql_delete = "DELETE FROM `{$config->database->{$config->site_identifier}->prefix}items` WHERE `id` = $this->id";
       $query = mysqli_query($mysqli, $sql_delete);
     }
 

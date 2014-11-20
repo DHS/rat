@@ -98,7 +98,7 @@ class UsersController extends Application {
       }
     }
 
-    if ($this->config->friends['enabled'] == TRUE) {
+    if ($this->config->friends->enabled == TRUE) {
       $friends = $user->friend_check($_SESSION['user_id']);
     }
 
@@ -466,7 +466,7 @@ class UsersController extends Application {
       $_SESSION['user_id'] = $user->id;
 
       // Check invites are enabled
-      if ($this->config->invites['enabled'] == TRUE) {
+      if ($this->config->invites->enabled == TRUE) {
 
         // Get invites
         $invites = Invite::list_by_code($_POST['code']);
@@ -689,7 +689,7 @@ class UsersController extends Application {
       $_SESSION['user_id'] = $user->id;
 
       // Check invites are enabled and the code is valid
-      if ($this->config->invites['enabled'] == TRUE && Invite::check_code_valid($_POST['code'], $_POST['email']) == TRUE) {
+      if ($this->config->invites->enabled == TRUE && Invite::check_code_valid($_POST['code'], $_POST['email']) == TRUE) {
 
         // Get invites
         $invites = Invite::list_by_code($_POST['code']);

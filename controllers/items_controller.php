@@ -54,21 +54,21 @@ class ItemsController extends Application {
 
       // Form validation
 
-      if ($this->config->items['titles']['enabled'] == FALSE && $_POST['content'] == '') {
-        $error .= ucfirst($this->config->items['name']) . ' must include ' . strtolower($this->config->items['content']['name']) . '.<br />';
+      if ($this->config->items->titles->enabled == FALSE && $_POST['content'] == '') {
+        $error .= ucfirst($this->config->items->name) . ' must include ' . strtolower($this->config->items->content->name) . '.<br />';
       }
 
-      if ($this->config->items['uploads']['enabled'] == TRUE && $_FILES['file']['name'] != '') {
+      if ($this->config->items->uploads->enabled == TRUE && $_FILES['file']['name'] != '') {
 
         if ($_FILES['file']['error'] > 0) {
           $error .= 'Error code: ' . $_FILES['file']['error'] . '<br />';
         }
 
-        if ( ! in_array($_FILES['file']['type'], $this->config->items['uploads']['mime-types'])) {
+        if ( ! in_array($_FILES['file']['type'], $this->config->items->uploads->mime_types)) {
           $error .= 'Invalid file type: ' . $_FILES['file']['type'] . '<br />';
         }
 
-        if ($_FILES['file']['size'] > $this->config->items['uploads']['max-size']) {
+        if ($_FILES['file']['size'] > $this->config->items->uploads->max-size) {
           $error .= 'File too large.<br />';
         }
 
@@ -79,10 +79,10 @@ class ItemsController extends Application {
       if ($error == '') {
         // No error so proceed...
 
-        if ($this->config->items['uploads']['enabled'] == TRUE && $_FILES['file']['name'] != '') {
+        if ($this->config->items->uploads->enabled == TRUE && $_FILES['file']['name'] != '') {
 
           include 'lib/upload.php';
-          $filename = upload($_FILES['file'], $this->config->items['uploads']['directory']);
+          $filename = upload($_FILES['file'], $this->config->items->uploads->directory);
 
           $item_id = Item::add($_SESSION['user_id'], $_POST['content'], $_POST['title'], $filename);
 
@@ -102,7 +102,7 @@ class ItemsController extends Application {
           $this->plugins->log->add($_SESSION['user_id'], 'item', $item_id, 'add', "title = {$_POST['title']}\ncontent = {$_POST['content']}");
         }
 
-        Application::flash('success', ucfirst($this->config->items['name']) . ' added!');
+        Application::flash('success', ucfirst($this->config->items->name) . ' added!');
 
         // Go forth!
         header('Location: ' . $this->url_for('users', 'show', $_SESSION['user_id']));
@@ -141,7 +141,7 @@ class ItemsController extends Application {
       $comment->content = process_content($comment->content);
     }
 
-    if ($this->config->items['titles']['enabled'] == TRUE) {
+    if ($this->config->items->titles->enabled == TRUE) {
       $this->head_title = $this->config->name . ' - ' . $item->title;
     }
 
@@ -188,7 +188,7 @@ class ItemsController extends Application {
         $comment->content = process_content($comment->content);
       }
 
-      if ($this->config->items['titles']['enabled'] == TRUE) {
+      if ($this->config->items->titles->enabled == TRUE) {
         $this->head_title = $this->config->name . ' - ' . $item->title;
       }
 
@@ -256,7 +256,7 @@ class ItemsController extends Application {
       }
 
       // Set message
-      Application::flash('success', ucfirst($this->config->items['name']) . ' removed!');
+      Application::flash('success', ucfirst($this->config->items->name) . ' removed!');
 
       // Return from whence you came
       header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -277,7 +277,7 @@ class ItemsController extends Application {
   // Show feed of friends' new items
   function feed() {
 
-    if ($this->config->friends['enabled'] == TRUE || isset($_SESSION['user_id'])) {
+    if ($this->config->friends->enabled == TRUE || isset($_SESSION['user_id'])) {
 
       // If friends enabled then show feed of friends' activity
 

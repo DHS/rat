@@ -28,7 +28,7 @@ class Filter {
 
   public function requireInvitesEnabled($uri, $actions) {
 
-    if (in_array($uri['action'], $actions) && $this->app->config->invites['enabled'] != TRUE) {
+    if (in_array($uri['action'], $actions) && $this->app->config->invites->enabled != TRUE) {
       throw new RoutingException($uri, "Page not found");
     }
 

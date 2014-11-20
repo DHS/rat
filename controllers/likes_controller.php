@@ -13,7 +13,7 @@ class LikesController extends Application {
     if (isset($item->user->email_notifications['item_like'])) {
 
       $to       = array('name' => $item->user->username, 'email' => $item->user->email);
-      $subject  = '[' . $this->config->name . '] Someone clicked ' . strtolower($this->config->items['likes']['name']) . ' on your ' . strtolower($this->config->items['name']) . ' on ' . $this->config->name . '!';
+      $subject  = '[' . $this->config->name . '] Someone clicked ' . strtolower($this->config->items->likes->name) . ' on your ' . strtolower($this->config->items->name) . ' on ' . $this->config->name . '!';
       $link     = substr($this->config->url, 0, -1) . $this->url_for('items', 'show', $item->id);
       $body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/item_like.html"), array('user' => $item->user, 'link' => $link, 'app' => $this));
 

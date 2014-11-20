@@ -16,11 +16,11 @@ class User {
   public static function add($email) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $email = sanitize_input($email);
 
-    $sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `email` = $email, `date_added` = NOW()";
+    $sql = "INSERT INTO `{$config->database->{$config->site_identifier}->prefix}users` SET `email` = $email, `date_added` = NOW()";
     $query = mysqli_query($mysqli, $sql);
 
     return mysqli_insert_id($mysqli);
@@ -31,11 +31,11 @@ class User {
   public static function get_by_id($id) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $id = sanitize_input($id);
 
-    $sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $id";
+    $sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database->{$config->site_identifier}->prefix}users` WHERE `id` = $id";
     $query = mysqli_query($mysqli, $sql);
     $result = mysqli_fetch_assoc($query);
 
@@ -59,11 +59,11 @@ class User {
   public static function get_by_username($username) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $username = sanitize_input($username);
 
-    $sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `username` = $username";
+    $sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database->{$config->site_identifier}->prefix}users` WHERE `username` = $username";
     $query = mysqli_query($mysqli, $sql);
     $result = mysqli_fetch_assoc($query);
 
@@ -83,11 +83,11 @@ class User {
   public static function get_by_email($email) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $email = sanitize_input($email);
 
-    $sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `email` = $email";
+    $sql = "SELECT `id`, `username`, `email`, `full_name`, `bio`, `url`, `points`, `invites`, `password`, `date_added`, `date_joined` FROM `{$config->database->{$config->site_identifier}->prefix}users` WHERE `email` = $email";
     $query = mysqli_query($mysqli, $sql);
     $result = mysqli_fetch_assoc($query);
 
@@ -107,14 +107,14 @@ class User {
   public static function signup($id, $username, $password, $salt) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $id = sanitize_input($id);
     $username = sanitize_input($username);
 
     $encrypted_password = md5($password . $salt);
 
-    $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `username` = $username, `password` = '$encrypted_password', `date_joined` = NOW() WHERE `id` = $id";
+    $sql = "UPDATE `{$config->database->{$config->site_identifier}->prefix}users` SET `username` = $username, `password` = '$encrypted_password', `date_joined` = NOW() WHERE `id` = $id";
     $query = mysqli_query($mysqli, $sql);
 
   }
@@ -169,10 +169,10 @@ class User {
   public static function remove() {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     // Check item exists
-    $sql_check = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $this->id";
+    $sql_check = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}users` WHERE `id` = $this->id";
     $count_query = mysqli_query($mysqli, $sql_check);
 
     if (mysqli_num_rows($count_query) > 0) {
@@ -187,9 +187,9 @@ class User {
   public function items($limit = 10, $offset = 0) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE `user_id` = $this->id ORDER BY `id` DESC";
+    $sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}items` WHERE `user_id` = $this->id ORDER BY `id` DESC";
 
     // Limit string
     $limit = sanitize_input($limit);
@@ -214,9 +214,9 @@ class User {
   public function invites($limit = 10, $offset = 0) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `user_id` = $this->id ORDER BY `id` DESC";
+    $sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}invites` WHERE `user_id` = $this->id ORDER BY `id` DESC";
 
     // Limit string
     $limit = sanitize_input($limit);
@@ -241,9 +241,9 @@ class User {
   public function friends($limit = 10, $offset = 0) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT `id`, `friend_user_id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = $this->id";
+    $sql = "SELECT `id`, `friend_user_id` FROM `{$config->database->{$config->site_identifier}->prefix}friends` WHERE `user_id` = $this->id";
 
     // Limit string
     $limit = sanitize_input($limit);
@@ -269,9 +269,9 @@ class User {
   public function followers($limit = 10, $offset = 0) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT `id`, `friend_user_id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `friend_user_id` = $this->id";
+    $sql = "SELECT `id`, `friend_user_id` FROM `{$config->database->{$config->site_identifier}->prefix}friends` WHERE `friend_user_id` = $this->id";
 
     // Limit string
     $limit = sanitize_input($limit);
@@ -297,9 +297,9 @@ class User {
   public function likes($limit = 10, $offset = 0) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT `item_id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}likes` WHERE `user_id` = $this->id ORDER BY `date` DESC";
+    $sql = "SELECT `item_id` FROM `{$config->database->{$config->site_identifier}->prefix}likes` WHERE `user_id` = $this->id ORDER BY `date` DESC";
 
     // Limit string
     $limit = sanitize_input($limit);
@@ -324,9 +324,9 @@ class User {
   public function comments($limit = 10, $offset = 0) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}comments` WHERE `user_id` = $this->id ORDER BY `id` ASC";
+    $sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}comments` WHERE `user_id` = $this->id ORDER BY `id` ASC";
 
     // Limit string
     $limit = sanitize_input($limit);
@@ -351,9 +351,9 @@ class User {
   public function email_notifications() {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT `notification`, `value` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users_email_notifications` WHERE `user_id` = $this->id";
+    $sql = "SELECT `notification`, `value` FROM `{$config->database->{$config->site_identifier}->prefix}users_email_notifications` WHERE `user_id` = $this->id";
 
     $query = mysqli_query($mysqli, $sql);
 
@@ -370,15 +370,15 @@ class User {
   public function friend_add($friend_user_id) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $friend_user_id = sanitize_input($friend_user_id);
 
-    $count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = $friend_user_id";
+    $count_sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = $friend_user_id";
     $count_query = mysqli_query($mysqli, $count_sql);
 
     if (mysqli_num_rows($count_query) < 1) {
-      $sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}friends` SET `user_id` = {$this->id}, `friend_user_id` = $friend_user_id";
+      $sql = "INSERT INTO `{$config->database->{$config->site_identifier}->prefix}friends` SET `user_id` = {$this->id}, `friend_user_id` = $friend_user_id";
       $query = mysqli_query($mysqli, $sql);
     }
 
@@ -388,12 +388,12 @@ class User {
   public function friend_update($friend_user_id, $status) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $friend_user_id = sanitize_input($friend_user_id);
     $status = sanitize_input($status);
 
-    $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}friends` SET `status` = $status WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
+    $sql = "UPDATE `{$config->database->{$config->site_identifier}->prefix}friends` SET `status` = $status WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
     $query = mysqli_query($mysqli, $sql);
 
   }
@@ -402,15 +402,15 @@ class User {
   public function friend_remove($friend_user_id) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $friend_user_id = sanitize_input($friend_user_id);
 
-    $count_sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
+    $count_sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
     $count_query = mysqli_query($mysqli, $count_sql);
 
     if (mysqli_num_rows($count_query) > 0) {
-      $sql = "DELETE FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
+      $sql = "DELETE FROM `{$config->database->{$config->site_identifier}->prefix}friends` WHERE `user_id` = {$this->id} AND `friend_user_id` = {$friend_user_id}";
       $query = mysqli_query($mysqli, $sql);
     }
 
@@ -420,7 +420,7 @@ class User {
   public function list_feed($limit = 10, $offset = 0) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     // Start by adding the viewer to the query string
     $friends_string = "`user_id` = {$this->id}";
@@ -432,7 +432,7 @@ class User {
       $friends_string .= " OR `user_id` = {$friend['friend_user_id']}";
     }
 
-    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items` WHERE $friends_string ORDER BY `id` DESC";
+    $sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}items` WHERE $friends_string ORDER BY `id` DESC";
 
     // Limit string
     $limit = sanitize_input($limit);
@@ -458,11 +458,11 @@ class User {
   public function friend_check($friend_user_id) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $friend_user_id = sanitize_input($friend_user_id);
 
-    $sql = "SELECT COUNT(id) AS count FROM `{$config->database[SITE_IDENTIFIER]['prefix']}friends` WHERE `user_id` = $friend_user_id AND `friend_user_id` = {$this->id}";
+    $sql = "SELECT COUNT(id) AS count FROM `{$config->database->{$config->site_identifier}->prefix}friends` WHERE `user_id` = $friend_user_id AND `friend_user_id` = {$this->id}";
     $query = mysqli_query($mysqli, $sql);
     $result = mysqli_fetch_assoc($query);
 
@@ -478,11 +478,11 @@ class User {
   public function update_password($new_password, $salt) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $encrypted_password = md5($new_password . $salt);
 
-    $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `password` = '{$encrypted_password}' WHERE `id` = $this->id";
+    $sql = "UPDATE `{$config->database->{$config->site_identifier}->prefix}users` SET `password` = '{$encrypted_password}' WHERE `id` = $this->id";
     $query = mysqli_query($mysqli, $sql);
 
   }
@@ -491,9 +491,9 @@ class User {
   public function update_profile($name = NULL, $bio = NULL, $url = NULL) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET ";
+    $sql = "UPDATE `{$config->database->{$config->site_identifier}->prefix}users` SET ";
 
     if ($name != '') {
       $name = sanitize_input($name);
@@ -526,11 +526,11 @@ class User {
   public function update_email_notifications(array $emails = null) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     foreach ($emails as $key => $value) {
 
-      $sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}users_email_notifications` (user_id, notification, value) VALUES ($this->id, '$key', $value) ON DUPLICATE KEY UPDATE `value` = $value;";
+      $sql = "INSERT INTO `{$config->database->{$config->site_identifier}->prefix}users_email_notifications` (user_id, notification, value) VALUES ($this->id, '$key', $value) ON DUPLICATE KEY UPDATE `value` = $value;";
 
       $query = mysqli_query($mysqli, $sql);
 
@@ -542,12 +542,12 @@ class User {
   public function update_invites($invites) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $invites = sanitize_input($invites);
 
     // Get current # of invites
-    $sql = "SELECT `invites` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `id` = $this->id";
+    $sql = "SELECT `invites` FROM `{$config->database->{$config->site_identifier}->prefix}users` WHERE `id` = $this->id";
     $query = mysqli_query($mysqli, $sql);
     $user = mysqli_fetch_assoc($query);
 
@@ -555,7 +555,7 @@ class User {
     $user['invites'] = $user['invites'] + $invites;
 
     // Update database
-    $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `invites` = {$user['invites']} WHERE `id` = $this->id";
+    $sql = "UPDATE `{$config->database->{$config->site_identifier}->prefix}users` SET `invites` = {$user['invites']} WHERE `id` = $this->id";
     $query = mysqli_query($mysqli, $sql);
 
   }
@@ -564,11 +564,11 @@ class User {
   public static function check_username_available($username) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $username = sanitize_input($username);
 
-    $query = mysqli_query($mysqli, "SELECT COUNT(id) AS count FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `username` = $username");
+    $query = mysqli_query($mysqli, "SELECT COUNT(id) AS count FROM `{$config->database->{$config->site_identifier}->prefix}users` WHERE `username` = $username");
     $user = mysqli_fetch_assoc($query);
 
     return $user['count'] >= 1 ? false : true;
@@ -579,11 +579,11 @@ class User {
   public static function check_email_available($email) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $email = sanitize_input($email);
 
-    $sql = "SELECT COUNT(id) AS count FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `email` = $email";
+    $sql = "SELECT COUNT(id) AS count FROM `{$config->database->{$config->site_identifier}->prefix}users` WHERE `email` = $email";
     $query = mysqli_query($mysqli, $sql);
     $users = mysqli_fetch_assoc($query);
 
@@ -644,11 +644,11 @@ class User {
   public static function check_password_reset_code($code) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $code = sanitize_input($code);
 
-    $sql = "SELECT `user_id` AS id FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users_password_reset` WHERE `reset_code` = $code AND `date` > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY `date` DESC";
+    $sql = "SELECT `user_id` AS id FROM `{$config->database->{$config->site_identifier}->prefix}users_password_reset` WHERE `reset_code` = $code AND `date` > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY `date` DESC";
     $query = mysqli_query($mysqli, $sql);
     $user = mysqli_fetch_assoc($query);
 
@@ -660,7 +660,7 @@ class User {
   public function generate_password_reset_code() {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     // Generate code
     $code = '';
@@ -670,7 +670,7 @@ class User {
     }
 
     // Write to database
-    $sql = "INSERT INTO `{$config->database[SITE_IDENTIFIER]['prefix']}users_password_reset` SET `user_id` = $this->id, `reset_code` = '$code'";
+    $sql = "INSERT INTO `{$config->database->{$config->site_identifier}->prefix}users_password_reset` SET `user_id` = $this->id, `reset_code` = '$code'";
     $query = mysqli_query($mysqli, $sql);
 
     return $code;

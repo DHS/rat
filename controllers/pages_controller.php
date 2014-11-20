@@ -28,26 +28,26 @@ class PagesController extends Application {
 
       $content .= "</p>\n";
 
-      $content .= '<p>It lets you create ' . $this->config->items['name_plural'];
+      $content .= '<p>It lets you create ' . $this->config->items->name_plural;
 
-      if ($this->config->items['titles']['enabled'] == TRUE) {
-        $content .= ' with ' . strtolower($this->config->items['titles']['name_plural']);
+      if ($this->config->items->titles->enabled == TRUE) {
+        $content .= ' with ' . strtolower($this->config->items->titles->name_plural);
       }
 
-      if ($this->config->items['comments']['enabled'] == TRUE || $this->config->items['likes']['enabled'] == TRUE) {
+      if ($this->config->items->comments->enabled == TRUE || $this->config->items->likes->enabled == TRUE) {
 
         $content .= ' and then ';
 
-        if ($this->config->items['comments']['enabled'] == TRUE) {
-          $content .= ' add ' . strtolower($this->config->items['comments']['name_plural']) . ' ';
+        if ($this->config->items->comments->enabled == TRUE) {
+          $content .= ' add ' . strtolower($this->config->items->comments->name_plural) . ' ';
         }
 
-        if ($this->config->items['comments']['enabled'] == TRUE && $this->config->items['likes']['enabled'] == TRUE) {
+        if ($this->config->items->comments->enabled == TRUE && $this->config->items->likes->enabled == TRUE) {
           $content .= ' and ';
         }
 
-        if ($this->config->items['likes']['enabled'] == TRUE) {
-          $content .= " '" . strtolower($this->config->items['likes']['name']) . "' ";
+        if ($this->config->items->likes->enabled == TRUE) {
+          $content .= " '" . strtolower($this->config->items->likes->name) . "' ";
         }
 
         $content .= 'them';
@@ -56,7 +56,7 @@ class PagesController extends Application {
 
       $content .= ". </p>\n";
 
-      if ($this->config->invites['enabled'] == TRUE) {
+      if ($this->config->invites->enabled == TRUE) {
         $content .= "<p>It also has an invite system so that you can invite your friends.</p>\n";
       }
 

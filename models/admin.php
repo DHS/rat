@@ -6,11 +6,11 @@ class Admin {
   public static function list_users() {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $users = array();
 
-    $sql = "SELECT * FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `date_joined` IS NOT NULL ORDER BY `date_joined` DESC";
+    $sql = "SELECT * FROM `{$config->database->{$config->site_identifier}->prefix}users` WHERE `date_joined` IS NOT NULL ORDER BY `date_joined` DESC";
     $query = mysqli_query($mysqli, $sql);
 
     if ($query != false) {
@@ -18,7 +18,7 @@ class Admin {
       while ($user = mysqli_fetch_assoc($query)) {
 
         // Find last login
-        $sql = "SELECT TIMESTAMPDIFF(DAY, date, NOW()) as `last_login` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}log` WHERE `user_id` = '{$user['id']}' AND `action` = 'login' ORDER BY `date` DESC LIMIT 1";
+        $sql = "SELECT TIMESTAMPDIFF(DAY, date, NOW()) as `last_login` FROM `{$config->database->{$config->site_identifier}->prefix}log` WHERE `user_id` = '{$user['id']}' AND `action` = 'login' ORDER BY `date` DESC LIMIT 1";
         $last_login_query = mysqli_query($mysqli, $sql);
 
         if (mysqli_num_rows($last_login_query) > 0) {
@@ -54,22 +54,26 @@ class Admin {
   public static function count_users() {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT COUNT(`id`) AS count FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `date_joined` IS NOT NULL";
+    $sql = "SELECT COUNT(`id`) AS count FROM `{$config->database->{$config->site_identifier}->prefix}users` WHERE `date_joined` IS NOT NULL";
+
     $query = mysqli_query($mysqli, $sql);
-    $result = mysqli_fetch_assoc($query);
-    return $result == null ? 0 : $result['count'];
-
+    if ($query == false) {
+      return 0;
+    } else {
+      $result = mysqli_fetch_assoc($query);
+      return $result['count'];
+    }
   }
 
   // Get beta signups who are still waiting for an invite
   public static function list_users_beta() {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT `id`, `email`, TIMESTAMPDIFF(DAY, date_added, NOW()) AS days_waiting, (SELECT COUNT(*) FROM `{$config->database[SITE_IDENTIFIER]['prefix']}invites` WHERE `email` = {$config->database[SITE_IDENTIFIER]['prefix']}users.email) AS invites FROM `{$config->database[SITE_IDENTIFIER]['prefix']}users` WHERE `date_joined` IS NULL ORDER BY `date_added` ASC";
+    $sql = "SELECT `id`, `email`, TIMESTAMPDIFF(DAY, date_added, NOW()) AS days_waiting, (SELECT COUNT(*) FROM `{$config->database->{$config->site_identifier}->prefix}invites` WHERE `email` = {$config->database->{$config->site_identifier}->prefix}users.email) AS invites FROM `{$config->database->{$config->site_identifier}->prefix}users` WHERE `date_joined` IS NULL ORDER BY `date_added` ASC";
     $waiting_users_query = mysqli_query($mysqli, $sql);
 
     $waiting_users = array();
@@ -85,7 +89,7 @@ class Admin {
   public static function update_invites($invites) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $invites = sanitize_input($invites);
 
@@ -98,7 +102,7 @@ class Admin {
       // uncomment the following line to zero invites
       //$user['invites'] = 0;
 
-      $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}users` SET `invites` = $new_invites WHERE id = {$user['id']}";
+      $sql = "UPDATE `{$config->database->{$config->site_identifier}->prefix}users` SET `invites` = $new_invites WHERE id = {$user['id']}";
       $query = mysqli_query($mysqli, $sql);
 
     }
@@ -109,7 +113,7 @@ class Admin {
   public static function update_item($id, $title = NULL, $byline = NULL, $content = NULL, $status = 1) {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
     $id = sanitize_input($id);
 
@@ -128,7 +132,7 @@ class Admin {
     $status = sanitize_input($status);
     $update_string .= "status = $status";
 
-    $sql = "UPDATE `{$config->database[SITE_IDENTIFIER]['prefix']}items` SET $update_string WHERE id = $id";
+    $sql = "UPDATE `{$config->database->{$config->site_identifier}->prefix}items` SET $update_string WHERE id = $id";
     $query = mysqli_query($mysqli, $sql);
 
   }
@@ -136,9 +140,9 @@ class Admin {
   public static function tables_exist() {
 
     global $mysqli;
-    $config = new AppConfig;
+    $config = new Config;
 
-    $sql = "SELECT `id` FROM `{$config->database[SITE_IDENTIFIER]['prefix']}items";
+    $sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}items";
     return mysqli_query($mysqli, $sql) !== FALSE;
 
   }
