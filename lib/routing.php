@@ -222,7 +222,8 @@ class Routing extends Application {
 
     }
 
-    return BASE_DIR . $route;
+    $config = new Config;
+    return $config->base_dir . $route;
 
   }
 

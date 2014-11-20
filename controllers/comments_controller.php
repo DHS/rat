@@ -17,7 +17,7 @@ class CommentsController extends Application {
       if ($item->user->email_notifications['item_comment']) {
 
         $to       = array('name' => $item->user->username, 'email' => $item->user->email);
-        $subject  = '[' . $this->config->name . '] Someone left a ' . strtolower($this->config->items['comments']['name']) . ' on your ' . strtolower($this->config->items['titles']['name']) . ' on ' . $this->config->name . '!';
+        $subject  = '[' . $this->config->name . '] Someone left a ' . strtolower($this->config->items->comments->name) . ' on your ' . strtolower($this->config->items->titles->name) . ' on ' . $this->config->name . '!';
         $link     = substr($this->config->url, 0, -1) . $this->url_for('items', 'show', $item->id);
         $body     = $this->twig_string->render(file_get_contents("themes/{$this->config->theme}/emails/item_comment.html"), array('link' => $link, 'app' => $this, 'user' => $item->user));
 

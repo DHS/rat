@@ -1,27 +1,22 @@
 <?php
 
+require_once 'lib/config.php';
+
 class Application {
 
   public $uri, $config;
 
-  private function __construct() {}
+  private function __construct() {
+    $this->config = new Config;
+  }
 
   public static function initialise() {
-
-    // Check for server config
-    if ( ! file_exists('config/server.php')) {
-      throw new ApplicationException(null, "Server config doesn't exist yet. Copy config/server-sample.php to config/server.php and update the variables.");
-    }
-
-    require_once 'config/server.php';
-    require_once 'config/application.php';
-    $config = new AppConfig;
 
     require_once 'lib/routing.php';
 
     try {
 
-      $uri = Routing::fetch_uri($config);
+      $uri = Routing::fetch_uri(new Config);
 
       $controller = ucfirst($uri['controller']) . 'Controller';
       @include "controllers/{$uri['controller']}_controller.php";
@@ -50,7 +45,6 @@ class Application {
 
       }
 
-      $app->loadConfig($config);
       $app->loadTwig();
       $app->loadModels();
       $app->loadPlugins();
@@ -87,7 +81,6 @@ class Application {
       // RoutingExceptions only thrown from static context
       // so must set up new Application before rendering 404
       $app = new Application;
-      $app->loadConfig($config);
       $app->loadView('pages/404');
 
     } catch (ApplicationException $e) {
@@ -95,42 +88,6 @@ class Application {
       ob_end_flush();
       $e->app->loadView('pages/500');
 
-    }
-
-  }
-
-  private function loadConfig($config) {
-
-    $this->config = $config;
-
-    // Work out the live domain from config
-    $domain = substr($this->config->url, 7);
-
-    // Determine if site is live or dev, set site_identifier constant and base_dir
-    if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.' . $domain) {
-      define('SITE_IDENTIFIER', 'live');
-      $base_dir = $this->config->base_dir;
-    } else {
-      define('SITE_IDENTIFIER', 'dev');
-      $base_dir = $this->config->dev_base_dir;
-    }
-
-    // Add trailing slash if necessary
-    if (substr($base_dir, -1) != '/') {
-      $base_dir = $base_dir.'/';
-    }
-
-    // Set base_dir constant
-    $this->config->base_dir = $base_dir;
-
-    // Remove this eventually
-    define('BASE_DIR', $base_dir);
-
-    // Update config->url and append base_dir
-    if (SITE_IDENTIFIER == 'live') {
-      $this->config->url .= $base_dir;
-    } else {
-      $this->config->url = $this->config->dev_url . $base_dir;
     }
 
   }
@@ -284,7 +241,7 @@ class Application {
       $route = implode($param, explode('*', $route, 2));
     }
 
-    return substr(BASE_DIR, 0, -1) . $route;
+    return substr($this->config->base_dir, 0, -1) . $route;
 
   }
 
