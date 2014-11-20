@@ -41,7 +41,7 @@ class Config {
 
   // Basic app variables
   public $name                = 'Ratter';
-  public $tagline             = 'deave<a href="http://github.com/DHS/rat">Rat</a>';
+  public $tagline             = 'Ratter is an app to demonstrate the functionality of <a href="http://github.com/DHS/rat">Rat</a>';
   public $default_controller  = 'items';
 
   // Beta - users can't signup, can only enter their email addresses
