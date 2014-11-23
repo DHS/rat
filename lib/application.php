@@ -1,21 +1,16 @@
 <?php
 
-require_once 'lib/config.php';
-
 class Application {
 
   public $uri, $config;
 
-  private function __construct() {
-    $this->config = new Config;
-  }
-
   public static function initialise() {
 
-    require_once 'lib/routing.php';
+    require_once 'models/config.php';
 
     try {
 
+      require_once 'lib/routing.php';
       $uri = Routing::fetch_uri(new Config);
 
       $controller = ucfirst($uri['controller']) . 'Controller';
@@ -45,6 +40,7 @@ class Application {
 
       }
 
+      $app->config = new Config;
       $app->loadTwig();
       $app->loadModels();
       $app->loadPlugins();
@@ -107,19 +103,6 @@ class Application {
 
     // Load a separate instance of twig to handle strings
     $this->twig_string = new Twig_Environment(new Twig_Loader_String(), $twig_config);
-
-  }
-
-  public function writeConfig($file, $settings = array()) {
-
-    $config_file = $this->twig_string->render(
-      file_get_contents("config/$file.twig"),
-      array('app' => array('config' => $settings))
-    );
-
-    $handle = fopen("config/$file.php", 'w');
-    fwrite($handle, $config_file);
-    fclose($handle);
 
   }
 

@@ -78,12 +78,7 @@ class Config {
       'name'        => 'Image',
       'directory'   => 'uploads',
       'max-size'    => '5242880',
-      'mime-types'  => array(
-        'image/jpeg',
-        'image/png',
-        'image/gif',
-        'image/pjpeg'
-      )
+      'mime-types'  => 'image/jpeg,image/png,image/gif,image/pjpeg'
     ),
 
     'comments' => array(
@@ -113,7 +108,7 @@ class Config {
   );
 
   // Admin users - array of user IDs who have access to admin area
-  public $admin_users = array(1);
+  public $admin_users = '1';
 
   // Theme
   public $theme = 'default';
@@ -133,11 +128,24 @@ class Config {
   public $base_dir;
 
   public function __construct() {
-
     $raw_config = $this->loadConfigFile();
-    $this->fillObject($raw_config);
+    self::fillObject($this, $raw_config);
     $this->processConfig();
+  }
 
+  static public function array_to_object($array) {
+    // Casting input means you can actually pass in objects too
+    $array = (array)$array;
+
+    // Loop through array checking if values are arrays and converting those too
+    foreach ($array as $key => $value) {
+      if (is_array($value)) {
+        $array[$key] = self::array_to_object($value);
+      }
+    }
+
+    // Finally, cast top level to object and return
+    return (object)$array;
   }
 
   private function loadConfigFile() {
@@ -162,10 +170,16 @@ class Config {
 
   }
 
-  private function fillObject($raw_config) {
+  public static function fillObject($old_object, $new_object) {
 
-    foreach ($this as $key => $value) {
-      $this->$key = $raw_config->$key;
+    $new_object = self::array_to_object($new_object);
+
+    foreach ($new_object as $key => $value) {
+      $old_object->$key = $value;
+    }
+
+    if ($old_object != $this) {
+      return $old_object;
     }
 
   }
@@ -195,6 +209,99 @@ class Config {
     } else {
       $this->url = $this->dev_url . $this->base_dir;
     }
+
+  }
+
+  public function prepareConfigToWrite($posted_conf) {
+
+    // Load existing config
+    $conf = new Config;
+    $conf = self::fillObject($conf, $posted_conf);
+
+    // Overwrite checkbox fields
+    //$checkboxes = array('beta', 'private', 'items["titles"]["enabled"]',
+    //  'items["content"]["enabled"]', 'items["uploads"]["enabled"]',
+    //  'items["comments"]["enabled"]', 'items["likes"]["enabled"]');
+    $checkboxes = array(
+      'beta', 'private', 'signup_email_notifications'
+    );
+
+    $conf->tagline = addslashes($conf->tagline);
+
+    foreach ($checkboxes as $key => $checkbox) {
+      if (isset($posted_conf->$checkbox) && $posted_conf->$checkbox == 'on') {
+        $conf->$checkbox = 1;
+      } else {
+        $conf->$checkbox = 0;
+      }
+    }
+
+    if (isset($posted_conf->items->titles->enabled) && $posted_conf->items->titles->enabled == 'on') {
+      $conf->items->titles->enabled = 1;
+    } else {
+      $conf->items->titles->enabled = 0;
+    }
+
+    if (isset($posted_conf->items->content->enabled) && $posted_conf->items->content->enabled == 'on') {
+      $conf->items->content->enabled = 1;
+    } else {
+      $conf->items->content->enabled = 0;
+    }
+
+    if (isset($posted_conf->items->uploads->enabled) && $posted_conf->items->uploads->enabled == 'on') {
+      $conf->items->uploads->enabled = 1;
+    } else {
+      $conf->items->uploads->enabled = 0;
+    }
+
+    if (isset($posted_conf->items->comments->enabled) && $posted_conf->items->comments->enabled == 'on') {
+      $conf->items->comments->enabled = 1;
+    } else {
+      $conf->items->comments->enabled = 0;
+    }
+
+    if (isset($posted_conf->items->likes->enabled) && $posted_conf->items->likes->enabled == 'on') {
+      $conf->items->likes->enabled = 1;
+    } else {
+      $conf->items->likes->enabled = 0;
+    }
+
+    if (isset($posted_conf->invites->enabled) && $posted_conf->invites->enabled == 'on') {
+      $conf->invites->enabled = 1;
+    } else {
+      $conf->invites->enabled = 0;
+    }
+
+    if (isset($posted_conf->friends->enabled) && $posted_conf->friends->enabled == 'on') {
+      $conf->friends->enabled = 1;
+    } else {
+      $conf->friends->enabled = 0;
+    }
+
+    if (isset($posted_conf->friends->asymmetric) && $posted_conf->friends->asymmetric == 'on') {
+      $conf->friends->asymmetric = 1;
+    } else {
+      $conf->friends->asymmetric = 0;
+    }
+
+    return $conf;
+
+  }
+
+  /**
+   * Write config.json
+   *
+   */
+  public function writeConfig($settings) {
+
+    $config_file = $this->twig_string->render(
+      file_get_contents("config/config.twig"),
+      array('app' => array('config' => $settings))
+    );
+
+    $handle = fopen('config/config.json', 'w');
+    fwrite($handle, $config_file);
+    fclose($handle);
 
   }
 

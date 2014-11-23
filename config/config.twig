@@ -1,6 +1,6 @@
 {
     "name"                        : "{{ app.config.name }}",
-    "tagline"                     : "{{ app.config.name }}",
+    "tagline"                     : "{{ app.config.tagline | raw }}",
     "default_controller"          : "items",
     "beta"                        : {{ app.config.beta }},
     "private"                     : {{ app.config.private }},
@@ -23,12 +23,7 @@
             "name"      : "{{ app.config.items.uploads.name }}",
             "directory" : "uploads",
             "max-size"  : "5242880",
-            "mime_types": [
-                "image/jpeg",
-                "image/png",
-                "image/gif",
-                "image/pjpeg"
-            ]
+            "mime_types": "image/jpeg,image/png,image/gif,image/pjpeg"
         },
         "comments": {
             "enabled"     : {{ app.config.items.comments.enabled }},
@@ -51,9 +46,7 @@
         "enabled"   : {{ app.config.friends.enabled }},
         "asymmetric": {{ app.config.friends.asymmetric }}
     },
-    "admin_users": [
-      1
-    ],
+    "admin_users": "1",
     "theme": "default",
     "plugins": {
         "log"       : 1,
