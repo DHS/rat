@@ -99,72 +99,53 @@ class Config {
 
     // Load existing config
     $conf = new Config;
+
+    // Convert posted conf to object
+    $posted_conf = self::array_to_object($posted_conf);
+
+    // Escape tagline
+    $posted_conf->tagline = addslashes($posted_conf->tagline);
+
+    // Setup new config
     $conf = self::fillObject($conf, $posted_conf);
 
     // Overwrite checkbox fields
-    //$checkboxes = array('beta', 'private', 'items["titles"]["enabled"]',
-    //  'items["content"]["enabled"]', 'items["uploads"]["enabled"]',
-    //  'items["comments"]["enabled"]', 'items["likes"]["enabled"]');
-    $checkboxes = array(
-      'beta', 'private', 'signup_email_notifications'
+    $posted_checkboxes = array(
+      &$posted_conf->beta,
+      &$posted_conf->private,
+      &$posted_conf->signup_email_notifications,
+      &$posted_conf->items->titles->enabled,
+      &$posted_conf->items->content->enabled,
+      &$posted_conf->items->uploads->enabled,
+      &$posted_conf->items->comments->enabled,
+      &$posted_conf->items->likes->enabled,
+      &$posted_conf->invites->enabled,
+      &$posted_conf->friends->enabled,
+      &$posted_conf->friends->asymmetric,
     );
 
-    $conf->tagline = addslashes($conf->tagline);
+    $conf_checkboxes = array(
+      &$conf->beta,
+      &$conf->private,
+      &$conf->signup_email_notifications,
+      &$conf->items->titles->enabled,
+      &$conf->items->content->enabled,
+      &$conf->items->uploads->enabled,
+      &$conf->items->comments->enabled,
+      &$conf->items->likes->enabled,
+      &$conf->invites->enabled,
+      &$conf->friends->enabled,
+      &$conf->friends->asymmetric,
+    );
 
-    foreach ($checkboxes as $key => $checkbox) {
-      if (isset($posted_conf->$checkbox) && $posted_conf->$checkbox == 'on') {
-        $conf->$checkbox = 1;
+    $i = 0;
+    foreach ($posted_checkboxes as $key => $checkbox) {
+      if ($checkbox == 'on') {
+        $conf_checkboxes[$i] = 1;
       } else {
-        $conf->$checkbox = 0;
+        $conf_checkboxes[$i] = 0;
       }
-    }
-
-    if (isset($posted_conf->items->titles->enabled) && $posted_conf->items->titles->enabled == 'on') {
-      $conf->items->titles->enabled = 1;
-    } else {
-      $conf->items->titles->enabled = 0;
-    }
-
-    if (isset($posted_conf->items->content->enabled) && $posted_conf->items->content->enabled == 'on') {
-      $conf->items->content->enabled = 1;
-    } else {
-      $conf->items->content->enabled = 0;
-    }
-
-    if (isset($posted_conf->items->uploads->enabled) && $posted_conf->items->uploads->enabled == 'on') {
-      $conf->items->uploads->enabled = 1;
-    } else {
-      $conf->items->uploads->enabled = 0;
-    }
-
-    if (isset($posted_conf->items->comments->enabled) && $posted_conf->items->comments->enabled == 'on') {
-      $conf->items->comments->enabled = 1;
-    } else {
-      $conf->items->comments->enabled = 0;
-    }
-
-    if (isset($posted_conf->items->likes->enabled) && $posted_conf->items->likes->enabled == 'on') {
-      $conf->items->likes->enabled = 1;
-    } else {
-      $conf->items->likes->enabled = 0;
-    }
-
-    if (isset($posted_conf->invites->enabled) && $posted_conf->invites->enabled == 'on') {
-      $conf->invites->enabled = 1;
-    } else {
-      $conf->invites->enabled = 0;
-    }
-
-    if (isset($posted_conf->friends->enabled) && $posted_conf->friends->enabled == 'on') {
-      $conf->friends->enabled = 1;
-    } else {
-      $conf->friends->enabled = 0;
-    }
-
-    if (isset($posted_conf->friends->asymmetric) && $posted_conf->friends->asymmetric == 'on') {
-      $conf->friends->asymmetric = 1;
-    } else {
-      $conf->friends->asymmetric = 0;
+      $i++;
     }
 
     return $conf;
