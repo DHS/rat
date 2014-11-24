@@ -93,6 +93,9 @@ class Config {
       $this->url = $this->dev_url . $this->base_dir;
     }
 
+    // Create array of admin_users
+    $this->admin_users = explode(',', $this->admin_users);
+
   }
 
   public function prepareConfigToWrite($posted_conf) {
