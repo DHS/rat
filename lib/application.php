@@ -34,7 +34,7 @@ class Application {
         $uri = Routing::route();
 
         $controller = ucfirst($uri['controller']) . 'Controller';
-        @include "controllers/{$uri['controller']}_controller.php";
+        include "controllers/{$uri['controller']}_controller.php";
 
         $app = new $controller;
 
