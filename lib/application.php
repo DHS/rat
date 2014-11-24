@@ -88,7 +88,7 @@ class Application {
 
   }
 
-  private function loadTwig() {
+  public function loadTwig() {
 
     $twig_config['cache'] = 'static/template_cache';
 
