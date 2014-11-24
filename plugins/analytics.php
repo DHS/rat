@@ -27,7 +27,7 @@ class analytics extends Application {
 
   function view() {
 
-    if ($this->analytics_id != NULL && SITE_IDENTIFIER == 'live') {
+    if ($this->analytics_id != NULL && $this->config->site_identifier == 'live') {
 
       return <<<HTML
 <script>
