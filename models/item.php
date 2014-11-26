@@ -1,7 +1,5 @@
 <?php
 
-require_once 'lib/config.php';
-
 class Item {
 
   public function __construct(array $attrs = null) {
