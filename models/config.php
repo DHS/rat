@@ -53,18 +53,26 @@ class Config {
 
   }
 
-  public static function fillObject($old_object, $new_object) {
+  public static function fillObject($old_object, $new_object = null) {
 
-    $new_object = self::array_to_object($new_object);
+    if ($new_object != null) {
 
-    foreach ($new_object as $key => $value) {
-      $old_object->$key = $value;
+      $new_object = self::array_to_object($new_object);
+
+      foreach ($new_object as $key => $value) {
+        $old_object->$key = $value;
+      }
+
+      if ($old_object != $this) {
+        return $old_object;
+      }
+
+    } else {
+
+      // No new object given so create an object from the old one
+      return self::array_to_object($old_object);
+
     }
-
-    if ($old_object != $this) {
-      return $old_object;
-    }
-
   }
 
   private function processConfig() {
