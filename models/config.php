@@ -16,6 +16,10 @@ class Config {
     $this->processConfig();
   }
 
+  /**
+   * Convert an array to an object, return the object
+   *
+   */
   static public function array_to_object($array) {
     // Casting input means you can actually pass in objects too
     $array = (array)$array;
@@ -31,6 +35,10 @@ class Config {
     return (object)$array;
   }
 
+  /**
+  * Load a config file
+  *
+  */
   private function loadConfigFile() {
 
     $config_contents = file_get_contents($this->_config_path);
@@ -53,6 +61,10 @@ class Config {
 
   }
 
+  /**
+  * Overwrite an old object with properties from a new object
+  *
+  */
   public static function fillObject($old_object, $new_object = null) {
 
     if ($new_object != null) {
@@ -75,6 +87,10 @@ class Config {
     }
   }
 
+  /**
+  * Process config file setting up some extra config settings
+  *
+  */
   private function processConfig() {
 
     // Work out the live domain from config
@@ -106,6 +122,10 @@ class Config {
 
   }
 
+  /**
+  * Prepare a new config from the admin section ready to write to a config file
+  *
+  */
   public function prepareConfigToWrite($posted_conf) {
 
     // Load existing config
