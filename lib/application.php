@@ -88,6 +88,9 @@ class Application {
 
   }
 
+  /**
+  * Initialise Twig
+  */
   public function loadTwig() {
 
     $twig_config['cache'] = 'static/template_cache';
@@ -106,6 +109,9 @@ class Application {
 
   }
 
+  /**
+  * Initialise all the models in the /models folder
+  */
   private function loadModels() {
 
     global $mysqli;
@@ -119,6 +125,9 @@ class Application {
 
   }
 
+  /**
+  * Initialise all the plugins in the /plugins folder
+  */
   private function loadPlugins() {
 
     $this->plugins = new StdClass();
@@ -131,6 +140,9 @@ class Application {
 
   }
 
+  /**
+  * Apply url filters
+  */
   private function runFilters() {
 
     $uri = $this->uri;
@@ -145,6 +157,9 @@ class Application {
 
   }
 
+  /**
+  * Initialise all default libs
+  */
   private function loadDefaultLibs() {
 
     require_once 'lib/content.php';
@@ -153,6 +168,9 @@ class Application {
 
   }
 
+  /**
+   * Runs the appropriate method in the controller
+   */
   private function loadAction() {
 
     // Check for params
@@ -186,6 +204,9 @@ class Application {
 
   }
 
+  /**
+   * Renders the Twig template for the given view
+   */
   protected function loadView($view, $params = array(), $layout = 'default') {
 
     // Note: the following is hardcoded in ajax methods
@@ -209,15 +230,23 @@ class Application {
 
   }
 
+  /**
+   * Generate a url for a given controller/action/id
+   */
   public static function url_for($controller, $action = '', $id = '', $params = array()) {
     return Routing::url_for($controller, $action, $id, $params);
   }
 
-  // url_for wrapper for use with Twig
+  /**
+   * Echo a url for a given controller/action/id
+   */
   public function echo_url_for($controller, $action = '', $id = '', $params = array()) {
     echo $this->url_for($controller, $action, $id, $params);
   }
 
+  /**
+  * Generate a url for a given route
+  */
   public function url_for_route($route, array $params) {
 
     foreach ($params as $param) {
@@ -228,18 +257,30 @@ class Application {
 
   }
 
+  /**
+  * Echos an html link for a given controller/action/id
+  */
   public function link_to($link_text, $controller, $action = '', $id = '', $params = array()) {
     echo '<a href="' . $this->url_for($controller, $action, $id, $params) . '">' . $link_text . '</a>';
   }
 
+  /**
+  * Return an html link for a given controller/action/id
+  */
   public function get_link_to($link_text, $controller, $action = '', $id = '', $params = array()) {
     return '<a href="' . $this->url_for($controller, $action, $id, $params) . '">' . $link_text . '</a>';
   }
 
+  /**
+  * Redirect to a given controller/action/id
+  */
   public function redirect_to($controller, $action = '', $id = '', $params = array()) {
     header('Location: ' . $this->url_for($controller, $action, $id, $params));
   }
 
+  /**
+  * Add a flash message to the session, probably to be shown on the next page
+  */
   public static function flash($category, $message) {
 
     if ( ! in_array($category, array('error', 'notice', 'success'))) {
@@ -250,6 +291,9 @@ class Application {
 
   }
 
+  /**
+  * Render a json object when returning API objects
+  */
   public function render_json($ref) {
 
     if (is_array($ref)) {
