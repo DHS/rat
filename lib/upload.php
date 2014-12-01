@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Master function for uploading, checks filenames and generates thumbnails
+ */
 function upload($file, $dir = 'uploads') {
 
   $filename = check_filename($file['name'], $dir);
@@ -17,6 +20,9 @@ function upload($file, $dir = 'uploads') {
 
 }
 
+/**
+* Check for original filename and increment if necessary
+*/
 function check_filename($filename, $dir = 'uploads') {
 
   // Check for file with same name and rename if neccessary
@@ -44,6 +50,9 @@ function check_filename($filename, $dir = 'uploads') {
 
 }
 
+/**
+* Upload the file and resize to the specified dimensions
+*/
 function upload_file($filename, $type, $max_width = 100, $max_height = 100, $dir = 'thumbnails', $upload_dir = 'uploads') {
 
   // Create temporary source image resource
