@@ -13,7 +13,7 @@ Getting started
 
 1. Copy all files to your application directory
 2. Create a MySQL database and run rat.sql in it
-3. Copy config/server-sample.php to config/server.php and update the variables
+3. In config/config.json, update the dev database details, dev_url, dev_base_dir and encryption_salt
 4. Visit /admin/setup to configure your application
 
 Functionality
@@ -86,7 +86,7 @@ The typical flow through the app for a given request is as follows:
 Theming Rat
 -----------
 
-To update the look and feel of your application, copy and rename the themes/default directory then update the $theme variable in config/application.php accordingly.
+To update the look and feel of your application, copy and rename the themes/default directory then update the $theme variable in config/config.json accordingly.
 
 Environment variables
 ---------------------
