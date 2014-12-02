@@ -88,6 +88,11 @@ Theming Rat
 
 To update the look and feel of your application, copy and rename the themes/default directory then update the $theme variable in config/application.php accordingly.
 
+Environment variables
+---------------------
+
+You can use environment variables to keep your database credentials and encryption salt out of your code. In config/config.json, use ENV:: as a prefix to the config variable name you'd like to load ie. change the dev database host value to ENV::MYSQL_HOST to load the MYSQL_HOST environment variable.
+
 On the shoulders of giants
 --------------------------
 

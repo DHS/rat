@@ -4,6 +4,11 @@ class Config {
 
   private $_config_path = 'config/config.json';
 
+  /**
+   * The prefix to look for when loading environment variables from config
+   */
+  private $_env_var_prefix = 'ENV::';
+
   public function __construct() {
 
     // Fetch config from config.json
@@ -11,6 +16,21 @@ class Config {
 
     // overwrite declared vars with those loaded from config.json
     self::fillObject($this, $raw_config);
+
+    /**
+     * Optional local environment vars to help replicate a production
+     * environment such as Heroku
+     *
+     * In config/config.json use the prefix ENV:: before a value to load a
+     * given environment variable ie. set the dev database host to
+     * "ENV::MYSQL_HOST" to load the MYSQL_HOST environment variable.
+     *
+     */
+    // putenv('MYSQL_HOST=localhost');
+    // putenv('MYSQL_USER=root');
+    // putenv('MYSQL_PASSWORD=');
+    // putenv('MYSQL_DATABASE=rat');
+    // putenv('ENCRYPTION_SALT=hw9e46');
 
     // Process config to setup base_dir and url
     $this->processConfig();
@@ -116,6 +136,33 @@ class Config {
     } else {
       $this->url = $this->dev_url . $this->base_dir;
     }
+
+    // Check encryption salt for environment variables
+    $config_value_array = explode($this->_env_var_prefix, $this->encryption_salt);
+    if (count($config_value_array) > 1){
+      // Exploding worked
+      $this->encryption_salt = getenv($config_value_array[1]);
+    }
+
+    // Check dev db for environment variables
+    foreach ($this->database->dev as $key => &$value) {
+      $config_value_array = explode($this->_env_var_prefix, $value);
+      if (count($config_value_array) > 1){
+        // Exploding worked
+        $this->database->dev->$key = getenv($config_value_array[1]);
+      }
+    }
+    unset($value);
+
+    // Check production db for environment variables
+    foreach ($this->database->live as $key => &$value) {
+      $config_value_array = explode($this->_env_var_prefix, $value);
+      if (count($config_value_array) > 1){
+        // Exploding worked
+        $this->database->live->$key = getenv($config_value_array[1]);
+      }
+    }
+    unset($value);
 
     // Create array of admin_users
     $this->admin_users = explode(',', $this->admin_users);
