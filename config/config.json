@@ -65,14 +65,14 @@
         "dev": {
             "host"      : "localhost",
             "username"  : "root",
-            "passsword" : "",
+            "password"  : "",
             "database"  : "rat",
             "prefix"    : ""
         },
         "live": {
             "host"      : "localhost",
             "username"  : "root",
-            "passsword" : "root",
+            "password"  : "root",
             "database"  : "rat",
             "prefix"    : ""
         }
