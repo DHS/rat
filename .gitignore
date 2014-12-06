@@ -5,7 +5,7 @@ uploads/stream/*
 uploads/thumbnails/*
 static/template_cache/*
 !.gitignore
-
+vendor/
 
 # Numerous always-ignore extensions
 *.diff

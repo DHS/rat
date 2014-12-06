@@ -6,6 +6,7 @@ class Application {
 
   public static function initialise() {
 
+    require_once 'vendor/autoload.php';
     require_once 'models/config.php';
 
     try {
@@ -100,8 +101,6 @@ class Application {
       $twig_config['auto_reload'] = TRUE;
     }
 
-    require_once 'lib/Twig/Autoloader.php';
-    Twig_Autoloader::register();
     $this->twig = new Twig_Environment(new Twig_Loader_Filesystem('themes/' . $this->config->theme), $twig_config);
 
     // Load a separate instance of twig to handle strings
