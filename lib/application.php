@@ -1,5 +1,8 @@
 <?php
 
+use Aws\S3\S3Client;
+use Aws\S3\Exception\S3Exception;
+
 class Application {
 
   public $uri, $config;
@@ -43,6 +46,7 @@ class Application {
 
       $app->config = new Config;
       $app->loadTwig();
+      $app->loadAws();
       $app->loadModels();
       $app->loadPlugins();
 
@@ -105,6 +109,16 @@ class Application {
 
     // Load a separate instance of twig to handle strings
     $this->twig_string = new Twig_Environment(new Twig_Loader_String(), $twig_config);
+
+  }
+
+  /**
+  * Initialise AWS
+  */
+  public function loadAws() {
+
+    // Instantiate an S3 client
+    $s3 = S3Client::factory();
 
   }
 

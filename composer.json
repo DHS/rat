@@ -1,5 +1,6 @@
 {
   "require": {
-    "twig/twig": "~1.0"
+    "twig/twig": "~1.0",
+    "aws/aws-sdk-php": "2.*"
   }
 }
