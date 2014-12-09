@@ -47,7 +47,7 @@
         "asymmetric": 0
     },
     "admin_users": "1",
-    "theme": "default",
+    "theme": "bootstrap",
     "plugins": {
         "log"       : 1,
         "gravatar"  : 1,

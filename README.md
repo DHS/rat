@@ -57,7 +57,7 @@ Functionality
 
 **Themes**
 
-- Default: a basic theme
+- Bootstrap: a basic theme made using [Twitter Bootstrap](http://getbootstrap.com/)
 
 How it works
 ------------
@@ -86,7 +86,7 @@ The typical flow through the app for a given request is as follows:
 Theming Rat
 -----------
 
-To update the look and feel of your application, copy and rename the themes/default directory then update the $theme variable in config/config.json accordingly.
+To update the look and feel of your application, copy and rename the /themes/bootstrap directory then update the $theme variable in config/config.json accordingly.
 
 Environment variables
 ---------------------
