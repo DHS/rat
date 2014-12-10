@@ -167,6 +167,9 @@ class Config {
     // Create array of admin_users
     $this->admin_users = explode(',', $this->admin_users);
 
+    // Create array of upload mime types
+    $this->items->uploads->mime_types = explode(',', $this->items->uploads->mime_types);
+
   }
 
   /**
