@@ -22,7 +22,7 @@
             "enabled"   : 1,
             "name"      : "Image",
             "directory" : "uploads",
-            "max-size"  : "5242880",
+            "max_size"  : "5242880",
             "mime_types": "image/jpeg,image/png,image/gif,image/pjpeg"
         },
         "comments": {
