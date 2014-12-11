@@ -31,6 +31,9 @@ class Config {
     // putenv('MYSQL_PASSWORD=');
     // putenv('MYSQL_DATABASE=rat');
     // putenv('ENCRYPTION_SALT=hw9e46');
+    // putenv('AWS_ACCESS_KEY_ID=abc');
+    // putenv('AWS_SECRET_ACCESS_KEY=123');
+    // putenv('S3_BUCKET=rat');
 
     // Process config to setup base_dir and url
     $this->processConfig();
