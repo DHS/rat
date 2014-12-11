@@ -96,6 +96,11 @@ class ItemsController extends Application {
           include 'lib/upload.php';
           $filename = upload($_FILES['file'], $this->config->items->uploads->directory);
 
+          // try {
+          //   $upload = $this->s3->upload($this->config->bucket, $_FILES['file']['name'], fopen($_FILES['file']['tmp_name'], 'rb'), 'public-read');
+          //   $url = $upload->get('ObjectURL');
+          // } catch (Exception $e) {}
+
           $item_id = Item::add($_SESSION['user_id'], $_POST['content'], $_POST['title'], $filename);
 
         } else {
