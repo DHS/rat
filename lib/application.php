@@ -5,7 +5,7 @@ use Aws\S3\Exception\S3Exception;
 
 class Application {
 
-  public $uri, $config;
+  public $uri, $config, $s3;
 
   public static function initialise() {
 
@@ -118,7 +118,7 @@ class Application {
   public function loadAws() {
 
     // Instantiate an S3 client
-    $s3 = S3Client::factory();
+    $this->s3 = S3Client::factory();
 
   }
 
