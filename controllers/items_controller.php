@@ -80,7 +80,7 @@ class ItemsController extends Application {
           $error .= 'Invalid file type: ' . $_FILES['file']['type'] . '<br />';
         }
 
-        if ($_FILES['file']['size'] > $this->config->items->uploads->max-size) {
+        if ($_FILES['file']['size'] > $this->config->items->uploads->max_size) {
           $error .= 'File too large.<br />';
         }
 
