@@ -19,11 +19,12 @@
             "name_plural" : "Contents"
         },
         "uploads": {
-            "enabled"   : 1,
-            "name"      : "Image",
-            "directory" : "uploads",
-            "max_size"  : "5242880",
-            "mime_types": "image/jpeg,image/png,image/gif,image/pjpeg"
+            "enabled"       : 1,
+            "name"          : "Image",
+            "directory"     : "uploads",
+            "max_size"      : "5242880",
+            "mime_types"    : "image/jpeg,image/png,image/gif,image/pjpeg",
+            "aws_s3_bucket" : "rat-uploads"
         },
         "comments": {
             "enabled"     : 1,

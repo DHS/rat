@@ -19,11 +19,12 @@
             "name_plural" : "{{ app.config.items.content.name_plural }}"
         },
         "uploads": {
-            "enabled"   : {{ app.config.items.uploads.enabled }},
-            "name"      : "{{ app.config.items.uploads.name }}",
-            "directory" : "uploads",
-            "max-size"  : "5242880",
-            "mime_types": "image/jpeg,image/png,image/gif,image/pjpeg"
+            "enabled"       : {{ app.config.items.uploads.enabled }},
+            "name"          : "{{ app.config.items.uploads.name }}",
+            "directory"     : "uploads",
+            "max-size"      : "5242880",
+            "mime_types"    : "image/jpeg,image/png,image/gif,image/pjpeg",
+            "aws_s3_bucket" : "rat-uploads"
         },
         "comments": {
             "enabled"     : {{ app.config.items.comments.enabled }},

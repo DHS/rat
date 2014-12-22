@@ -33,7 +33,7 @@ class Config {
     // putenv('ENCRYPTION_SALT=hw9e46');
     // putenv('AWS_ACCESS_KEY_ID=abc');
     // putenv('AWS_SECRET_ACCESS_KEY=123');
-    // putenv('S3_BUCKET=rat');
+    // putenv('AWS_S3_BUCKET=rat-uploads');
 
     // Process config to setup base_dir and url
     $this->processConfig();
@@ -166,6 +166,13 @@ class Config {
       }
     }
     unset($value);
+
+    // Check for AWS S3 bucket environment variable
+    $config_value_array = explode($this->_env_var_prefix, $this->config->items->uploads->aws_s3_bucket);
+    if (count($config_value_array) > 1){
+      // Exploding worked
+      $this->config->items->uploads->aws_s3_bucket = getenv($config_value_array[1]);
+    }
 
     // Create array of admin_users
     $this->admin_users = explode(',', $this->admin_users);
