@@ -56,26 +56,35 @@
         "analytics" : 0
     },
     "send_emails_from"  : "support@blah.com",
-    "url"               : "http://example.com",
-    "dev_url"           : "http://127.0.0.1",
-    "live_base_dir"     : "/",
-    "dev_base_dir"      : "/rat",
     "send_emails"       : 1,
     "encryption_salt"   : "hw9e46",
-    "database": {
+    "environments": {
         "dev": {
-            "host"      : "localhost",
-            "username"  : "root",
-            "password"  : "",
-            "database"  : "rat",
-            "prefix"    : ""
+            "url"         : "",
+            "base_dir"    : "",
+            "db_host"     : "localhost",
+            "db_username" : "root",
+            "db_password" : "",
+            "db_database" : "rat",
+            "db_prefix"   : ""
+        },
+        "staging": {
+            "url"         : "",
+            "base_dir"    : "",
+            "db_host"     : "localhost",
+            "db_username" : "root",
+            "db_password" : "root",
+            "db_database" : "rat",
+            "db_prefix"   : ""
         },
         "live": {
-            "host"      : "localhost",
-            "username"  : "root",
-            "password"  : "root",
-            "database"  : "rat",
-            "prefix"    : ""
+            "url"         : "",
+            "base_dir"    : "",
+            "db_host"     : "localhost",
+            "db_username" : "root",
+            "db_password" : "root",
+            "db_database" : "rat",
+            "db_prefix"   : ""
         }
     }
 }

@@ -119,7 +119,12 @@ class Config {
     // Work out the live domain from config
     $domain = substr($this->url, 7);
 
-    // Determine if site is live or dev, set site_identifier constant and base_dir
+    # todo Set vars based on checking environments
+    // Determine which environment we're in and use it to set up
+    // site_identifier and base_dir
+    // foreach ($this->environments as $environment) {
+    //
+    // }
     if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.' . $domain) {
       $this->site_identifier = 'live';
       $this->base_dir = $this->live_base_dir;
