@@ -59,32 +59,38 @@
     "send_emails"       : 1,
     "encryption_salt"   : "hw9e46",
     "environments": {
-        "dev": {
-            "url"         : "",
-            "base_dir"    : "",
-            "db_host"     : "localhost",
-            "db_username" : "root",
-            "db_password" : "",
-            "db_database" : "rat",
-            "db_prefix"   : ""
+        "local": {
+            "url"         : "http://127.0.0.1",
+            "base_dir"    : "/rat",
+            "database": {
+                "host"     : "localhost",
+                "username" : "root",
+                "password" : "",
+                "database" : "rat",
+                "prefix"   : ""
+            }
         },
         "staging": {
-            "url"         : "",
-            "base_dir"    : "",
-            "db_host"     : "localhost",
-            "db_username" : "root",
-            "db_password" : "root",
-            "db_database" : "rat",
-            "db_prefix"   : ""
+            "url"         : "http://my-rat-app-staging.herokuapp.com",
+            "base_dir"    : "/",
+            "database": {
+                "host"     : "localhost",
+                "username" : "root",
+                "password" : "",
+                "database" : "rat",
+                "prefix"   : ""
+            }
         },
         "live": {
-            "url"         : "",
-            "base_dir"    : "",
-            "db_host"     : "localhost",
-            "db_username" : "root",
-            "db_password" : "root",
-            "db_database" : "rat",
-            "db_prefix"   : ""
+            "url"         : "http://my-rat-app.herokuapp.com",
+            "base_dir"    : "/",
+            "database": {
+                "host"     : "localhost",
+                "username" : "root",
+                "password" : "",
+                "database" : "rat",
+                "prefix"   : ""
+            }
         }
     }
 }
