@@ -131,6 +131,17 @@ class Config {
           // Set up some environment-specific config vars
           $this->site_identifier = $environment_name;
           $this->base_dir = $environment->base_dir;
+
+          // Check db for environment variables
+          foreach ($environment->database as $key => &$value) {
+            $config_value_array = explode($this->_env_var_prefix, $value);
+            if (count($config_value_array) > 1){
+              // Exploding worked
+              $environment->database->$key = getenv($config_value_array[1]);
+            }
+          }
+          unset($value);
+
           break;
 
         }
@@ -164,26 +175,6 @@ class Config {
       // Exploding worked
       $this->encryption_salt = getenv($config_value_array[1]);
     }
-
-    // Check dev db for environment variables
-    foreach ($this->database->dev as $key => &$value) {
-      $config_value_array = explode($this->_env_var_prefix, $value);
-      if (count($config_value_array) > 1){
-        // Exploding worked
-        $this->database->dev->$key = getenv($config_value_array[1]);
-      }
-    }
-    unset($value);
-
-    // Check production db for environment variables
-    foreach ($this->database->live as $key => &$value) {
-      $config_value_array = explode($this->_env_var_prefix, $value);
-      if (count($config_value_array) > 1){
-        // Exploding worked
-        $this->database->live->$key = getenv($config_value_array[1]);
-      }
-    }
-    unset($value);
 
     // Check for AWS S3 bucket environment variable
     $config_value_array = explode($this->_env_var_prefix, $this->config->items->uploads->aws_s3_bucket);
