@@ -116,22 +116,35 @@ class Config {
   */
   private function processConfig() {
 
-    // Work out the live domain from config
-    $domain = substr($this->url, 7);
+    try {
 
-    # todo Set vars based on checking environments
-    // Determine which environment we're in and use it to set up
-    // site_identifier and base_dir
-    // foreach ($this->environments as $environment) {
-    //
-    // }
-    if ($_SERVER['HTTP_HOST'] == $domain || $_SERVER['HTTP_HOST'] == 'www.' . $domain) {
-      $this->site_identifier = 'live';
-      $this->base_dir = $this->live_base_dir;
-    } else {
-      $this->site_identifier = 'dev';
-      $this->base_dir = $this->dev_base_dir;
-    }
+      // Loop through environments
+      foreach ($this->environments as $environment_name => $environment) {
+
+        // Snip http from the beginning of the environment url
+        $domain = substr($environment->url, 7);
+
+        // Check if the current url matches the environment
+        if ($_SERVER['HTTP_HOST'] == $domain
+          || $_SERVER['HTTP_HOST'] == 'www.' . $domain) {
+
+          // Set up some environment-specific config vars
+          $this->site_identifier = $environment_name;
+          $this->base_dir = $environment->base_dir;
+          break;
+
+        }
+
+      }
+
+      // If site_identifier didn't get set then we have a problem
+      if ($this->site_identifier == null) {
+        throw new Exception('Environment could not be determined. Check the
+        environment url you\'re running on matches one of those in
+        config.json.');
+      }
+
+    } catch (Exception $e) {}
 
     // Add trailing slash if necessary
     if (substr($this->base_dir, -1) != '/') {
