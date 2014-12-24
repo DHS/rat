@@ -1,12 +1,13 @@
 <?php
 
-// Create database connection
+$db = $this->config->environments->{$this->config->site_identifier}->database;
 
+// Create database connection
 $mysqli = new mysqli(
-  $this->config->database->{$this->config->site_identifier}->host,
-  $this->config->database->{$this->config->site_identifier}->username,
-  $this->config->database->{$this->config->site_identifier}->password,
-  $this->config->database->{$this->config->site_identifier}->database
+  $db->host,
+  $db->username,
+  $db->password,
+  $db->database
 );
 
 if ($mysqli == false) {
