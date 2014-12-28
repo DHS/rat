@@ -7,6 +7,15 @@ CREATE TABLE `comments` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+CREATE TABLE `config` (
+  `id` bigint(15) unsigned NOT NULL AUTO_INCREMENT,
+  `app_id` bigint(15) DEFAULT NULL,
+  `key` varchar(180) CHARACTER SET utf8 DEFAULT NULL,
+  `value` varchar(180) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `app_id` (`app_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 CREATE TABLE `friends` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(15) NOT NULL DEFAULT '0',
