@@ -3,9 +3,11 @@ CREATE TABLE `comments` (
   `user_id` bigint(15) NOT NULL DEFAULT '0',
   `item_id` int(11) NOT NULL DEFAULT '0',
   `content` text NOT NULL,
-  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `item_id` (`item_id`)
 
 CREATE TABLE `config` (
   `id` bigint(15) unsigned NOT NULL AUTO_INCREMENT,
@@ -23,39 +25,44 @@ CREATE TABLE `friends` (
   `status` tinyint(1) DEFAULT '0',
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `friend_user_id` (`friend_user_id`)
 
 CREATE TABLE `invites` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(15) NOT NULL,
-  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
   `email` varchar(50) DEFAULT '',
   `code` varchar(11) DEFAULT NULL,
   `result` int(1) DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
 
 CREATE TABLE `items` (
   `content` text default NULL,
-  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(15) NOT NULL DEFAULT '0',
   `title` varchar(140) DEFAULT NULL,
   `image` varchar(140) DEFAULT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
 
 CREATE TABLE `likes` (
-  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(15) NOT NULL DEFAULT '0',
   `item_id` int(11) NOT NULL DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `item_id` (`item_id`)
 
 CREATE TABLE `log` (
-  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(15) NOT NULL DEFAULT '0',
@@ -64,6 +71,8 @@ CREATE TABLE `log` (
   `action` varchar(50) NOT NULL DEFAULT '',
   `params` varchar(50) DEFAULT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
 
 CREATE TABLE `users` (
   PRIMARY KEY  (`id`)
