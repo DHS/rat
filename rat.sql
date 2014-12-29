@@ -3,11 +3,11 @@ CREATE TABLE `comments` (
   `user_id` bigint(15) NOT NULL DEFAULT '0',
   `item_id` int(11) NOT NULL DEFAULT '0',
   `content` text NOT NULL,
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `item_id` (`item_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE `config` (
   `id` bigint(15) unsigned NOT NULL AUTO_INCREMENT,
@@ -25,25 +25,24 @@ CREATE TABLE `friends` (
   `status` tinyint(1) DEFAULT '0',
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` timestamp NULL DEFAULT NULL,
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `friend_user_id` (`friend_user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE `invites` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(15) NOT NULL,
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
   `email` varchar(50) DEFAULT '',
   `code` varchar(11) DEFAULT NULL,
   `result` int(1) DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE `items` (
   `content` text default NULL,
-) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(15) NOT NULL DEFAULT '0',
   `title` varchar(140) DEFAULT NULL,
@@ -51,9 +50,9 @@ CREATE TABLE `items` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE `likes` (
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(15) NOT NULL DEFAULT '0',
   `item_id` int(11) NOT NULL DEFAULT '0',
@@ -61,9 +60,9 @@ CREATE TABLE `likes` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `item_id` (`item_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE `log` (
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(15) NOT NULL DEFAULT '0',
   `object_type` varchar(50) DEFAULT NULL,
@@ -73,10 +72,9 @@ CREATE TABLE `log` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE `users` (
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
   `id` bigint(15) NOT NULL AUTO_INCREMENT,
   `username` varchar(180) DEFAULT NULL,
   `email` varchar(180) DEFAULT NULL,
@@ -88,6 +86,8 @@ CREATE TABLE `users` (
   `password` varchar(180) DEFAULT NULL,
   `date_added` datetime DEFAULT NULL,
   `date_joined` datetime DEFAULT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE `users_email_notifications` (
   `user_id` int(11) unsigned NOT NULL,
@@ -99,5 +99,6 @@ CREATE TABLE `users_email_notifications` (
 CREATE TABLE `users_password_reset` (
   `user_id` bigint(15) unsigned NOT NULL,
   `reset_code` char(32) DEFAULT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
