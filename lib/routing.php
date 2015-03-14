@@ -2,7 +2,7 @@
 
 class Routing extends Application {
 
-  public static function fetch_uri($config) {
+  public static function fetch_uri() {
 
     // Get request from server, split into segments, store as controller,
     // view, id and params

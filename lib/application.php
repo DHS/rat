@@ -14,7 +14,7 @@ class Application {
     try {
 
       require_once 'lib/routing.php';
-      $uri = Routing::fetch_uri(new Config);
+      $uri = Routing::fetch_uri();
 
       $controller = ucfirst($uri['controller']) . 'Controller';
       @include "controllers/{$uri['controller']}_controller.php";
