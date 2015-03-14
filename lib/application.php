@@ -10,7 +10,6 @@ class Application {
   public static function initialise() {
 
     require_once 'vendor/autoload.php';
-    require_once 'models/config.php';
 
     try {
 
@@ -44,7 +43,7 @@ class Application {
 
       }
 
-      $app->config = new Config;
+      $app->loadConfig();
       $app->loadTwig();
       $app->loadAws();
       $app->loadModels();
@@ -91,6 +90,14 @@ class Application {
 
     }
 
+  }
+
+  /**
+   * Set up config
+   */
+  public function loadConfig() {
+    require_once 'models/config.php';
+    $this->config = new Config();
   }
 
   /**
