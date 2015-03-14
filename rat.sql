@@ -11,12 +11,24 @@ CREATE TABLE `comments` (
 
 CREATE TABLE `config` (
   `id` bigint(15) unsigned NOT NULL AUTO_INCREMENT,
-  `app_id` bigint(15) DEFAULT NULL,
-  `key` varchar(180) CHARACTER SET utf8 DEFAULT NULL,
-  `value` varchar(180) CHARACTER SET utf8 DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `app_id` (`app_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `name` varchar(180) NOT NULL DEFAULT 'Ratter',
+  `tagline` varchar(180) DEFAULT 'Ratter is an app to demonstrate the functionality of <a href="http://github.com/DHS/rat">Rat</a>',
+  `beta` tinyint(1) NOT NULL DEFAULT '1',
+  `private` tinyint(1) NOT NULL DEFAULT '1',
+  `signup_email_notifications` tinyint(1) NOT NULL DEFAULT '0',
+  `items` varchar(10000) DEFAULT '{"name":"post","name_plural":"posts","titles":{"enabled":1,"name":"Title","name_plural":"Titles"},"content":{"enabled":1,"name":"Content","name_plural":"Contents"},"uploads":{"enabled":1,"name":"Image","directory":"uploads","max_size":"5242880","mime_types":"image/jpeg,image/png,image/gif,image/pjpeg","aws_s3_bucket":"rat-uploads"},"comments":{"enabled":1,"name":"Comment","name_plural":"Comments"},"likes":{"enabled":1,"name":"Like","name_plural":"Likes","opposite_name":"Unlike","past_tense":"Liked by"}}',
+  `timezone` varchar(180) NOT NULL DEFAULT 'Europe/London',
+  `invites` varchar(1000) NOT NULL DEFAULT '{"enabled":1}',
+  `friends` varchar(1000) NOT NULL DEFAULT '{"enabled":1}',
+  `admin_users` varchar(180) NOT NULL DEFAULT '1',
+  `theme` varchar(180) NOT NULL DEFAULT 'bootstrap',
+  `plugins` varchar(1000) NOT NULL DEFAULT '{"log":1,"gravatar":1,"points":0,"analytics":0}',
+  `send_emails` tinyint(1) NOT NULL DEFAULT '0',
+  `send_emails_from` varchar(180) DEFAULT NULL,
+  `encryption_salt` varchar(180) NOT NULL DEFAULT 'hw9e46',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+INSERT INTO `config` (`name`) VALUES ('Ratter');
 
 CREATE TABLE `friends` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

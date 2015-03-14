@@ -11,12 +11,6 @@ class Config {
 
   public function __construct() {
 
-    // Fetch config from config.json
-    $raw_config = $this->loadConfigFile();
-
-    // overwrite declared vars with those loaded from config.json
-    self::fillObject($this, $raw_config);
-
     /**
      * Optional local environment vars to help replicate a production
      * environment such as Heroku
@@ -35,8 +29,18 @@ class Config {
     // putenv('AWS_SECRET_ACCESS_KEY=123');
     // putenv('AWS_S3_BUCKET=rat-uploads');
 
-    // Process config to setup base_dir and url
-    $this->processConfig();
+    // Load database config from config.json
+    self::fillObject($this, $this->loadDbConfigFile());
+
+    // Determine environment
+    $this->processConfigBeforeDb();
+
+    // Load application config from database
+    self::fillObject($this, $this->loadConfigFromDb());
+
+    // Determine environment
+    $this->processConfigAfterDb();
+
   }
 
   /**
@@ -62,7 +66,7 @@ class Config {
   * Load a config file
   *
   */
-  private function loadConfigFile() {
+  private function loadDbConfigFile() {
 
     $config_contents = file_get_contents($this->_config_path);
 
@@ -94,6 +98,7 @@ class Config {
 
       $new_object = self::array_to_object($new_object);
 
+      // Set new attributes on old object
       foreach ($new_object as $key => $value) {
         $old_object->$key = $value;
       }
@@ -114,7 +119,7 @@ class Config {
   * Process config file setting up some extra config settings
   *
   */
-  private function processConfig() {
+  private function processConfigBeforeDb() {
 
     try {
 
@@ -168,6 +173,13 @@ class Config {
     } else {
       $this->url = $this->dev_url . $this->base_dir;
     }
+
+  }
+
+  /**
+   * Process config file setting up some extra config settings
+   */
+  private function processConfigAfterDb() {
 
     // Check encryption salt for environment variables
     $config_value_array = explode($this->_env_var_prefix, $this->encryption_salt);
@@ -267,6 +279,39 @@ class Config {
     fwrite($handle, $config_file);
     fclose($handle);
 
+  }
+
+  // Fetch config from database
+  public function loadConfigFromDb() {
+
+    global $mysqli;
+
+    // Load own mysql connection as config is often loaded statically
+    $db = $this->environments->{$this->site_identifier}->database;
+
+    // Create database connection
+    $mysqli = new mysqli(
+      $db->host,
+      $db->username,
+      $db->password,
+      $db->database
+    );
+
+    $sql = "SELECT * FROM `{$this->environments->{$this->site_identifier}->database->prefix}config` WHERE `id` = 1";
+
+    $query = mysqli_query($mysqli, $sql);
+    $result = mysqli_fetch_array($query, MYSQL_ASSOC);
+
+    $conf = new stdClass();
+    foreach ((array)$result as $key => $value) {
+      if (is_object(json_decode($value)) == true) {
+        $conf->$key = json_decode($value);
+      } else {
+        $conf->$key = $value;
+      }
+    }
+
+    return $conf;
   }
 
 }

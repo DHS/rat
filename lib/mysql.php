@@ -1,19 +1,5 @@
 <?php
 
-$db = $this->config->environments->{$this->config->site_identifier}->database;
-
-// Create database connection
-$mysqli = new mysqli(
-  $db->host,
-  $db->username,
-  $db->password,
-  $db->database
-);
-
-if ($mysqli == false) {
-  throw new ApplicationException($this, "Couldn't connect to server.");
-}
-
 // SQL injection protection function
 
 function sanitize_input($input) {

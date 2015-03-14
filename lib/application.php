@@ -151,7 +151,7 @@ class Application {
   private function loadPlugins() {
 
     $this->plugins = new StdClass();
-    foreach ($this->config->plugins as $key => $value) {
+    foreach ((array)$this->config->plugins as $key => $value) {
       if ($value == TRUE) {
         require_once "plugins/$key.php";
         $this->plugins->$key = new $key;
@@ -183,6 +183,7 @@ class Application {
   private function loadDefaultLibs() {
 
     require_once 'lib/content.php';
+    require_once 'lib/mysql.php';
     require_once 'lib/email.php';
     $this->email = new Email($this);
 
