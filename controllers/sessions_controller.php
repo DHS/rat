@@ -67,7 +67,7 @@ class SessionsController extends Application {
     if ($user->deauthenticate() == TRUE) {
 
       Application::flash('info', 'You are now logged out.');
-      Application::redirect_to($this->config->default_controller);
+      Application::redirect_to('items');
 
     } else {
 

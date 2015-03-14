@@ -43,7 +43,7 @@ class Routing extends Application {
 
     // Set the controller to the default if not in URI
     if (empty($uri['controller'])) {
-      $uri['controller'] = $config->default_controller;
+      $uri['controller'] = 'items';
     }
 
     return $uri;

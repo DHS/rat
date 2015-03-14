@@ -28,14 +28,14 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-        <a class="brand" href="{{ app.url_for(app.config.default_controller) }}">{{ app.config.name }}</a>
+        <a class="brand" href="{{ app.url_for('items') }}">{{ app.config.name }}</a>
 
       {% if session.user_id %}
 
         <div class="nav-collapse">
           <ul class="nav">
-            <li{% if app.uri.controller == app.config.default_controller %} class="active"{% endif %}>
-              {{ app.link_to('Home', app.config.default_controller) }}
+            <li{% if app.uri.controller == 'items' %} class="active"{% endif %}>
+              {{ app.link_to('Home', 'items') }}
             </li>
             <li{% if app.uri.controller == 'users' %} class="active"{% endif %}>
               {{ app.link_to('My profile', 'users', 'show', session.user_id) }}
