@@ -1,7 +1,8 @@
 <?php
 
-// SQL injection protection function
-
+/**
+ * SQL injection protection function
+ */
 function sanitize_input($input) {
 
   global $mysqli;

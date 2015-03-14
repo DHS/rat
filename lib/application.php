@@ -101,8 +101,8 @@ class Application {
   }
 
   /**
-  * Initialise Twig
-  */
+   * Initialise Twig
+   */
   public function loadTwig() {
 
     $twig_config['cache'] = 'static/template_cache';
@@ -120,8 +120,8 @@ class Application {
   }
 
   /**
-  * Initialise AWS
-  */
+   * Initialise AWS
+   */
   public function loadAws() {
 
     // Instantiate an S3 client
@@ -130,8 +130,8 @@ class Application {
   }
 
   /**
-  * Initialise all the models in the /models folder
-  */
+   * Initialise all the models in the /models folder
+   */
   private function loadModels() {
 
     global $mysqli;
@@ -146,8 +146,8 @@ class Application {
   }
 
   /**
-  * Initialise all the plugins in the /plugins folder
-  */
+   * Initialise all the plugins in the /plugins folder
+   */
   private function loadPlugins() {
 
     $this->plugins = new StdClass();
@@ -161,8 +161,8 @@ class Application {
   }
 
   /**
-  * Apply url filters
-  */
+   * Apply url filters
+   */
   private function runFilters() {
 
     $uri = $this->uri;
@@ -178,8 +178,8 @@ class Application {
   }
 
   /**
-  * Initialise all default libs
-  */
+   * Initialise all default libs
+   */
   private function loadDefaultLibs() {
 
     require_once 'lib/content.php';
@@ -266,8 +266,8 @@ class Application {
   }
 
   /**
-  * Generate a url for a given route
-  */
+   * Generate a url for a given route
+   */
   public function url_for_route($route, array $params) {
 
     foreach ($params as $param) {
@@ -279,29 +279,29 @@ class Application {
   }
 
   /**
-  * Echos an html link for a given controller/action/id
-  */
+   * Echos an html link for a given controller/action/id
+   */
   public function link_to($link_text, $controller, $action = '', $id = '', $params = array()) {
     echo '<a href="' . $this->url_for($controller, $action, $id, $params) . '">' . $link_text . '</a>';
   }
 
   /**
-  * Return an html link for a given controller/action/id
-  */
+   * Return an html link for a given controller/action/id
+   */
   public function get_link_to($link_text, $controller, $action = '', $id = '', $params = array()) {
     return '<a href="' . $this->url_for($controller, $action, $id, $params) . '">' . $link_text . '</a>';
   }
 
   /**
-  * Redirect to a given controller/action/id
-  */
+   * Redirect to a given controller/action/id
+   */
   public function redirect_to($controller, $action = '', $id = '', $params = array()) {
     header('Location: ' . $this->url_for($controller, $action, $id, $params));
   }
 
   /**
-  * Add a flash message to the session, probably to be shown on the next page
-  */
+   * Add a flash message to the session, probably to be shown on the next page
+   */
   public static function flash($category, $message) {
 
     if ( ! in_array($category, array('error', 'notice', 'success'))) {
@@ -313,8 +313,8 @@ class Application {
   }
 
   /**
-  * Render a json object when returning API objects
-  */
+   * Render a json object when returning API objects
+   */
   public function render_json($ref) {
 
     if (is_array($ref)) {

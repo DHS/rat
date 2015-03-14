@@ -45,7 +45,6 @@ class Config {
 
   /**
    * Convert an array to an object, return the object
-   *
    */
   static public function array_to_object($array) {
     // Casting input means you can actually pass in objects too
@@ -63,9 +62,8 @@ class Config {
   }
 
   /**
-  * Load a config file
-  *
-  */
+   * Load a config file
+   */
   private function loadDbConfigFile() {
 
     $config_contents = file_get_contents($this->_config_path);
@@ -89,9 +87,8 @@ class Config {
   }
 
   /**
-  * Overwrite an old object with properties from a new object
-  *
-  */
+   * Overwrite an old object with properties from a new object
+   */
   public static function fillObject($old_object, $new_object = null) {
 
     if ($new_object != null) {
@@ -116,9 +113,8 @@ class Config {
   }
 
   /**
-  * Process config file setting up some extra config settings
-  *
-  */
+   * Process config file setting up some extra config settings
+   */
   private function processConfigBeforeDb() {
 
     try {
@@ -204,9 +200,8 @@ class Config {
   }
 
   /**
-  * Prepare a new config from the admin section ready to write to a config file
-  *
-  */
+   * Prepare a new config from the admin section ready to write to a config file
+   */
   public function prepareConfigToWrite($posted_conf) {
 
     // Load existing config
@@ -266,7 +261,6 @@ class Config {
 
   /**
    * Write config.json
-   *
    */
   public function writeConfig($settings) {
 
