@@ -12,9 +12,16 @@ Getting started
 ---------------
 
 1. Copy all files to your application directory
-2. Create a MySQL database and run rat.sql in it
-3. In config/config.json, update the dev database details, dev_url, dev_base_dir and encryption_salt
-4. Visit /admin/setup to configure your application
+2. In the command line, run the following commands in the application directory:
+
+  ```
+  composer install
+  chmod 777 static/template_cache/
+  ````
+
+3. Create a MySQL database and run rat.sql in it
+4. In config/config.json, update the variables under one of the environments (maybe start with local)
+5. Visit /admin/setup to configure your application
 
 Functionality
 -------------
