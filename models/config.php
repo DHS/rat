@@ -275,7 +275,9 @@ class Config {
 
   }
 
-  // Fetch config from database
+  /**
+   * Fetch config from database
+   */
   public function loadConfigFromDb() {
 
     global $mysqli;

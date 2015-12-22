@@ -20,8 +20,6 @@ class InvitesController extends Application {
       Application::flash('error', 'You have no remaining invites.');
     }
 
-
-
     if ($this->json) {
       $this->render_json($user->invites());
     } else {
