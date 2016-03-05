@@ -37,8 +37,8 @@
 <!-- Share buttons -->
 {% if not app.config.private %}
   <span style="float: right; text-align: right;">
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ app.url_for('items', 'show', this.item.id) }}" data-text="{{ this.item.title }}" data-count="none">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-      <iframe src="//www.facebook.com/plugins/like.php?href={{ app.url_for('items', 'show', this.item.id) }}&amp;width=300&amp;layout=button&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:48px; height:20px;" allowTransparency="true"></iframe>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ app.url_for('items', 'show', item.id) }}" data-text="{{ item.title }}" data-count="none">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+      <iframe src="//www.facebook.com/plugins/like.php?href={{ app.url_for('items', 'show', item.id) }}&amp;width=300&amp;layout=button&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:48px; height:20px;" allowTransparency="true"></iframe>
     </span>
 {% endif %}
 
