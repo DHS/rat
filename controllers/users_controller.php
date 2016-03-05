@@ -47,7 +47,7 @@ class UsersController extends Application {
 
       // No email submitted so show signup form
 
-      $this->loadView('users/add', array('code' => $code));
+      $this->loadView('users/add', array('email' => $_GET['email'], 'code' => $code));
 
     }
 
@@ -415,7 +415,7 @@ class UsersController extends Application {
 
     // Check email
     $_POST['email'] = trim($_POST['email']);
-    $email_check = $this->check_email($_POST['email'], FALSE);
+    $email_check = $this->check_email($_POST['email'], TRUE);
     if ($email_check !== TRUE) {
       $error .= $email_check;
     }
@@ -765,7 +765,7 @@ class UsersController extends Application {
   }
 
   // Helper function: checks email is valid and available, returns TRUE or error message
-  private function check_email($email, $new = TRUE) {
+  private function check_email($email, $existingUser = FALSE) {
 
     $return = '';
 
@@ -781,8 +781,10 @@ class UsersController extends Application {
       $return .= 'Email must contain an @ symbol.<br />';
     }
 
-    if (User::check_email_available($email) != TRUE && $new == TRUE) {
-      $return .= 'An account with that email address already exists in the system. ' . $this->get_link_to('Click here', 'sessions', 'add') . ' to login.<br />';
+    if (User::check_email_available($email) != TRUE) {
+      if ($existingUser == FALSE) {
+        $return .= 'An account with that email address already exists in the system. ' . $this->get_link_to('Click here', 'sessions', 'add') . ' to login.<br />';
+      }
     }
 
     return strlen($return) > 0 ? $return : TRUE;
