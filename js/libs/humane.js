@@ -122,7 +122,11 @@ if(typeof jQuery != 'undefined') {
             date = humaneDate(date);
 
             if(date && settings['lowercase']) {
-                date = date.toLowerCase();
+                if (date == 'Just Now'){
+                    date = 'Just now';
+                } else {
+                    date = date.toLowerCase();
+                }
             }
 
             if(date && $t.html() != date) {
