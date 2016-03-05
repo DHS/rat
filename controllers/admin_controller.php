@@ -2,8 +2,8 @@
 
 class AdminController extends Application {
 
-  protected $requireAdmin = array('index', 'signups', 'users', 'history',
-    'invite', 'grant_invites');
+  protected $requireAdmin = array('index', 'config', 'signups', 'users',
+    'history', 'invite', 'grant_invites');
 
   // Show admin dashboard
   function index() {
