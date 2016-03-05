@@ -207,9 +207,6 @@ class Config {
     // Convert posted conf to object
     $posted_conf = self::array_to_object($posted_conf);
 
-    // Escape tagline
-    $posted_conf->tagline = addslashes($posted_conf->tagline);
-
     // Setup new config
     $conf = self::fillObject($conf, $posted_conf);
 
@@ -257,19 +254,65 @@ class Config {
   }
 
   /**
-   * Write config.json
+   * Write config
    */
-  public function writeConfig($settings) {
+  public function writeConfig($newConfig) {
 
-    $config_file = $this->twig_string->render(
-      file_get_contents("config/config.twig"),
-      array('app' => array('config' => $settings))
+    global $mysqli;
+
+    // Escape strings
+    $newConfig = $this->escapeStrings($newConfig);
+
+    // Fix checkboxes
+    $newConfig = $this->prepareConfigToWrite($newConfig);
+
+    $items = "'" . json_encode($newConfig->items) . "'";
+    $invites = "'" . json_encode($newConfig->invites) . "'";
+    $friends = "'" . json_encode($newConfig->friends) . "'";
+    $plugins = "'" . json_encode($newConfig->plugins) . "'";
+
+    // Build query
+    $sql = "UPDATE `{$config->database->{$config->site_identifier}->prefix}config` SET ";
+    $sql .= "`name` = '$newConfig->name', ";
+    $sql .= "`tagline` = '$newConfig->tagline', ";
+    $sql .= "`beta` = $newConfig->beta, ";
+    $sql .= "`private` = $newConfig->private, ";
+    $sql .= "`signup_email_notifications` = $newConfig->signup_email_notifications, ";
+    $sql .= "`items` = $items, ";
+    $sql .= "`timezone` = '$newConfig->timezone', ";
+    $sql .= "`invites` = $invites, ";
+    $sql .= "`friends` = $friends, ";
+    $sql .= "`theme` = '$newConfig->theme', ";
+    $sql .= "`plugins` = $plugins, ";
+    $sql .= "`send_emails` = $newConfig->send_emails ";
+    $sql .= "WHERE id = 1;";
+
+    $query = mysqli_query($mysqli, $sql);
+
+  }
+
+  public function escapeStrings($newConfig) {
+
+    $strings = array(
+      'name',
+      'name_plural',
+      'tagline',
+      'content',
+      'past_tense'
     );
 
-    $handle = fopen('config/config.json', 'w');
-    fwrite($handle, $config_file);
-    fclose($handle);
+    // Loop through new config
+    foreach ($newConfig as $key => &$value) {
+      if (is_array($value)) {
+        // If the value is an array then recurse!
+        $value = self::escapeStrings($value);
+      } elseif (in_array($key, $strings)) {
+        // If it's a string then escape it
+        $value = sanitize_input($value, true);
+      }
+    }
 
+    return $newConfig;
   }
 
   /**

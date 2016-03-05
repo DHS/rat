@@ -148,6 +148,7 @@ class Routing extends Application {
     // Search through all route targets and find the last one to match
     // both the controller, action and the names of additional parameters
     $targets = array_values($routes->aliases);
+    $shortcuts = array_keys($routes->aliases);
     $match = NULL;
     $size = count($targets);
 
@@ -181,6 +182,11 @@ class Routing extends Application {
       ) {
 
         $match = $i;
+
+        // URLs with an id require a wildcard
+        if (isset($uri['id']) && substr_count($shortcuts[$i], '*') < 1) {
+          $match = null;
+        }
 
       }
 

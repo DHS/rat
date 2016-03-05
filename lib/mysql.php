@@ -3,7 +3,7 @@
 /**
  * SQL injection protection function
  */
-function sanitize_input($input) {
+function sanitize_input($input, $skipQuotes = false) {
 
   global $mysqli;
 
@@ -11,8 +11,9 @@ function sanitize_input($input) {
     $input = stripslashes($input);
   }
 
-  // If not a number, then add quotes
-  if ( ! is_numeric($input)) {
+  if (is_numeric($input) || $skipQuotes) {
+    $input = mysqli_real_escape_string($mysqli, $input);
+  } else {
     $input = "'" . mysqli_real_escape_string($mysqli, $input) . "'";
   }
 

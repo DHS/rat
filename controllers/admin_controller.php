@@ -21,11 +21,9 @@ class AdminController extends Application {
 
     if ($_POST) {
 
-      // Use the config lib to convert $_POST into something writable
-      $conf = Config::prepareConfigToWrite($_POST);
-
       // Update config
-      Config::writeConfig($conf);
+      $config = new Config;
+      $config->writeConfig($_POST);
 
       // Set flash message
       Application::flash('success', 'App config updated!');
