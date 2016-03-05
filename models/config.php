@@ -143,10 +143,21 @@ class Config {
       $db->database
     );
 
-    $sql = "SELECT * FROM `{$this->environments->{$this->site_identifier}->database->prefix}config` WHERE `id` = 1";
+    if ($mysqli->connect_error) {
+      exit("Error ({$mysqli->connect_errno}) connecting to database:
+        {$mysqli->connect_error}");
+    }
 
+    $sql = "SELECT * FROM `{$this->environments->{$this->site_identifier}->database->prefix}config` WHERE `id` = 1";
     $query = mysqli_query($mysqli, $sql);
-    $result = mysqli_fetch_array($query, MYSQL_ASSOC);
+    if ( ! $query) {
+      exit('Unable to query database to fetch config.');
+    }
+
+    $result = mysqli_fetch_assoc($query);
+    if ( ! $result) {
+      exit('Unable to fetch config from the database.');
+    }
 
     $conf = new stdClass();
     foreach ((array)$result as $key => $value) {
