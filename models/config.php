@@ -156,7 +156,11 @@ class Config {
         config.json.');
       }
 
-    } catch (Exception $e) {}
+    } catch (Exception $e) {
+      // Application hasn't loaded yet so pretty error messages won't work
+      echo $e->getMessage();
+      exit;
+    }
 
     // Add trailing slash if necessary
     if (substr($this->base_dir, -1) != '/') {
