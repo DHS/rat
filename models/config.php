@@ -21,7 +21,7 @@ class Config {
      *
      */
     // putenv('MYSQL_HOST=localhost');
-    // putenv('MYSQL_USER=root');
+    // putenv('MYSQL_USERNAME=root');
     // putenv('MYSQL_PASSWORD=');
     // putenv('MYSQL_DATABASE=rat');
     // putenv('ENCRYPTION_SALT=hw9e46');
