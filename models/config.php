@@ -29,17 +29,20 @@ class Config {
     // putenv('AWS_SECRET_ACCESS_KEY=123');
     // putenv('AWS_S3_BUCKET=rat-uploads');
 
-    // Load database config from config.json
-    self::fillObject($this, $this->loadDbConfigFile());
+    // Load environment config
+    $envConfig = $this->loadEnvConfigFile();
+
+    // Overwrite self with environment config
+    self::fillObject($this, $envConfig);
 
     // Determine environment
-    $this->processConfigBeforeDb();
+    $this->processEnvConfig();
 
     // Load application config from database
     self::fillObject($this, $this->loadConfigFromDb());
 
     // Determine environment
-    $this->processConfigAfterDb();
+    $this->processConfig();
 
   }
 
@@ -64,7 +67,7 @@ class Config {
   /**
    * Load a config file
    */
-  private function loadDbConfigFile() {
+  private function loadEnvConfigFile() {
 
     $config_contents = file_get_contents($this->_config_path);
 
@@ -115,7 +118,7 @@ class Config {
   /**
    * Process config file setting up some extra config settings
    */
-  private function processConfigBeforeDb() {
+  private function processEnvConfig() {
 
     try {
 
@@ -162,24 +165,12 @@ class Config {
       exit;
     }
 
-    // Add trailing slash if necessary
-    if (substr($this->base_dir, -1) != '/') {
-      $this->base_dir = $this->base_dir.'/';
-    }
-
-    // Update config->url and append base_dir
-    if ($this->site_identifier == 'live') {
-      $this->url .= $this->base_dir;
-    } else {
-      $this->url = $this->dev_url . $this->base_dir;
-    }
-
   }
 
   /**
-   * Process config file setting up some extra config settings
+   * Extra config processing
    */
-  private function processConfigAfterDb() {
+  private function processConfig() {
 
     // Check encryption salt for environment variables
     $config_value_array = explode($this->_env_var_prefix, $this->encryption_salt);
@@ -200,6 +191,15 @@ class Config {
 
     // Create array of upload mime types
     $this->items->uploads->mime_types = explode(',', $this->items->uploads->mime_types);
+
+    // Add trailing slash to base_dir if necessary
+    if (substr($this->base_dir, -1) != '/') {
+      $this->base_dir .= '/';
+    }
+
+    // Set site url
+    $this->url = $this->environments->{$this->site_identifier}->url;
+    $this->url .= $this->base_dir;
 
   }
 
