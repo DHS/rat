@@ -29,7 +29,8 @@ class Filter {
   public function requireInvitesEnabled($uri, $actions) {
 
     if (in_array($uri['action'], $actions) && $this->app->config->invites->enabled != TRUE) {
-      throw new RoutingException($uri, "Page not found");
+      Application::flash('error', 'Page not found');
+      $this->app->redirect_to('items');
     }
 
   }
@@ -37,7 +38,8 @@ class Filter {
   public function requireAdmin($uri, $actions) {
 
     if (in_array($uri['action'], $actions) && (!isset($_SESSION['user_id']) || !in_array($_SESSION['user_id'], $this->app->config->admin_users))) {
-      throw new RoutingException($uri, "Page not found");
+      Application::flash('error', 'Page not found');
+      $this->app->redirect_to('items');
     }
 
   }
