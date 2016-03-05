@@ -29,19 +29,20 @@ class Config {
     // putenv('AWS_SECRET_ACCESS_KEY=123');
     // putenv('AWS_S3_BUCKET=rat-uploads');
 
-    // Load environment config
     $envConfig = $this->loadEnvConfigFile();
 
-    // Overwrite self with environment config
+    // Add environment config to $this
     self::fillObject($this, $envConfig);
 
-    // Determine environment
+    // Determine which environment we're in
     $this->processEnvConfig();
 
     // Load application config from database
-    self::fillObject($this, $this->loadConfigFromDb());
+    $dbConfig = $this->loadConfigFromDb();
 
-    // Determine environment
+    // Add config from database to $this
+    self::fillObject($this, $dbConfig);
+
     $this->processConfig();
 
   }
@@ -72,7 +73,8 @@ class Config {
   }
 
   /**
-   * Process config file setting up some extra config settings
+   * Process environment config
+   * Determines which environment we're in
    */
   private function processEnvConfig() {
 
