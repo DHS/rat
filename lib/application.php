@@ -108,7 +108,7 @@ class Application {
     $twig_config['cache'] = 'static/template_cache';
 
     // If we're in dev mode then force template compiling
-    if ($this->config->site_identifier == 'dev') {
+    if ($this->config->site_identifier == 'local') {
       $twig_config['auto_reload'] = TRUE;
     }
 
