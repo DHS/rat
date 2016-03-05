@@ -47,24 +47,6 @@ class Config {
   }
 
   /**
-   * Convert an array to an object, return the object
-   */
-  static public function array_to_object($array) {
-    // Casting input means you can actually pass in objects too
-    $array = (array)$array;
-
-    // Loop through array checking if values are arrays and converting those too
-    foreach ($array as $key => $value) {
-      if (is_array($value)) {
-        $array[$key] = self::array_to_object($value);
-      }
-    }
-
-    // Finally, cast top level to object and return
-    return (object)$array;
-  }
-
-  /**
    * Load a config file
    */
   private function loadEnvConfigFile() {
@@ -87,32 +69,6 @@ class Config {
 
     return $decoded_config;
 
-  }
-
-  /**
-   * Overwrite an old object with properties from a new object
-   */
-  public static function fillObject($old_object, $new_object = null) {
-
-    if ($new_object != null) {
-
-      $new_object = self::array_to_object($new_object);
-
-      // Set new attributes on old object
-      foreach ($new_object as $key => $value) {
-        $old_object->$key = $value;
-      }
-
-      if ($old_object != $this) {
-        return $old_object;
-      }
-
-    } else {
-
-      // No new object given so create an object from the old one
-      return self::array_to_object($old_object);
-
-    }
   }
 
   /**
@@ -165,6 +121,41 @@ class Config {
       exit;
     }
 
+  }
+
+  /**
+   * Fetch config from database
+   */
+  public function loadConfigFromDb() {
+
+    global $mysqli;
+
+    // Load own mysql connection as config is often loaded statically
+    $db = $this->environments->{$this->site_identifier}->database;
+
+    // Create database connection
+    $mysqli = new mysqli(
+      $db->host,
+      $db->username,
+      $db->password,
+      $db->database
+    );
+
+    $sql = "SELECT * FROM `{$this->environments->{$this->site_identifier}->database->prefix}config` WHERE `id` = 1";
+
+    $query = mysqli_query($mysqli, $sql);
+    $result = mysqli_fetch_array($query, MYSQL_ASSOC);
+
+    $conf = new stdClass();
+    foreach ((array)$result as $key => $value) {
+      if (is_object(json_decode($value)) == true) {
+        $conf->$key = json_decode($value);
+      } else {
+        $conf->$key = $value;
+      }
+    }
+
+    return $conf;
   }
 
   /**
@@ -280,38 +271,47 @@ class Config {
   }
 
   /**
-   * Fetch config from database
+   * Overwrite an old object with properties from a new object
    */
-  public function loadConfigFromDb() {
+  public static function fillObject($old_object, $new_object = null) {
 
-    global $mysqli;
+    if ($new_object != null) {
 
-    // Load own mysql connection as config is often loaded statically
-    $db = $this->environments->{$this->site_identifier}->database;
+      $new_object = self::array_to_object($new_object);
 
-    // Create database connection
-    $mysqli = new mysqli(
-      $db->host,
-      $db->username,
-      $db->password,
-      $db->database
-    );
+      // Set new attributes on old object
+      foreach ($new_object as $key => $value) {
+        $old_object->$key = $value;
+      }
 
-    $sql = "SELECT * FROM `{$this->environments->{$this->site_identifier}->database->prefix}config` WHERE `id` = 1";
+      if ($old_object != $this) {
+        return $old_object;
+      }
 
-    $query = mysqli_query($mysqli, $sql);
-    $result = mysqli_fetch_array($query, MYSQL_ASSOC);
+    } else {
 
-    $conf = new stdClass();
-    foreach ((array)$result as $key => $value) {
-      if (is_object(json_decode($value)) == true) {
-        $conf->$key = json_decode($value);
-      } else {
-        $conf->$key = $value;
+      // No new object given so create an object from the old one
+      return self::array_to_object($old_object);
+
+    }
+  }
+
+  /**
+   * Convert an array to an object, return the object
+   */
+  static public function array_to_object($array) {
+    // Casting input means you can actually pass in objects too
+    $array = (array)$array;
+
+    // Loop through array checking if values are arrays and converting those too
+    foreach ($array as $key => $value) {
+      if (is_array($value)) {
+        $array[$key] = self::array_to_object($value);
       }
     }
 
-    return $conf;
+    // Finally, cast top level to object and return
+    return (object)$array;
   }
 
 }
