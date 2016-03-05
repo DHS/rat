@@ -19,17 +19,19 @@
 {% include 'partials/friend.html' %}
 {% endif %}
 
-{% if user.full_name or user.bio or user.url %}
-
   <h3>Profile</h3>
 
+  {% if user.full_name or user.bio or user.url %}
   <p>
     {% if user.full_name %}<strong>Name</strong> {{ user.full_name }}{% endif %}
     {% if user.bio %}<br /><strong>Bio</strong> {{ user.bio }}{% endif %}
     {% if user.url %}<br /><strong>URL</strong> <a href="{{ user.url }}">{{ user.url }}</a>{% endif %}
-  <p />
+  </p>
+  {% endif %}
 
-{% endif %}
+  <p>
+    <br />Joined <strong><span title="{{ user.date_joined }}">{{ user.date_joined }}</span></strong>
+  <p>
 
 {% if app.plugins.points %}
 {{ app.plugins.points.view() }}

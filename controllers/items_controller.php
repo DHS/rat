@@ -4,8 +4,18 @@ class ItemsController extends Application {
 
   protected $requireLoggedIn = array('add', 'remove');
 
-  // Show stream of everyone's items
   function index() {
+
+    if ($this->config->friends->enabled) {
+      $this->feed();
+    } else {
+      $this->all();
+    }
+
+  }
+
+  // Show stream of everyone's items
+  function all() {
 
     // Page zero so overwrite to 1
     if ( ! isset($this->uri['params']['page'])) {
@@ -322,7 +332,7 @@ class ItemsController extends Application {
         $offset = ($this->uri['params']['page'] - 1) * $limit;
       }
 
-      $this->items = $user->list_feed($limit, $offset);
+      $items = $user->list_feed($limit, $offset);
 
       foreach ($items as $item) {
         $item->content = process_content($item->content);
@@ -338,7 +348,11 @@ class ItemsController extends Application {
         }
       }
 
-      $this->loadView('items/index');
+      if ($this->json) {
+        $this->render_json($items);
+      } else {
+        $this->loadView('items/index', array('items' => $items));
+      }
 
     } else {
 

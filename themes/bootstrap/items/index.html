@@ -10,9 +10,14 @@
 {% else %}
   {% if items %}
 
+    <div class="span1 offset0">
+      <p>{% if app.config.friends.enabled %}{{ app.link_to('My feed', 'items', 'feed') }}
+        <br />{{ app.link_to('All items', 'items', 'all') }}{% endif %}
+    </div>
+
     <div class="row">
 
-      <div class="span4 offset3">
+      <div class="span5 offset1">
         {% for item in items %}
           {% include 'partials/item.html' %}
         {% endfor %}
@@ -28,7 +33,7 @@
 
   {% else %}
 
-    <div class="span5 offset3">
+    <div class="span1 offset0">
       <p>No {{ app.config.items.name_plural }} found...</p>
     </div>
 

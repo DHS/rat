@@ -429,7 +429,7 @@ class User {
 
     // Loop through friends adding them to the query string
     foreach ($friends as $friend) {
-      $friends_string .= " OR `user_id` = {$friend['friend_user_id']}";
+      $friends_string .= " OR `user_id` = $friend->id";
     }
 
     $sql = "SELECT `id` FROM `{$config->database->{$config->site_identifier}->prefix}items` WHERE $friends_string ORDER BY `id` DESC";

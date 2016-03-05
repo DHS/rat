@@ -1,6 +1,6 @@
 {% if user.id != session.user_id %}
 
-  <span id="friends_{{ user.id }}">
+  <div id="friends_{{ user.id }}" style="text-align: center;">
 
   {% if not session.user_id %}
 
@@ -26,6 +26,8 @@
 
   {% endif %}
 
-  </span>
+  </div>
+
+  <p />
 
 {% endif %}
