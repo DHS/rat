@@ -113,7 +113,9 @@ class UsersController extends Application {
         $vars['friends'] = $friends;
       }
 
-      if (isset($user->username)) {
+      if (isset($user->full_name) && $user->full_name != '') {
+        $vars['title'] = $user->full_name;
+      } else {
         $vars['title'] = $user->username;
       }
 
