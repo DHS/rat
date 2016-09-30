@@ -165,21 +165,21 @@ class UsersController extends Application {
           exit();
         }
 
+        $user_id = User::check_password_reset_code($code);
+
+        // Get user object
+        $user = User::get_by_id($user_id);
+
         $error = '';
 
         // Check password
-        $password_check = $this->check_password($_POST['password1'], $_POST['password2']);
+        $password_check = $this->check_password($_POST['password1'], $_POST['password2'], $user->username);
         if ($password_check !== TRUE) {
           $error .= $password_check;
         }
 
         // Error processing
         if ($error == '') {
-
-          $user_id = User::check_password_reset_code($code);
-
-          // Get user object
-          $user = User::get_by_id($user_id);
 
           // Do update
           $user->update_password($_POST['password1'], $this->config->encryption_salt);
@@ -289,7 +289,7 @@ class UsersController extends Application {
     }
 
     // Check password
-    $password_check = $this->check_password($_POST['new_password1'], $_POST['new_password2']);
+    $password_check = $this->check_password($_POST['new_password1'], $_POST['new_password2'], $this->user->username);
     if ($password_check !== TRUE) {
       $error .= $password_check;
     }
@@ -427,7 +427,7 @@ class UsersController extends Application {
     }
 
     // Check password
-    $password_check = $this->check_password($_POST['password1'], $_POST['password2']);
+    $password_check = $this->check_password($_POST['password1'], $_POST['password2'], $_POST['username']);
     if ($password_check !== TRUE) {
       $error .= $password_check;
     }
@@ -630,7 +630,7 @@ class UsersController extends Application {
     }
 
     // Check password
-    $password_check = $this->check_password($_POST['password1'], $_POST['password2']);
+    $password_check = $this->check_password($_POST['password1'], $_POST['password2'], $_POST['username']);
     if ($password_check !== TRUE) {
       $error .= $password_check;
     }
