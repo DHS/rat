@@ -6,7 +6,7 @@ class ItemsController extends Application {
 
   function index() {
 
-    if ($this->config->friends->enabled) {
+    if ($this->config->friends->enabled && isset($_SESSION['user_id'])) {
       $this->feed();
     } else {
       $this->all();
@@ -312,7 +312,7 @@ class ItemsController extends Application {
   // Show feed of friends' new items
   function feed() {
 
-    if ($this->config->friends->enabled == TRUE || isset($_SESSION['user_id'])) {
+    if ($this->config->friends->enabled == TRUE && isset($_SESSION['user_id'])) {
 
       // If friends enabled then show feed of friends' activity
 
