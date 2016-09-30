@@ -748,17 +748,25 @@ class UsersController extends Application {
       // There was an error
 
       // Propagate get vars to be picked up by the form
-      $this->uri['params']['email'] = $_POST['email'];
-      $this->uri['params']['username'] = $_POST['username'];
-      if (isset($_POST['code'])) {
-        $this->code = $_POST['code'];
+      $vars = array('title' => 'Signup');
+
+      if (isset($_POST['email']) && $_POST['email'] != '') {
+        $vars['email'] = $_POST['email'];
+      }
+
+      if (isset($_POST['username']) && $_POST['username'] != '') {
+        $vars['username'] = $_POST['username'];
+      }
+
+      if (isset($_POST['code']) && $_POST['code'] != '') {
+        $vars['code'] = $_POST['code'];
       }
 
       // Show error message
       Application::flash('error', $error);
 
       // Show signup form
-      $this->loadView('users/add', array('title' => 'Signup'));
+      $this->loadView('users/add', $vars);
 
     }
 
