@@ -821,14 +821,15 @@ class UsersController extends Application {
   }
 
   // Helper function: checks passwords match and are good, returns TRUE or error message
-  private function check_password($password1, $password2) {
+  private function check_password($password1, $password2, $username = null) {
 
     $return = '';
 
     // Easily guessable passwords
     $easy_passwords = array(
       'password', '123', '1234', '12345', '123456', '1234567', '12345678', 'abc123',
-      'qwerty', 'letmein', 'test', 'blah', 'hello', 'jesus', 'iloveyou', 'monkey', 'princess'
+      'qwerty', 'letmein', 'test', 'blah', 'hello', 'jesus', 'iloveyou', 'monkey',
+      'princess', 'password123'
     );
 
     if ($password1 == '' || $password2 == '') {
@@ -843,8 +844,12 @@ class UsersController extends Application {
       $return .= 'Password must not be easy to guess.<br />';
     }
 
-    if (strlen($password1) < 3) {
-      $return .= 'Password must be more than two characters long.<br />';
+    if (strlen($password1) < 6) {
+      $return .= 'Password must be at least six characters.<br />';
+    }
+
+    if ($username != null && $username == $password1) {
+      $return .= 'Username and password must not be the same.<br />';
     }
 
     return strlen($return) > 0 ? $return : TRUE;
