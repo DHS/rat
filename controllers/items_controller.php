@@ -209,7 +209,7 @@ class ItemsController extends Application {
 
       $item->update($_POST['title'], $_POST['content']);
 
-      Application::flash('success', 'Item updated!');
+      Application::flash('success', ucfirst($this->config->items->name) . ' updated!');
 
       // Get redirected
       if (isset($this->uri['params']['redirect_to'])) {
